@@ -1,6 +1,16 @@
 <template>
   <div class="container">
     <div class="main">
+      <div class="top">
+        <div class="avatar">
+          <img src="" alt="">
+        </div>
+        <div class="info">
+          <p><van-icon name="user-o" class="icon"/> UUUSSS</p>
+          <p><van-icon name="phone-o"  class="icon"/> 19829648586</p>
+        </div>
+        <van-icon name="setting-o" class="setting"/>
+      </div>
     </div>
   </div>
 </template>
@@ -9,9 +19,6 @@
 import user_img from "@/assets/images/default.png";
 export default {
   name: "mine",
-  components:{
-    grade
-  },
   data() {
     return {
       menu: [
@@ -25,7 +32,7 @@ export default {
       user_img: user_img
     };
   },
-  created() {    
+  created() {
   },
   mounted() {},
   methods: {
@@ -55,5 +62,32 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .avatar{
+    margin-right: 15px;
+    img{
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+    }
+  }
+  .info{
+    flex-grow: 1;
+    p{
+      color: #fff;
+      font-size: 14px;
+      .icon{
+        color: rgba(255, 255, 255, .6)
+      }
+    }
+  }
+  .setting {
+    color: #fff;
+    font-size: 25px;
+  }
+}
 </style>
 
