@@ -14,9 +14,6 @@
         </template>
         <template slot="left">
           <van-icon name="arrow-left" class="left" v-if="goback" />
-          <div class="avatar" slot="left" v-else>
-            <img :src="$store.state.userInfo.user_img || user_img" alt />
-          </div>
         </template>
         <slot slot="right" name="right"></slot>
       </van-nav-bar>

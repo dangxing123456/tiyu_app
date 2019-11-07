@@ -79,12 +79,51 @@
           </div>
         </div>
       </div>
-      
+
       <div class="title">
         <h3>精选推荐</h3>
         <van-icon name="arrow" />
       </div>
-
+      <div class="wrapper">
+        <div class="wrapper-top">
+          <div class="left">
+            <img src="https://picsum.photos/50/50" alt />
+            <div class="left-span">
+              <span class="peo">CUBA才教练</span>
+              <span class="dan">近7单中7单</span>
+            </div>
+          </div>
+          <div class="right">
+            <h3>100%</h3>
+            <p>命中率</p>
+          </div>
+        </div>
+        <div class="wrapper-center">
+          <h3>冠军联赛 给我冲冲 rng牛逼 ig牛逼 fpx牛逼</h3>
+          <div class="vspk">
+            <div class="left">
+              <span class="xingqi">星期三</span>
+              <span class="zhandui">皇家马德里&nbsp;&nbsp;&nbsp;</span>VS
+              <span>&nbsp;&nbsp;&nbsp;哈哈哈哈哈</span>
+            </div>
+            <div class="right">
+              <span>58金币</span>
+            </div>
+          </div>
+        </div>
+        <div class="wrapper-bottom">
+          <div class="time">
+            <p>
+              <span>竟足-发布：11-05 22:05</span> |
+              <span>截止：11-05 22:05</span>
+            </p>
+          </div>
+          <div class="num">
+            <img src="../../../assets/images/num.png" alt />
+            <span>315</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -236,6 +275,88 @@ export default {
           color: #999;
         }
       }
+    }
+  }
+}
+.wrapper {
+  background: #fff;
+  padding: 15px;
+  margin-top: 10px;
+  .wrapper-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .left {
+      img {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+      }
+      .left-span {
+        float: right;
+        line-height: 38px;
+        margin-left: 8px;
+        .dan {
+          padding: 3px;
+          border: 1px solid rgb(121, 155, 151);
+          border-radius: 15px;
+          font-size: 12px;
+          color: rgb(121, 155, 151);
+        }
+      }
+    }
+    .right {
+      h3 {
+        color: red;
+      }
+      p {
+        color: rgb(185, 60, 74);
+        font-size: 14px;
+      }
+    }
+  }
+  .wrapper-center {
+    margin-top: 10px;
+    h3 {
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .vspk {
+      margin-top: 10px;
+      padding: 5px 15px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color: rgb(248, 248, 248);
+      height: 30px;
+      .left {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 80%;
+        font-size: 14px;
+        .xingqi {
+          color: #999;
+        }
+        .zhandui{
+          margin-left: 20px;
+        }
+      }
+      .right {
+        span {
+          color: rgb(185, 60, 74);
+        }
+      }
+    }
+  }
+  .wrapper-bottom {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #999;
+    .num {
     }
   }
 }
