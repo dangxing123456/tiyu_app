@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <navBar />
+    <navBar :goback="false"/>
     <div class="main">
       <van-tabs v-model="activeType" swipeable sticky>
         <van-tab title="积分记录" :name="1">
