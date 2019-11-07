@@ -2,21 +2,8 @@
   <div class="container">
     <navBar />
     <div class="main">
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getList">
-        <table class="table" border="0">
-          <tr>
-            <th align="left" width="30%">时间</th>
-            <th align="center" width="20%">类型</th>
-            <th align="right">金额</th>
-          </tr>
-          <tr v-for="(item,index) in list" :key="index">
-            <td align="left">{{item.updated_at}}</td>
-            <td align="center">{{item.type}}</td>
-            <td align="right">{{item.amount}}</td>
-          </tr>
-        </table>
-      </van-list>
-    </div>
+      jhgjhg
+    </div>    
   </div>
 </template>
 

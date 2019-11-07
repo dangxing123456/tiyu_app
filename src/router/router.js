@@ -17,10 +17,12 @@ const router = new Router({
    *  isTransition: 是否开启过渡动画
    * }
    */
-  routes: [{
+  routes: [
+    {
       path: "/",
       component: Index,
-      children: [{
+      children: [
+        {
           path: "/",
           name: "home",
           component: () => import("@/views/index/subviews/home.vue"),
@@ -39,6 +41,32 @@ const router = new Router({
           path: "/score",
           name: "score",
           component: () => import("@/views/index/subviews/score.vue"),
+          redirect: { name: "theScore" },
+          children: [
+            {
+              path: "/theScore",
+              name: "theScore",
+              component: () => import("@/views/scores/theScore.vue"),
+              redirect: { name: "football" },
+              children: [
+                {
+                  path: "/football",
+                  name: "football",
+                  component: () => import("@/views/ball/football.vue")
+                },
+                {
+                  path: "/basketball",
+                  name: "basketball",
+                  component: () => import("@/views/ball/basketball.vue")
+                }
+              ]
+            },
+            {
+              path: "/lottery",
+              name: "lottery",
+              component: () => import("@/views/scores/lottery.vue")
+            }
+          ],
           meta: {
             keepAlive: false,
             isTransition: true,
@@ -46,7 +74,7 @@ const router = new Router({
             isMember: false,
             icon: "2-1",
             icon_press: "2-2",
-            isLogin: false,            
+            isLogin: false,
             index: 1
           }
         },
@@ -130,43 +158,42 @@ const router = new Router({
         isMember: false,
         isLogin: false
       }
-    },
+    }
   ]
 });
 router.beforeEach((to, from, next) => {
   if (to.meta.index != undefined) {
-    store.state.tabActiveIndex = to.meta.index
+    store.state.tabActiveIndex = to.meta.index;
   }
   if (to.meta.isLogin) {
-    if (!window.localStorage.getItem('token')) {
+    if (!window.localStorage.getItem("token")) {
       if (from.name == "login") {
-        router.push('/')
+        router.push("/");
       } else {
-        router.push('/login/' + from.name)
+        router.push("/login/" + from.name);
       }
     } else {
-      next()
+      next();
     }
     if (to.meta.isMember) {
-      if (!window.localStorage.getItem('token')) {
-        router.push('/login/' + from.name)
+      if (!window.localStorage.getItem("token")) {
+        router.push("/login/" + from.name);
       } else {
         if (store.state.isMember) {
-          next()
+          next();
         } else {
-          router.push('/buymember')
+          router.push("/buymember");
         }
       }
     }
   } else {
-    next()
+    next();
   }
-})
+});
 
 router.afterEach(route => {
-
   // console.log(route)
   // console.log("跳转")
-})
+});
 
 export default router;
