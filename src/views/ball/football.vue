@@ -11,10 +11,10 @@
               <span class="rady">未开始</span>
             </div>
             <div class="top">
-              <div class="shoucang">
-                <van-icon name="star" size="28px" color="rgb(218,218,218)" />
-              </div>
               <div class="img">
+                <div class="shoucang">
+                  <van-icon name="star" size="28px" color="rgb(218,218,218)" />
+                </div>
                 <div class="icon">
                   <span>4</span>
                   <span class="sen">4</span>
@@ -98,6 +98,7 @@ export default {
   .con {
     background-color: #fff;
     border-bottom: 2px solid rgb(243, 243, 243);
+    padding: 8px;
     .head {
       padding: 2px 7px;
       font-size: 14px;
@@ -106,7 +107,7 @@ export default {
         color: rgb(106, 177, 244);
       }
       .time {
-        margin-left: 50px;
+        margin-left: 10px;
         display: inline-block;
         width: 50px;
         height: 20px;
@@ -125,18 +126,19 @@ export default {
       width: 90%;
       .img-right {
         position: relative;
-        width: 100px;
+        width: 150px;
         img {
           display: block;
           width: 50px;
           height: 50px;
           margin: auto;
+         
         }
         .icon {
           width: 35px;
           position: absolute;
           top: -14px;
-          right: -14px;
+          right: 11px;
           span {
             display: inline-block;
             width: 14px;
@@ -151,7 +153,11 @@ export default {
       }
       .img {
         position: relative;
-        width: 100px;
+        width: 150px;
+         .shoucang{
+            float: left;
+            margin-top: 35px;
+          }
         img {
           display: block;
           width: 50px;
@@ -162,7 +168,7 @@ export default {
           width: 35px;
           position: absolute;
           top: -14px;
-          left: -14px;
+          left: 25px;
           span {
             display: inline-block;
             width: 14px;
@@ -183,6 +189,7 @@ export default {
       }
       .text {
         font-size: 20px;
+        color: #999;
       }
     }
     .bottom {
@@ -196,8 +203,8 @@ export default {
   .con {
     background-color: #fff;
     border-bottom: 2px solid rgb(243, 243, 243);
+    padding: 8px;
     .head {
-      padding: 2px 7px;
       font-size: 14px;
       color: rgb(160, 160, 160);
       .rady {
