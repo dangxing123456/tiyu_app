@@ -13,10 +13,10 @@
         </van-swipe>
       </div>
       <van-grid :column-num="2" class="menu">
-        <van-grid-item>
+        <van-grid-item @click="detailFoot">
           <img src="../../../assets/images/index1.png" />
         </van-grid-item>
-        <van-grid-item>
+        <van-grid-item @click="detailBasket">
           <img src="../../../assets/images/index2.png" />
         </van-grid-item>
       </van-grid>
@@ -139,7 +139,18 @@ export default {
   },
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    detailFoot(){
+      this.$router.push({
+        path:'/racefootball'
+      })
+    },
+    detailBasket(){
+      this.$router.push({
+        path:'/racebasketball'
+      })
+    }
+  }
 };
 </script>
 
