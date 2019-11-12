@@ -82,6 +82,27 @@ const router = new Router({
           path: "/find",
           name: "find",
           component: () => import("@/views/index/subviews/find.vue"),
+          redirect: { name: "documentary" },
+          children: [
+            {
+              // 跟单
+              path: "/documentary",
+              name: "documentary",
+              component: () => import("@/views/found/documentary.vue")
+            },
+            {
+              // 推荐
+              path: "/recommended",
+              name: "recommended",
+              component: () => import("@/views/found/recommended.vue")
+            },
+            {
+              // 合买
+              path: "/chipped",
+              name: "chipped",
+              component: () => import("@/views/found/chipped.vue")
+            }
+          ],
           meta: {
             keepAlive: false,
             isTransition: true,
@@ -109,6 +130,80 @@ const router = new Router({
           }
         }
       ]
+    },
+    //连红榜
+    {
+      path: "/redlist",
+      name: "redlist",
+      component: () => import("@/views/rankingList/redlist.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "连红榜",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //命中榜
+    {
+      path: "/hitlist",
+      name: "hitlist",
+      component: () => import("@/views/rankingList/hitlist.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "命中榜",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //盈利榜
+    {
+      path: "/profitlist",
+      name: "profitlist",
+      component: () => import("@/views/rankingList/profitlist.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "盈利榜",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    }, //竞彩足球
+    {
+      path: "/racefootball",
+      name: "racefootball",
+      component: () => import("@/views/raceball/racefootball.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "竞彩足球",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //竞彩篮球
+    {
+      path: "/racebasketball",
+      name: "racebasketball",
+      component: () => import("@/views/raceball/racebasketball.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "竞彩篮球",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
     },
     // 注册登录
     {

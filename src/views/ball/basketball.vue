@@ -8,7 +8,7 @@
             <div class="head">
               <div class="left">
                 <span>304</span>
-                <span>NBA</span>
+                <span class="nba">NBA</span>
               </div>
               <div class="right">
                 <span>11-07</span>
@@ -21,7 +21,7 @@
                 <img src="https://picsum.photos/640/320" />
                 <h3>asd</h3>
               </div>
-              <div class="text">VS</div>
+              <div class="text yanse">90&nbsp;:&nbsp;97</div>
               <div class="img-right">
                 <img src="https://picsum.photos/640/320" />
                 <h3>asd</h3>
@@ -35,7 +35,7 @@
             <div class="head">
               <div class="left">
                 <span>304</span>
-                <span>NBA</span>
+                <span class="nba">NBA</span>
               </div>
               <div class="right">
                 <span>11-07</span>
@@ -62,7 +62,7 @@
             <div class="head">
               <div class="left">
                 <span>304</span>
-                <span>NBA</span>
+                <span class="nba">NBA</span>
               </div>
               <div class="right">
                 <span>11-07</span>
@@ -111,23 +111,24 @@ export default {
   .con {
     background-color: #fff;
     border-bottom: 2px solid rgb(243, 243, 243);
+    padding: 8px;
     .head {
       padding: 2px 7px;
       font-size: 12px;
       color: rgb(160, 160, 160);
       .left {
         float: left;
-        width: 80px;
+        width: 70px;
         height: 14px;
         border-right: 1px solid rgb(160, 160, 160);
         margin-top: 5px;
-        span {
+        .nba{
           margin-left: 10px;
         }
       }
       .right {
         float: left;
-        padding-left: 5px;
+        padding-left: .3rem;
         .time {
           display: inline-block;
           width: 50px;
@@ -184,6 +185,10 @@ export default {
       }
       .text {
         font-size: 20px;
+        color: #999;
+      }
+      .yanse {
+        color: red;
       }
     }
   }

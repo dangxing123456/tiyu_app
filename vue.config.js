@@ -132,7 +132,7 @@ module.exports = {
   // webpack-dev-server配置
   devServer: {
     // 环境配置
-    host: '192.168.0.113',
+    host: '192.168.0.104',
     // host: "192.168.0.118",
     hot: false,
     port: appPort,
@@ -144,7 +144,7 @@ module.exports = {
       // 配置多个代理(配置一个 proxy: "http://localhost:4000" )
       "/api": {
         target: "http://192.168.0.107/api",
-        changeOrigin: true, 
+        changeOrigin: true,
         pathRewrite: {
           "^/api": "/"
         }
