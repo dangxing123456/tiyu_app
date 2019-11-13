@@ -253,6 +253,18 @@ const router = new Router({
         isMember: false,
         isLogin: false
       }
+    },
+    {
+      path: "/setting",
+      name: "setting",
+      component: () => import("@/views/mine/setting.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "设置",
+        isMember: false,
+        isLogin: false
+      }
     }
   ]
 });
