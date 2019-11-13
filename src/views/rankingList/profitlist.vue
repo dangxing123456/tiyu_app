@@ -3,7 +3,7 @@
     <navBar :goback="true" :title=title>
     </navBar>
     <div class="main">
-     盈利榜
+    <commonRanking></commonRanking>
     </div>
      <router-view/>
   </div>
@@ -11,10 +11,12 @@
 
 <script>
 import navBar from "@/components/navbar/navbar.vue";
+import commonRanking from "@/components/commonRankingList/commonRanking.vue";
 export default {
   name: "profitlist",
   components:{
-    navBar
+    navBar,
+    commonRanking
   },
   props: {
    

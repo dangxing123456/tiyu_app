@@ -3,7 +3,7 @@
     <navBar :goback="true" :title=title>
     </navBar>
     <div class="main">
-     命中榜
+     我的关注
     </div>
      <router-view/>
   </div>

@@ -3,7 +3,7 @@
     <navBar :goback="false" :search="false" title>
       <!-- <van-button type="danger" size="mini" slot="right" @click="removeMessage">...</van-button> -->
       <div class="right" slot="right">
-        <van-icon name="like-o" size="20px" />
+        <van-icon class-prefix="icon" name="sousuo" />
         <span @click="dia">...</span>
       </div>
       <van-tabs
@@ -119,6 +119,10 @@ export default {
   width: 30%;
   left: 84%;
   font-size: 14px;
+  
+}
+.van-dialog .van-dialog__confirm{
+  color: black;
 }
 </style>
 <style lang="less" scoped>
@@ -126,6 +130,9 @@ export default {
   /deep/ [class*="van-hairline"]::after {
     border: none;
   }
+}
+.navbar .right[data-v-685b8cc8]{
+    color: white;
 }
 .right {
   span {

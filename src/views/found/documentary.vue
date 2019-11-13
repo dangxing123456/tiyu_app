@@ -23,37 +23,42 @@
         <div>关注专家</div>
       </div>
       <div class="content">
-        <div class="top">
-          <div class="left">
-            <img src="../../assets/images/default.png" alt />
-            <h3>追命杀手</h3>
-          </div>
-          <div class="right">
-            <p>一场稳单的推荐一场稳单的推荐一场稳单的推荐一场稳单的推荐一场稳单的推荐</p>
-            <div>
-              <span class="span1">足</span>
-              <span class="span2">单关</span>
-              <span class="span3">4连红</span>
-              <span class="span4">起跟金额2元</span>
-              <span class="time">截止: 11-07 21:49</span>
+        <div @click="detailExpert">
+          <div class="top">
+            <div class="left">
+              <img src="../../assets/images/default.png" alt />
+              <h3>追命杀手</h3>
+            </div>
+            <div class="right">
+              <p>一场稳单的推荐一场稳单的推荐一场稳单的推荐一场稳单的推荐一场稳单的推荐</p>
+              <div>
+                <span class="span1">足</span>
+                <span class="span2">单关</span>
+                <span class="span3">4连红</span>
+                <span class="span4">起跟金额2元</span>
+                <span class="time">截止: 11-07 21:49</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="bottom">
-          <div>
-            <p>实力指数<img src="../../assets/images/wenhao.png" alt=""></p>
-            <p class="money">870.0</p>
-          </div>
-          <div>
-            <p>跟单总额</p>
-            <p class="money">1440.0元</p>
-          </div>
-          <div>
-            <p>跟单人气</p>
-            <p class="money">67</p>
-          </div>
-          <div>
-            <van-button type="danger">跟一单</van-button>
+          <div class="bottom">
+            <div>
+              <p>
+                实力指数
+                <img src="../../assets/images/wenhao.png" alt />
+              </p>
+              <p class="money">870.0</p>
+            </div>
+            <div>
+              <p>跟单总额</p>
+              <p class="money">1440.0元</p>
+            </div>
+            <div>
+              <p>跟单人气</p>
+              <p class="money">67</p>
+            </div>
+            <div>
+              <van-button type="danger">跟一单</van-button>
+            </div>
           </div>
         </div>
       </div>
@@ -78,19 +83,24 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    detail(){
+    detail() {
       this.$router.push({
-        path:'/redlist'
-      })
+        path: "/redlist"
+      });
     },
-    detail1(){
+    detail1() {
       this.$router.push({
-        path:'/hitlist'
-      })
+        path: "/hitlist"
+      });
     },
-    detail2(){
+    detail2() {
       this.$router.push({
-        path:'/profitlist'
+        path: "/profitlist"
+      });
+    },
+    detailExpert(){
+      this.$router.push({
+        path:'/ExpertsSuggest'
       })
     }
   }
