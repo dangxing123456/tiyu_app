@@ -12,7 +12,7 @@ class Api extends Axios {
     return await this.axios("POST", "user/login", params);
   }
   async logout(params = {}) {
-    return await this.axios("POST", "user/logout", params)
+    return await this.axios("POST", "user/logout", params);
   }
   async register(params = {}) {
     return await this.axios("POST", "user/register", params);

@@ -6,16 +6,24 @@
         <van-icon name="like-o" size="20px" />
         <span>...</span>
       </div>
-      <van-tabs @click="OnClick" slot="title">
+      <van-tabs
+        class="menu"
+        @click="OnClick"
+        slot="title"
+        background="#f24a44"
+        color="white"
+        title-active-color="white"
+        title-inactive-color="rgb(240,240,240)"
+      >
         <van-tab title="跟单"></van-tab>
         <van-tab title="推荐"></van-tab>
         <van-tab title="合买"></van-tab>
       </van-tabs>
     </navBar>
-     
+
     <!-- <van-divider v-if="!list||list.length==0">暂无数据</van-divider> -->
     <div class="main" id="message">
-     <router-view />
+      <router-view />
       <!-- <div class="list">
         <div class="item" v-for="(item,index) in list" :key="index">
           <div class="message-box">
@@ -25,7 +33,7 @@
           </div>
           <p>{{item.d}}</p>
         </div>
-      </div> -->
+      </div>-->
     </div>
   </div>
 </template>
@@ -61,14 +69,14 @@ export default {
         this.$router.push({
           path: "/documentary"
         });
-      } else if(title=='推荐') {
+      } else if (title == "推荐") {
         this.$router.push({
           path: "/recommended"
         });
-      }else{
+      } else {
         this.$router.push({
-          path : '/chipped'
-        })
+          path: "/chipped"
+        });
       }
     },
     getList() {
@@ -94,6 +102,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+ .menu {
+  /deep/ [class*="van-hairline"]::after {
+    border: none;
+  }
+}
 .right {
   span {
     color: white;

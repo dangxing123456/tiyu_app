@@ -205,6 +205,21 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
+    //全部玩法
+    {
+      path: "/allplay",
+      name: "allplay",
+      component: () => import("@/views/raceball/allplay.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "全部玩法",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
     // 注册登录
     {
       path: "/login/:name?",

@@ -132,7 +132,7 @@ module.exports = {
   // webpack-dev-server配置
   devServer: {
     // 环境配置
-    host: '192.168.0.104',
+    host: '192.168.0.103',
     // host: "192.168.0.118",
     hot: false,
     port: appPort,
