@@ -70,7 +70,9 @@
             </div>
           </div>
         </van-tab>
-        <van-tab title="赛程">内容 1</van-tab>
+        <van-tab title="赛程">
+          <commonBall></commonBall>
+        </van-tab>
         <van-tab title="关注">内容 2</van-tab>
       </van-tabs>
     </div>
@@ -78,9 +80,12 @@
 </template>
 
 <script>
+import commonBall from '../ball/commonBall'
 export default {
   name: "score",
-  components: {},
+  components: {
+    commonBall
+  },
   data() {
     return {};
   },

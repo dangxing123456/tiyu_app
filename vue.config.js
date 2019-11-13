@@ -1,15 +1,12 @@
 const WebpackOnBuildPlugin = require("on-build-webpack");
 const path = require("path");
 const fs = require("fs");
-const {
-  exec,
-  spawn
-} = require("child_process");
+const { exec, spawn } = require("child_process");
 
-const appname =  "widget" // "apicloud" //"widget"; // 项目文件名
+const appname = "widget"; // "apicloud" //"widget"; // 项目文件名
 const appPort = 1111; // 真机同步端口,浏览器打开端口。(请与)
 const scriptActive = process.env.npm_lifecycle_event;
-const customTheme = require("./van-custom-theme")
+const customTheme = require("./van-custom-theme");
 
 function resolve(dir) {
   return path.join(__dirname, dir);
@@ -20,7 +17,7 @@ if (scriptActive === "apicloud") {
   const wifiWorker = spawn(`apicloud wifiStart --port ${appPort}`, {
     shell: true
   });
-  wifiWorker.stdout.on("data", function (chunk) {
+  wifiWorker.stdout.on("data", function(chunk) {
     console.log(" " + chunk.toString());
   });
   wifiWorker.on("error", err => {
@@ -53,8 +50,8 @@ module.exports = {
     sourceMap: false, // 开启 CSS source maps
     loaderOptions: {
       less: {
-          modifyVars: customTheme.theme
-        }
+        modifyVars: customTheme.theme
+      }
     }, // css预设器配置项
     modules: false // 启用 CSS modules for all css / pre-processor files.
   },
@@ -63,32 +60,31 @@ module.exports = {
     config.entry("index").add("@babel/polyfill"); // 添加babel-poiyfill
     // 配置SVG
     // svg loader
-    const svgRule = config.module.rule('svg') // 找到svg-loader
-    svgRule.uses.clear() // 清除已有的loader, 如果不这样做会添加在此loader之后
-    svgRule.exclude.add(/node_modules/) // 正则匹配排除node_modules目录
+    const svgRule = config.module.rule("svg"); // 找到svg-loader
+    svgRule.uses.clear(); // 清除已有的loader, 如果不这样做会添加在此loader之后
+    svgRule.exclude.add(/node_modules/); // 正则匹配排除node_modules目录
     svgRule // 添加svg新的loader处理
       .test(/\.svg$/)
-      .use('svg-sprite-loader')
-      .loader('svg-sprite-loader')
+      .use("svg-sprite-loader")
+      .loader("svg-sprite-loader")
       .options({
-        symbolId: 'icon-[name]'
-      })
+        symbolId: "icon-[name]"
+      });
 
     // 修改images loader 添加svg处理
-    const imagesRule = config.module.rule('images')
-    imagesRule.exclude.add(resolve('src/icons'))
+    const imagesRule = config.module.rule("images");
+    imagesRule.exclude.add(resolve("src/icons"));
     config.module
-      .rule('images')
-      .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)      
-      .use('url-loader')
-      .loader('url-loader')
-      .tap(options => Object.assign(options, { limit: 3000 }))
-
+      .rule("images")
+      .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
+      .use("url-loader")
+      .loader("url-loader")
+      .tap(options => Object.assign(options, { limit: 3000 }));
   },
   configureWebpack: config => {
     config.plugins = config.plugins.concat([
       // 删除build时旧的文件
-      new WebpackOnBuildPlugin(function (stats) {
+      new WebpackOnBuildPlugin(function(stats) {
         const newlyCreatedAssets = stats.compilation.assets;
         const unlinked = [];
         const files = fs.readdirSync(path.resolve(`./${appname}/`));
@@ -123,7 +119,6 @@ module.exports = {
         }
       })
     ]);
-
   },
   // vue-loader配置
   // vueLoader: {},
@@ -132,14 +127,14 @@ module.exports = {
   // webpack-dev-server配置
   devServer: {
     // 环境配置
-    host: '192.168.0.103',
+    host: "0.0.0.0",
     // host: "192.168.0.118",
     hot: false,
     port: appPort,
     https: false,
     hotOnly: false,
     open: false, //配置自动启动浏览器
-    disableHostCheck: true ,//外网映射
+    disableHostCheck: true, //外网映射
     proxy: {
       // 配置多个代理(配置一个 proxy: "http://localhost:4000" )
       "/api": {
@@ -149,7 +144,6 @@ module.exports = {
           "^/api": "/"
         }
       }
-
     }
   },
   transpileDependencies: ["swiper", "dom7", "ssr-window"],
