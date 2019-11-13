@@ -4,7 +4,7 @@
       <!-- <van-button type="danger" size="mini" slot="right" @click="removeMessage">...</van-button> -->
       <div class="right" slot="right">
         <van-icon name="like-o" size="20px" />
-        <span>...</span>
+        <span @click="dia">...</span>
       </div>
       <van-tabs
         class="menu"
@@ -41,7 +41,7 @@
 <script>
 import navBar from "@/components/navbar/navbar.vue";
 export default {
-  name: "message",
+  name: "myguanzhu",
   components: {
     navBar
   },
@@ -64,6 +64,19 @@ export default {
     this.getList();
   },
   methods: {
+    dia() {
+      this.$dialog
+        .alert({
+          confirmButtonText: "我的关注",
+          closeOnClickOverlay: true 
+        })
+        .then(() => {
+          //点击确认按钮后的调用
+          this.$router.push({
+            path: "/myguanzhu"
+          });
+        });
+    },
     OnClick(name, title) {
       if (title == "跟单") {
         this.$router.push({
@@ -100,9 +113,16 @@ export default {
   }
 };
 </script>
-
+<style>
+.van-dialog {
+  top: 12%;
+  width: 30%;
+  left: 84%;
+  font-size: 14px;
+}
+</style>
 <style lang="less" scoped>
- .menu {
+.menu {
   /deep/ [class*="van-hairline"]::after {
     border: none;
   }

@@ -220,6 +220,21 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
+    //我的关注
+    {
+      path: "/myguanzhu",
+      name: "myguanzhu",
+      component: () => import("@/views/guanzhu/myguanzhu.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "我的关注",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
     // 注册登录
     {
       path: "/login/:name?",

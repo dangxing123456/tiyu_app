@@ -338,6 +338,28 @@ export default {
   /deep/ .van-dropdown-menu__title {
     color: white;
   }
+  /deep/ .van-dropdown-item__content {
+    padding: 0 5px 5px 3px;
+    margin: 0 auto;
+    .van-cell {
+      width: 23%;
+      float: left;
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid #cccccc;
+      text-align: center;
+      padding: 0.2rem 0;
+      margin-left: 5px;
+      margin-top: 5px;
+    }
+  }
+  /deep/ .van-cell__value{
+    display: none;
+  }
+  /deep/ .van-dropdown-item__option--active{
+    border: 1px solid red !important;
+    color: red;
+  }
 }
 .title {
   color: #4b4949;

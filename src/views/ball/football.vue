@@ -3,41 +3,7 @@
     <div class="main">
       <van-tabs>
         <van-tab title="即时" class="instant">
-          <p class="title">即将开赛18场</p>
-          <div class="con">
-            <div class="head">
-              <span>周三001 日职乙</span>
-              <span class="time">18:00</span>
-              <span class="rady">未开始</span>
-            </div>
-            <div class="top">
-              <div class="img">
-                <div class="shoucang">
-                  <van-icon name="star" size="28px" color="rgb(218,218,218)" />
-                </div>
-                <div class="icon">
-                  <span>4</span>
-                  <span class="sen">4</span>
-                </div>
-                <img src="https://picsum.photos/640/320" />
-                <h3>asd</h3>
-              </div>
-              <div class="text">VS</div>
-              <div class="img-right">
-                <img src="https://picsum.photos/640/320" />
-                <h3>asd</h3>
-                <div class="icon">
-                  <span>4</span>
-                  <span class="sen">4</span>
-                </div>
-              </div>
-            </div>
-            <div class="bottom">
-              <span>
-                <van-icon name="arrow" />41个方案
-              </span>
-            </div>
-          </div>
+          <commonBall></commonBall>
         </van-tab>
         <van-tab title="完成" class="complete">
           <p class="title">即将开赛18场</p>
@@ -48,12 +14,12 @@
             </div>
             <div class="top">
               <div class="img">
-                <img src="https://picsum.photos/640/320" />
-                <h3>asd</h3>
                 <div class="icon">
                   <span>4</span>
                   <span class="sen">4</span>
                 </div>
+                <img src="https://picsum.photos/640/320" />
+                <h3>asd</h3>
               </div>
               <div class="text">
                 <p class="score">0:2</p>
@@ -70,17 +36,19 @@
             </div>
           </div>
         </van-tab>
-        <van-tab title="赛程">
+        <van-tab title="赛程" class="complete">
           <commonBall></commonBall>
         </van-tab>
-        <van-tab title="关注">内容 2</van-tab>
+        <van-tab title="关注">
+          <commonBall></commonBall>
+        </van-tab>
       </van-tabs>
     </div>
   </div>
 </template>
 
 <script>
-import commonBall from '../ball/commonBall'
+import commonBall from "../../components/commonBall/commonBall";
 export default {
   name: "score",
   components: {
@@ -131,13 +99,12 @@ export default {
       width: 90%;
       .img-right {
         position: relative;
-        width: 150px;
+        width: 3rem;
         img {
           display: block;
           width: 50px;
           height: 50px;
           margin: auto;
-         
         }
         .icon {
           width: 35px;
@@ -158,11 +125,11 @@ export default {
       }
       .img {
         position: relative;
-        width: 150px;
-         .shoucang{
-            float: left;
-            margin-top: 35px;
-          }
+        width: 3rem;
+        .shoucang {
+          float: left;
+          margin-top: 35px;
+        }
         img {
           display: block;
           width: 50px;
@@ -236,7 +203,7 @@ export default {
       padding: 10px 15px;
       .img-right {
         position: relative;
-        width: 100px;
+        width: 150px;
         img {
           display: block;
           width: 50px;
@@ -262,7 +229,8 @@ export default {
       }
       .img {
         position: relative;
-        width: 100px;
+        width: 150px;
+
         img {
           display: block;
           width: 50px;
