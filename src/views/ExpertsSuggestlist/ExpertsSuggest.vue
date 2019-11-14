@@ -20,13 +20,13 @@
           </div>
         </div>
         <div class="right" ref="right">
-          <div class="info">
+          <div class="info" ref="guanzhu" @click="change">
             <van-icon class-prefix="icon" name="jiahao" />未关注
           </div>
         </div>
       </div>
       <div class="tab">
-        <van-tabs @click="onClick">
+        <van-tabs>
           <van-tab title="7天">
             <div class="tab-top">
               <p class="p1">165%</p>
@@ -169,12 +169,29 @@ export default {
   props: {},
   data() {
     return {
-      title: this.$route.meta.title
+      title: this.$route.meta.title,
+      flag: false
     };
   },
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    change() {
+      if (this.flag == false) {
+        console.log(1);
+        this.flag = true;
+        this.$nextTick(function() {
+          this.$refs.guanzhu.innerHTML =
+            '<van-icon class-prefix="icon" name="jiahao" />未关注';
+        });
+      } else {
+        console.log(2);
+        this.flag = false;
+        this.$refs.guanzhu.innerHTML =
+          '<van-icon class-prefix="icon" name="jiahao" />已关注';
+      }
+    }
+  },
   mounted() {
     // console.log(this.$route)
   }
@@ -262,8 +279,9 @@ export default {
 .navbar .right[data-v-685b8cc8] {
   color: white;
 }
-.icon {
+.icon-jiahao {
   font-size: 10px;
+  margin-right: 8px;
 }
 .content {
   display: flex;
@@ -434,11 +452,11 @@ export default {
         .p2 {
           margin-top: 5px;
         }
-        img{
-            width: 60px;
+        img {
+          width: 60px;
         }
-        .renqi{
-            color: #f24a44;
+        .renqi {
+          color: #f24a44;
         }
       }
       i {

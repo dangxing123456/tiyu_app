@@ -67,116 +67,13 @@ export default {
   font-size: 13px;
   color: #999;
 }
-.instant {
-  .con {
-    background-color: #fff;
-    border-bottom: 2px solid rgb(243, 243, 243);
-    padding: 8px;
-    .head {
-      padding: 2px 7px;
-      font-size: 14px;
-      color: rgb(160, 160, 160);
-      .rady {
-        color: rgb(106, 177, 244);
-      }
-      .time {
-        margin-left: 10px;
-        display: inline-block;
-        width: 50px;
-        height: 20px;
-        background-color: rgb(240, 240, 240);
-        text-align: center;
-        border-radius: 10px;
-        line-height: 20px;
-      }
-    }
-    .top {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      text-align: center;
-      padding: 12px 15px 0px 15px;
-      width: 90%;
-      .img-right {
-        position: relative;
-        width: 3rem;
-        img {
-          display: block;
-          width: 50px;
-          height: 50px;
-          margin: auto;
-        }
-        .icon {
-          width: 35px;
-          position: absolute;
-          top: -14px;
-          right: 11px;
-          span {
-            display: inline-block;
-            width: 14px;
-            height: 20px;
-            background-color: rgb(234, 231, 113);
-            font-size: 14px;
-          }
-          .sen {
-            background-color: rgb(221, 125, 122);
-          }
-        }
-      }
-      .img {
-        position: relative;
-        width: 3rem;
-        .shoucang {
-          float: left;
-          margin-top: 35px;
-        }
-        img {
-          display: block;
-          width: 50px;
-          height: 50px;
-          margin: auto;
-        }
-        .icon {
-          width: 35px;
-          position: absolute;
-          top: -14px;
-          left: 25px;
-          span {
-            display: inline-block;
-            width: 14px;
-            height: 20px;
-            background-color: rgb(234, 231, 113);
-            font-size: 14px;
-          }
-          .sen {
-            background-color: rgb(221, 125, 122);
-          }
-        }
-      }
-
-      h3 {
-        font-size: 16px;
-        padding: 5px 0;
-        margin-top: 10px;
-      }
-      .text {
-        font-size: 20px;
-        color: #999;
-      }
-    }
-    .bottom {
-      text-align: right;
-      font-size: 12px;
-      color: rgb(113, 0, 11);
-    }
-  }
-}
 .complete {
   .con {
     background-color: #fff;
     border-bottom: 2px solid rgb(243, 243, 243);
     padding: 8px;
     .head {
+       padding: 2px 7px;
       font-size: 14px;
       color: rgb(160, 160, 160);
       .rady {

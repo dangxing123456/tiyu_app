@@ -7,7 +7,7 @@
         <span>东京FC</span>
       </div>
       <div class="right" slot="right">
-        <span class="fenxi">分析</span>
+        <span class="fenxi" @click="detail">分析</span>
       </div>
     </navBar>
     <div class="main">
@@ -148,6 +148,11 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    detail(){
+      this.$router.push({
+        path:"/matchFenxi"
+      })
+    },
     change: function(e) {
       if (this.box.includes(e)) {
         this.box.splice(this.box.indexOf(e), 1);
@@ -164,6 +169,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.fenxi{
+  color: #ffffff;
+}
 .main {
   padding: 0 15px;
   h3 {

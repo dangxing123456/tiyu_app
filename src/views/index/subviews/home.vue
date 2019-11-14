@@ -7,7 +7,7 @@
         </van-swipe-item>
       </van-swipe>
       <div class="notice">
-        <van-icon name="volume" class="icon" />
+        <van-icon class="yin" class-prefix="icon" name="yinliang" />
         <van-swipe :autoplay="3000" vertical class="notice-list" :show-indicators="false">
           <van-swipe-item v-for="(image, index) in 4" :key="index">123456789</van-swipe-item>
         </van-swipe>
@@ -169,6 +169,9 @@ export default {
   display: flex;
   align-items: center;
   padding: 0 15px;
+  .yin{
+    color: red;
+  }
   .icon {
     flex-shrink: 0;
   }

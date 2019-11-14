@@ -250,6 +250,48 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
+    //赛事分析
+    {
+      path: "/matchFenxi",
+      name: "matchFenxi",
+      component: () => import("@/views/fenxi/matchFenxi.vue"),
+      redirect: { name: "analysis" },
+      children: [
+        {
+          //分析
+          path: "/analysis",
+          name: "analysis",
+          component: () => import("@/views/fenxiList/analysis.vue")
+        },
+        {
+          // 情报
+          path: "/intelligence",
+          name: "intelligence",
+          component: () => import("@/views/fenxiList/intelligence.vue")
+        },
+        {
+          //赔率
+          path: "/losspercent",
+          name: "losspercent",
+          component: () => import("@/views/fenxiList/losspercent.vue")
+        },
+        {
+          //方案
+          path: "/plan",
+          name: "plan",
+          component: () => import("@/views/fenxiList/plan.vue")
+        }
+      ],
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "赛事分析",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
     // 注册登录
     {
       path: "/login/:name?",

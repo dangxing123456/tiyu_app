@@ -142,7 +142,6 @@
                         ref="bgc"
                         v-for="(item,index) in list2"
                         :key="index"
-                        @click="change2(item)"
                       >{{item.score}}</li>
                     </ul>
                   </div>

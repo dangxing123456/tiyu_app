@@ -6,8 +6,8 @@
           <span class="img"></span>
           <span>连红榜</span>
         </div>
-        <div @click="detail1">
-          <span class="img"></span>
+        <div class="deo" @click="detail1">
+          <p><van-icon class-prefix="icon" name="bangdan" /></p>
           <span>命中榜</span>
         </div>
         <div @click="detail2">
@@ -21,6 +21,9 @@
           <van-dropdown-item v-model="value2" :options="option2" />
         </van-dropdown-menu>
         <div>关注专家</div>
+      </div>
+      <div class="zhuanjia" v-if="show">
+
       </div>
       <div class="content">
         <div @click="detailExpert">
@@ -57,13 +60,64 @@
               <p class="money">67</p>
             </div>
             <div>
-              <van-button type="danger">跟一单</van-button>
+              <van-button @click.stop="showPopup" type="danger">跟一单</van-button>
             </div>
           </div>
         </div>
       </div>
     </div>
-
+    <van-popup position="bottom" v-model="show">
+      <div class="popup">
+        <div class="head">
+          <div>
+            <span class="peo">发单人：</span>
+            <span class="com">红单一生一世</span>
+          </div>
+          <div>
+            <span class="peo">投注方式</span>
+            <span class="com">2串1</span>
+          </div>
+        </div>
+        <div class="con">
+          <div>
+            <p class="money">8.0元</p>
+            <p class="text">自购</p>
+          </div>
+          <div>
+            <p class="money">2元</p>
+            <p class="text">起跟金额</p>
+          </div>
+          <div>
+            <p class="money">221人</p>
+            <p class="text">跟单人气</p>
+          </div>
+        </div>
+        <div class="wrap">
+          <div>
+            <p class="mon">
+              实付金额
+              <span>20元</span>
+            </p>
+            <p class="yong">
+              佣金比例：
+              <span>10%</span>
+            </p>
+          </div>
+          <div>
+            <div class="num">
+              <p>投</p>
+              <van-stepper value="10" bind:change="onChange" />
+              <p>倍</p>
+              <p />
+            </div>
+          </div>
+        </div>
+        <div class="btn">
+          <van-button type="default" size="large">取消</van-button>
+          <van-button type="danger" size="large">确定</van-button>
+        </div>
+      </div>
+    </van-popup>
     <router-view />
   </div>
 </template>
@@ -77,12 +131,16 @@ export default {
       value1: 0,
       value2: "a",
       option1: [{ text: "按实力", value: 0 }, { text: "按人气", value: 1 }],
-      option2: [{ text: "竞足", value: "a" }, { text: "竞篮", value: "b" }]
+      option2: [{ text: "竞足", value: "a" }, { text: "竞篮", value: "b" }],
+      show: false
     };
   },
   computed: {},
   watch: {},
   methods: {
+    showPopup() {
+      this.show = true;
+    },
     detail() {
       this.$router.push({
         path: "/redlist"
@@ -98,15 +156,74 @@ export default {
         path: "/profitlist"
       });
     },
-    detailExpert(){
+    detailExpert() {
       this.$router.push({
-        path:'/ExpertsSuggest'
-      })
+        path: "/ExpertsSuggest"
+      });
     }
   }
 };
 </script>
 <style lang="less" scoped>
+// 弹出层样式
+.popup {
+  .head {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .peo {
+      font-size: 12px;
+    }
+    .com {
+      font-size: 14px;
+    }
+  }
+  .con {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    div {
+      width: 33%;
+      text-align: center;
+      border: 1px solid #eeeeee;
+      border-top: none;
+      padding: 5px 0;
+      .money {
+        font-size: 14px;
+      }
+      .text {
+        font-size: 12px;
+        margin-top: 8px;
+      }
+    }
+  }
+  .wrap {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px 0;
+    div {
+      font-size: 14px;
+      .yong {
+        margin-top: 8px;
+      }
+      .mon{
+        span{
+          color: #f24a44;
+        }
+      }
+    }
+    .num {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .btn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
 .main {
   padding: 10px 0px;
   .head {
@@ -115,7 +232,16 @@ export default {
     align-items: center;
     border-bottom: 1px solid #cccccc;
     padding: 7px 25px;
+    .deo{
+      p{
+       i{
+          color: red;
+        font-size: 35px;
+       }
+      }
+    }
     div {
+      text-align: center;
       .img {
         display: block;
         width: 30px;
