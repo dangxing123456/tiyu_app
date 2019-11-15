@@ -1,29 +1,26 @@
 <template>
   <div class="container" id="shop">
-    <navBar :goback="true" :title=title>
-    </navBar>
+  
     <div class="main">
-    <commonRanking></commonRanking>
+     情报
     </div>
      <router-view/>
   </div>
 </template>
 
 <script>
-import navBar from "@/components/navbar/navbar.vue";
-import commonRanking from "@/components/commonRankingList/commonRanking.vue";
+
 export default {
-  name: "profitlist",
+  name: "intelligence",
   components:{
-    navBar,
-    commonRanking
+
   },
   props: {
    
   },
   data() {
     return {
-      title:this.$route.meta.title
+
     };
   },
   computed: {

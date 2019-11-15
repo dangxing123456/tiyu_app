@@ -1,12 +1,12 @@
 <template>
   <div class="container" id="shop">
     <div class="main">
-      <van-tabs @click="onClick">
+      <van-tabs class="tab" @click="onClick">
         <van-tab title="足球"></van-tab>
         <van-tab title="篮球"></van-tab>
       </van-tabs>
     </div>
-     <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -46,4 +46,24 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.tab {
+  width: 100%;
+  background-color: white;
+  /deep/ .van-tabs__nav--line {
+    width: 35%;
+    margin: 0 auto;
+
+    .van-tab {
+      border-radius: 0.3rem;
+      background-color: #eeeeee;
+      height: 25px;
+      line-height: 25px;
+      margin-top: 8px;
+    }
+    .van-tab--active {
+      background-color: #f24a44;
+      color: #ffffff;
+    }
+  }
+}
 </style>

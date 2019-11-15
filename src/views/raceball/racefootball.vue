@@ -7,7 +7,7 @@
           <img src="../../assets/images/shuaxin.png" alt />
         </span>
       </div>
-      <van-dropdown-menu slot="title">
+      <van-dropdown-menu class="menu" slot="title">
         <van-dropdown-item v-model="value1" :options="option1" />
       </van-dropdown-menu>
     </navBar>
@@ -52,7 +52,7 @@
                   </ul>
                 </div>
                 <div class="right1">
-                  <span ref="sp">全部玩法</span>
+                  <span ref="sp" @click="detailPlay">全部玩法</span>
                 </div>
               </div>
             </div>
@@ -142,7 +142,6 @@
                         ref="bgc"
                         v-for="(item,index) in list2"
                         :key="index"
-                        @click="change2(item)"
                       >{{item.score}}</li>
                     </ul>
                   </div>
@@ -157,8 +156,14 @@
       </van-collapse>
       <!-- 底部按钮 -->
       <div class="bot-btn">
-        <van-button type="default" size="large">取消</van-button>
-        <van-button type="danger" size="large">确定</van-button>
+        <div class="text">
+          <p>至少选择1场比赛</p>
+          <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
+        </div>
+        <div class="btn">
+          <van-button type="default" size="large">取消</van-button>
+          <van-button type="danger" size="large">确定</van-button>
+        </div>
       </div>
       <!-- 下拉菜单 -->
       <van-action-sheet v-model="show" :actions="actions">
@@ -243,11 +248,11 @@ export default {
       changeColor: false,
       list: [
         { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" }
+        { score: "胜1.53" },
+        { score: "胜1.52" },
+        { score: "胜1.50" },
+        { score: "胜1.51" },
+        { score: "胜1.49" }
       ],
       list1: [
         { score: "胜1.54" },
@@ -285,6 +290,15 @@ export default {
     }
   },
   methods: {
+    detailPlay() {
+      this.$router.push({
+        path: "/allplay",
+        query: {
+          list: this.list,
+          box: this.box
+        }
+      });
+    },
     alertMenu() {
       this.show = true;
     },
@@ -313,12 +327,39 @@ export default {
       console.log(this.box2.length);
     }
   },
-  mounted() {
-    // console.log(this.$route)
-  }
+  mounted() {}
 };
 </script>
 <style lang="less" scoped>
+// 修改vant ui内置样式
+.menu {
+  background: none;
+  /deep/ .van-dropdown-menu__title {
+    color: white;
+  }
+  /deep/ .van-dropdown-item__content {
+    padding: 0 5px 5px 3px;
+    margin: 0 auto;
+    .van-cell {
+      width: 23%;
+      float: left;
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid #cccccc;
+      text-align: center;
+      padding: 0.2rem 0;
+      margin-left: 5px;
+      margin-top: 5px;
+    }
+  }
+  /deep/ .van-cell__value{
+    display: none;
+  }
+  /deep/ .van-dropdown-item__option--active{
+    border: 1px solid red !important;
+    color: red;
+  }
+}
 .title {
   color: #4b4949;
 }
@@ -491,8 +532,22 @@ export default {
 .bot-btn {
   position: fixed;
   bottom: 0;
-  display: flex;
   width: 100%;
+  .text {
+    width: 100%;
+    background-color: rgb(250, 235, 275);
+    text-align: center;
+    padding: 5px 0px;
+    font-size: 14px;
+    .pei {
+      color: rgb(158, 150, 145);
+      padding-top: 5px;
+    }
+  }
+  .btn {
+    display: flex;
+    width: 100%;
+  }
 }
 .bgColor {
   background-color: red;

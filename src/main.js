@@ -17,6 +17,8 @@ import touch from 'vue-directive-touch'
 import Vant from 'vant';
 import 'vant/lib/index.less';
 import 'vant/lib/icon/local.css';  // vant图标库
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 Vue.use(Vant);
 Vue.use(touch);
 Vue.config.productionTip = false;
