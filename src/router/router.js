@@ -235,7 +235,7 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
-    //专家建议
+    //专家战绩
     {
       path: "/ExpertsSuggest",
       name: "ExpertsSuggest",
@@ -243,7 +243,7 @@ const router = new Router({
       meta: {
         keepAlive: false,
         isTransition: true,
-        title: "专家建议",
+        title: "专家战绩",
         isMember: false,
         isLogin: false,
         icon: "4-1",
@@ -273,7 +273,39 @@ const router = new Router({
           //赔率
           path: "/losspercent",
           name: "losspercent",
-          component: () => import("@/views/fenxiList/losspercent.vue")
+          component: () => import("@/views/fenxiList/losspercent.vue"),
+          children: [
+            {
+              //必发
+              path: "/bifa",
+              name: "bifa",
+              component: () => import("@/views/peilv/bifa.vue")
+            },
+            {
+              //大小球
+              path: "/daxiao",
+              name: "daxiao",
+              component: () => import("@/views/peilv/daxiao.vue")
+            },
+            {
+              //凯利
+              path: "/kaili",
+              name: "kaili",
+              component: () => import("@/views/peilv/kaili.vue")
+            },
+            {
+              //欧赔
+              path: "/oupei",
+              name: "oupei",
+              component: () => import("@/views/peilv/oupei.vue")
+            },
+            {
+              //亚赔
+              path: "/yapei",
+              name: "yapei",
+              component: () => import("@/views/peilv/yapei.vue")
+            },
+          ]
         },
         {
           //方案
