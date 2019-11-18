@@ -1,7 +1,7 @@
 
 <template>
   <div class="echarts">
-    <div id="echart"></div>
+    <div :id="id"></div>
   </div>
 </template>
  
@@ -13,12 +13,7 @@ export default {
       myChart: {}
     };
   },
-  props: {
-    echartObj: {
-      type: Object,
-      default: {}
-    }
-  },
+  props: ["echartObj", "id"],
   created() {
     this.$nextTick(() => {
       this.loadEchart();
@@ -32,27 +27,87 @@ export default {
   },
   methods: {
     loadEchart() {
-      this.myChart = Echarts.init(document.getElementById("echart"));
-      this.myChart.setOption({
-        title: {
-          text: this.echartObj.title.text
-        },
-        tooltip: {},
-        xAxis: {
-          data: this.echartObj.xAxis.data
-        },
-        yAxis: {},
-        series: this.echartObj.series
-      });
+      this.myChart = Echarts.init(document.getElementById(this.id));
+      this.myChart.setOption(
+        {
+          xAxis: {
+            type: "category",
+            data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+          },
+          yAxis: {
+            type: "value"
+          },
+          series: [
+            {
+              data: [820, 932, 901, 934, 1290, 1330, 1320],
+              type: "line"
+            }
+          ]
+        }
+        //   {
+        //   title: {
+        //     text: this.echartObj.title.text,
+        //     x: this.echartObj.title.x,
+        //     textStyle: this.echartObj.title.textStyle
+        //   },
+        //   tooltip: {
+        //     trigger: this.echartObj.tooltip.trigger,
+        //     axisPointer: this.echartObj.tooltip.axisPointer,
+        //     formatter: this.echartObj.tooltip.formatter
+        //   },
+        //   dataset: {
+        //     dimensions: this.echartObj.dataset.dimensions,
+        //     source: this.echartObj.dataset.source
+        //   },
+        //   legend: {
+        //     data: this.echartObj.legend.data,
+        //     show: this.echartObj.legend.show
+        //   },
+        //   grid: this.echartObj.grid,
+        //   xAxis: {
+        //     data: this.echartObj.xAxis.data,
+        //     // axisLine: this.echartObj.xAxis.axisLine,
+        //     show: this.echartObj.xAxis.show,
+        //     type: this.echartObj.xAxis.type
+        //   },
+        //   yAxis: {
+        //     min: this.echartObj.yAxis.min,
+        //     max: this.echartObj.yAxis.max,
+        //     splitNumber: this.echartObj.yAxis.splitNumber,
+        //     axisLabel: this.echartObj.yAxis.axisLabel,
+        //     show: this.echartObj.yAxis.show
+        //   },
+        //   series: this.echartObj.series
+        // }
+      );
     }
   }
 };
 </script>
  
 <style lang="less" scoped>
-#echart {
+#echarts1,
+#echarts2,
+#echarts3,
+#pei,
+#pei1,
+#pei2,
+#ya,
+#da {
   width: 80%;
   height: 200px;
   margin: 0 auto;
+}
+#Yecharts,
+#Yecharts1,
+#Yecharts2,
+#Yecharts3,
+#Yecharts4,
+#Yecharts5,
+#Yecharts6,
+#Zecharts,
+#Zecharts1 {
+  width: 100%;
+  height: 230px;
 }
 </style>

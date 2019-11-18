@@ -53,7 +53,7 @@
         <h3>大神推单</h3>
         <van-icon name="arrow" />
       </div>
-      <div class="user-list">
+      <div class="user-list" @click="show">
         <div class="item">
           <div class="top">
             <div class="avatar">
@@ -119,7 +119,7 @@
             </p>
           </div>
           <div class="num">
-            <img src="../../../assets/images/num.png" alt />
+             <van-icon name="eye" />
             <span>315</span>
           </div>
         </div>
@@ -140,6 +140,11 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    show(){
+      this.$router.push({
+        path:'/ExpertsSuggest'
+      })
+    },
     detailFoot(){
       this.$router.push({
         path:'/racefootball'

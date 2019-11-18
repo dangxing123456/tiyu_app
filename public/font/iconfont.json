@@ -34,6 +34,13 @@
       "unicode_decimal": 58943
     },
     {
+      "icon_id": "7034538",
+      "name": "钱",
+      "font_class": "qian",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
       "icon_id": "7159315",
       "name": "加好",
       "font_class": "jiahao",

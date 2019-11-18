@@ -1,7 +1,7 @@
 <template>
   <div class="container" id="shop">
     <div class="main">
-      <div title="即时" class="instant">
+      <div title="即时" class="instant" @click="show">
         <p class="title">即将开赛18场</p>
         <div class="con">
           <div class="head">
@@ -50,7 +50,13 @@ export default {
     return {};
   },
   created() {},
-  methods: {}
+  methods: {
+    show(){
+     this.$router.push({
+       path:'/matchFenxi'
+     })
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
