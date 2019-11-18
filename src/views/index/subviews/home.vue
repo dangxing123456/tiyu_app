@@ -119,7 +119,7 @@
             </p>
           </div>
           <div class="num">
-            <img src="../../../assets/images/num.png" alt />
+             <van-icon name="eye" />
             <span>315</span>
           </div>
         </div>

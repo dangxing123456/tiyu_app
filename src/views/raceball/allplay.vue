@@ -171,6 +171,7 @@ export default {
 <style lang="less" scoped>
 .fenxi{
   color: #ffffff;
+  font-size: 14px;
 }
 .main {
   padding: 0 15px;

@@ -3,10 +3,10 @@
     <div class="main">
       <div class="head">
         <van-tabs
-          v-model="active"
           title-inactive-color="#333333"
           title-active-color="#f24a44"
           @click="OnClick"
+          @change="jihuo"
           swipeable
         >
           <van-tab title="欧赔">
@@ -37,7 +37,7 @@ export default {
   props: {},
   data() {
     return {
-      active: 1
+     
     };
   },
   computed: {},
@@ -65,6 +65,9 @@ export default {
           path: "/daxiao"
         });
       }
+    },
+    jihuo(){
+      console.log()
     }
   },
   mounted() {

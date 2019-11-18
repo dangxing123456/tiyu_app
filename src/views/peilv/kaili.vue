@@ -62,6 +62,7 @@ export default {
 <style lang="less" scoped>
 .content {
   background-color: #fff;
+  
   h3 {
     font-size: 14px;
     font-weight: bold;

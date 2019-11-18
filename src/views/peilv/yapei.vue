@@ -122,14 +122,16 @@ export default {
   props: {},
   data() {
     return {
-      id6:'ya',
+      id6: "ya",
       echartObj3: {
         title: {
           text: ""
         },
         legend: {
-          data: ["10BET"]
+          show: "true",
+          data: ["韦德"]
         },
+        dataset: {},
         tooltip: {
           formatter: function(params) {
             var res = params[0].name + "<br/>输赢：";
@@ -152,6 +154,8 @@ export default {
           }
         },
         xAxis: {
+          type: "category",
+          show: "true",
           data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
         },
         yAxis: {
@@ -177,10 +181,10 @@ export default {
         },
         series: [
           {
-            name: "10BET",
+            name: "韦德",
             type: "line",
             stack: "总量",
-            data: [1, 1, 2, 3, 2, 1],
+            data: [1, 1, 2, 3, 2, 1]
           }
         ]
       }
@@ -210,6 +214,10 @@ export default {
     /deep/ .van-tab {
       height: 30px;
       line-height: 30px;
+    }
+    /deep/ .van-tabs__nav--line {
+      height: 0;
+      padding-bottom: 30px;
     }
     h3 {
       float: left;

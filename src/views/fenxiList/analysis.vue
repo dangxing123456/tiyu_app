@@ -207,6 +207,8 @@ export default {
         title: {
           text: ""
         },
+        dataset: {},
+        legend: {},
         tooltip: {
           formatter: function(params) {
             var res = params[0].name + "<br/>输赢：";
@@ -229,6 +231,8 @@ export default {
           }
         },
         xAxis: {
+          type: "",
+          show: "true",
           data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
         },
         yAxis: {
@@ -263,8 +267,12 @@ export default {
         title: {
           text: ""
         },
+        dataset: {},
         tooltip: {},
+        legend: {},
         xAxis: {
+          type: "",
+          show: "true",
           data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
         },
         yAxis: {
