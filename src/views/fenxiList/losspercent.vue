@@ -10,21 +10,18 @@
           swipeable
         >
           <van-tab title="欧赔">
-            <router-view />
           </van-tab>
           <van-tab title="亚赔">
-            <router-view />
           </van-tab>
           <van-tab title="凯利">
-            <router-view />
           </van-tab>
           <van-tab title="必发">
-            <router-view />
           </van-tab>
           <van-tab title="大小球">
-            <router-view />
+            
           </van-tab>
         </van-tabs>
+        <router-view />
       </div>
     </div>
   </div>

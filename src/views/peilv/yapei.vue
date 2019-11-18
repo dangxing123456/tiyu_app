@@ -3,7 +3,7 @@
     <div class="main">
       <div class="content">
         <div class="head">
-          <h3>欧赔指数</h3>
+          <h3>亚赔指数</h3>
           <echarts :id="id6" :echartObj="echartObj3"></echarts>
         </div>
         <div class="table">

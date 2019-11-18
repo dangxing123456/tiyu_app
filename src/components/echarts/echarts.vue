@@ -21,6 +21,10 @@ export default {
   },
   mounted() {
     let _this = this;
+    setTimeout(() => {
+      this.loadEchart();
+    }, 1000);
+    return
     window.onresize = function() {
       _this.myChart.resize();
     };
@@ -29,56 +33,41 @@ export default {
     loadEchart() {
       this.myChart = Echarts.init(document.getElementById(this.id));
       this.myChart.setOption(
-        {
+          {
+          title: {
+            text: this.echartObj.title.text,
+            x: this.echartObj.title.x,
+            textStyle: this.echartObj.title.textStyle
+          },
+          tooltip: {
+            trigger: this.echartObj.tooltip.trigger,
+            axisPointer: this.echartObj.tooltip.axisPointer,
+            formatter: this.echartObj.tooltip.formatter
+          },
+          dataset: {
+            dimensions: this.echartObj.dataset.dimensions,
+            source: this.echartObj.dataset.source
+          },
+          legend: {
+            data: this.echartObj.legend.data,
+            show: this.echartObj.legend.show
+          },
+          grid: this.echartObj.grid,
           xAxis: {
-            type: "category",
-            data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+            data: this.echartObj.xAxis.data,
+            // axisLine: this.echartObj.xAxis.axisLine,
+            show: this.echartObj.xAxis.show,
+            type: this.echartObj.xAxis.type
           },
           yAxis: {
-            type: "value"
+            min: this.echartObj.yAxis.min,
+            max: this.echartObj.yAxis.max,
+            splitNumber: this.echartObj.yAxis.splitNumber,
+            axisLabel: this.echartObj.yAxis.axisLabel,
+            show: this.echartObj.yAxis.show
           },
-          series: [
-            {
-              data: [820, 932, 901, 934, 1290, 1330, 1320],
-              type: "line"
-            }
-          ]
+          series: this.echartObj.series
         }
-        //   {
-        //   title: {
-        //     text: this.echartObj.title.text,
-        //     x: this.echartObj.title.x,
-        //     textStyle: this.echartObj.title.textStyle
-        //   },
-        //   tooltip: {
-        //     trigger: this.echartObj.tooltip.trigger,
-        //     axisPointer: this.echartObj.tooltip.axisPointer,
-        //     formatter: this.echartObj.tooltip.formatter
-        //   },
-        //   dataset: {
-        //     dimensions: this.echartObj.dataset.dimensions,
-        //     source: this.echartObj.dataset.source
-        //   },
-        //   legend: {
-        //     data: this.echartObj.legend.data,
-        //     show: this.echartObj.legend.show
-        //   },
-        //   grid: this.echartObj.grid,
-        //   xAxis: {
-        //     data: this.echartObj.xAxis.data,
-        //     // axisLine: this.echartObj.xAxis.axisLine,
-        //     show: this.echartObj.xAxis.show,
-        //     type: this.echartObj.xAxis.type
-        //   },
-        //   yAxis: {
-        //     min: this.echartObj.yAxis.min,
-        //     max: this.echartObj.yAxis.max,
-        //     splitNumber: this.echartObj.yAxis.splitNumber,
-        //     axisLabel: this.echartObj.yAxis.axisLabel,
-        //     show: this.echartObj.yAxis.show
-        //   },
-        //   series: this.echartObj.series
-        // }
       );
     }
   }
