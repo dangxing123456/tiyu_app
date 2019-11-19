@@ -84,7 +84,7 @@
         <h3>精选推荐</h3>
         <van-icon name="arrow" />
       </div>
-      <div class="wrapper">
+      <div class="wrapper" @click="detailPlan">
         <div class="wrapper-top">
           <div class="left">
             <img src="https://picsum.photos/50/50" alt />
@@ -119,7 +119,7 @@
             </p>
           </div>
           <div class="num">
-             <van-icon name="eye" />
+            <van-icon name="eye" />
             <span>315</span>
           </div>
         </div>
@@ -140,26 +140,34 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    show(){
+    show() {
       this.$router.push({
-        path:'/ExpertsSuggest'
-      })
+        path: "/ExpertsSuggest"
+      });
     },
-    detailFoot(){
-      this.$router.push({
-        path:'/racefootball'
-      })
+    detailPlan(){
+       this.$router.push({
+        path: "/planDetails"
+      });
     },
-    detailBasket(){
+    detailFoot() {
       this.$router.push({
-        path:'/racebasketball'
-      })
+        path: "/racefootball"
+      });
+    },
+    detailBasket() {
+      this.$router.push({
+        path: "/racebasketball"
+      });
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
+.main {
+  padding: 10px 0;
+}
 .banner {
   width: 100%;
   height: 230px;
@@ -174,7 +182,7 @@ export default {
   display: flex;
   align-items: center;
   padding: 0 15px;
-  .yin{
+  .yin {
     color: red;
   }
   .icon {
@@ -301,6 +309,9 @@ export default {
   background: #fff;
   padding: 15px;
   margin-top: 10px;
+  box-shadow: 0 0 5px #cccccc;
+  width: 85%;
+  margin: 0 auto;
   .wrapper-top {
     display: flex;
     justify-content: space-between;
@@ -357,7 +368,7 @@ export default {
         .xingqi {
           color: #999;
         }
-        .zhandui{
+        .zhandui {
           margin-left: 20px;
         }
       }
@@ -373,7 +384,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 14px;
+    font-size: 12px;
     color: #999;
     .num {
     }

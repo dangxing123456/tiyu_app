@@ -216,7 +216,7 @@
         </div>
       </van-action-sheet>
     </div>
-    <router-view />
+
   </div>
 </template>
 

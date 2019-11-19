@@ -53,6 +53,13 @@
       "font_class": "yinliang",
       "unicode": "e605",
       "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "9099037",
+      "name": "锁子",
+      "font_class": "suozi1",
+      "unicode": "e760",
+      "unicode_decimal": 59232
     }
   ]
 }

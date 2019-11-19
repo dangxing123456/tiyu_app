@@ -5,7 +5,7 @@
     <div class="main">
      竞猜篮球
     </div>
-     <router-view/>
+   
   </div>
 </template>
 

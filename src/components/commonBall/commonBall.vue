@@ -70,6 +70,7 @@ export default {
     background-color: #fff;
     border-bottom: 2px solid rgb(243, 243, 243);
     padding: 8px;
+    height: 140px;
     .head {
       padding: 2px 7px;
       font-size: 14px;
@@ -127,6 +128,7 @@ export default {
         .shoucang {
           float: left;
           margin-top: 35px;
+          width: 30px;
         }
         img {
           display: block;
@@ -158,6 +160,7 @@ export default {
         margin-top: 10px;
       }
       .text {
+        width: 50px;
         font-size: 20px;
         color: #999;
       }

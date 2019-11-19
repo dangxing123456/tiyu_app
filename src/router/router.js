@@ -235,21 +235,7 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
-    //专家战绩
-    {
-      path: "/ExpertsSuggest",
-      name: "ExpertsSuggest",
-      component: () => import("@/views/ExpertsSuggestlist/ExpertsSuggest.vue"),
-      meta: {
-        keepAlive: false,
-        isTransition: true,
-        title: "专家战绩",
-        isMember: false,
-        isLogin: false,
-        icon: "4-1",
-        icon_press: "4-2"
-      }
-    },
+
     //赛事分析
     {
       path: "/matchFenxi",
@@ -304,7 +290,7 @@ const router = new Router({
               path: "/yapei",
               name: "yapei",
               component: () => import("@/views/peilv/yapei.vue")
-            },
+            }
           ]
         },
         {
@@ -324,21 +310,82 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
-      //竞彩专家
-      {
-        path: "/experts",
-        name: "experts",
-        component: () => import("@/views/found/experts.vue"),
-        meta: {
-          keepAlive: false,
-          isTransition: true,
-          title: "竞彩专家",
-          isMember: false,
-          isLogin: false,
-          icon: "4-1",
-          icon_press: "4-2"
-        }
-      },
+    //竞彩专家
+    {
+      path: "/experts",
+      name: "experts",
+      component: () => import("@/views/found/experts.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "竞彩专家",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //专家战绩
+    {
+      path: "/ExpertsSuggest",
+      name: "ExpertsSuggest",
+      component: () => import("@/views/detail/ExpertsSuggest.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "专家战绩",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //方案详情
+    {
+      path: "/planDetails",
+      name: "planDetails",
+      component: () => import("@/views/detail/planDetails.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "方案详情",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //合买详情
+    {
+      path: "/chippedDetails",
+      name: "chippedDetails",
+      component: () => import("@/views/detail/chippedDetails.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "合买详情",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //认购详情
+    {
+      path: "/subscribeDetails",
+      name: "subscribeDetails",
+      component: () => import("@/views/detail/subscribeDetails.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "认购详情",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+
     // 注册登录
     {
       path: "/login/:name?",

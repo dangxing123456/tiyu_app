@@ -17,7 +17,7 @@
             </li>
             <li class="van-li" @click="detail">
               <img src="public/img/index1.png" alt />
-              <div class="div" >更多</div>
+              <div class="div">更多</div>
             </li>
           </ul>
         </van-tab>
@@ -28,7 +28,7 @@
               <div class="div">二狗子</div>
               <div class="div2">1中1</div>
             </li>
-            <li class="van-li"  @click="detail">
+            <li class="van-li" @click="detail">
               <img src="public/img/index1.png" alt />
               <div class="div">更多</div>
             </li>
@@ -43,7 +43,7 @@
             </li>
             <li class="van-li" @click="detail">
               <img src="public/img/index1.png" alt />
-              <div class="div" >更多</div>
+              <div class="div">更多</div>
             </li>
           </ul>
         </van-tab>
@@ -56,14 +56,20 @@
             </li>
             <li class="van-li" @click="detail">
               <img src="public/img/index1.png" alt />
-              <div class="div" >更多</div>
+              <div class="div">更多</div>
             </li>
           </ul>
         </van-tab>
       </van-tabs>
+      <div class="select">
+        <div>关注专家</div>
+        <van-dropdown-menu class="item">
+          <van-dropdown-item v-model="value1" :options="option1" />
+          <van-dropdown-item v-model="value2" :options="option2" />
+        </van-dropdown-menu>
+      </div>
       <div class="title">
         <h3>精选推荐</h3>
-        <van-icon name="arrow" />
       </div>
       <div class="wrapper" v-for="item in 10">
         <div class="wrapper-top">
@@ -106,6 +112,33 @@
           </div>
         </div>
       </div>
+      <div class="title">
+        <h3>最热红人</h3>
+      </div>
+      <div class="linchang">
+        <div class="con">
+          <div class="head">
+            <img src="https://picsum.photos/50/50" alt />
+            <p>赢家之财神</p>
+          </div>
+          <div class="bot">
+            <p>
+              <span>50</span>%
+            </p>
+          </div>
+        </div>
+        <div class="con">
+          <div class="head">
+            <img src="https://picsum.photos/50/50" alt />
+            <p>赢家之财神</p>
+          </div>
+          <div class="bot">
+            <p>
+              <span>50</span>%
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
     <router-view />
   </div>
@@ -117,17 +150,26 @@ export default {
   props: {},
   data() {
     return {
-      active: 2
+      active: 2,
+      value1: 0,
+      value2: "a",
+      option1: [
+        { text: "全部玩法", value: 0 },
+        { text: "竞彩足球", value: 1 },
+        { text: "竞彩篮球", value: 2 }
+      ],
+      option2: [{ text: "活动", value: "a" }, { text: "免费", value: "b" }],
+      show: false
     };
   },
   computed: {},
   watch: {},
   methods: {
-      detail(){
-          this.$router.push({
-              path:'/experts'
-          })
-      }
+    detail() {
+      this.$router.push({
+        path: "/experts"
+      });
+    }
   }
 };
 </script>
@@ -163,7 +205,17 @@ export default {
   border: 1px solid #b93c4a;
   border-radius: 0.1rem;
 }
-
+.select {
+  background: #fff;
+  border-bottom: 1px solid #eeeeee;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+  .item {
+    width: 55%;
+  }
+}
 .title {
   display: flex;
   padding: 10px 15px 0 15px;
@@ -172,7 +224,7 @@ export default {
   background: #fff;
 
   h3 {
-    font-size: 0.45rem;
+    font-size: 18px;
     font-weight: 500;
     padding-left: 8px;
     border-left: 5px solid #f24a44;
@@ -186,7 +238,7 @@ export default {
 .wrapper {
   background: #fff;
   padding: 15px;
-  border-bottom:  1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
   .wrapper-top {
     display: flex;
     justify-content: space-between;
@@ -283,4 +335,35 @@ export default {
     }
   }
 }
+  .linchang {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 7px;
+    .con {
+      width: 48%;
+      text-align: center;
+      box-shadow: 0 0 0.1rem #cccccc;
+      .head{
+        padding: 10px;
+        img{
+          border-radius: 50%;
+        }
+        p{
+          font-size: 14px;
+          padding: 5px;
+        }
+      }
+    }
+    .bot{
+      padding: 8px;
+      p{
+        color: #f24a44;
+        span{
+          font-size: 25px;
+        }
+      }
+    }
+  }
 </style>
