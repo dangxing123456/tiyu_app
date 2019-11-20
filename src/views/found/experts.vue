@@ -57,36 +57,7 @@
               </div>
             </div>
             <h3 class="hh">您关注的专家</h3>
-            <div class="content" v-for="item in 10">
-              <div>
-                <img src="https://picsum.photos/50/50" alt />
-                <p>张恩华</p>
-              </div>
-              <div class="center">
-                <p class="p1">
-                  <span class="span1">近7场中6场</span>
-                  <span class="span2">3连红</span>
-                </p>
-                <p class="p2">
-                  <span class="span1">近7场</span>
-                  <span class="span2">86%</span>
-                </p>
-                <p class="p3">
-                  <span>均回报</span>
-                  <span class="span2">113%</span>
-                </p>
-                <p class="p4">
-                  <span>擅长联赛</span>
-                  <span class="span1">英超</span>
-                  <span class="span1">西甲</span>
-                  <span class="span1">亚冠</span>
-                </p>
-              </div>
-              <div class="text"></div>
-              <div class="right">
-                <span>已关注</span>
-              </div>
-            </div>
+            <commonExperts :show="show"></commonExperts>
           </div>
         </van-tab>
       </van-tabs>
@@ -128,10 +99,10 @@ export default {
         this.bg_color = "red";
       }
     },
-    detail(){
+    detail() {
       this.$router.push({
-        path:'/planDetails'
-      })
+        path: "/planDetails"
+      });
     }
   }
 };

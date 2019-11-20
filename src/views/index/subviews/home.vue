@@ -75,7 +75,7 @@
               7日命中率
               <span>100%</span>
             </p>
-            <div class="btn">跟一单</div>
+            <div class="btn" @click.stop="showPopup">跟一单</div>
           </div>
         </div>
       </div>
@@ -124,6 +124,58 @@
           </div>
         </div>
       </div>
+      <van-popup position="bottom" v-model="show1">
+        <div class="popup">
+          <div class="head">
+            <div>
+              <span class="peo">发单人：</span>
+              <span class="com">红单一生一世</span>
+            </div>
+            <div>
+              <span class="peo">投注方式</span>
+              <span class="com">2串1</span>
+            </div>
+          </div>
+          <div class="con">
+            <div>
+              <p class="money">8.0元</p>
+              <p class="text">自购</p>
+            </div>
+            <div>
+              <p class="money">2元</p>
+              <p class="text">起跟金额</p>
+            </div>
+            <div>
+              <p class="money">221人</p>
+              <p class="text">跟单人气</p>
+            </div>
+          </div>
+          <div class="wrap">
+            <div>
+              <p class="mon">
+                实付金额
+                <span>20元</span>
+              </p>
+              <p class="yong">
+                佣金比例：
+                <span>10%</span>
+              </p>
+            </div>
+            <div>
+              <div class="num">
+                <p>投</p>
+                <van-stepper value="10" bind:change="onChange" />
+                <p>倍</p>
+                <p />
+              </div>
+            </div>
+          </div>
+          <div class="btn">
+            <van-button type="default" size="large">取消</van-button>
+            <van-button type="danger" size="large">确定</van-button>
+          </div>
+        </div>
+      </van-popup>
     </div>
   </div>
 </template>
@@ -132,7 +184,9 @@ import navBar from "@/components/navbar/navbar.vue";
 export default {
   name: "home",
   data() {
-    return {};
+    return {
+      show1: false
+    };
   },
   components: {
     navBar
@@ -140,13 +194,16 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    showPopup() {
+      this.show1 = true;
+    },
     show() {
       this.$router.push({
         path: "/ExpertsSuggest"
       });
     },
-    detailPlan(){
-       this.$router.push({
+    detailPlan() {
+      this.$router.push({
         path: "/planDetails"
       });
     },
@@ -410,6 +467,65 @@ export default {
     font-size: 20px;
     text-align: center;
     background: #e73736;
+  }
+}
+// 弹出层样式
+.popup {
+  .head {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .peo {
+      font-size: 12px;
+    }
+    .com {
+      font-size: 14px;
+    }
+  }
+  .con {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    div {
+      width: 33%;
+      text-align: center;
+      border: 1px solid #eeeeee;
+      border-top: none;
+      padding: 5px 0;
+      .money {
+        font-size: 14px;
+      }
+      .text {
+        font-size: 12px;
+        margin-top: 8px;
+      }
+    }
+  }
+  .wrap {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px 0;
+    div {
+      font-size: 14px;
+      .yong {
+        margin-top: 8px;
+      }
+      .mon {
+        span {
+          color: #f24a44;
+        }
+      }
+    }
+    .num {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .btn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
 }
 </style>

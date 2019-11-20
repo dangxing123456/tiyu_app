@@ -12,7 +12,7 @@
           <div class="top">
             <div class="img">
               <div class="shoucang">
-                <van-icon name="star" size="28px" color="rgb(218,218,218)" />
+                <van-icon @click.stop="change" :style="{color:color}" name="star" size="28px"  />
               </div>
               <div class="icon">
                 <span>4</span>
@@ -47,14 +47,25 @@ export default {
   name: "score",
   components: {},
   data() {
-    return {};
+    return {
+      color: "#eee",
+      flag: false
+    };
   },
   created() {},
   methods: {
-    show(){
-     this.$router.push({
-       path:'/matchFenxi'
-     })
+    change() {
+      this.flag = !this.flag;
+      if (this.flag) {
+        this.color= "#eee";
+      } else {
+        this.color = "yellow";
+      }
+    },
+    show() {
+      this.$router.push({
+        path: "/matchFenxi"
+      });
     }
   }
 };
@@ -87,6 +98,7 @@ export default {
         text-align: center;
         border-radius: 10px;
         line-height: 20px;
+       
       }
     }
     .top {

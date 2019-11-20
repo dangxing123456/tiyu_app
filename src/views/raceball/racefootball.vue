@@ -216,7 +216,6 @@
         </div>
       </van-action-sheet>
     </div>
-
   </div>
 </template>
 
@@ -352,10 +351,10 @@ export default {
       margin-top: 5px;
     }
   }
-  /deep/ .van-cell__value{
+  /deep/ .van-cell__value {
     display: none;
   }
-  /deep/ .van-dropdown-item__option--active{
+  /deep/ .van-dropdown-item__option--active {
     border: 1px solid red !important;
     color: red;
   }

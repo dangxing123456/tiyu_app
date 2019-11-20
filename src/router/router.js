@@ -340,6 +340,21 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
+    //名人战绩
+    {
+      path: "/celebrityRecord",
+      name: "celebrityRecord",
+      component: () => import("@/views/detail/celebrityRecord.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "名人战绩",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
     //方案详情
     {
       path: "/planDetails",

@@ -7,7 +7,9 @@
           <span>连红榜</span>
         </div>
         <div class="deo" @click="detail1">
-          <p><van-icon class-prefix="icon" name="bangdan" /></p>
+          <p>
+            <van-icon class-prefix="icon" name="bangdan" />
+          </p>
           <span>命中榜</span>
         </div>
         <div @click="detail2">
@@ -16,54 +18,98 @@
         </div>
       </div>
       <div class="select">
-        <van-dropdown-menu class="item">
-          <van-dropdown-item v-model="value1" :options="option1" />
-          <van-dropdown-item v-model="value2" :options="option2" />
-        </van-dropdown-menu>
-        <div>关注专家</div>
-      </div>
-      <div class="zhuanjia" v-if="show">
-
-      </div>
-      <div class="content">
-        <div @click="detailExpert">
-          <div class="top">
-            <div class="left">
-              <img src="../../assets/images/default.png" alt />
-              <h3>追命杀手</h3>
+        <van-tabs title-inactive-color="#333" title-active-color="#f24a44">
+          <van-tab>
+            <div slot="title">
+              <van-dropdown-menu class="item" active-color="#ee0a24">
+                <van-dropdown-item v-model="value1" :options="option1" />
+                <van-dropdown-item v-model="value2" :options="option2" />
+              </van-dropdown-menu>
             </div>
-            <div class="right">
-              <p>一场稳单的推荐一场稳单的推荐一场稳单的推荐一场稳单的推荐一场稳单的推荐</p>
-              <div>
-                <span class="span1">足</span>
-                <span class="span2">单关</span>
-                <span class="span3">4连红</span>
-                <span class="span4">起跟金额2元</span>
-                <span class="time">截止: 11-07 21:49</span>
+            <div class="content">
+              <div @click="detailExpert">
+                <div class="top">
+                  <div class="left">
+                    <img src="../../assets/images/default.png" alt />
+                    <h3>追命杀手</h3>
+                  </div>
+                  <div class="right">
+                    <p>一场稳单的推荐一场稳单的推荐一场稳单的推荐一场稳单的推荐一场稳单的推荐</p>
+                    <div>
+                      <span class="span1">足</span>
+                      <span class="span2">单关</span>
+                      <span class="span3">4连红</span>
+                      <span class="span4">起跟金额2元</span>
+                      <span class="time">截止: 11-07 21:49</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="bottom">
+                  <div>
+                    <p>
+                      实力指数
+                      <van-icon @click.stop="shiliPopup" name="question-o" />
+                    </p>
+                    <p class="money">870.0</p>
+                  </div>
+                  <div>
+                    <p>跟单总额</p>
+                    <p class="money">1440.0元</p>
+                  </div>
+                  <div>
+                    <p>跟单人气</p>
+                    <p class="money">67</p>
+                  </div>
+                  <div>
+                    <van-button @click.stop="showPopup" type="danger">跟一单</van-button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="bottom">
-            <div>
-              <p>
-                实力指数
-                <img src="../../assets/images/wenhao.png" alt />
-              </p>
-              <p class="money">870.0</p>
+          </van-tab>
+          <van-tab title="关注专家">
+            <div class="content">
+              <div @click="detailExpert">
+                <div class="top">
+                  <div class="left">
+                    <img src="../../assets/images/default.png" alt />
+                    <h3>追命杀手</h3>
+                  </div>
+                  <div class="right">
+                    <p>一场稳单的推荐一场稳单的推荐一场稳单的推荐一场稳单</p>
+                    <div>
+                      <span class="span1">足</span>
+                      <span class="span2">单关</span>
+                      <span class="span3">4连红</span>
+                      <span class="span4">起跟金额2元</span>
+                      <span class="time">截止: 11-07 21:49</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="bottom">
+                  <div>
+                    <p>跟单人气</p>
+                    <p class="money">870.0</p>
+                  </div>
+                  <div>
+                    <p>跟单总额</p>
+                    <p class="money">1440.0元</p>
+                  </div>
+                  <div>
+                    <p>
+                      命中率
+                      <van-icon @click.stop="mingPopup" name="question-o" />
+                    </p>
+                    <p class="money">67%</p>
+                  </div>
+                  <div>
+                    <van-button @click.stop="showPopup" type="danger">跟一单</van-button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>
-              <p>跟单总额</p>
-              <p class="money">1440.0元</p>
-            </div>
-            <div>
-              <p>跟单人气</p>
-              <p class="money">67</p>
-            </div>
-            <div>
-              <van-button @click.stop="showPopup" type="danger">跟一单</van-button>
-            </div>
-          </div>
-        </div>
+          </van-tab>
+        </van-tabs>
       </div>
     </div>
     <van-popup position="bottom" v-model="show">
@@ -118,7 +164,36 @@
         </div>
       </div>
     </van-popup>
-    <router-view />
+    <van-popup v-model="shiliShow" round>
+      <div class="shili">
+        <h3>实力专家指数</h3>
+        <div class="wrap">
+          <p>实力指数根据用户多项数据</p>
+          <ul>
+            <li>1.近30日发单4单</li>
+            <li>2.近7日盈利率不低于1%</li>
+            <li>3.近15日连红1单</li>
+            <li>4.近7日命中率不低于40%</li>
+            <li>5.近30日盈利率不低于1%</li>
+          </ul>
+          <p>计算出来的综合数值, 该数字越高,则此发单人整体能力越强,本周状态越好,更容易带领大家红单</p>
+        </div>
+        <div class="bot" @click="btn">
+          <span >确认</span>
+        </div>
+      </div>
+    </van-popup>
+    <van-popup v-model="mingShow">
+      <div class="shili">
+        <h3>实力专家指数</h3>
+        <div class="wrap wrap1">
+          <p>命中率统计的是发单人近7日的发单平均命中率</p>
+        </div>
+        <div class="bot">
+          <span>确认</span>
+        </div>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -132,7 +207,9 @@ export default {
       value2: "a",
       option1: [{ text: "按实力", value: 0 }, { text: "按人气", value: 1 }],
       option2: [{ text: "竞足", value: "a" }, { text: "竞篮", value: "b" }],
-      show: false
+      show: false,
+      shiliShow: false,
+      mingShow: false
     };
   },
   computed: {},
@@ -140,6 +217,15 @@ export default {
   methods: {
     showPopup() {
       this.show = true;
+    },
+    shiliPopup() {
+      this.shiliShow = true;
+    },
+    mingPopup() {
+      this.mingShow = true;
+    },
+    btn() {
+      this.shiliShow =false
     },
     detail() {
       this.$router.push({
@@ -165,6 +251,39 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.select {
+  /deep/ .van-tabs__line {
+    display: none;
+  }
+}
+.shili {
+  width: 280px;
+  font-size: 14px;
+  h3 {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  ul li {
+    padding: 10px 0;
+    color: #f24a44;
+  }
+  .wrap {
+    height: 250px;
+    overflow-y: scroll;
+    padding: 5px 21px;
+  }
+  .wrap1 {
+    height: 60px;
+  }
+  .bot {
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    color: #f24a44;
+    border-top: 1px solid #eeeeee;
+  }
+}
 // 弹出层样式
 .popup {
   .head {
@@ -207,8 +326,8 @@ export default {
       .yong {
         margin-top: 8px;
       }
-      .mon{
-        span{
+      .mon {
+        span {
           color: #f24a44;
         }
       }
@@ -232,12 +351,12 @@ export default {
     align-items: center;
     border-bottom: 1px solid #cccccc;
     padding: 7px 25px;
-    .deo{
-      p{
-       i{
+    .deo {
+      p {
+        i {
           color: red;
-        font-size: 35px;
-       }
+          font-size: 35px;
+        }
       }
     }
     div {
@@ -265,14 +384,6 @@ export default {
     }
   }
   .select {
-    background: #fff;
-    border-bottom: 1px solid #cccccc;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    .item {
-      width: 55%;
-    }
   }
   .content {
     padding: 10px 0px;
@@ -298,12 +409,16 @@ export default {
           padding-bottom: 15px;
         }
       }
+      .left1 {
+        width: 20%;
+      }
       .right {
         padding-right: 8px;
         p {
           font-size: 14px;
           height: 80px;
           color: rgb(50, 50, 50);
+          width: 290px;
         }
         div {
           padding-bottom: 10px;
@@ -358,11 +473,15 @@ export default {
       }
     }
     .bottom {
+      /deep/ .van-icon-question-o {
+        color: #ffd700;
+      }
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px 10px 0 10px;
       div {
+        width: 25%;
         text-align: center;
         p {
           font-size: 14px;

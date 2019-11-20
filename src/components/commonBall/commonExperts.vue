@@ -1,7 +1,7 @@
 <template>
   <div class="container" id="shop">
     <div class="main">
-      <div class="content" v-for="(item,index) in 10" :key="index">
+      <div class="content" v-for="(item,index) in 10" :key="index" @click="detail">
         <div>
           <img src="https://picsum.photos/50/50" alt />
           <p>张恩华</p>
@@ -40,7 +40,7 @@
             <p>最高连红</p>
           </div>
         </div>
-        <div class="right" ref="guanzhu" @click="change">
+        <div class="right" ref="guanzhu" @click.stop="change">
           <span :style="{backgroundColor:bg_color}">{{content}}</span>
         </div>
       </div>
@@ -67,9 +67,7 @@ export default {
   computed: {},
   watch: {},
   mounted() {
-    console.log(this.show);
-    console.log(this.show1);
-    console.log(this.show2);
+   
   },
   methods: {
     change() {
@@ -81,6 +79,11 @@ export default {
         this.content = "+关注";
         this.bg_color = "red";
       }
+    },
+    detail(){
+      this.$router.push({
+        path:'/celebrityRecord'
+      })
     }
   }
 };
