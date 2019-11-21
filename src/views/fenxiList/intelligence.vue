@@ -56,7 +56,6 @@
               <p>2.55</p>
             </div>
           </div>
-
           <div class="pro">
             <div :style="'width:'+num+'%;'" class="red"></div>
             <div :style="'width:'+num1+'%;'" class="yello"></div>

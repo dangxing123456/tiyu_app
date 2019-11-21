@@ -205,11 +205,26 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
-    //全部玩法
+    //足球全部玩法
     {
       path: "/allplay",
       name: "allplay",
       component: () => import("@/views/raceball/allplay.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "全部玩法",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //篮球全部玩法
+    {
+      path: "/allplayBasket",
+      name: "allplayBasket",
+      component: () => import("@/views/raceball/allplayBasket.vue"),
       meta: {
         keepAlive: false,
         isTransition: true,
@@ -236,7 +251,7 @@ const router = new Router({
       }
     },
 
-    //赛事分析
+    //足球赛事分析
     {
       path: "/matchFenxi",
       name: "matchFenxi",
@@ -298,6 +313,48 @@ const router = new Router({
           path: "/plan",
           name: "plan",
           component: () => import("@/views/fenxiList/plan.vue")
+        }
+      ],
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "赛事分析",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    // 篮球赛事分析
+    {
+      path: "/fenxinBasket",
+      name: "fenxinBasket",
+      component: () => import("@/views/fenxi/fenxinBasket.vue"),
+      redirect: { name: "analysisBasket" },
+      children: [
+        {
+          //分析
+          path: "/analysisBasket",
+          name: "analysisBasket",
+          component: () => import("@/views/fenxiList/analysisBasket.vue")
+        },
+        {
+          // 亚赔
+          path: "/yapeiBasket",
+          name: "yapeiBasket",
+          component: () => import("@/views/fenxiList/yapeiBasket.vue")
+        },
+        {
+          //欧赔
+          path: "/oupeiBasket",
+          name: "oupeiBasket",
+          component: () => import("@/views/fenxiList/oupeiBasket.vue")
+        },
+        {
+          //大小
+          path: "/daxiaoBasket",
+          name: "daxiaoBasket",
+          component: () => import("@/views/fenxiList/daxiaoBasket.vue")
         }
       ],
       meta: {

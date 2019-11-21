@@ -163,6 +163,7 @@
         </table>
       </div>
       <div class="weilai">
+        <h3>未来赛事</h3>
         <div class="head">
           <img src="../../assets/images/default.png" />
           <span>乌兹别克</span>
@@ -494,7 +495,8 @@ export default {
   }
   span {
     float: right;
-    margin-left: 8px;
+    margin-right: 8px;
+    padding: 5px 0;
   }
   .tab2 {
     width: 100%;
