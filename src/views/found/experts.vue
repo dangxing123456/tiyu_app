@@ -51,7 +51,7 @@
                   </p>
                 </div>
                 <div class="num">
-                  <img src="../../assets/images/num.png" alt />
+                 <van-icon name="eye" />
                   <span>315</span>
                 </div>
               </div>
@@ -189,9 +189,10 @@ export default {
     // padding: 10px 0;
     border-left: 3px solid #f24a44;
     padding: 0 15px;
+    margin: 10px 0;
   }
   .wrapper {
-    margin-top: 18px;
+    margin-top: 10px;
     padding: 6px;
     box-shadow: 0 0 5px #cccccc;
     .wrapper-top {
@@ -287,6 +288,8 @@ export default {
       color: #999;
 
       .num {
+        display: flex;
+        align-items: center;
       }
     }
   }

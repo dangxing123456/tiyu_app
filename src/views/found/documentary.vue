@@ -22,7 +22,7 @@
           <van-tab>
             <div slot="title">
               <van-dropdown-menu class="item" active-color="#ee0a24">
-                <van-dropdown-item v-model="value1" :options="option1" />
+                <van-dropdown-item v-model="value1" :options="option1" @change="changeValue" />
                 <van-dropdown-item v-model="value2" :options="option2" />
               </van-dropdown-menu>
             </div>
@@ -179,17 +179,17 @@
           <p>计算出来的综合数值, 该数字越高,则此发单人整体能力越强,本周状态越好,更容易带领大家红单</p>
         </div>
         <div class="bot" @click="btn">
-          <span >确认</span>
+          <span>确认</span>
         </div>
       </div>
     </van-popup>
-    <van-popup v-model="mingShow">
+    <van-popup v-model="mingShow" round>
       <div class="shili">
         <h3>实力专家指数</h3>
         <div class="wrap wrap1">
           <p>命中率统计的是发单人近7日的发单平均命中率</p>
         </div>
-        <div class="bot">
+        <div class="bot" @click="btn1">
           <span>确认</span>
         </div>
       </div>
@@ -215,6 +215,9 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    changeValue(value) {
+      console.log(value);
+    },
     showPopup() {
       this.show = true;
     },
@@ -225,7 +228,10 @@ export default {
       this.mingShow = true;
     },
     btn() {
-      this.shiliShow =false
+      this.shiliShow = false;
+    },
+    btn1() {
+      this.mingShow = false;
     },
     detail() {
       this.$router.push({

@@ -25,9 +25,9 @@
               </p>
             </div>
           </div>
-          <div class="right" ref="right">
-            <div class="info" ref="guanzhu" @click="change">
-              <van-icon class-prefix="icon" name="jiahao" />未关注
+          <div class="right">
+            <div class="info" @click.stop="change">
+              <span :style="{backgroundColor:bg_color}">{{content}}</span>
             </div>
             <div class="fensi">
               粉丝
@@ -58,10 +58,10 @@
         <div class="time">
           <van-icon class-prefix="icon" name="suozi" />
           <p>支付后显示付费方案</p>
-          <p>
-            距离售卖截止剩余时间
-            <span>06:03:02</span>
-          </p>
+          <div class="countDown ">
+            <span>距离售卖截止剩余时间</span>
+            <van-count-down :time="time" />
+          </div>
         </div>
       </div>
       <div class="suggstion">
@@ -91,7 +91,11 @@ export default {
   props: {},
   data() {
     return {
-      title: this.$route.meta.title
+      title: this.$route.meta.title,
+      content: "+关注",
+      flag: false,
+      bg_color: "red",
+      time: 30 * 60 * 60 * 1000
     };
   },
   computed: {},
@@ -99,9 +103,18 @@ export default {
   methods: {
     toast() {
       this.$toast({
-        message: "支付后显示付费方案",
-        
+        message: "支付后显示付费方案"
       });
+    },
+    change() {
+      this.flag = !this.flag;
+      if (this.flag) {
+        this.content = "已关注";
+        this.bg_color = "#777";
+      } else {
+        this.content = "+关注";
+        this.bg_color = "red";
+      }
     }
   },
   mounted() {
@@ -167,16 +180,19 @@ export default {
     }
     .right {
       .info {
-        font-size: 14px;
-        background-color: #f24a44;
-        padding: 5px;
-        color: white;
-        padding: 5px;
-        font-size: 12px;
+        span {
+          font-size: 12px;
+          display: inline-block;
+          width: 65px;
+          height: 25px;
+          background-color: red;
+          border-radius: 3px;
+          text-align: center;
+          line-height: 25px;
+          color: #fff;
+        }
       }
-      /deep/ .icon-jiahao {
-        font-size: 14px;
-      }
+
       .fensi {
         padding: 8px 0;
         font-size: 12px;
@@ -242,6 +258,13 @@ export default {
     }
     p {
       padding: 10px 0;
+    }
+    .countDown  {
+      display: flex;
+      justify-content: center;
+      .van-count-down{
+        color: #f24a44;
+      }
     }
   }
 }

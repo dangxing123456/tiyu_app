@@ -444,6 +444,8 @@ export default {
     font-size: 12px;
     color: #999;
     .num {
+      display: flex;
+      align-items: center;
     }
   }
 }

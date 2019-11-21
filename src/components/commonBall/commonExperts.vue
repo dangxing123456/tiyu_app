@@ -40,7 +40,7 @@
             <p>最高连红</p>
           </div>
         </div>
-        <div class="right" ref="guanzhu" @click.stop="change">
+        <div class="right"  @click.stop="change">
           <span :style="{backgroundColor:bg_color}">{{content}}</span>
         </div>
       </div>

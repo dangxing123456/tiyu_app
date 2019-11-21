@@ -11,12 +11,12 @@
         <van-tab title="资深专家">
           <ul class="van-ul">
             <li class="van-li" v-for="(item) in 5">
-              <img src="public/img/index1.png" alt />
+              <img src="https://picsum.photos/50/50" alt />
               <div class="div">二狗子</div>
               <div class="div2">1中1</div>
             </li>
             <li class="van-li" @click="detail">
-              <img src="public/img/index1.png" alt />
+              <img src="https://picsum.photos/50/50" alt />
               <div class="div">更多</div>
             </li>
           </ul>
@@ -24,12 +24,12 @@
         <van-tab title="盈利专家">
           <ul class="van-ul">
             <li class="van-li" v-for="(item) in 5">
-              <img src="public/img/index1.png" alt />
+              <img src="https://picsum.photos/50/50" alt />
               <div class="div">二狗子</div>
               <div class="div2">1中1</div>
             </li>
             <li class="van-li" @click="detail">
-              <img src="public/img/index1.png" alt />
+              <img src="https://picsum.photos/50/50" alt />
               <div class="div">更多</div>
             </li>
           </ul>
@@ -37,12 +37,12 @@
         <van-tab title="连红专家">
           <ul class="van-ul">
             <li class="van-li" v-for="(item) in 5">
-              <img src="public/img/index1.png" alt />
+              <img src="https://picsum.photos/50/50" alt />
               <div class="div">二狗子</div>
               <div class="div2">1中1</div>
             </li>
             <li class="van-li" @click="detail">
-              <img src="public/img/index1.png" alt />
+              <img src="https://picsum.photos/50/50" alt />
               <div class="div">更多</div>
             </li>
           </ul>
@@ -50,12 +50,12 @@
         <van-tab title="我的关注">
           <ul class="van-ul">
             <li class="van-li" v-for="(item) in 5">
-              <img src="public/img/index1.png" alt />
+              <img src="https://picsum.photos/50/50" alt />
               <div class="div">狗子</div>
               <div class="div2">1中1</div>
             </li>
             <li class="van-li" @click="detail">
-              <img src="public/img/index1.png" alt />
+              <img src="https://picsum.photos/50/50" alt />
               <div class="div">更多</div>
             </li>
           </ul>
@@ -63,7 +63,7 @@
       </van-tabs>
       <div class="select">
         <div>关注专家</div>
-        <van-dropdown-menu class="item">
+        <van-dropdown-menu class="item" @click="change">
           <van-dropdown-item v-model="value1" :options="option1" />
           <van-dropdown-item v-model="value2" :options="option2" />
         </van-dropdown-menu>
@@ -107,7 +107,7 @@
             </p>
           </div>
           <div class="num">
-            <img src="../../assets/images/num.png" alt />
+           <van-icon name="eye" />
             <span>315</span>
           </div>
         </div>
@@ -169,6 +169,9 @@ export default {
       this.$router.push({
         path: "/experts"
       });
+    },
+    change(value) {
+      console.log(1);
     }
   }
 };
@@ -190,6 +193,7 @@ export default {
 .van-ul .van-li img {
   width: 1rem;
   height: 1rem;
+  border-radius: 50%;
 }
 
 .van-ul .van-li .div {
@@ -237,7 +241,7 @@ export default {
 
 .wrapper {
   background: #fff;
-  padding: 15px;
+  padding: 10px;
   border-bottom: 1px solid #eeeeee;
   .wrapper-top {
     display: flex;
@@ -328,42 +332,44 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 14px;
+    font-size: 12px;
     color: #999;
 
     .num {
+      display: flex;
+      align-items: center;
     }
   }
 }
-  .linchang {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #fff;
-    padding: 7px;
-    .con {
-      width: 48%;
-      text-align: center;
-      box-shadow: 0 0 0.1rem #cccccc;
-      .head{
-        padding: 10px;
-        img{
-          border-radius: 50%;
-        }
-        p{
-          font-size: 14px;
-          padding: 5px;
-        }
+.linchang {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 7px;
+  .con {
+    width: 48%;
+    text-align: center;
+    box-shadow: 0 0 0.1rem #cccccc;
+    .head {
+      padding: 10px;
+      img {
+        border-radius: 50%;
       }
-    }
-    .bot{
-      padding: 8px;
-      p{
-        color: #f24a44;
-        span{
-          font-size: 25px;
-        }
+      p {
+        font-size: 14px;
+        padding: 5px;
       }
     }
   }
+  .bot {
+    padding: 8px;
+    p {
+      color: #f24a44;
+      span {
+        font-size: 25px;
+      }
+    }
+  }
+}
 </style>

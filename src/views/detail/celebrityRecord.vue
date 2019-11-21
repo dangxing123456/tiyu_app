@@ -43,13 +43,14 @@
             </div>
             <i class="ii"></i>
             <div>
-              <van-icon name="question-o" />
+              <van-icon class-prefix="icon" name="wenhao" @click="onshow" />
               <p class="p1">117%</p>
               <p>回报率</p>
             </div>
           </div>
         </div>
       </div>
+
       <div class="content">
         <div class="wrap" v-for="(item,index) in 10" :key="index" @click="detail">
           <div>哈哈哈哈哈哈哈哈哈哈哈或哈奥奥奥奥奥奥奥奥奥奥奥奥奥奥奥奥</div>
@@ -73,6 +74,22 @@
         </div>
       </div>
     </div>
+    <van-popup v-model="show" round>
+      <div class="popup">
+        <h3>
+          <i></i> 关于命中率
+        </h3>
+        <p>按场计算,例:1单发布两场赛事,有1场命中则算2中1。此单命中率为50%。</p>
+        <h3>
+          <i></i> 关于回报率
+        </h3>
+        <p>回报率按场计算,命中投注项SP相加则为此订单回报率</p>
+        <h3>
+          <i></i> 关于连红
+        </h3>
+        <p>连红分为历史最高连红和近期连红,历史最高连红统计的是专家近30场连红数据</p>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -88,7 +105,8 @@ export default {
     return {
       title: this.$route.meta.title,
       flag: false,
-      content: "+关注"
+      content: "+关注",
+      show: false
     };
   },
   computed: {},
@@ -102,10 +120,13 @@ export default {
         this.content = "+关注";
       }
     },
-    detail(){
-        this.$router.push({
-            path:'/planDetails'
-        })
+    detail() {
+      this.$router.push({
+        path: "/planDetails"
+      });
+    },
+    onshow() {
+      this.show = true;
     }
   },
   mounted() {
@@ -114,6 +135,29 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.popup {
+  background-color: #fff;
+  font-size: 14px;
+  width: 280px;
+
+  h3 {
+    font-size: 16px;
+    color: black;
+    padding: 10px;
+    border-bottom: 1px solid #eeeeee;
+    i {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background-color: black;
+      border-radius: 50%;
+      margin-bottom: 4px;
+    }
+  }
+  p{
+    padding: 10px;
+  }
+}
 .box1 {
   position: fixed;
   top: 0;
@@ -194,8 +238,9 @@ export default {
     div {
       width: 33%;
       text-align: center;
-      .van-icon {
+      .icon-wenhao {
         float: right;
+        color: #777;
       }
       p {
         padding: 5px 0;
