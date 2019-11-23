@@ -161,8 +161,8 @@
           <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
         </div>
         <div class="btn">
-          <van-button type="default" size="large">取消</van-button>
-          <van-button type="danger" size="large">确定</van-button>
+          <van-button type="default" size="large">清空</van-button>
+          <van-button type="danger" size="large" @click="detailPlan">确定</van-button>
         </div>
       </div>
       <!-- 下拉菜单 -->
@@ -211,7 +211,7 @@
           </div>
           <div class="btn">
             <van-button type="default" size="large">取消</van-button>
-            <van-button type="danger" size="large">确定</van-button>
+            <van-button type="danger" size="large" >确定</van-button>
           </div>
         </div>
       </van-action-sheet>
@@ -285,10 +285,16 @@ export default {
         this.$refs.sp.innerHTML = "<span>全部玩法</span>";
         this.$refs.sp.style.background = "white";
         this.$refs.sp.style.color = "#4b4949";
+
       }
     }
   },
   methods: {
+    detailPlan() {
+      this.$router.push({
+        path: "/confirmPlan"
+      });
+    },
     detailPlay() {
       this.$router.push({
         path: "/allplay",
@@ -306,24 +312,21 @@ export default {
         this.box.splice(this.box.indexOf(e), 1);
       } else {
         this.box.push(e);
-      } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box.length);
-    },
-    change1: function(e) {
-      if (this.box1.includes(e)) {
-        this.box1.splice(this.box1.indexOf(e), 1);
-      } else {
-        this.box1.push(e);
-      } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box1.length);
-    },
-    change2: function(e) {
-      if (this.box2.includes(e)) {
-        this.box2.splice(this.box2.indexOf(e), 1);
-      } else {
-        this.box2.push(e);
-      } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box2.length);
+      } // 把点击的元素item放入box数组中
+      var a = [];
+      for (let i of this.box) {
+        var c = i.score;
+        a.push({ 1: [c] });
+        console.log(a);
+        var key = "gates";
+        var o = {};
+        var str = "o." + key + "='" + '["2-1","3-1"]' + "'";
+        eval(str);
+        var key = "sel";
+        var str1 = "o." + key + "='" + a + "'";
+        eval(str1);
+        console.log(o);
+      }
     }
   },
   mounted() {}

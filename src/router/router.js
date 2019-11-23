@@ -457,6 +457,21 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
+    //确认方案
+    {
+      path: "/confirmPlan",
+      name: "confirmPlan",
+      component: () => import("@/views/detail/confirmPlan.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "确认方案",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
 
     // 注册登录
     {

@@ -134,16 +134,14 @@ export default {
   props: {},
   data() {
     return {
-      value1: 6,
+      value1: 4,
       option1: [
-        { text: "胜平负", value: 0 },
-        { text: "让球胜平负", value: 1 },
-        { text: "比分", value: 2 },
-        { text: "总进球", value: 3 },
-        { text: "半全场", value: 4 },
-        { text: "混投2选1", value: 5 },
-        { text: "混合过关", value: 6 },
-        { text: "单关", value: 7 }
+        { text: "胜负", value: 0 },
+        { text: "让分胜负", value: 1 },
+        { text: "胜分差", value: 2 },
+        { text: "大小分", value: 3 },
+        { text: "混合过关", value: 4 },
+        { text: "单关", value: 5 },
       ],
       show: false,
       actions: [],
@@ -227,7 +225,7 @@ export default {
     padding: 0 5px 5px 3px;
     margin: 0 auto;
     .van-cell {
-      width: 23%;
+      width: 31%;
       float: left;
       display: flex;
       justify-content: space-between;
