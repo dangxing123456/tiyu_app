@@ -3,14 +3,14 @@
     <navBar :goback="true" :title="title"></navBar>
     <div class="head">
       <div class="div1" @click="showAdd">+添加/编辑赛事</div>
-      <div>清空列表</div>
+      <div @click="clears">清空列表</div>
     </div>
     <div class="main">
-      <div class="test" v-for="(item,index) in 5" :key="index">
+      <div class="test" v-for="(item,index) in list" :key="index">
         <div class="left">
           <p class="first"></p>
           <p>
-            <van-icon name="clear" />
+            <van-icon name="clear" @click="remove(index)" />
           </p>
           <p></p>
         </div>
@@ -126,6 +126,7 @@ export default {
         { score: "胜1.54" },
         { score: "胜1.54" }
       ],
+      list: [1, 2, 3, 4],
       value: 1,
       show: false,
       actions: []
@@ -139,6 +140,16 @@ export default {
     },
     showAdd() {
       this.$router.push({ path: "/racefootball" });
+    },
+    //清空列表
+    clears() {
+      this.list.splice(0, this.list.length);
+      this.$router.go(-1);
+    },
+    //删除列表
+    remove(index) {
+	  this.list.splice(index, 1);
+	  console.log(this.list)
     }
   },
   mounted() {
