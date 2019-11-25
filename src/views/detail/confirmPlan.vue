@@ -11,7 +11,7 @@
 					<p class="first"></p>
 					<p>
 						<van-icon name="clear" @click="removeTodo(index)"/>
-					</p>
+					</p> 
 					<p></p>
 				</div>
 				<div class="right">
