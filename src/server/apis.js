@@ -6,8 +6,10 @@ class Api extends Axios {
    * @param {Object} params typeid
    */
   async smscode(params = {}) {
-    return await this.axios("POST", "user/smscode", params);
-  }  
+    // return await this.axios("POST", "football/getFootBallMatch", {});
+    return await this.axios("POST", "football/getFootBallMatch", params);
+  }
+
 }
 
 export default new Api();

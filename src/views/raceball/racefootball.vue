@@ -11,143 +11,69 @@
         <van-dropdown-item v-model="value1" :options="option1" />
       </van-dropdown-menu>
     </navBar>
+    <div class="che"></div>
     <div class="main">
-      <van-collapse v-model="activeNames">
-        <van-collapse-item name="1">
+      <van-collapse v-model="activeNames" accordion>
+        <van-collapse-item v-for="(item,index) in dataRes" :key="index" :name="index">
           <div class="title" slot="title">
-            <span>2019年11月8日</span>
-            <span>星期五</span>
-            <span>24场</span>
-            <span>可投注</span>
+            <span>{{item[0].date}}</span>
+            <span>{{item[0].num}}</span>
+            <span v-if="item[0].showStatus==1">可投注</span>
+            <span v-if="item[0].showStatus==0">不可投注</span>
+            <!-- <span>可投注 {{res[index].length}}</span> -->
           </div>
-          <div class="test">
+          <div
+            class="test"
+            v-for="(item2,index1) in dataRes[index]"
+            :key="index1"
+            @click="clickAdd(index1)"
+          >
             <div class="left">
-              <p class="first">001</p>
-              <p>澳超</p>
-              <p>16:19截止</p>
+              <p class="first">{{item2.num}}</p>
+              <p>{{item2.lcnAbbr}}</p>
+              <p>{{item2.time}}截止</p>
             </div>
             <div class="right">
               <div class="div1">
-                <span>[1]墨尔本城</span>
+                <span>{{item2.hcn}}</span>
                 <span>VS</span>
-                <span>[6]中央海岸水手</span>
+
+                <span>{{item2.acnAbbr}}</span>
               </div>
               <div class="tab">
                 <div class="left1">
                   <p class="p1">
-                    <span class="p1-first">0</span>
+                    <span class="p1-first">{{item2.footBallBet.odds_list.hhad.single}}</span>
                   </p>
                   <p class="p2">
-                    <span class="p2-first">0</span>
+                    <span class="p2-first">{{item2.footBallBet.odds_list.hhad.goalline}}</span>
                   </p>
                 </div>
                 <div class="center">
-                  <ul>
-                    <li
+                  <ul ref="aa">
+                    <!-- <li
                       :class="box.includes(item) ? 'bgColor':'' "
-                      v-for="(item,index) in list"
+                      v-for="(item,index) in obj"
                       :key="index"
-                      @click="change(item)"
-                    >{{item.score}}</li>
+                      @click="change(item,index1)"
+                    >{{item.score}}</li>-->
+                    <li>{{item2.footBallBet.odds_list.hhad.odds[0].a}}</li>
+                    <li>{{item2.footBallBet.odds_list.hhad.odds[0].d}}</li>
+                    <li>{{item2.footBallBet.odds_list.hhad.odds[0].h}}</li>
+                    <li>{{item2.footBallBet.odds_list.hhad.odds[1].a}}</li>
+                    <li>{{item2.footBallBet.odds_list.hhad.odds[1].d}}</li>
+                    <li>{{item2.footBallBet.odds_list.hhad.odds[1].h}}</li>
                   </ul>
+                  <!-- <van-checkbox-group v-model="result" checked-color='red'>
+                    <van-checkbox
+                      v-for="(item,index) in obj[index1].list"
+                      :key="index"
+                      :name="index"
+                    >{{item.score}}</van-checkbox>
+                  </van-checkbox-group>-->
                 </div>
                 <div class="right1">
-                  <span ref="sp" @click="detailPlay">全部玩法</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </van-collapse-item>
-        <van-collapse-item title="标题2" name="2">
-          <div class="title" slot="title">
-            <span>2019年11月9日</span>
-            <span>星期六</span>
-            <span>24场</span>
-            <span>可投注</span>
-          </div>
-          <div class="test">
-            <div class="left">
-              <p class="first">001</p>
-              <p>澳超</p>
-              <p>16:19截止</p>
-            </div>
-            <div class="right">
-              <div class="div1">
-                <span>[1]墨尔本城</span>
-                <span>VS</span>
-                <span>[6]中央海岸水手</span>
-              </div>
-              <div class="tab">
-                <div class="left1">
-                  <p class="p1">
-                    <span class="p1-first">0</span>
-                  </p>
-                  <p class="p2">
-                    <span class="p2-first">0</span>
-                  </p>
-                </div>
-                <div class="center">
-                  <div class="center">
-                    <ul>
-                      <li
-                        :class="box1.includes(item) ? 'bgColor':'' "
-                        ref="bgc"
-                        v-for="(item,index) in list1"
-                        :key="index"
-                        @click="change1(item)"
-                      >{{item.score}}</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="right1">
-                  <span :class="box.lenght!=0 ? 'bgColor':'' ">全部玩法</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </van-collapse-item>
-        <van-collapse-item title="标题3" name="3">
-          <div class="title" slot="title">
-            <span>2019年11月10日</span>
-            <span>星期日</span>
-            <span>24场</span>
-            <span>可投注</span>
-          </div>
-          <div class="test">
-            <div class="left">
-              <p class="first">001</p>
-              <p>澳超</p>
-              <p>16:19截止</p>
-            </div>
-            <div class="right">
-              <div class="div1">
-                <span>[1]墨尔本城</span>
-                <span>VS</span>
-                <span>[6]中央海岸水手</span>
-              </div>
-              <div class="tab">
-                <div class="left1">
-                  <p class="p1">
-                    <span class="p1-first">0</span>
-                  </p>
-                  <p class="p2">
-                    <span class="p2-first">0</span>
-                  </p>
-                </div>
-                <div class="center">
-                  <div class="center">
-                    <ul>
-                      <li
-                        :class="box2.includes(item) ? 'bgColor':'' "
-                        ref="bgc"
-                        v-for="(item,index) in list2"
-                        :key="index"
-                      >{{item.score}}</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="right1">
-                  <span>全部玩法</span>
+                  <span ref="sp" @click="detailPlay(item2)">全部玩法</span>
                 </div>
               </div>
             </div>
@@ -174,21 +100,7 @@
           </div>
           <div class="wrapper">
             <ul>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
+              <li v-for="(item,index) in 8" :key="index">西甲(8)</li>
             </ul>
           </div>
           <div class="senf">
@@ -211,7 +123,7 @@
           </div>
           <div class="btn">
             <van-button type="default" size="large">取消</van-button>
-            <van-button type="danger" size="large" >确定</van-button>
+            <van-button type="danger" size="large">确定</van-button>
           </div>
         </div>
       </van-action-sheet>
@@ -220,6 +132,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import navBar from "@/components/navbar/navbar.vue";
 export default {
   name: "racefootball",
@@ -229,6 +142,8 @@ export default {
   props: {},
   data() {
     return {
+      result: [1],
+      i: 0,
       value1: 6,
       option1: [
         { text: "胜平负", value: 0 },
@@ -243,96 +158,121 @@ export default {
       show: false,
       actions: [],
       checked: true,
-      activeNames: ["1"],
+      activeNames: 0,
       changeColor: false,
-      list: [
-        { score: "胜1.54" },
-        { score: "胜1.53" },
-        { score: "胜1.52" },
-        { score: "胜1.50" },
-        { score: "胜1.51" },
-        { score: "胜1.49" }
-      ],
-      list1: [
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" }
-      ],
-      list2: [
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" }
-      ],
+      dataLen: [],
+      dataRes: [],
+      obj: { a: 1, b: 2, c: 3 },
+      obj1: { a: 4, b: 5, c: 6 },
       box: [],
-      box1: [],
-      box2: []
+
+      res: []
     };
   },
   computed: {},
   watch: {
     box: function() {
       if (this.box.length > 0) {
-        this.$refs.sp.innerHTML = "<span>已选" + this.box.length + "项</span>";
-        this.$refs.sp.style.background = "red";
-        this.$refs.sp.style.color = "white";
+        console.log(this.$refs);
+        this.$refs.sp[this.i].innerHTML =
+          "<span>已选" + this.box.length + "项</span>";
+        this.$refs.sp[this.i].style.background = "red";
+        this.$refs.sp[this.i].style.color = "white";
       } else {
-        this.$refs.sp.innerHTML = "<span>全部玩法</span>";
-        this.$refs.sp.style.background = "white";
-        this.$refs.sp.style.color = "#4b4949";
-
+        this.$refs.sp[this.i].innerHTML = "<span>全部玩法</span>";
+        this.$refs.sp[this.i].style.background = "white";
+        this.$refs.sp[this.i].style.color = "#4b4949";
       }
     }
   },
+  created() {
+    this.$SERVER
+      .smscode({
+        pagenum: 1,
+        pagesize: 10
+      })
+      .then(res => {
+        this.dataLen = res.data.list;
+        console.log(this.dataLen);
+        var map = this.dataLen.reduce(
+          (p, c) => [(p[c.date] = p[c.date] || []), p[c.date].push(c), p][2],
+          {}
+        );
+        // 获取映射分类下的数组
+        var result = Object.keys(map).map(i => map[i]);
+        this.dataRes = result;
+        console.log(result);
+      });
+  },
   methods: {
+    operate(item, event) {},
+    clickAdd(index) {
+      this.i = index;
+      console.log(this.$refs.aa[this.i].children);
+    },
     detailPlan() {
       this.$router.push({
         path: "/confirmPlan"
       });
     },
-    detailPlay() {
+    detailPlay(item) {
       this.$router.push({
         path: "/allplay",
         query: {
-          list: this.list,
-          box: this.box
+          // list: this.list,
+          box: item
         }
       });
     },
     alertMenu() {
       this.show = true;
     },
-    change: function(e) {
+    change: function(e, index) {
       if (this.box.includes(e)) {
         this.box.splice(this.box.indexOf(e), 1);
       } else {
         this.box.push(e);
       } // 把点击的元素item放入box数组中
-      var a = [];
-      for (let i of this.box) {
-        var c = i.score;
-        a.push({ 1: [c] });
-        console.log(a);
-        var key = "gates";
-        var o = {};
-        var str = "o." + key + "='" + '["2-1","3-1"]' + "'";
-        eval(str);
-        var key = "sel";
-        var str1 = "o." + key + "='" + a + "'";
-        eval(str1);
-        console.log(o);
-      }
+      console.log(this.box);
+      //   var a = [];
+      //   for (let i of this.box) {
+      //     var c = i.score;
+      //     a.push({ 1: [c] });
+      //     console.log(a);
+      //     var key = "gates";
+      //     var o = {};
+      //     var str = "o." + key + "='" + '["2-1","3-1"]' + "'";
+      //     eval(str);
+      //     var key = "sel";
+      //     var str1 = "o." + key + "='" + a + "'";
+      //     eval(str1);
+      //     console.log(o);
+      //   }
     }
   },
   mounted() {}
 };
 </script>
 <style lang="less" scoped>
+// .tab {
+//   /deep/ .van-checkbox {
+//     width: 71px;
+//     height: 34px;
+//     float: left;
+//   }
+//   /deep/ .van-icon-success {
+//     display: inline-block;
+//     width: 70px;
+//     height: 30px;
+//     border-radius: 0;
+//   }
+//   /deep/ .van-checkbox__label {
+//     position: absolute;
+//   }
+// /deep/ .van-checkbox__icon--checked{
+//   background-color: red;
+// }
+// }
 // 修改vant ui内置样式
 .menu {
   background: none;
@@ -370,13 +310,16 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 14px;
   .right {
+    font-size: 14px;
     width: 80%;
     .div1 {
       display: flex;
       justify-content: space-around;
       padding-bottom: 15px;
-      font-size: 16px;
+
       color: #4b4949;
     }
     .tab {
@@ -417,6 +360,7 @@ export default {
         }
       }
       .center {
+        font-size: 12px;
         ul {
           li {
             display: inline-block;
@@ -438,15 +382,17 @@ export default {
           width: 31px;
           border: 1px solid #eeeeee;
           line-height: 30px;
+          font-size: 14px;
         }
       }
     }
   }
   .left {
     text-align: center;
+    font-size: 12px;
     .first {
       padding-bottom: 20px;
-      font-size: 16px;
+
       color: #4b4949;
     }
   }
@@ -555,5 +501,8 @@ export default {
   background-color: red;
   color: white !important;
   text-align: center !important;
+}
+.red {
+  color: red !important;
 }
 </style>

@@ -14,17 +14,17 @@
       <h3>胜平负/让球</h3>
       <div class="first">
         <div class="left">
-          <p class="p1">0</p>
-          <p class="p2">+1</p>
+          <p class="p1">{{list.footBallBet.odds_list.hhad.single}}</p>
+          <p class="p2">{{list.footBallBet.odds_list.hhad.goalline}}</p>
         </div>
         <div class="right">
           <ul>
-            <li
-              :class="box.includes(item) ? 'bgColor':'' "
-              v-for="(item,index) in list"
-              :key="index"
-              @click="change(item)"
-            >{{item.score}}</li>
+            <li>{{list.footBallBet.odds_list.hhad.odds[0].a}}</li>
+            <li>{{list.footBallBet.odds_list.hhad.odds[0].d}}</li>
+            <li>{{list.footBallBet.odds_list.hhad.odds[0].h}}</li>
+            <li>{{list.footBallBet.odds_list.hhad.odds[1].a}}</li>
+            <li>{{list.footBallBet.odds_list.hhad.odds[1].d}}</li>
+            <li>{{list.footBallBet.odds_list.hhad.odds[1].h}}</li>
           </ul>
         </div>
       </div>
@@ -35,14 +35,38 @@
         </div>
         <div class="right">
           <ul>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
+            <li>
+              <p>0球</p>
+              <p>{{list.footBallBet.odds_list.ttg.odds[0].s0}}</p>
+            </li>
+            <li>
+              <p>1球</p>
+              <p>{{list.footBallBet.odds_list.ttg.odds[0].s1}}</p>
+            </li>
+            <li>
+              <p>2球</p>
+              <p>{{list.footBallBet.odds_list.ttg.odds[0].s2}}</p>
+            </li>
+            <li>
+              <p>3球</p>
+              <p>{{list.footBallBet.odds_list.ttg.odds[0].s3}}</p>
+            </li>
+            <li>
+              <p>4球</p>
+              <p>{{list.footBallBet.odds_list.ttg.odds[0].s4}}</p>
+            </li>
+            <li>
+              <p>5球</p>
+              <p>{{list.footBallBet.odds_list.ttg.odds[0].s5}}</p>
+            </li>
+            <li>
+              <p>6球</p>
+              <p>{{list.footBallBet.odds_list.ttg.odds[0].s6}}</p>
+            </li>
+            <li>
+              <p>7球</p>
+              <p>{{list.footBallBet.odds_list.ttg.odds[0].s7}}</p>
+            </li>
           </ul>
         </div>
       </div>
@@ -53,15 +77,15 @@
         </div>
         <div class="right">
           <ul>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
+            <li>{{list.footBallBet.odds_list.hafu.odds[0].aa}}</li>
+            <li>{{list.footBallBet.odds_list.hafu.odds[0].ad}}</li>
+            <li>{{list.footBallBet.odds_list.hafu.odds[0].ah}}</li>
+            <li>{{list.footBallBet.odds_list.hafu.odds[0].da}}</li>
+            <li>{{list.footBallBet.odds_list.hafu.odds[0].dd}}</li>
+            <li>{{list.footBallBet.odds_list.hafu.odds[0].dh}}</li>
+            <li>{{list.footBallBet.odds_list.hafu.odds[0].ha}}</li>
+            <li>{{list.footBallBet.odds_list.hafu.odds[0].hd}}</li>
+            <li>{{list.footBallBet.odds_list.hafu.odds[0].hh}}</li>
           </ul>
         </div>
       </div>
@@ -127,7 +151,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -141,17 +164,16 @@ export default {
   props: {},
   data() {
     return {
-      list: this.$route.query.list,
-      box: this.$route.query.box
+      list: this.$route.query.box
     };
   },
   computed: {},
   watch: {},
   methods: {
-    detail(){
+    detail() {
       this.$router.push({
-        path:"/matchFenxi"
-      })
+        path: "/matchFenxi"
+      });
     },
     change: function(e) {
       if (this.box.includes(e)) {
@@ -164,12 +186,11 @@ export default {
   },
   mounted() {
     console.log(this.list);
-    console.log(this.box);
   }
 };
 </script>
 <style lang="less" scoped>
-.fenxi{
+.fenxi {
   color: #ffffff;
   font-size: 14px;
 }
@@ -181,13 +202,13 @@ export default {
     display: inline-block;
   }
   .first {
+    font-size: 12px;
     .left {
       float: left;
       width: 10%;
       p {
-        
-        height: 40px;
-        line-height: 40px;
+        height: 35px;
+        line-height: 35px;
         text-align: center;
         border: 1px solid #ffffff;
       }
@@ -204,22 +225,23 @@ export default {
       ul {
         li {
           display: inline-block;
-          height: 40px;
+          height: 35px;
           width: 32%;
           border: 1px solid #eeeeee;
           float: left;
           text-align: center;
-          line-height: 40px;
+          line-height: 35px;
           color: #4b4949;
         }
       }
     }
   }
   .second {
+    font-size: 12px;
     .left {
       float: left;
       width: 10%;
-      height: 82px;
+      height: 80px;
       background-color: rgb(118, 178, 235);
       p {
         height: 82px;
@@ -237,22 +259,22 @@ export default {
       ul {
         li {
           display: inline-block;
-          height: 40px;
+          height: 35px;
           width: 24%;
           border: 1px solid #eeeeee;
           float: left;
           text-align: center;
-          line-height: 40px;
           color: #4b4949;
         }
       }
     }
   }
   .third {
+    font-size: 12px;
     .left {
       float: left;
       width: 10%;
-      height: 125px;
+      height: 122px;
       background-color: rgb(240, 170, 120);
       p {
         height: 82px;
@@ -270,25 +292,26 @@ export default {
       ul {
         li {
           display: inline-block;
-          height: 40px;
+          height: 35px;
           width: 32%;
           border: 1px solid #eeeeee;
           float: left;
           text-align: center;
-          line-height: 40px;
+          line-height: 35px;
           color: #4b4949;
         }
       }
     }
   }
   .fourth {
+    font-size: 12px;
     .sheng,
     .fu {
       .left {
         float: left;
         width: 10%;
-        height: 125px;
-        line-height: 125px;
+        height: 122px;
+        line-height: 122px;
         background-color: rgb(236, 152, 147);
 
         p {
@@ -307,12 +330,12 @@ export default {
         ul {
           li {
             display: inline-block;
-            height: 40px;
+            height: 35px;
             width: 19%;
             border: 1px solid #eeeeee;
             float: left;
             text-align: center;
-            line-height: 40px;
+            line-height: 35px;
             color: #4b4949;
           }
         }
@@ -338,12 +361,12 @@ export default {
         ul {
           li {
             display: inline-block;
-            height: 40px;
+            height: 35px;
             width: 19%;
             border: 1px solid #eeeeee;
             float: left;
             text-align: center;
-            line-height: 40px;
+            line-height: 35px;
             color: #4b4949;
           }
         }
