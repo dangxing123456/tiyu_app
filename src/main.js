@@ -12,13 +12,14 @@ import "@/icons/index.js"; // 引入svg图标
 import * as method from "@/common/js/mixin.js"; // 引入全局方法
 import API from "@/server/apis.js"; // 引入api接口
 import VConsole from "vconsole";
-import Navigation from "vue-navigation"
-import touch from 'vue-directive-touch'
-import Vant from 'vant';
-import 'vant/lib/index.less';
-import 'vant/lib/icon/local.css';  // vant图标库
-import echarts from 'echarts'
-Vue.prototype.$echarts = echarts
+import Navigation from "vue-navigation";
+import touch from "vue-directive-touch";
+import Vant from "vant";
+import "vant/lib/index.less";
+import "vant/lib/icon/local.css"; // vant图标库
+import echarts from "echarts";
+import $ from "jquery";
+Vue.prototype.$echarts = echarts;
 Vue.use(Vant);
 Vue.use(touch);
 Vue.config.productionTip = false;
@@ -26,6 +27,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$METHOD = method;
 // 全局引入API
 Vue.prototype.$SERVER = API;
+Vue.prototype.$ = $;
 // 引入路由记录插件
 Vue.use(Navigation, {
   router,
@@ -38,9 +40,9 @@ Vue.use(Navigation, {
 // 该判断只在云编译环境下才有效 使用isApp变量手动设置环境(ios必须要有测试包的情况下，才会携带apicloud标识)
 // 标识可以在config.xml文件userAgent字段设置
 if (window.navigator.userAgent.match(/APICloud/i)) {
-// if (true) {
+  // if (true) {
   window.apiready = function() {
-    process.env.NODE_ENV === "development" && new VConsole()
+    process.env.NODE_ENV === "development" && new VConsole();
     // new VConsole()
     // 将API链接Vue原型，后续通过this.api代替window.api
     Vue.prototype.api = window.api;
@@ -51,7 +53,7 @@ if (window.navigator.userAgent.match(/APICloud/i)) {
     }).$mount("#app");
   };
 } else {
-  process.env.NODE_ENV === "development" // && new VConsole();
+  process.env.NODE_ENV === "development"; // && new VConsole();
   new Vue({
     router,
     store,

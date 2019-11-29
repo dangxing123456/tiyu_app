@@ -232,7 +232,7 @@ export default {
           }
         },
         xAxis: {
-          type: "",
+          type: "category",
           show: "true",
           data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
         },
@@ -272,7 +272,7 @@ export default {
         tooltip: {},
         legend: {},
         xAxis: {
-          type: "",
+          type: "category",
           show: "true",
           data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
         },

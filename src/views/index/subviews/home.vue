@@ -477,6 +477,7 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    padding: 10px;
     .peo {
       font-size: 12px;
     }
@@ -492,7 +493,6 @@ export default {
       width: 33%;
       text-align: center;
       border: 1px solid #eeeeee;
-      border-top: none;
       padding: 5px 0;
       .money {
         font-size: 14px;

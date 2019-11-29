@@ -148,8 +148,8 @@ export default {
     },
     //删除列表
     remove(index) {
-	  this.list.splice(index, 1);
-	  console.log(this.list)
+      this.list.splice(index, 1);
+      console.log(this.list);
     }
   },
   mounted() {
@@ -178,7 +178,7 @@ export default {
   }
 }
 .test {
-  padding: 15px 10px;
+  padding: 10px 10px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -189,8 +189,8 @@ export default {
     .div1 {
       display: flex;
       justify-content: space-around;
-      padding-bottom: 15px;
-      font-size: 16px;
+      padding-bottom: 10px;
+      font-size: 14px;
       color: #4b4949;
     }
     .tab {
@@ -202,12 +202,12 @@ export default {
         .p1 {
           span {
             display: inline-block;
-            height: 40px;
+            height: 38px;
             width: 70px;
             border: 1px solid #eeeeee;
             float: left;
             text-align: center;
-            line-height: 40px;
+            line-height: 38px;
           }
           .p1-first {
             width: 20px;
@@ -218,12 +218,12 @@ export default {
         .p2 {
           span {
             display: inline-block;
-            height: 40px;
+            height: 38px;
             width: 70px;
             border: 1px solid #eeeeee;
             float: left;
             text-align: center;
-            line-height: 40px;
+            line-height: 38px;
           }
           .p2-first {
             width: 20px;
@@ -234,20 +234,20 @@ export default {
         .p3 {
           span {
             display: inline-block;
-            height: 40px;
-            width: 70px;
-            border: 1px solid #eeeeee;
+            height: 38px;
+            border: 0.02rem solid #eeeeee;
             float: left;
             text-align: center;
-          }
-          .p3-first {
-            width: 20px;
+            width: 0.4rem;
             background-color: #29e222;
             color: white;
+            writing-mode: tb-rl;
+            line-height: 0.4rem;
           }
         }
       }
       .center {
+        font-size: 12px;
         .bot {
           display: inline-block;
           width: 214px;
@@ -262,12 +262,12 @@ export default {
           li {
             background-color: #fff;
             display: inline-block;
-            height: 43px;
-            width: 70px;
-            border: 1px solid #eeeeee;
+            height: 40px;
+            width: 1.4rem;
+            border: 0.02rem solid #eeeeee;
             float: left;
             text-align: center;
-            line-height: 43px;
+            line-height: 40px;
             color: #4b4949;
           }
         }
@@ -276,7 +276,7 @@ export default {
         color: #4b4949;
         span {
           display: inline-block;
-          height: 122px;
+          height: 118px;
           width: 31px;
           border: 1px solid #eeeeee;
           line-height: 32px;
@@ -333,6 +333,7 @@ export default {
     .div1 {
       border-left: 1px solid #eeeeee;
       display: flex;
+      font-size: 14px;
       p {
         margin-left: 25px;
       }

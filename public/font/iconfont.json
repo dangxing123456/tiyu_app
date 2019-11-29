@@ -20,6 +20,13 @@
       "unicode_decimal": 59111
     },
     {
+      "icon_id": "1249935",
+      "name": "箭头-上",
+      "font_class": "jiantou-up",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
       "icon_id": "2409081",
       "name": "问号",
       "font_class": "wenhao",
@@ -39,6 +46,13 @@
       "font_class": "bangdan",
       "unicode": "e63f",
       "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "4546569",
+      "name": "箭头-下",
+      "font_class": "jiantou1-bottom",
+      "unicode": "e602",
+      "unicode_decimal": 58882
     },
     {
       "icon_id": "7034538",

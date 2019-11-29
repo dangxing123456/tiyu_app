@@ -24,8 +24,41 @@ export default new Vuex.Store({
     register: {},
     message: null,
     recharge: null,
-    qq: "10000"
+    qq: 10000,
+    todos: [
+      { id: 1, done: true, text: "我是码农" },
+
+      { id: 2, done: false, text: "我是码农202号" },
+
+      { id: 3, done: true, text: "我是码农202号" }
+    ],
+    //当前比赛
+    listData: {},
+    //比赛选中的索引
+    activeData: [],
+    //比赛选中的赔率
+    betData: []
   },
-  mutations: {},
-  actions: {}
+  //方法
+  mutations: {
+    clickTotal(state) {
+      state.qq++;
+    },
+    //存值
+    setValue(state, xxx) {
+      state.listData = xxx;
+      console.log(state.listData);
+      // this.$router.push({
+      //   path: "/allplay"
+      // });
+    }
+  },
+  actions: {},
+  //计算属性
+  getters: {
+    getToDo(state) {
+      return state.todos.filter(item => item.done === true);
+      // filter 迭代过滤器 将每个item的值 item.done == true 挑出来， 返回的是一个数组
+    }
+  }
 });
