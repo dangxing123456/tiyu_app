@@ -12,103 +12,100 @@
       </van-dropdown-menu>
     </navBar>
     <div class="main">
-      <div v-for="(item,i) in 5">
-        <span v-for="(item2,j) in 5" :ref="'j'+i+'_'+j" :id="'j'+i+'_'+j">
-           {{i}}-{{j}}
-        </span>
-      </div>
-      <!-- <van-collapse v-model="activeNames" accordion> -->
-        <!-- <van-collapse-item v-for="(item,index) in dataRes" :key="index" :name="index">
-          <div class="title" slot="title">
-            <span>{{item[0].date}}</span>
-            <span>{{item[0].num}}</span>
-            
-            <span v-if="item[0].showStatus==1">可投注</span>
-            <span v-if="item[0].showStatus==0">不可投注</span>
-          </div> -->
-          <div class="test" v-for="(item2,index1) in dataRes" :key="index1">
-            <div class="left">
-              <p class="first">{{item2.num}}</p>
-              <p>{{item2.lcnAbbr}}</p>
-              <p>{{item2.time}}截止</p>
-            </div>
-            <div class="right">
-              <div class="div1">
-                <span>[{{item2.horder.substring(item2.horder.length-2,item2.horder.length-1)}}]{{item2.hcn}}</span>
-                <span>VS</span>
+      <div class="wrap" v-for="(item,index) in result" :key="index">
+        <div class="title">
+          <span>{{item.date}}</span>
+          <span>{{item.num}}</span>
+          <span v-if="item.showStatus==1">可投注</span>
+          <span v-if="item.showStatus==0">不可投注</span>
+        </div>
+        <div class="test">
+          <div class="left">
+            <p class="first">{{item.num}}</p>
+            <p>{{item.lcnAbbr}}</p>
+            <p>{{item.time}}截止</p>
+          </div>
+          <div class="right">
+            <div class="div1">
+              <span>{{item.hcn}}</span>
+              <span>VS</span>
 
-                <span>[{{item2.aorder.substring(item2.aorder.length-2,item2.aorder.length-1)}}]{{item2.acnAbbr}}</span>
+              <span>{{item.acnAbbr}}</span>
+            </div>
+            <div class="tab">
+              <div class="left1">
+                <p class="p1">
+                  <span class="p1-first">0</span>
+                </p>
+                <p class="p2">
+                  <span class="p2-first">{{item.footBallBet.odds_list.hhad.goalline}}</span>
+                </p>
               </div>
-              <div class="tab">
-                <div class="left1">
-                  <p class="p1">
-                    <span class="p1-first">0</span>
-                  </p>
-                  <p class="p2">
-                    <span class="p2-first">{{item2.footBallBet.odds_list.hhad.goalline}}</span>
-                  </p>
-                </div>
-                <div class="center">
-                  <ul>
-                    <li
-                    :id="'id'+index1+'_0'"
-                      :ref="'id'+index1+'_0'"
-                      @click="push('0','0',item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].h,index1,item2)"
-                    >
-                      <span>胜</span>
-                      <span
-                        v-if="item2.footBallBet.odds_list.had"
-                      >{{item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].h}}</span>
-                    </li>
-                    <li
-                      :ref="'id'+index1+'_1'"
-                      @click="push('0','1',item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].d,index1,item2)"
-                    >
-                      <span>平</span>
-                      <span
-                        v-if="item2.footBallBet.odds_list.had"
-                      >{{item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].d}}</span>
-                    </li>
-                    <li
-                      :ref="'id'+index1+'_2'"
-                      @click="push('0','2',item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].a,index1,item2)"
-                    >
-                      <span>负</span>
-                      <span
-                        v-if="item2.footBallBet.odds_list.had"
-                      >{{item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].a}}</span>
-                    </li>
-                    <li
-                      :ref="'id'+index1+'_3'"
-                      @click="push('1','3',item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].h,index1,item2)"
-                    >
-                      <span>胜</span>
-                      <span>{{item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].h}}</span>
-                    </li>
-                    <li
-                      :ref="'id'+index1+'_4'"
-                      @click="push('1','4',item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].d,index1,item2)"
-                    >
-                      <span>平</span>
-                      <span>{{item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].d}}</span>
-                    </li>
-                    <li
-                      :ref="'id'+index1+'_5'"
-                      @click="push('1','5',item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].a,index1,item2)"
-                    >
-                      <span>负</span>
-                      <span>{{item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].a}}</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="right1">
-                  <span ref="sp" @click="detailPlay(item2,index1)">全部比赛</span>
-                </div>
+              <div class="center">
+                <ul>
+                  <li
+                    :ref="'id'+index+'_0'"
+                    @click="push('0','0',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].h,index)"
+                  >
+                    <span>胜</span>
+                    <span
+                      v-if="item.footBallBet.odds_list.had"
+                    >{{item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].h}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_1'"
+                    @click="push('0','1',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].d,index)"
+                  >
+                    <span>平</span>
+                    <span
+                      v-if="item.footBallBet.odds_list.had"
+                    >{{item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].d}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_2'"
+                    @click="push('0','2',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].a,index)"
+                  >
+                    <span>负</span>
+                    <span
+                      v-if="item.footBallBet.odds_list.had"
+                    >{{item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].a}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_3'"
+                    @click="push('1','3',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].h,index)"
+                  >
+                    <span>胜</span>
+                    <span
+                      v-if="item.footBallBet.odds_list.hhad"
+                    >{{item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].h}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_4'"
+                    @click="push('1','4',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].d,index)"
+                  >
+                    <span>平</span>
+                    <span
+                      v-if="item.footBallBet.odds_list.hhad"
+                    >{{item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].d}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_5'"
+                    @click="push('1','5',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].a,index)"
+                  >
+                    <span>负</span>
+                    <span
+                      v-if="item.footBallBet.odds_list.hhad"
+                    >{{item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].a}}</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="right1">
+                <span ref="sp" @click="detailPlay(item,index)">全部比赛</span>
               </div>
             </div>
           </div>
-        <!-- </van-collapse-item> -->
-      <!-- </van-collapse> -->
+        </div>
+      </div>
       <!-- 底部按钮 -->
       <div class="bot-btn">
         <div class="text">
@@ -205,37 +202,32 @@ export default {
     }),
     ...mapGetters({
       tofo: "getToDo"
-    }),
-    getTest() {
-      for (var i = 0; i < this.dataRes.length; i++) {
-        for (var j = 0; j < this.dataRes[i].length; j++) {
-          console.log(this.dataRes[i][j].id);
-          for (var k = 0; k < this.$store.state.replayData.length; k++) {
-            console.log(this.$store.state.replayData[k].id);
-            if (this.dataRes[i][j].id == this.$store.state.replayData[k].id) {
-              return "哈哈";
-            }
-          }
-          // if (this.dataRes[i][j].id) {
-          // }
-        }
-      }
-
-      return "全部玩法";
-    }
+    })
   },
   watch: {},
   created() {
     //获取足球信息
-
     //下单
   },
-  //1.不高亮
-  //2.点击数据会重复
-
+  //
+  updated() {
+    if (this.$store.state.activeData) {
+      for (var i = 0; i < this.$store.state.activeData.length; i++) {
+        for (var j = 0; j < this.$store.state.activeData[i].length; j++) {
+          for (var k = 0; k < this.$store.state.activeData[i][j].length; k++) {
+            if (this.$store.state.activeData[i][j][k] != undefined) {
+              this.$refs[
+                "id" + i + "_" + this.$store.state.activeData[i][j][k]
+              ][0].className = "bgColor";
+            }
+          }
+        }
+      }
+    }
+  },
   mounted() {
     var count = 0;
-    var that = this
+    var that = this;
     if (this.arrdata) {
       for (var i = 0; i < this.arrdata.length; i++) {
         if (!this.arrdata[i]) {
@@ -252,120 +244,61 @@ export default {
         }
       }
     }
-    console.log(count);
-    this.$nextTick(function() {
-    this.$SERVER
-      .getFootBall({
-        pagenum: 1,
-        pagesize: 10
-      })
-      .then(res => {
-        this.dataLen = res.data.list;
-        //根据时间把数组进行分类
-        var map = this.dataLen.reduce(
-          (p, c) => [(p[c.date] = p[c.date] || []), p[c.date].push(c), p][2],
-          {}
-        );
-        // 获取映射分类下的数组
-        var result = Object.keys(map).map(i => map[i]);
-
-        this.dataRes = res.data.list;
-        console.log(this.$store.state.activeData)
-        if (this.$store.state.activeData[0] != undefined) {
-        for (var i = 0; i < this.$store.state.activeData[0].length; i++) {
-          if (this.$store.state.activeData[0][i]) {
-            for (
-              var j = 0;
-              j < this.$store.state.activeData[0][i].length;
-              j++
-            ) {
-              if (this.$store.state.activeData[0][i][j] != undefined) {
-                // console.log(this.$store.state.activeData[0][i][j]);
-              }
-              console.log('________')
-              console.log(that.$refs)
-              window.refs = that.$refs
-              return
-              that.$refs[
-                "id" + i + "_" + this.$store.state.activeData[i][j]
-              ][0].className = "bgColor";
-              // console.log(this.$store.state.activeData[0][i])
-            }
+    that.$nextTick(function() {
+      that.$SERVER
+        .getFootBall({
+          pagenum: 1,
+          pagesize: 10
+        })
+        .then(res => {
+          if (res.code == 200) {
+            that.result = res.data.list;
           }
-        }
-        
-      }
-      
-    console.log(this.$refs)
-      });
+        });
     });
   },
   methods: {
-    push(i1, i2, val, index1, item2) {
-      console.log(this.$store.state.replayData);
-      // console.log(index1);
-      if (this.$refs["id" + index1 + "_" + i2][0].className == "bgColor") {
-        //点击 删除的 时候
+    push(i1, i2, val, index) {
+      for (var i = 0; i < 3; i++) {        
+        if (this.$store.state.arrData[0][i]) {
+          if (this.$refs["id" + index + "_" + i][0].className != "bgColor") {
+            this.$store.state.arrData[0].splice(i, 1);
+          }
+        }
+      }
+      for (var i = 3; i < 6; i++) {
+        
+        if (this.$store.state.arrData[1][i]) {
+          if (this.$refs["id" + index + "_" + i][0].className != "bgColor") {
+            this.$store.state.arrData[1].splice(i-3, 1);
+          }
+        }
+      }
 
+      if (this.$refs["id" + index + "_" + i2][0].className == "bgColor") {
         // 删除
-        delete this.$store.state.arrData[i1][i2];
-        if (!this.$store.state.activeData[index1]) {
-          this.$store.state.activeData[index1] = [];
-        }
-        for (var i = 0; i < this.$store.state.arrData.length; i++) {
-          for (var j = 0; j < this.$store.state.arrData[i].length; j++) {
-            if (!this.$store.state.activeData[index1][i]) {
-              this.$store.state.activeData[index1][i] = [];
-            }
-            if (this.$store.state.arrData[index1]) {
-              this.$store.state.activeData[index1][i][
-                j
-              ] = this.$store.state.arrData[i][j];
-            }
-          }
-        }
-        this.$refs["id" + index1 + "_" + i2][0].className = "";
-        console.log(this.$store.state.activeData);
+        this.$refs["id" + index + "_" + i2][0].className = "";
+        delete this.$store.state.activeData[index][i1][i2];
       } else {
-        // this.$store.state.replayData[index1]=(item2);
-        //点击 把比赛加入vuex  中
-        this.$store.state.replayData.push(item2);
         // 添加
-       
         this.$store.state.arrData[i1][i2] = i2;
-        if (!this.$store.state.activeData[index1]) {
-          this.$store.state.activeData[index1] = [];
+        if (!this.$store.state.activeData[index]) {
+          this.$store.state.activeData[index] = [];
         }
         for (var i = 0; i < this.$store.state.arrData.length; i++) {
           for (var j = 0; j < this.$store.state.arrData[i].length; j++) {
-            if (!this.$store.state.activeData[index1][i]) {
-              this.$store.state.activeData[index1][i] = [];
+            if (!this.$store.state.activeData[index][i]) {
+              this.$store.state.activeData[index][i] = [];
             }
-            if (this.$store.state.arrData[index1]) {
-              this.$store.state.activeData[index1][i][
+            if (this.$store.state.arrData[index]) {
+              this.$store.state.activeData[index][i][
                 j
               ] = this.$store.state.arrData[i][j];
             }
           }
         }
-         console.log(this.$store.state.activeData);
-        this.$refs["id" + index1 + "_" + i2][0].className = "bgColor";
-        //点击把比赛加入到vuex中
-        for (var i = 0; i < this.$store.state.replayData.length; i++) {
-          for (var j = i + 1; j < this.$store.state.replayData.length; ) {
-            if (
-              this.$store.state.replayData[i].id ==
-              this.$store.state.replayData[j].id
-            ) {
-              //通过id属性进行匹配；
-              this.$store.state.replayData.splice(j, 1); //去除重复的对象；
-            } else {
-              j++;
-            }
-          }
-        }
-
-        console.log();
+        console.log(this.$store.state.activeData);
+        this.$refs["id" + index + "_" + i2][0].className = "bgColor";
       }
     },
     //映射mapMutations中的clickTotal方法
@@ -375,7 +308,7 @@ export default {
       //往vuex中存入状态
       set: "setValue"
     }),
-    detailPlan(item2) {
+    detailPlan(item) {
       console.log(this.$store.state.replayData);
       this.$router.push({
         path: "/confirmPlan"
@@ -391,17 +324,7 @@ export default {
     alertMenu() {
       this.show = true;
     },
-    change: function(e, index) {},
-    text(e) {
-      // console.log(item.matchId);
-      if (this.textList.indexOf(e.target.innerHTML) === -1) {
-        this.textList.push(e.target.innerHTML);
-      } else {
-        this.textList.splice(this.textList.indexOf(e.target.innerHTML), 1);
-      }
-      this.textList = Array.from(new Set(this.textList));
-      console.log(this.textList);
-    }
+    change: function(e, index) {}
   }
 };
 </script>
@@ -440,211 +363,215 @@ export default {
     color: red;
   }
 }
-/deep/ .van-collapse-item__content {
-  padding-bottom: 120px;
-}
-.title {
-  color: #4b4949;
-}
-.test {
-  padding: 15px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eeeeee;
-  font-size: 14px;
-  .right {
-    font-size: 14px;
-    width: 80%;
-    .div1 {
-      display: flex;
-      justify-content: space-around;
-      padding-bottom: 15px;
 
-      color: #4b4949;
-      span {
-        display: inline-block;
-        width: 33%;
-        text-align: center;
-      }
-    }
-    .tab {
-      .left1 {
-        float: left;
-        color: #4b4949;
-        .p1 {
-          span {
-            display: inline-block;
-            height: 30px;
-            width: 70px;
-            border: 1px solid #eeeeee;
-            float: left;
-            text-align: center;
-            line-height: 30px;
-          }
-          .p1-first {
-            width: 20px;
-            background-color: rgb(204, 204, 204);
-            color: white;
-          }
-        }
-        .p2 {
-          span {
-            display: inline-block;
-            height: 30px;
-            width: 70px;
-            border: 1px solid #eeeeee;
-            float: left;
-            text-align: center;
-            line-height: 30px;
-          }
-          .p2-first {
-            width: 20px;
-            background-color: rgb(100, 160, 240);
-            color: white;
-          }
-        }
-      }
-      .center {
-        font-size: 12px;
-        ul {
-          li {
-            display: inline-block;
-            height: 30px;
-            width: 70px;
-            border: 1px solid #eeeeee;
-            float: left;
-            text-align: center;
-            line-height: 30px;
-            color: #4b4949;
-          }
-        }
-      }
-      .right1 {
+.main {
+  padding-bottom: 120px;
+
+  .title {
+    color: #4b4949;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .test {
+    padding: 15px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eeeeee;
+    font-size: 14px;
+    .right {
+      font-size: 14px;
+      width: 80%;
+      .div1 {
+        display: flex;
+        justify-content: space-around;
+        padding-bottom: 15px;
+
         color: #4b4949;
         span {
           display: inline-block;
-          height: 62px;
-          width: 31px;
-          border: 1px solid #eeeeee;
-          line-height: 30px;
-          font-size: 14px;
+          width: 33%;
+          text-align: center;
+        }
+      }
+      .tab {
+        .left1 {
+          float: left;
+          color: #4b4949;
+          .p1 {
+            span {
+              display: inline-block;
+              height: 30px;
+              width: 70px;
+              border: 1px solid #eeeeee;
+              float: left;
+              text-align: center;
+              line-height: 30px;
+            }
+            .p1-first {
+              width: 20px;
+              background-color: rgb(204, 204, 204);
+              color: white;
+            }
+          }
+          .p2 {
+            span {
+              display: inline-block;
+              height: 30px;
+              width: 70px;
+              border: 1px solid #eeeeee;
+              float: left;
+              text-align: center;
+              line-height: 30px;
+            }
+            .p2-first {
+              width: 20px;
+              background-color: rgb(100, 160, 240);
+              color: white;
+            }
+          }
+        }
+        .center {
+          font-size: 12px;
+          ul {
+            li {
+              display: inline-block;
+              height: 30px;
+              width: 70px;
+              border: 1px solid #eeeeee;
+              float: left;
+              text-align: center;
+              line-height: 30px;
+              color: #4b4949;
+            }
+          }
+        }
+        .right1 {
+          color: #4b4949;
+          span {
+            display: inline-block;
+            height: 62px;
+            width: 31px;
+            border: 1px solid #eeeeee;
+            line-height: 30px;
+            font-size: 14px;
+          }
         }
       }
     }
-  }
-  .left {
-    text-align: center;
-    font-size: 12px;
-    .first {
-      padding-bottom: 20px;
+    .left {
+      text-align: center;
+      font-size: 12px;
+      .first {
+        padding-bottom: 20px;
 
-      color: #4b4949;
-    }
-  }
-}
-.right .shai {
-  display: inline-block;
-  text-align: center;
-  line-height: 20px;
-  border: 1px solid #ffffff;
-  background-color: #f24a44;
-  color: #ffffff;
-  width: 20px;
-  height: 20px;
-  font-size: 14px;
-  border-radius: 5px;
-}
-.content {
-  background-color: #eeeeee;
-  .head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 10px;
-    h3 {
-      font-size: 16px;
-    }
-    span {
-      font-size: 14px;
-      color: #f24a44;
-    }
-  }
-  .wrapper {
-    background-color: #fff;
-    padding: 10px 5px;
-    ul {
-      display: flex;
-      flex-flow: wrap;
-      justify-content: space-around;
-      li {
-        display: inline-block;
-        width: 100px;
-        height: 35px;
-        border: 1px solid #d6d6d6;
-        text-align: center;
-        line-height: 35px;
-        margin-top: 10px;
+        color: #4b4949;
       }
     }
   }
-  .senf {
-    padding: 8px 10px;
-    h3 {
-      font-size: 16px;
-    }
+  .right .shai {
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid #ffffff;
+    background-color: #f24a44;
+    color: #ffffff;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    border-radius: 5px;
   }
-  .bottom {
-    background-color: #fff;
-    padding: 8px 10px;
-    .radio {
+  .content {
+    background-color: #eeeeee;
+    .head {
       display: flex;
       align-items: center;
-      justify-content: space-around;
-      width: 50%;
-      input {
-        display: inline-block;
-        width: 50px;
-        border: 1px solid #d6d6d6;
-        border-radius: 3px;
+      justify-content: space-between;
+      padding: 8px 10px;
+      h3 {
+        font-size: 16px;
+      }
+      span {
+        font-size: 14px;
+        color: #f24a44;
       }
     }
-    .con {
-      width: 75%;
+    .wrapper {
+      background-color: #fff;
+      padding: 10px 5px;
+      ul {
+        display: flex;
+        flex-flow: wrap;
+        justify-content: space-around;
+        li {
+          display: inline-block;
+          width: 100px;
+          height: 35px;
+          border: 1px solid #d6d6d6;
+          text-align: center;
+          line-height: 35px;
+          margin-top: 10px;
+        }
+      }
+    }
+    .senf {
+      padding: 8px 10px;
+      h3 {
+        font-size: 16px;
+      }
+    }
+    .bottom {
+      background-color: #fff;
+      padding: 8px 10px;
+      .radio {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 50%;
+        input {
+          display: inline-block;
+          width: 50px;
+          border: 1px solid #d6d6d6;
+          border-radius: 3px;
+        }
+      }
+      .con {
+        width: 75%;
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        padding-top: 10px;
+        color: #4b4949;
+      }
+    }
+    .btn {
       display: flex;
       justify-content: space-between;
+    }
+  }
+  .bot-btn {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    .text {
+      width: 100%;
+      background-color: rgb(250, 235, 275);
+      text-align: center;
+      padding: 5px 0px;
       font-size: 14px;
-      padding-top: 10px;
-      color: #4b4949;
+      .pei {
+        color: rgb(158, 150, 145);
+        padding-top: 5px;
+      }
+    }
+    .btn {
+      display: flex;
+      width: 100%;
     }
   }
-  .btn {
-    display: flex;
-    justify-content: space-between;
-  }
-}
-.bot-btn {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  .text {
-    width: 100%;
-    background-color: rgb(250, 235, 275);
-    text-align: center;
-    padding: 5px 0px;
-    font-size: 14px;
-    .pei {
-      color: rgb(158, 150, 145);
-      padding-top: 5px;
-    }
-  }
-  .btn {
-    display: flex;
-    width: 100%;
-  }
-}
 
-.red {
-  color: red !important;
+  .red {
+    color: red !important;
+  }
 }
 </style>

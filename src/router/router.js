@@ -551,6 +551,7 @@ const router = new Router({
     }
   ]
 });
+// 判断  是否登录  存在token
 router.beforeEach((to, from, next) => {
   if (to.meta.index != undefined) {
     store.state.tabActiveIndex = to.meta.index;

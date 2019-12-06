@@ -22,7 +22,7 @@
         <div class="right">
           <ul>
             <li
-            :id="'id'+dataIndex+'_0'"
+              :id="'id'+dataIndex+'_0'"
               :ref="'id'+dataIndex+'_0'"
               @click="push('0','0',list.footBallBet.odds_list.had.odds
 
@@ -769,7 +769,6 @@ export default {
           .className == "bgColor"
       ) {
         // 删除
-        this.count -= 1;
         if (this.$store.state.activeData[this.$store.state.listData.index]) {
           delete this.$store.state.activeData[this.$store.state.listData.index][
             i1
@@ -783,8 +782,7 @@ export default {
       } else {
         // 添加
         this.count += 1;
-        console.log(this.count);
-        console.log(this.$store.state.arrData);
+
         this.$store.state.arrData[i1][i2] = i2;
         this.$refs[
           "id" + this.$store.state.listData.index + "_" + i2
@@ -972,7 +970,7 @@ export default {
           }
         }
       }
-      console.log(this.$store.state.activeData);
+
       this.list.count = 3;
       // console.log(this.$store.state.activeData);
       this.$store.state.betData.push([...this.betArr]);
@@ -1006,7 +1004,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$refs);
     if (this.$store.state.activeData[this.list.index] != undefined) {
       for (
         var i = 0;
