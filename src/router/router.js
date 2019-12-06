@@ -472,6 +472,21 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
+    //确认下单
+    {
+      path: "/confirmOrder",
+      name: "confirmOrder",
+      component: () => import("@/views/detail/confirmOrder.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "确认",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
 
     // 注册登录
     {

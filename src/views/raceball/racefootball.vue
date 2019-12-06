@@ -12,16 +12,21 @@
       </van-dropdown-menu>
     </navBar>
     <div class="main">
-      <van-collapse v-model="activeNames" accordion>
-        <van-collapse-item v-for="(item,index) in dataRes" :key="index" :name="index">
+      <div v-for="(item,i) in 5">
+        <span v-for="(item2,j) in 5" :ref="'j'+i+'_'+j" :id="'j'+i+'_'+j">
+           {{i}}-{{j}}
+        </span>
+      </div>
+      <!-- <van-collapse v-model="activeNames" accordion> -->
+        <!-- <van-collapse-item v-for="(item,index) in dataRes" :key="index" :name="index">
           <div class="title" slot="title">
             <span>{{item[0].date}}</span>
             <span>{{item[0].num}}</span>
-            <!-- <span>{{item.length}场</span> -->
+            
             <span v-if="item[0].showStatus==1">可投注</span>
             <span v-if="item[0].showStatus==0">不可投注</span>
-          </div>
-          <div class="test" v-for="(item2,index1) in dataRes[index]" :key="index1">
+          </div> -->
+          <div class="test" v-for="(item2,index1) in dataRes" :key="index1">
             <div class="left">
               <p class="first">{{item2.num}}</p>
               <p>{{item2.lcnAbbr}}</p>
@@ -37,75 +42,82 @@
               <div class="tab">
                 <div class="left1">
                   <p class="p1">
-                    <span class="p1-first">{{item2.footBallBet.odds_list.hhad.single}}</span>
+                    <span class="p1-first">0</span>
                   </p>
                   <p class="p2">
                     <span class="p2-first">{{item2.footBallBet.odds_list.hhad.goalline}}</span>
                   </p>
                 </div>
                 <div class="center">
-                  <ul class="a" ref="aa">
+                  <ul>
                     <li
-                      :class="textList.includes(item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].h) ? 'bgColor':'' "
-                      @click="text($event)"
+                    :id="'id'+index1+'_0'"
+                      :ref="'id'+index1+'_0'"
+                      @click="push('0','0',item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].h,index1,item2)"
                     >
                       <span>胜</span>
-                      {{item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].h}}
+                      <span
+                        v-if="item2.footBallBet.odds_list.had"
+                      >{{item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].h}}</span>
                     </li>
                     <li
-                      :class="textList.includes(item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].d) ? 'bgColor':'' "
-                      @click="text($event)"
+                      :ref="'id'+index1+'_1'"
+                      @click="push('0','1',item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].d,index1,item2)"
                     >
                       <span>平</span>
-                      {{item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].d}}
+                      <span
+                        v-if="item2.footBallBet.odds_list.had"
+                      >{{item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].d}}</span>
                     </li>
                     <li
-                      :class="textList.includes(item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].a) ? 'bgColor':'' "
-                      @click="text($event)"
+                      :ref="'id'+index1+'_2'"
+                      @click="push('0','2',item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].a,index1,item2)"
                     >
                       <span>负</span>
-                      {{item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].a}}
+                      <span
+                        v-if="item2.footBallBet.odds_list.had"
+                      >{{item2.footBallBet.odds_list.had.odds[item2.footBallBet.odds_list.had.odds.length-1].a}}</span>
                     </li>
                     <li
-                      :class="textList.includes(item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].h) ? 'bgColor':'' "
-                      @click="text($event)"
+                      :ref="'id'+index1+'_3'"
+                      @click="push('1','3',item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].h,index1,item2)"
                     >
                       <span>胜</span>
-                      {{item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].h}}
+                      <span>{{item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].h}}</span>
                     </li>
                     <li
-                      :class="textList.includes(item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].d) ? 'bgColor':'' "
-                      @click="text($event)"
+                      :ref="'id'+index1+'_4'"
+                      @click="push('1','4',item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].d,index1,item2)"
                     >
                       <span>平</span>
-                      {{item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].d}}
+                      <span>{{item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].d}}</span>
                     </li>
                     <li
-                      :class="textList.includes(item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].a) ? 'bgColor':'' "
-                      @click="text($event)"
+                      :ref="'id'+index1+'_5'"
+                      @click="push('1','5',item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].a,index1,item2)"
                     >
                       <span>负</span>
-                      {{item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].a}}
+                      <span>{{item2.footBallBet.odds_list.hhad.odds[item2.footBallBet.odds_list.hhad.odds.length-1].a}}</span>
                     </li>
                   </ul>
                 </div>
                 <div class="right1">
-                  <span ref="sp" @click="detailPlay(item2,index1)">全部玩法</span>
+                  <span ref="sp" @click="detailPlay(item2,index1)">全部比赛</span>
                 </div>
               </div>
             </div>
           </div>
-        </van-collapse-item>
-      </van-collapse>
+        <!-- </van-collapse-item> -->
+      <!-- </van-collapse> -->
       <!-- 底部按钮 -->
       <div class="bot-btn">
         <div class="text">
-          <p>至少选择1场比赛</p>
+          <p>至少选择{{this.$store.state.replayData.length}}场比赛</p>
           <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
         </div>
         <div class="btn">
           <van-button type="default" size="large">清空</van-button>
-          <van-button type="danger" size="large" @click="detailPlan">确定</van-button>
+          <van-button type="danger" size="large" @click="detailPlan()">确定</van-button>
         </div>
       </div>
       <!-- 下拉菜单 -->
@@ -180,32 +192,68 @@ export default {
       changeColor: false,
       dataLen: [],
       dataRes: [],
-      obj: { a: 1, b: 2, c: 3 },
-      obj1: { a: 4, b: 5, c: 6 },
       box: [],
       res: [],
       arr: [],
       textList: []
     };
   },
-  computed: {},
-  watch: {
-    box: function() {
-      if (this.box.length > 0) {
-        console.log(this.$refs);
-        this.$refs.sp[this.i].innerHTML =
-          "<span>已选" + this.box.length + "项</span>";
-        this.$refs.sp[this.i].style.background = "red";
-        this.$refs.sp[this.i].style.color = "white";
-      } else {
-        this.$refs.sp[this.i].innerHTML = "<span>全部玩法</span>";
-        this.$refs.sp[this.i].style.background = "white";
-        this.$refs.sp[this.i].style.color = "#4b4949";
+  computed: {
+    ...mapState({
+      a: "qq",
+      acdata: "activeData"
+    }),
+    ...mapGetters({
+      tofo: "getToDo"
+    }),
+    getTest() {
+      for (var i = 0; i < this.dataRes.length; i++) {
+        for (var j = 0; j < this.dataRes[i].length; j++) {
+          console.log(this.dataRes[i][j].id);
+          for (var k = 0; k < this.$store.state.replayData.length; k++) {
+            console.log(this.$store.state.replayData[k].id);
+            if (this.dataRes[i][j].id == this.$store.state.replayData[k].id) {
+              return "哈哈";
+            }
+          }
+          // if (this.dataRes[i][j].id) {
+          // }
+        }
       }
+
+      return "全部玩法";
     }
   },
+  watch: {},
   created() {
     //获取足球信息
+
+    //下单
+  },
+  //1.不高亮
+  //2.点击数据会重复
+
+  mounted() {
+    var count = 0;
+    var that = this
+    if (this.arrdata) {
+      for (var i = 0; i < this.arrdata.length; i++) {
+        if (!this.arrdata[i]) {
+          this.arrdata.splice(i, 1);
+          i--;
+        }
+      }
+      console.log(this.arrdata);
+      for (var i = 0; i < this.arrdata.length; i++) {
+        for (var j = 0; j < this.arrdata[i].length; j++) {
+          if (this.arrdata[i][j]) {
+            count += 1;
+          }
+        }
+      }
+    }
+    console.log(count);
+    this.$nextTick(function() {
     this.$SERVER
       .getFootBall({
         pagenum: 1,
@@ -213,7 +261,6 @@ export default {
       })
       .then(res => {
         this.dataLen = res.data.list;
-        console.log(this.dataLen);
         //根据时间把数组进行分类
         var map = this.dataLen.reduce(
           (p, c) => [(p[c.date] = p[c.date] || []), p[c.date].push(c), p][2],
@@ -221,33 +268,106 @@ export default {
         );
         // 获取映射分类下的数组
         var result = Object.keys(map).map(i => map[i]);
-        this.dataRes = result;
-        console.log(result);
+
+        this.dataRes = res.data.list;
+        console.log(this.$store.state.activeData)
+        if (this.$store.state.activeData[0] != undefined) {
+        for (var i = 0; i < this.$store.state.activeData[0].length; i++) {
+          if (this.$store.state.activeData[0][i]) {
+            for (
+              var j = 0;
+              j < this.$store.state.activeData[0][i].length;
+              j++
+            ) {
+              if (this.$store.state.activeData[0][i][j] != undefined) {
+                // console.log(this.$store.state.activeData[0][i][j]);
+              }
+              console.log('________')
+              console.log(that.$refs)
+              window.refs = that.$refs
+              return
+              that.$refs[
+                "id" + i + "_" + this.$store.state.activeData[i][j]
+              ][0].className = "bgColor";
+              // console.log(this.$store.state.activeData[0][i])
+            }
+          }
+        }
+        
+      }
+      
+    console.log(this.$refs)
       });
-    //下单
-    this.$SERVER
-      .footBallBookOrder({
-        wagers: [["0_1", "1_1"], ["0_2", "1_2", "3_2"]],
-        userId: "10089",
-        times: 2,
-        matchIds: ["123275", "123276"],
-        bets: [[1.8, 3.5, 8]]
-      })
-      .then(res => {
-        console.log(res);
-      });
+    });
   },
-  //vuex中取出state的值 使用映射
-  computed: {
-    ...mapState({
-      a: "qq"
-    }),
-    ...mapGetters({
-      tofo: "getToDo"
-    })
-  },
-  mounted() {},
   methods: {
+    push(i1, i2, val, index1, item2) {
+      console.log(this.$store.state.replayData);
+      // console.log(index1);
+      if (this.$refs["id" + index1 + "_" + i2][0].className == "bgColor") {
+        //点击 删除的 时候
+
+        // 删除
+        delete this.$store.state.arrData[i1][i2];
+        if (!this.$store.state.activeData[index1]) {
+          this.$store.state.activeData[index1] = [];
+        }
+        for (var i = 0; i < this.$store.state.arrData.length; i++) {
+          for (var j = 0; j < this.$store.state.arrData[i].length; j++) {
+            if (!this.$store.state.activeData[index1][i]) {
+              this.$store.state.activeData[index1][i] = [];
+            }
+            if (this.$store.state.arrData[index1]) {
+              this.$store.state.activeData[index1][i][
+                j
+              ] = this.$store.state.arrData[i][j];
+            }
+          }
+        }
+        this.$refs["id" + index1 + "_" + i2][0].className = "";
+        console.log(this.$store.state.activeData);
+      } else {
+        // this.$store.state.replayData[index1]=(item2);
+        //点击 把比赛加入vuex  中
+        this.$store.state.replayData.push(item2);
+        // 添加
+       
+        this.$store.state.arrData[i1][i2] = i2;
+        if (!this.$store.state.activeData[index1]) {
+          this.$store.state.activeData[index1] = [];
+        }
+        for (var i = 0; i < this.$store.state.arrData.length; i++) {
+          for (var j = 0; j < this.$store.state.arrData[i].length; j++) {
+            if (!this.$store.state.activeData[index1][i]) {
+              this.$store.state.activeData[index1][i] = [];
+            }
+            if (this.$store.state.arrData[index1]) {
+              this.$store.state.activeData[index1][i][
+                j
+              ] = this.$store.state.arrData[i][j];
+            }
+          }
+        }
+         console.log(this.$store.state.activeData);
+        this.$refs["id" + index1 + "_" + i2][0].className = "bgColor";
+        //点击把比赛加入到vuex中
+        for (var i = 0; i < this.$store.state.replayData.length; i++) {
+          for (var j = i + 1; j < this.$store.state.replayData.length; ) {
+            if (
+              this.$store.state.replayData[i].id ==
+              this.$store.state.replayData[j].id
+            ) {
+              //通过id属性进行匹配；
+              this.$store.state.replayData.splice(j, 1); //去除重复的对象；
+            } else {
+              j++;
+            }
+          }
+        }
+
+        console.log();
+      }
+    },
     //映射mapMutations中的clickTotal方法
     ...mapMutations({
       //修改state中的状态
@@ -255,14 +375,14 @@ export default {
       //往vuex中存入状态
       set: "setValue"
     }),
-    detailPlan() {
+    detailPlan(item2) {
+      console.log(this.$store.state.replayData);
       this.$router.push({
         path: "/confirmPlan"
       });
     },
     detailPlay(item, i) {
       item.index = i;
-      console.log(i);
       this.$store.state.listData = item;
       this.$router.push({
         path: "/allplay"
@@ -271,14 +391,7 @@ export default {
     alertMenu() {
       this.show = true;
     },
-    change: function(e, index) {
-      if (this.box.includes(e)) {
-        this.box.splice(this.box.indexOf(e), 1);
-      } else {
-        this.box.push(e);
-      } // 把点击的元素item放入box数组中
-      console.log(this.box);
-    },
+    change: function(e, index) {},
     text(e) {
       // console.log(item.matchId);
       if (this.textList.indexOf(e.target.innerHTML) === -1) {
@@ -293,9 +406,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.bgc {
-  color: white !important;
+.bgColor {
   background-color: red;
+  color: white !important;
+  text-align: center !important;
 }
 // 修改vant ui内置样式
 .menu {
@@ -325,6 +439,9 @@ export default {
     border: 1px solid red !important;
     color: red;
   }
+}
+/deep/ .van-collapse-item__content {
+  padding-bottom: 120px;
 }
 .title {
   color: #4b4949;
@@ -526,11 +643,7 @@ export default {
     width: 100%;
   }
 }
-.bgColor {
-  background-color: red;
-  color: white !important;
-  text-align: center !important;
-}
+
 .red {
   color: red !important;
 }

@@ -34,10 +34,15 @@ export default new Vuex.Store({
     ],
     //当前比赛
     listData: {},
+    //确认选中的比赛
+    replayData: [],
     //比赛选中的索引
     activeData: [],
     //比赛选中的赔率
-    betData: []
+    betData: [],
+    arrData: [[], [], [], [], []],
+    //倍数
+    value: 1
   },
   //方法
   mutations: {
