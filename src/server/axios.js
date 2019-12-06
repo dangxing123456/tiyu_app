@@ -4,9 +4,7 @@ import qs from "qs";
 import envconfig from "./envconfig.js";
 import router from "@/router/router.js";
 import store from "../store/store";
-import {
-  Toast
-} from "vant";
+import { Toast } from "vant";
 Vue.use(Toast);
 
 // 状态码错误信息
@@ -41,7 +39,11 @@ axios.interceptors.request.use(
     }
     // qs转换
     if (config.method.toUpperCase() !== "GET") {
+<<<<<<< HEAD
       // if (Object.prototype.toString.call(config.data) !== '[object FormData]') config.data = qs.stringify(config.data);
+=======
+      // if (Object.prototype.toString.call(config.data) !== "[object FormData]") config.data = qs.stringify(config.data);
+>>>>>>> 2cba31119c81150a7786fc8041ce4f9350b5a493
     }
     return config;
   },
@@ -89,15 +91,16 @@ export default class Axios {
   axios(method, url, params, config) {
     return new Promise((resolve, reject) => {
       if (typeof params !== "object") params = {};
-      let _option = Object.assign({
+      let _option = Object.assign(
+        {
           method,
           url,
           baseURL: envconfig.baseURL,
           timeout: 30000,
           headers: {
-            'Content-Type': 'application/json',
-            // 'Content-Type': 'application/x-www-form-urlencoded'
-          },
+            'Content-Type': 'application/json'
+            // "Content-Type": "application/x-www-form-urlencoded"
+          }
           // withCredentials: true, //是否携带cookies发起请求
         },
         config
@@ -105,32 +108,35 @@ export default class Axios {
       // 添加token
       _option.headers = {
         ..._option.headers,
-        authorization: "Bearer " + store.state.token || "",
+        authorization: "Bearer " + store.state.token || ""
         // userid: store.state.userInfo.userid || ""
         // Cookie: "JSESSIONID=" + window.localStorage.getItem('Cookie')
       };
       // 处理get、post传参问题
-      method.toUpperCase() !== "GET" ?
-        // (_option.data = {...params,...{token:store.state.token}}) :
-        (_option.data = Object.prototype.toString.call(params) === '[object FormData]'? params:{...params,...{token:store.state.token}}) :
-        (_option.params = params);
+      method.toUpperCase() !== "GET"
+        ? // (_option.data = {...params,...{token:store.state.token}}) :
+          (_option.data =
+            Object.prototype.toString.call(params) === "[object FormData]"
+              ? params
+              : { ...params, ...{ token: store.state.token } })
+        : (_option.params = params);
       // 请求成功后服务器返回二次处理
-      if(!window.localStorage.getItem('token')&&config&&config.isLogin){
+      if (!window.localStorage.getItem("token") && config && config.isLogin) {
         Toast.fail("请登录后再操作！");
-        return
+        return;
       }
       axios.request(_option).then(
         res => {
           if (res.data.code == 200) {
             resolve(res.data);
-          } else if(res.data.code == 3){
+          } else if (res.data.code == 201) {
             Toast.fail(res.data.msg);
-            window.localStorage.removeItem('token')
+            window.localStorage.removeItem("token");
           } else {
-            if(!config||!config.fail){
+            if (!config || !config.fail) {
               Toast.fail(res.data.msg);
             }
-            reject(res.data)
+            reject(res.data);
           }
         },
         error => {

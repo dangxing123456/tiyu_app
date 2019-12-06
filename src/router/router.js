@@ -205,11 +205,26 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
-    //全部玩法
+    //足球全部玩法
     {
       path: "/allplay",
       name: "allplay",
       component: () => import("@/views/raceball/allplay.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "全部玩法",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //篮球全部玩法
+    {
+      path: "/allplayBasket",
+      name: "allplayBasket",
+      component: () => import("@/views/raceball/allplayBasket.vue"),
       meta: {
         keepAlive: false,
         isTransition: true,
@@ -235,22 +250,8 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
-    //专家战绩
-    {
-      path: "/ExpertsSuggest",
-      name: "ExpertsSuggest",
-      component: () => import("@/views/ExpertsSuggestlist/ExpertsSuggest.vue"),
-      meta: {
-        keepAlive: false,
-        isTransition: true,
-        title: "专家战绩",
-        isMember: false,
-        isLogin: false,
-        icon: "4-1",
-        icon_press: "4-2"
-      }
-    },
-    //赛事分析
+
+    //足球赛事分析
     {
       path: "/matchFenxi",
       name: "matchFenxi",
@@ -304,7 +305,7 @@ const router = new Router({
               path: "/yapei",
               name: "yapei",
               component: () => import("@/views/peilv/yapei.vue")
-            },
+            }
           ]
         },
         {
@@ -324,21 +325,169 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
-      //竞彩专家
-      {
-        path: "/experts",
-        name: "experts",
-        component: () => import("@/views/found/experts.vue"),
-        meta: {
-          keepAlive: false,
-          isTransition: true,
-          title: "竞彩专家",
-          isMember: false,
-          isLogin: false,
-          icon: "4-1",
-          icon_press: "4-2"
+    // 篮球赛事分析
+    {
+      path: "/fenxinBasket",
+      name: "fenxinBasket",
+      component: () => import("@/views/fenxi/fenxinBasket.vue"),
+      redirect: { name: "analysisBasket" },
+      children: [
+        {
+          //分析
+          path: "/analysisBasket",
+          name: "analysisBasket",
+          component: () => import("@/views/fenxiList/analysisBasket.vue")
+        },
+        {
+          // 亚赔
+          path: "/yapeiBasket",
+          name: "yapeiBasket",
+          component: () => import("@/views/fenxiList/yapeiBasket.vue")
+        },
+        {
+          //欧赔
+          path: "/oupeiBasket",
+          name: "oupeiBasket",
+          component: () => import("@/views/fenxiList/oupeiBasket.vue")
+        },
+        {
+          //大小
+          path: "/daxiaoBasket",
+          name: "daxiaoBasket",
+          component: () => import("@/views/fenxiList/daxiaoBasket.vue")
         }
-      },
+      ],
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "赛事分析",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //竞彩专家
+    {
+      path: "/experts",
+      name: "experts",
+      component: () => import("@/views/found/experts.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "竞彩专家",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //专家战绩
+    {
+      path: "/ExpertsSuggest",
+      name: "ExpertsSuggest",
+      component: () => import("@/views/detail/ExpertsSuggest.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "专家战绩",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //名人战绩
+    {
+      path: "/celebrityRecord",
+      name: "celebrityRecord",
+      component: () => import("@/views/detail/celebrityRecord.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "名人战绩",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //方案详情
+    {
+      path: "/planDetails",
+      name: "planDetails",
+      component: () => import("@/views/detail/planDetails.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "方案详情",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //合买详情
+    {
+      path: "/chippedDetails",
+      name: "chippedDetails",
+      component: () => import("@/views/detail/chippedDetails.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "合买详情",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //认购详情
+    {
+      path: "/subscribeDetails",
+      name: "subscribeDetails",
+      component: () => import("@/views/detail/subscribeDetails.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "认购详情",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //确认方案
+    {
+      path: "/confirmPlan",
+      name: "confirmPlan",
+      component: () => import("@/views/detail/confirmPlan.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "确认方案",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //确认下单
+    {
+      path: "/confirmOrder",
+      name: "confirmOrder",
+      component: () => import("@/views/detail/confirmOrder.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "确认",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+
     // 注册登录
     {
       path: "/login/:name?",
@@ -402,6 +551,7 @@ const router = new Router({
     }
   ]
 });
+// 判断  是否登录  存在token
 router.beforeEach((to, from, next) => {
   if (to.meta.index != undefined) {
     store.state.tabActiveIndex = to.meta.index;

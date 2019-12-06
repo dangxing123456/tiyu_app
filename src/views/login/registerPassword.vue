@@ -67,7 +67,8 @@ export default {
   methods: {
     regFn() {
       var that = this;
-      if (!regexUtil.isPassword(this.$store.state.register.newpassword)) {
+      if (regexUtil.isPassword(this.$store.state.register.newpassword)) {
+        console.log(this.$store.state.register.newpassword);
         this.$toast.fail("请输入6-11位字母数字组合密码");
         return;
       }
@@ -77,9 +78,16 @@ export default {
       }
 
       this.regLoading = true;
+      console.log(this.$store.state.register.newpassword);
       this.$SERVER
-        .register(this.$store.state.register)
+        .register({
+          mobile: 18302988038,
+          password: this.$store.state.register.newpassword,
+          nickname: "打豆豆",
+          sex: 1
+        })
         .then(res => {
+          console.log(res);
           that.regLoading = false;
           that.$METHOD.setStore("token", res.data.userinfo.token);
           that.$store.state.token = res.data.userinfo.token;
@@ -150,12 +158,20 @@ export default {
   .field {
   }
   .checknumbtn {
-    background: linear-gradient(90deg,rgba(249,74,81,1),rgba(247,109,98,1));
+    background: linear-gradient(
+      90deg,
+      rgba(249, 74, 81, 1),
+      rgba(247, 109, 98, 1)
+    );
     border: 0;
     border-radius: 18px;
   }
   .regbtn {
-    background: linear-gradient(90deg,rgba(249,74,81,1),rgba(247,109,98,1));
+    background: linear-gradient(
+      90deg,
+      rgba(249, 74, 81, 1),
+      rgba(247, 109, 98, 1)
+    );
     border-radius: 100px;
     margin-top: 90px;
     border: 0;
@@ -170,7 +186,7 @@ export default {
     color: #999;
     span {
       text-decoration: underline;
-      color: rgba(249,74,81,1);
+      color: rgba(249, 74, 81, 1);
     }
   }
 }

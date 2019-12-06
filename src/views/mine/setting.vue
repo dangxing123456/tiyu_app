@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     logout() {
+      
     },
   }
 };

@@ -57,6 +57,7 @@ export default {
     };
   },
   created() {
+    console.log(this.$METHOD);
     if (this.$METHOD.getStore("token")) {
       this.$router.push("/");
     }
@@ -75,8 +76,8 @@ export default {
       that.loginLoading = true;
       that.$SERVER
         .login({
-          mobile: this.form.user_account,
-          password: this.form.user_pwd
+          mobile: that.form.user_account,
+          password: that.form.user_pwd
         })
         .then(res => {
           that.$toast.success("登录成功");

@@ -41,6 +41,7 @@
     "babel-plugin-import": "^1.11.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "jquery": "^3.4.1",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "mockjs": "^1.1.0",
