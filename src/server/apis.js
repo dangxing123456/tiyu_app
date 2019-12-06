@@ -5,9 +5,15 @@ class Api extends Axios {
    * 获取商品数据
    * @param {Object} params typeid
    */
-  async smscode(params = {}) {
-    return await this.axios("POST", "user/smscode", params);
+  async login(params = {}) {
+    return await this.axios("POST", "sport/user/login", params);
   }  
+  async getFootBallMatch(params = {}) {
+    return await this.axios("POST", "sport/football/getFootBallMatch", params);
+  }  
+
+
+  
 }
 
 export default new Api();

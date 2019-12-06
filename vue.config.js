@@ -137,11 +137,11 @@ module.exports = {
     disableHostCheck: true, //外网映射
     proxy: {
       // 配置多个代理(配置一个 proxy: "http://localhost:4000" )
-      "/api": {
-        target: "http://192.168.0.107/api",
+      "/": {
+        target: "http://a.com:13000",
         changeOrigin: true,
         pathRewrite: {
-          "^/api": "/"
+          "^/": "/"
         }
       }
     }

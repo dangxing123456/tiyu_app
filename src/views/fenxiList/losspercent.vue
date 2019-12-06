@@ -17,8 +17,7 @@
           </van-tab>
           <van-tab title="必发">
           </van-tab>
-          <van-tab title="大小球">
-            
+          <van-tab title="大小球">            
           </van-tab>
         </van-tabs>
         <router-view />

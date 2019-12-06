@@ -3,9 +3,6 @@
     <navBar :goback="true" title>
       <div class="right" slot="right">
         <span class="shai" @click="alertMenu">筛</span>
-        <span>
-          <img src="../../assets/images/shuaxin.png" alt />
-        </span>
       </div>
       <van-dropdown-menu class="menu" slot="title">
         <van-dropdown-item v-model="value1" :options="option1" />
@@ -13,158 +10,49 @@
     </navBar>
     <div class="main">
       <van-collapse v-model="activeNames">
-        <van-collapse-item name="1">
+        <van-collapse-item :name="index" v-for="(i,index) in list" :key="index">
           <div class="title" slot="title">
-            <span>2019年11月8日</span>
-            <span>星期五</span>
-            <span>24场</span>
+            <span>{{i[0].date}} {{i[0].num.substr(0,2)}}</span>
+            <span>{{i.length}}场</span>
             <span>可投注</span>
           </div>
-          <div class="test">
-            <div class="left">
-              <p class="first">001</p>
-              <p>澳超</p>
-              <p>16:19截止</p>
-            </div>
-            <div class="right">
-              <div class="div1">
-                <span>[1]墨尔本城</span>
-                <span>VS</span>
-                <span>[6]中央海岸水手</span>
+          <div class="item" v-for="(j,index2) in i" :key="index2">
+            <div class="test">
+              <div class="left">
+                <p class="first">{{j.num.substr(2,3)}}</p>
+                <p>{{j.l_cn_abbr}}</p>
+                <p>16:19截止</p>
               </div>
-              <div class="tab">
-                <div class="left1">
-                  <p class="p1">
-                    <span class="p1-first">0</span>
-                  </p>
-                  <p class="p2">
-                    <span class="p2-first">0</span>
-                  </p>
+              <div class="right">
+                <div class="div1">
+                  <span>[{{j.h_order}}]{{j.hcnAbbr}}</span>
+                  <span>VS</span>
+                  <span>[{{j.a_order}}]{{j.lcnAbbr}}</span>
                 </div>
-                <div class="center">
-                  <ul>
-                    <li
-                      :class="box.includes(item) ? 'bgColor':'' "
-                      v-for="(item,index) in list"
-                      :key="index"
-                      @click="change(item)"
-                    >{{item.score}}</li>
-                  </ul>
-                </div>
-                <div class="right1">
-                  <span ref="sp" @click="detailPlay">全部玩法</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </van-collapse-item>
-        <van-collapse-item title="标题2" name="2">
-          <div class="title" slot="title">
-            <span>2019年11月9日</span>
-            <span>星期六</span>
-            <span>24场</span>
-            <span>可投注</span>
-          </div>
-          <div class="test">
-            <div class="left">
-              <p class="first">001</p>
-              <p>澳超</p>
-              <p>16:19截止</p>
-            </div>
-            <div class="right">
-              <div class="div1">
-                <span>[1]墨尔本城</span>
-                <span>VS</span>
-                <span>[6]中央海岸水手</span>
-              </div>
-              <div class="tab">
-                <div class="left1">
-                  <p class="p1">
-                    <span class="p1-first">0</span>
-                  </p>
-                  <p class="p2">
-                    <span class="p2-first">0</span>
-                  </p>
-                </div>
-                <div class="center">
+                <div class="tab">
+                  <div class="left1">
+                    <p class="p1">
+                      <span class="p1-first">0</span>
+                    </p>
+                    <p class="p2">
+                      <span class="p2-first">{{j.footBallBet.odds_list.hhad.fixedodds}}</span>
+                    </p>
+                  </div>
                   <div class="center">
                     <ul>
-                      <li
-                        :class="box1.includes(item) ? 'bgColor':'' "
-                        ref="bgc"
-                        v-for="(item,index) in list1"
-                        :key="index"
-                        @click="change1(item)"
-                      >{{item.score}}</li>
+                      <li class="bgColor" @click="change()">{{j.score}}</li>
                     </ul>
                   </div>
-                </div>
-                <div class="right1">
-                  <span :class="box.lenght!=0 ? 'bgColor':'' ">全部玩法</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </van-collapse-item>
-        <van-collapse-item title="标题3" name="3">
-          <div class="title" slot="title">
-            <span>2019年11月10日</span>
-            <span>星期日</span>
-            <span>24场</span>
-            <span>可投注</span>
-          </div>
-          <div class="test">
-            <div class="left">
-              <p class="first">001</p>
-              <p>澳超</p>
-              <p>16:19截止</p>
-            </div>
-            <div class="right">
-              <div class="div1">
-                <span>[1]墨尔本城</span>
-                <span>VS</span>
-                <span>[6]中央海岸水手</span>
-              </div>
-              <div class="tab">
-                <div class="left1">
-                  <p class="p1">
-                    <span class="p1-first">0</span>
-                  </p>
-                  <p class="p2">
-                    <span class="p2-first">0</span>
-                  </p>
-                </div>
-                <div class="center">
-                  <div class="center">
-                    <ul>
-                      <li
-                        :class="box2.includes(item) ? 'bgColor':'' "
-                        ref="bgc"
-                        v-for="(item,index) in list2"
-                        :key="index"
-                      >{{item.score}}</li>
-                    </ul>
+                  <div class="right1">
+                    <span ref="sp" @click="detailPlay">全部玩法</span>
                   </div>
-                </div>
-                <div class="right1">
-                  <span>全部玩法</span>
                 </div>
               </div>
             </div>
           </div>
         </van-collapse-item>
       </van-collapse>
-      <!-- 底部按钮 -->
-      <div class="bot-btn">
-        <div class="text">
-          <p>至少选择1场比赛</p>
-          <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
-        </div>
-        <div class="btn">
-          <van-button type="default" size="large">取消</van-button>
-          <van-button type="danger" size="large">确定</van-button>
-        </div>
-      </div>
+
       <!-- 下拉菜单 -->
       <van-action-sheet v-model="show" :actions="actions">
         <div class="content">
@@ -216,7 +104,17 @@
         </div>
       </van-action-sheet>
     </div>
-    <router-view />
+              <!-- 底部按钮 -->
+      <div class="bot-btn">
+        <div class="text">
+          <p>至少选择1场比赛</p>
+          <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
+        </div>
+        <div class="btn">
+          <van-button type="default" size="large">取消</van-button>
+          <van-button type="danger" size="large">确定</van-button>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -244,35 +142,9 @@ export default {
       show: false,
       actions: [],
       checked: true,
-      activeNames: ["1"],
+      activeNames: [0],
       changeColor: false,
-      list: [
-        { score: "胜1.54" },
-        { score: "胜1.53" },
-        { score: "胜1.52" },
-        { score: "胜1.50" },
-        { score: "胜1.51" },
-        { score: "胜1.49" }
-      ],
-      list1: [
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" }
-      ],
-      list2: [
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" }
-      ],
-      box: [],
-      box1: [],
-      box2: []
+      list: []
     };
   },
   computed: {},
@@ -288,6 +160,23 @@ export default {
         this.$refs.sp.style.color = "#4b4949";
       }
     }
+  },
+  created() {
+    this.$SERVER.getFootBallMatch().then(res => {
+      console.log(res.data.list);
+      let objArray = [];
+      let j = 0;
+      for (let i = 0; i < res.data.list.length; i++) {
+        if (res.data.list[i].num.substr(2, 3) == 1 && i !== 0) {
+          objArray.push(res.data.list.slice(j, i - 1));
+          j = i;
+        } else if (i == res.data.list.length - 1) {
+          objArray.push(res.data.list.slice(j, res.data.list.length));
+        }
+      }
+      this.list = objArray
+      console.log(objArray);
+    });
   },
   methods: {
     detailPlay() {
@@ -308,23 +197,7 @@ export default {
       } else {
         this.box.push(e);
       } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box.length);
-    },
-    change1: function(e) {
-      if (this.box1.includes(e)) {
-        this.box1.splice(this.box1.indexOf(e), 1);
-      } else {
-        this.box1.push(e);
-      } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box1.length);
-    },
-    change2: function(e) {
-      if (this.box2.includes(e)) {
-        this.box2.splice(this.box2.indexOf(e), 1);
-      } else {
-        this.box2.push(e);
-      } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box2.length);
+      console.log(this.box);
     }
   },
   mounted() {}
@@ -352,10 +225,10 @@ export default {
       margin-top: 5px;
     }
   }
-  /deep/ .van-cell__value{
+  /deep/ .van-cell__value {
     display: none;
   }
-  /deep/ .van-dropdown-item__option--active{
+  /deep/ .van-dropdown-item__option--active {
     border: 1px solid red !important;
     color: red;
   }
@@ -530,8 +403,6 @@ export default {
   }
 }
 .bot-btn {
-  position: fixed;
-  bottom: 0;
   width: 100%;
   .text {
     width: 100%;

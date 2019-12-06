@@ -74,22 +74,26 @@ export default {
       }
       that.loginLoading = true;
       that.$SERVER
-        .login(that.form)
+        .login({
+          mobile: this.form.user_account,
+          password: this.form.user_pwd
+        })
         .then(res => {
           that.$toast.success("登录成功");
-          that.$METHOD.setStore("token", res.data.userinfo.token);
-          that.$store.state.token = res.data.userinfo.token;
-          that.$store.state.userInfo = res.data.userinfo_first;
-          that.$store.state.isActive = res.data.userinfo_first.setting;
+          that.$METHOD.setStore("token", res.data.token);
+          that.$store.state.token = res.data.token;
+          that.$store.state.userInfo = res.data;
           that.loginLoading = false;
-          var push = api.require("push");
-          push.bind(
-            {
-              userName: res.data.userinfo_first.user_nickname,
-              userId: res.data.userinfo_first.use_rid
-            },
-            function(ret, err) {}
-          );
+          if (window.navigator.userAgent.match(/APICloud/i)) {
+            var push = api.require("push");
+            push.bind(
+              {
+                userName: res.data.nickname,
+                userId: res.data.userId
+              },
+              function(ret, err) {}
+            );
+          }
           that.$router.go(-1);
         })
         .catch(res => {

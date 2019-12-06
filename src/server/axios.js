@@ -41,7 +41,7 @@ axios.interceptors.request.use(
     }
     // qs转换
     if (config.method.toUpperCase() !== "GET") {
-      if (Object.prototype.toString.call(config.data) !== '[object FormData]') config.data = qs.stringify(config.data);
+      // if (Object.prototype.toString.call(config.data) !== '[object FormData]') config.data = qs.stringify(config.data);
     }
     return config;
   },
@@ -95,8 +95,8 @@ export default class Axios {
           baseURL: envconfig.baseURL,
           timeout: 30000,
           headers: {
-            //'Content-Type': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded'
           },
           // withCredentials: true, //是否携带cookies发起请求
         },
@@ -121,7 +121,7 @@ export default class Axios {
       }
       axios.request(_option).then(
         res => {
-          if (res.data.code == 1) {
+          if (res.data.code == 200) {
             resolve(res.data);
           } else if(res.data.code == 3){
             Toast.fail(res.data.msg);
