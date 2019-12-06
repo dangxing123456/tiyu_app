@@ -28,12 +28,12 @@ export default {
     return {
       // tabActiveIndex: 0,
       bottom: 0,
-      show: false,      
+      show: false,
       tabList: []
     };
   },
   created() {
-    this.tabList  = this.$router.options.routes[0].children
+    this.tabList = this.$router.options.routes[0].children;
     this.$store.state.tabActiveIndex = this.tabList.findIndex(
       item => item.path === this.$route.path
     );
@@ -49,14 +49,14 @@ export default {
   methods: {
     switchTab(item, idx) {
       if (this.$store.state.tabActiveIndex > idx) {
-          this.$store.state.navAn = "slide-right";
-        } else {
-          this.$store.state.navAn = "slide-left";
-        }
-        if (this.$store.state.tabActiveIndex !== idx) {
-          this.$store.state.tabActiveIndex = idx;
-          this.$router.push(item.path);
-        }
+        this.$store.state.navAn = "slide-right";
+      } else {
+        this.$store.state.navAn = "slide-left";
+      }
+      if (this.$store.state.tabActiveIndex !== idx) {
+        this.$store.state.tabActiveIndex = idx;
+        this.$router.push(item.path);
+      }
     }
   }
 };
@@ -69,7 +69,7 @@ export default {
   width: 100%;
   background-color: #ffffff;
 }
-.footer-empty {  
+.footer-empty {
   height: 60px;
 }
 .iphonX-box {

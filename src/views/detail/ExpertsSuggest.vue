@@ -20,8 +20,8 @@
           </div>
         </div>
         <div class="right" ref="right">
-          <div class="info" ref="guanzhu" @click="change">
-            <van-icon class-prefix="icon" name="jiahao" />未关注
+          <div class="info"  @click="change">
+           {{content}}
           </div>
         </div>
       </div>
@@ -154,8 +154,7 @@
         </div>
       </div>
     </div>
-
-    <router-view />
+    
   </div>
 </template>
 
@@ -170,25 +169,21 @@ export default {
   data() {
     return {
       title: this.$route.meta.title,
-      flag: false
+      flag: false,
+      content: "+关注",
     };
   },
   computed: {},
   watch: {},
   methods: {
     change() {
-      if (this.flag == false) {
-        console.log(1);
-        this.flag = true;
-        this.$nextTick(function() {
-          this.$refs.guanzhu.innerHTML =
-            '<van-icon class-prefix="icon" name="jiahao" />未关注';
-        });
+      this.flag = !this.flag;
+      if (this.flag) {
+        this.content = "已关注";
+       
       } else {
-        console.log(2);
-        this.flag = false;
-        this.$refs.guanzhu.innerHTML =
-          '<van-icon class-prefix="icon" name="jiahao" />已关注';
+        this.content = "+关注";
+         
       }
     }
   },

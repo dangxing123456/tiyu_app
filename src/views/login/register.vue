@@ -107,7 +107,7 @@ export default {
           }, 1000);
         }
         this.$SERVER
-          .smscode({
+          .sendchecknum({
             mobile: this.$store.state.register.user_account
           })
           .then(res => {

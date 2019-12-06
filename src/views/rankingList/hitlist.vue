@@ -5,7 +5,7 @@
     <div class="main">
      <commonRanking></commonRanking>
     </div>
-     <router-view/>
+  
   </div>
 </template>
 

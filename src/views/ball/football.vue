@@ -14,6 +14,7 @@
             </div>
             <div class="top">
               <div class="img">
+                <div class="shoucang"></div>
                 <div class="icon">
                   <span>4</span>
                   <span class="sen">4</span>
@@ -72,15 +73,16 @@ export default {
     background-color: #fff;
     border-bottom: 2px solid rgb(243, 243, 243);
     padding: 8px;
+    height: 140px;
     .head {
-       padding: 2px 7px;
+      padding: 2px 7px;
       font-size: 14px;
       color: rgb(160, 160, 160);
       .rady {
         color: rgb(106, 177, 244);
       }
       .time {
-        margin-left: 1.1rem;
+        margin-left: 10px;
         display: inline-block;
         width: 50px;
         height: 20px;
@@ -91,13 +93,12 @@ export default {
       }
     }
     .top {
-      width: 80%;
-      margin: 0 auto;
       display: flex;
       justify-content: space-around;
       align-items: center;
       text-align: center;
-      padding: 10px 15px;
+      padding: 12px 15px 0px 15px;
+      width: 90%;
       .img-right {
         position: relative;
         width: 150px;
@@ -111,7 +112,7 @@ export default {
           width: 35px;
           position: absolute;
           top: -14px;
-          right: -14px;
+          right: 11px;
           span {
             display: inline-block;
             width: 14px;
@@ -127,7 +128,11 @@ export default {
       .img {
         position: relative;
         width: 150px;
-
+        .shoucang {
+          float: left;
+          margin-top: 35px;
+          width: 30px;
+        }
         img {
           display: block;
           width: 50px;
@@ -138,7 +143,7 @@ export default {
           width: 35px;
           position: absolute;
           top: -14px;
-          left: -14px;
+          left: 25px;
           span {
             display: inline-block;
             width: 14px;
@@ -158,10 +163,10 @@ export default {
         margin-top: 10px;
       }
       .text {
+        width: 50px;
         p {
           font-size: 13px;
           color: #999;
-          padding: 5px 0;
         }
         .score {
           font-size: 30px;

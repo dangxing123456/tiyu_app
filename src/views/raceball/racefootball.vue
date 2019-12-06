@@ -12,157 +12,109 @@
       </van-dropdown-menu>
     </navBar>
     <div class="main">
-      <van-collapse v-model="activeNames">
-        <van-collapse-item name="1">
-          <div class="title" slot="title">
-            <span>2019年11月8日</span>
-            <span>星期五</span>
-            <span>24场</span>
-            <span>可投注</span>
+      <div class="wrap" v-for="(item,index) in result" :key="index">
+        <div class="title">
+          <span>{{item.date}}</span>
+          <span>{{item.num}}</span>
+          <span v-if="item.showStatus==1">可投注</span>
+          <span v-if="item.showStatus==0">不可投注</span>
+        </div>
+        <div class="test">
+          <div class="left">
+            <p class="first">{{item.num}}</p>
+            <p>{{item.lcnAbbr}}</p>
+            <p>{{item.time}}截止</p>
           </div>
-          <div class="test">
-            <div class="left">
-              <p class="first">001</p>
-              <p>澳超</p>
-              <p>16:19截止</p>
+          <div class="right">
+            <div class="div1">
+              <span>{{item.hcn}}</span>
+              <span>VS</span>
+
+              <span>{{item.acnAbbr}}</span>
             </div>
-            <div class="right">
-              <div class="div1">
-                <span>[1]墨尔本城</span>
-                <span>VS</span>
-                <span>[6]中央海岸水手</span>
+            <div class="tab">
+              <div class="left1">
+                <p class="p1">
+                  <span class="p1-first">0</span>
+                </p>
+                <p class="p2">
+                  <span class="p2-first">{{item.footBallBet.odds_list.hhad.goalline}}</span>
+                </p>
               </div>
-              <div class="tab">
-                <div class="left1">
-                  <p class="p1">
-                    <span class="p1-first">0</span>
-                  </p>
-                  <p class="p2">
-                    <span class="p2-first">0</span>
-                  </p>
-                </div>
-                <div class="center">
-                  <ul>
-                    <li
-                      :class="box.includes(item) ? 'bgColor':'' "
-                      v-for="(item,index) in list"
-                      :key="index"
-                      @click="change(item)"
-                    >{{item.score}}</li>
-                  </ul>
-                </div>
-                <div class="right1">
-                  <span ref="sp" @click="detailPlay">全部玩法</span>
-                </div>
+              <div class="center">
+                <ul>
+                  <li
+                    :ref="'id'+index+'_0'"
+                    @click="push('0','0',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].h,index)"
+                  >
+                    <span>胜</span>
+                    <span
+                      v-if="item.footBallBet.odds_list.had"
+                    >{{item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].h}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_1'"
+                    @click="push('0','1',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].d,index)"
+                  >
+                    <span>平</span>
+                    <span
+                      v-if="item.footBallBet.odds_list.had"
+                    >{{item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].d}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_2'"
+                    @click="push('0','2',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].a,index)"
+                  >
+                    <span>负</span>
+                    <span
+                      v-if="item.footBallBet.odds_list.had"
+                    >{{item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].a}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_3'"
+                    @click="push('1','3',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].h,index)"
+                  >
+                    <span>胜</span>
+                    <span
+                      v-if="item.footBallBet.odds_list.hhad"
+                    >{{item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].h}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_4'"
+                    @click="push('1','4',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].d,index)"
+                  >
+                    <span>平</span>
+                    <span
+                      v-if="item.footBallBet.odds_list.hhad"
+                    >{{item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].d}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_5'"
+                    @click="push('1','5',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].a,index)"
+                  >
+                    <span>负</span>
+                    <span
+                      v-if="item.footBallBet.odds_list.hhad"
+                    >{{item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].a}}</span>
+                  </li>
+                </ul>
               </div>
-            </div>
-          </div>
-        </van-collapse-item>
-        <van-collapse-item title="标题2" name="2">
-          <div class="title" slot="title">
-            <span>2019年11月9日</span>
-            <span>星期六</span>
-            <span>24场</span>
-            <span>可投注</span>
-          </div>
-          <div class="test">
-            <div class="left">
-              <p class="first">001</p>
-              <p>澳超</p>
-              <p>16:19截止</p>
-            </div>
-            <div class="right">
-              <div class="div1">
-                <span>[1]墨尔本城</span>
-                <span>VS</span>
-                <span>[6]中央海岸水手</span>
-              </div>
-              <div class="tab">
-                <div class="left1">
-                  <p class="p1">
-                    <span class="p1-first">0</span>
-                  </p>
-                  <p class="p2">
-                    <span class="p2-first">0</span>
-                  </p>
-                </div>
-                <div class="center">
-                  <div class="center">
-                    <ul>
-                      <li
-                        :class="box1.includes(item) ? 'bgColor':'' "
-                        ref="bgc"
-                        v-for="(item,index) in list1"
-                        :key="index"
-                        @click="change1(item)"
-                      >{{item.score}}</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="right1">
-                  <span :class="box.lenght!=0 ? 'bgColor':'' ">全部玩法</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </van-collapse-item>
-        <van-collapse-item title="标题3" name="3">
-          <div class="title" slot="title">
-            <span>2019年11月10日</span>
-            <span>星期日</span>
-            <span>24场</span>
-            <span>可投注</span>
-          </div>
-          <div class="test">
-            <div class="left">
-              <p class="first">001</p>
-              <p>澳超</p>
-              <p>16:19截止</p>
-            </div>
-            <div class="right">
-              <div class="div1">
-                <span>[1]墨尔本城</span>
-                <span>VS</span>
-                <span>[6]中央海岸水手</span>
-              </div>
-              <div class="tab">
-                <div class="left1">
-                  <p class="p1">
-                    <span class="p1-first">0</span>
-                  </p>
-                  <p class="p2">
-                    <span class="p2-first">0</span>
-                  </p>
-                </div>
-                <div class="center">
-                  <div class="center">
-                    <ul>
-                      <li
-                        :class="box2.includes(item) ? 'bgColor':'' "
-                        ref="bgc"
-                        v-for="(item,index) in list2"
-                        :key="index"
-                      >{{item.score}}</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="right1">
-                  <span>全部玩法</span>
-                </div>
+              <div class="right1">
+                <span ref="sp" @click="detailPlay(item,index)">全部比赛</span>
               </div>
             </div>
           </div>
-        </van-collapse-item>
-      </van-collapse>
+        </div>
+      </div>
       <!-- 底部按钮 -->
       <div class="bot-btn">
         <div class="text">
-          <p>至少选择1场比赛</p>
+          <p>至少选择{{this.$store.state.replayData.length}}场比赛</p>
           <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
         </div>
         <div class="btn">
-          <van-button type="default" size="large">取消</van-button>
-          <van-button type="danger" size="large">确定</van-button>
+          <van-button type="default" size="large">清空</van-button>
+          <van-button type="danger" size="large" @click="detailPlan()">确定</van-button>
         </div>
       </div>
       <!-- 下拉菜单 -->
@@ -174,21 +126,7 @@
           </div>
           <div class="wrapper">
             <ul>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
+              <li v-for="(item,index) in 8" :key="index">西甲(8)</li>
             </ul>
           </div>
           <div class="senf">
@@ -216,12 +154,13 @@
         </div>
       </van-action-sheet>
     </div>
-    <router-view />
   </div>
 </template>
 
 <script>
+import $ from "jquery";
 import navBar from "@/components/navbar/navbar.vue";
+import { mapState, mapGetters, mapMutations } from "vuex";
 export default {
   name: "racefootball",
   components: {
@@ -230,6 +169,8 @@ export default {
   props: {},
   data() {
     return {
+      result: [1],
+      i: 0,
       value1: 6,
       option1: [
         { text: "胜平负", value: 0 },
@@ -244,93 +185,155 @@ export default {
       show: false,
       actions: [],
       checked: true,
-      activeNames: ["1"],
+      activeNames: 0,
       changeColor: false,
-      list: [
-        { score: "胜1.54" },
-        { score: "胜1.53" },
-        { score: "胜1.52" },
-        { score: "胜1.50" },
-        { score: "胜1.51" },
-        { score: "胜1.49" }
-      ],
-      list1: [
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" }
-      ],
-      list2: [
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" },
-        { score: "胜1.54" }
-      ],
+      dataLen: [],
+      dataRes: [],
       box: [],
-      box1: [],
-      box2: []
+      res: [],
+      arr: [],
+      textList: []
     };
   },
-  computed: {},
-  watch: {
-    box: function() {
-      if (this.box.length > 0) {
-        this.$refs.sp.innerHTML = "<span>已选" + this.box.length + "项</span>";
-        this.$refs.sp.style.background = "red";
-        this.$refs.sp.style.color = "white";
-      } else {
-        this.$refs.sp.innerHTML = "<span>全部玩法</span>";
-        this.$refs.sp.style.background = "white";
-        this.$refs.sp.style.color = "#4b4949";
+  computed: {
+    ...mapState({
+      a: "qq",
+      acdata: "activeData"
+    }),
+    ...mapGetters({
+      tofo: "getToDo"
+    })
+  },
+  watch: {},
+  created() {
+    //获取足球信息
+    //下单
+  },
+  //
+  updated() {
+    if (this.$store.state.activeData) {
+      for (var i = 0; i < this.$store.state.activeData.length; i++) {
+        for (var j = 0; j < this.$store.state.activeData[i].length; j++) {
+          for (var k = 0; k < this.$store.state.activeData[i][j].length; k++) {
+            if (this.$store.state.activeData[i][j][k] != undefined) {
+              this.$refs[
+                "id" + i + "_" + this.$store.state.activeData[i][j][k]
+              ][0].className = "bgColor";
+            }
+          }
+        }
       }
     }
   },
-  methods: {
-    detailPlay() {
-      this.$router.push({
-        path: "/allplay",
-        query: {
-          list: this.list,
-          box: this.box
+  mounted() {
+    var count = 0;
+    var that = this;
+    if (this.arrdata) {
+      for (var i = 0; i < this.arrdata.length; i++) {
+        if (!this.arrdata[i]) {
+          this.arrdata.splice(i, 1);
+          i--;
         }
+      }
+      console.log(this.arrdata);
+      for (var i = 0; i < this.arrdata.length; i++) {
+        for (var j = 0; j < this.arrdata[i].length; j++) {
+          if (this.arrdata[i][j]) {
+            count += 1;
+          }
+        }
+      }
+    }
+    that.$nextTick(function() {
+      that.$SERVER
+        .getFootBall({
+          pagenum: 1,
+          pagesize: 10
+        })
+        .then(res => {
+          if (res.code == 200) {
+            that.result = res.data.list;
+          }
+        });
+    });
+  },
+  methods: {
+    push(i1, i2, val, index) {
+      for (var i = 0; i < 3; i++) {        
+        if (this.$store.state.arrData[0][i]) {
+          if (this.$refs["id" + index + "_" + i][0].className != "bgColor") {
+            this.$store.state.arrData[0].splice(i, 1);
+          }
+        }
+      }
+      for (var i = 3; i < 6; i++) {
+        
+        if (this.$store.state.arrData[1][i]) {
+          if (this.$refs["id" + index + "_" + i][0].className != "bgColor") {
+            this.$store.state.arrData[1].splice(i-3, 1);
+          }
+        }
+      }
+
+      if (this.$refs["id" + index + "_" + i2][0].className == "bgColor") {
+        // 删除
+        this.$refs["id" + index + "_" + i2][0].className = "";
+        delete this.$store.state.activeData[index][i1][i2];
+      } else {
+        // 添加
+        this.$store.state.arrData[i1][i2] = i2;
+        if (!this.$store.state.activeData[index]) {
+          this.$store.state.activeData[index] = [];
+        }
+        for (var i = 0; i < this.$store.state.arrData.length; i++) {
+          for (var j = 0; j < this.$store.state.arrData[i].length; j++) {
+            if (!this.$store.state.activeData[index][i]) {
+              this.$store.state.activeData[index][i] = [];
+            }
+            if (this.$store.state.arrData[index]) {
+              this.$store.state.activeData[index][i][
+                j
+              ] = this.$store.state.arrData[i][j];
+            }
+          }
+        }
+        console.log(this.$store.state.activeData);
+        this.$refs["id" + index + "_" + i2][0].className = "bgColor";
+      }
+    },
+    //映射mapMutations中的clickTotal方法
+    ...mapMutations({
+      //修改state中的状态
+      totalAlise: "clickTotal",
+      //往vuex中存入状态
+      set: "setValue"
+    }),
+    detailPlan(item) {
+      console.log(this.$store.state.replayData);
+      this.$router.push({
+        path: "/confirmPlan"
+      });
+    },
+    detailPlay(item, i) {
+      item.index = i;
+      this.$store.state.listData = item;
+      this.$router.push({
+        path: "/allplay"
       });
     },
     alertMenu() {
       this.show = true;
     },
-    change: function(e) {
-      if (this.box.includes(e)) {
-        this.box.splice(this.box.indexOf(e), 1);
-      } else {
-        this.box.push(e);
-      } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box.length);
-    },
-    change1: function(e) {
-      if (this.box1.includes(e)) {
-        this.box1.splice(this.box1.indexOf(e), 1);
-      } else {
-        this.box1.push(e);
-      } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box1.length);
-    },
-    change2: function(e) {
-      if (this.box2.includes(e)) {
-        this.box2.splice(this.box2.indexOf(e), 1);
-      } else {
-        this.box2.push(e);
-      } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box2.length);
-    }
-  },
-  mounted() {}
+    change: function(e, index) {}
+  }
 };
 </script>
 <style lang="less" scoped>
+.bgColor {
+  background-color: red;
+  color: white !important;
+  text-align: center !important;
+}
 // 修改vant ui内置样式
 .menu {
   background: none;
@@ -352,206 +355,223 @@ export default {
       margin-top: 5px;
     }
   }
-  /deep/ .van-cell__value{
+  /deep/ .van-cell__value {
     display: none;
   }
-  /deep/ .van-dropdown-item__option--active{
+  /deep/ .van-dropdown-item__option--active {
     border: 1px solid red !important;
     color: red;
   }
 }
-.title {
-  color: #4b4949;
-}
-.test {
-  padding: 15px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .right {
-    width: 80%;
-    .div1 {
-      display: flex;
-      justify-content: space-around;
-      padding-bottom: 15px;
-      font-size: 16px;
-      color: #4b4949;
-    }
-    .tab {
-      .left1 {
-        float: left;
-        color: #4b4949;
-        .p1 {
-          span {
-            display: inline-block;
-            height: 30px;
-            width: 70px;
-            border: 1px solid #eeeeee;
-            float: left;
-            text-align: center;
-            line-height: 30px;
-          }
-          .p1-first {
-            width: 20px;
-            background-color: rgb(204, 204, 204);
-            color: white;
-          }
-        }
-        .p2 {
-          span {
-            display: inline-block;
-            height: 30px;
-            width: 70px;
-            border: 1px solid #eeeeee;
-            float: left;
-            text-align: center;
-            line-height: 30px;
-          }
-          .p2-first {
-            width: 20px;
-            background-color: rgb(100, 160, 240);
-            color: white;
-          }
-        }
-      }
-      .center {
-        ul {
-          li {
-            display: inline-block;
-            height: 30px;
-            width: 70px;
-            border: 1px solid #eeeeee;
-            float: left;
-            text-align: center;
-            line-height: 30px;
-            color: #4b4949;
-          }
-        }
-      }
-      .right1 {
+
+.main {
+  padding-bottom: 120px;
+
+  .title {
+    color: #4b4949;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .test {
+    padding: 15px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eeeeee;
+    font-size: 14px;
+    .right {
+      font-size: 14px;
+      width: 80%;
+      .div1 {
+        display: flex;
+        justify-content: space-around;
+        padding-bottom: 15px;
+
         color: #4b4949;
         span {
           display: inline-block;
-          height: 62px;
-          width: 31px;
-          border: 1px solid #eeeeee;
-          line-height: 30px;
+          width: 33%;
+          text-align: center;
+        }
+      }
+      .tab {
+        .left1 {
+          float: left;
+          color: #4b4949;
+          .p1 {
+            span {
+              display: inline-block;
+              height: 30px;
+              width: 70px;
+              border: 1px solid #eeeeee;
+              float: left;
+              text-align: center;
+              line-height: 30px;
+            }
+            .p1-first {
+              width: 20px;
+              background-color: rgb(204, 204, 204);
+              color: white;
+            }
+          }
+          .p2 {
+            span {
+              display: inline-block;
+              height: 30px;
+              width: 70px;
+              border: 1px solid #eeeeee;
+              float: left;
+              text-align: center;
+              line-height: 30px;
+            }
+            .p2-first {
+              width: 20px;
+              background-color: rgb(100, 160, 240);
+              color: white;
+            }
+          }
+        }
+        .center {
+          font-size: 12px;
+          ul {
+            li {
+              display: inline-block;
+              height: 30px;
+              width: 70px;
+              border: 1px solid #eeeeee;
+              float: left;
+              text-align: center;
+              line-height: 30px;
+              color: #4b4949;
+            }
+          }
+        }
+        .right1 {
+          color: #4b4949;
+          span {
+            display: inline-block;
+            height: 62px;
+            width: 31px;
+            border: 1px solid #eeeeee;
+            line-height: 30px;
+            font-size: 14px;
+          }
         }
       }
     }
-  }
-  .left {
-    text-align: center;
-    .first {
-      padding-bottom: 20px;
-      font-size: 16px;
-      color: #4b4949;
-    }
-  }
-}
-.right .shai {
-  display: inline-block;
-  text-align: center;
-  line-height: 20px;
-  border: 1px solid #ffffff;
-  background-color: #f24a44;
-  color: #ffffff;
-  width: 20px;
-  height: 20px;
-  font-size: 14px;
-  border-radius: 5px;
-}
-.content {
-  background-color: #eeeeee;
-  .head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 10px;
-    h3 {
-      font-size: 16px;
-    }
-    span {
-      font-size: 14px;
-      color: #f24a44;
-    }
-  }
-  .wrapper {
-    background-color: #fff;
-    padding: 10px 5px;
-    ul {
-      display: flex;
-      flex-flow: wrap;
-      justify-content: space-around;
-      li {
-        display: inline-block;
-        width: 100px;
-        height: 35px;
-        border: 1px solid #d6d6d6;
-        text-align: center;
-        line-height: 35px;
-        margin-top: 10px;
+    .left {
+      text-align: center;
+      font-size: 12px;
+      .first {
+        padding-bottom: 20px;
+
+        color: #4b4949;
       }
     }
   }
-  .senf {
-    padding: 8px 10px;
-    h3 {
-      font-size: 16px;
-    }
+  .right .shai {
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid #ffffff;
+    background-color: #f24a44;
+    color: #ffffff;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    border-radius: 5px;
   }
-  .bottom {
-    background-color: #fff;
-    padding: 8px 10px;
-    .radio {
+  .content {
+    background-color: #eeeeee;
+    .head {
       display: flex;
       align-items: center;
-      justify-content: space-around;
-      width: 50%;
-      input {
-        display: inline-block;
-        width: 50px;
-        border: 1px solid #d6d6d6;
-        border-radius: 3px;
+      justify-content: space-between;
+      padding: 8px 10px;
+      h3 {
+        font-size: 16px;
+      }
+      span {
+        font-size: 14px;
+        color: #f24a44;
       }
     }
-    .con {
-      width: 75%;
+    .wrapper {
+      background-color: #fff;
+      padding: 10px 5px;
+      ul {
+        display: flex;
+        flex-flow: wrap;
+        justify-content: space-around;
+        li {
+          display: inline-block;
+          width: 100px;
+          height: 35px;
+          border: 1px solid #d6d6d6;
+          text-align: center;
+          line-height: 35px;
+          margin-top: 10px;
+        }
+      }
+    }
+    .senf {
+      padding: 8px 10px;
+      h3 {
+        font-size: 16px;
+      }
+    }
+    .bottom {
+      background-color: #fff;
+      padding: 8px 10px;
+      .radio {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 50%;
+        input {
+          display: inline-block;
+          width: 50px;
+          border: 1px solid #d6d6d6;
+          border-radius: 3px;
+        }
+      }
+      .con {
+        width: 75%;
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        padding-top: 10px;
+        color: #4b4949;
+      }
+    }
+    .btn {
       display: flex;
       justify-content: space-between;
+    }
+  }
+  .bot-btn {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    .text {
+      width: 100%;
+      background-color: rgb(250, 235, 275);
+      text-align: center;
+      padding: 5px 0px;
       font-size: 14px;
-      padding-top: 10px;
-      color: #4b4949;
+      .pei {
+        color: rgb(158, 150, 145);
+        padding-top: 5px;
+      }
+    }
+    .btn {
+      display: flex;
+      width: 100%;
     }
   }
-  .btn {
-    display: flex;
-    justify-content: space-between;
+
+  .red {
+    color: red !important;
   }
-}
-.bot-btn {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  .text {
-    width: 100%;
-    background-color: rgb(250, 235, 275);
-    text-align: center;
-    padding: 5px 0px;
-    font-size: 14px;
-    .pei {
-      color: rgb(158, 150, 145);
-      padding-top: 5px;
-    }
-  }
-  .btn {
-    display: flex;
-    width: 100%;
-  }
-}
-.bgColor {
-  background-color: red;
-  color: white !important;
-  text-align: center !important;
 }
 </style>

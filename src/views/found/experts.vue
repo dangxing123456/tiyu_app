@@ -4,115 +4,18 @@
     <div class="main">
       <van-tabs title-inactive-color="#333333" title-active-color="#f24a44">
         <van-tab title="资深专家">
-          <div class="content" v-for="item in 10">
-            <div>
-              <img src="https://picsum.photos/50/50" alt />
-              <p>张恩华</p>
-            </div>
-            <div class="center">
-              <p class="p1">
-                <span class="span1">近7场中6场</span>
-                <span class="span2">3连红</span>
-              </p>
-              <p class="p2">
-                <span class="span1">近7场</span>
-                <span class="span2">86%</span>
-              </p>
-              <p class="p3">
-                <span>均回报</span>
-                <span class="span2">113%</span>
-              </p>
-              <p class="p4">
-                <span>擅长联赛</span>
-                <span class="span1">英超</span>
-                <span class="span1">西甲</span>
-                <span class="span1">亚冠</span>
-              </p>
-            </div>
-            <div class="text"></div>
-            <div class="right">
-              <span>已关注</span>
-            </div>
-          </div>
+          <commonExperts :show="show"></commonExperts>
         </van-tab>
         <van-tab title="盈利专家">
-          <div class="content" v-for="item in 10">
-            <div>
-              <img src="https://picsum.photos/50/50" alt />
-              <p>张恩华</p>
-            </div>
-            <div>
-              <p class="p1">
-                <span class="span1">近7场中6场</span>
-                <span class="span2">3连红</span>
-              </p>
-              <p class="p2">
-                <span class="span1">近7场</span>
-                <span class="span2">86%</span>
-              </p>
-              <p class="p3">
-                <span>均回报</span>
-                <span class="span2">113%</span>
-              </p>
-              <p class="p4">
-                <span>擅长联赛</span>
-                <span class="span1">英超</span>
-                <span class="span1">西甲</span>
-                <span class="span1">亚冠</span>
-              </p>
-            </div>
-            <div class="text">
-              <p>
-                <span>170</span> %
-              </p>
-              <p>均回报</p>
-            </div>
-            <div class="right">
-              <span>已关注</span>
-            </div>
-          </div>
+          <commonExperts :show1="show1"></commonExperts>
         </van-tab>
         <van-tab title="连红专家">
-          <div class="content" v-for="item in 10">
-            <div>
-              <img src="https://picsum.photos/50/50" alt />
-              <p>张恩华</p>
-            </div>
-            <div>
-              <p class="p1">
-                <span class="span1">近7场中6场</span>
-                <span class="span2">3连红</span>
-              </p>
-              <p class="p2">
-                <span class="span1">近7场</span>
-                <span class="span2">86%</span>
-              </p>
-              <p class="p3">
-                <span>均回报</span>
-                <span class="span2">113%</span>
-              </p>
-              <p class="p4">
-                <span>擅长联赛</span>
-                <span class="span1">英超</span>
-                <span class="span1">西甲</span>
-                <span class="span1">亚冠</span>
-              </p>
-            </div>
-            <div class="text">
-              <p>
-                <span>10</span> 连红
-              </p>
-              <p>最高连红</p>
-            </div>
-            <div class="right">
-              <span>已关注</span>
-            </div>
-          </div>
+          <commonExperts :show2="show2"></commonExperts>
         </van-tab>
         <van-tab title="我的关注">
           <div class="wrap">
             <h3 class="hh">您关注的专家发布的新推荐</h3>
-            <div class="wrapper" v-for="item in 10">
+            <div class="wrapper" v-for="(item,index) in 10" :key="index" @click="detail">
               <div class="wrapper-top">
                 <div class="left">
                   <img src="https://picsum.photos/50/50" alt />
@@ -148,11 +51,13 @@
                   </p>
                 </div>
                 <div class="num">
-                  <img src="../../assets/images/num.png" alt />
+                 <van-icon name="eye" />
                   <span>315</span>
                 </div>
               </div>
             </div>
+            <h3 class="hh">您关注的专家</h3>
+            <commonExperts :show="show"></commonExperts>
           </div>
         </van-tab>
       </van-tabs>
@@ -162,20 +67,44 @@
 
 <script>
 import navBar from "@/components/navbar/navbar.vue";
+import commonExperts from "../../components/commonBall/commonExperts";
 export default {
   name: "experts",
   props: {},
   components: {
-    navBar
+    navBar,
+    commonExperts
   },
   data() {
     return {
-      title: this.$route.meta.title
+      title: this.$route.meta.title,
+      flag: false,
+      content: "+关注",
+      bg_color: "red",
+      show: false,
+      show1: true,
+      show2: true
     };
   },
   computed: {},
   watch: {},
-  methods: {}
+  methods: {
+    change() {
+      this.flag = !this.flag;
+      if (this.flag) {
+        this.content = "已关注";
+        this.bg_color = "#777";
+      } else {
+        this.content = "+关注";
+        this.bg_color = "red";
+      }
+    },
+    detail() {
+      this.$router.push({
+        path: "/planDetails"
+      });
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -242,7 +171,7 @@ export default {
   .right {
     span {
       display: inline-block;
-      width: 55px;
+      width: 65px;
       height: 25px;
       background-color: red;
       border-radius: 3px;
@@ -260,11 +189,12 @@ export default {
     // padding: 10px 0;
     border-left: 3px solid #f24a44;
     padding: 0 15px;
+    margin: 10px 0;
   }
   .wrapper {
-    margin-top: 18px;
+    margin-top: 10px;
     padding: 6px;
-    box-shadow: 0 0 5px #b3b3b3;
+    box-shadow: 0 0 5px #cccccc;
     .wrapper-top {
       display: flex;
       justify-content: space-between;
@@ -358,6 +288,8 @@ export default {
       color: #999;
 
       .num {
+        display: flex;
+        align-items: center;
       }
     }
   }
