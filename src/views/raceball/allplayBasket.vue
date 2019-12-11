@@ -2,41 +2,75 @@
   <div class="container" id="shop">
     <navBar :goback="true" title>
       <div slot="title">
-        <span>心田喜悦</span>
+        <span>{{list.acn}}</span>
         <span>VS</span>
-        <span>东京FC</span>
+        <span>{{list.hcn}}</span>
       </div>
       <div class="right" slot="right">
         <span class="fenxi" @click="detail">分析</span>
       </div>
     </navBar>
     <div class="main">
-      <h3>主队让分-1.5</h3>
+      <h3>主队让分{{list.basketBallBet.odds_list.hdc[list.basketBallBet.odds_list.hdc.length-1].fixedodds}}</h3>
       <div class="first">
         <div class="left">
           <p class="p1">0</p>
-          <p class="p2">+1</p>
+          <p class="p2">让</p>
         </div>
         <div class="right">
           <ul>
             <li
-              :class="box.includes(item) ? 'bgColor':'' "
-              v-for="(item,index) in list"
-              :key="index"
-              @click="change(item)"
-            >{{item.score}}</li>
+              :ref="'id'+dataIndex+'_0'"
+              @click="push('0','0',list.basketBallBet.odds_list.mnl[list.basketBallBet.odds_list.mnl.length-1].a,index)"
+            >
+              <span>胜</span>
+              <span>{{list.basketBallBet.odds_list.mnl[list.basketBallBet.odds_list.mnl.length-1].a}}</span>
+            </li>
+            <li
+              :ref="'id'+dataIndex+'_1'"
+              @click="push('0','1',list.basketBallBet.odds_list.mnl[list.basketBallBet.odds_list.mnl.length-1].h,index)"
+            >
+              <span>平</span>
+              <span>{{list.basketBallBet.odds_list.mnl[list.basketBallBet.odds_list.mnl.length-1].h}}</span>
+            </li>
+            <li
+              :ref="'id'+dataIndex+'_2'"
+              @click="push('1','2',list.basketBallBet.odds_list.hdc[list.basketBallBet.odds_list.hdc.length-1].a,index)"
+            >
+              <span>负</span>
+              <span>{{list.basketBallBet.odds_list.hdc[list.basketBallBet.odds_list.hdc.length-1].a}}</span>
+            </li>
+            <li
+              :ref="'id'+dataIndex+'_3'"
+              @click="push('1','3',list.basketBallBet.odds_list.hdc[list.basketBallBet.odds_list.hdc.length-1].h,index)"
+            >
+              <span>胜</span>
+              <span>{{list.basketBallBet.odds_list.hdc[list.basketBallBet.odds_list.hdc.length-1].h}}</span>
+            </li>
           </ul>
         </div>
       </div>
-      <h3>预设总分163.5</h3>
+      <h3>预设总分{{list.basketBallBet.odds_list.hilo[list.basketBallBet.odds_list.hilo.length-1].fixedodds}}</h3>
       <div class="second">
         <div class="left">
           <p class="p1">大小分</p>
         </div>
         <div class="right">
           <ul>
-            <li>胜 4.00</li>
-            <li>胜 4.00</li>
+            <li
+              :ref="'id'+dataIndex+'_4'"
+              @click="push('2','4',list.basketBallBet.odds_list.hilo[list.basketBallBet.odds_list.hilo.length-1].h,index)"
+            >
+              <span>大</span>
+              <span>{{list.basketBallBet.odds_list.hilo[list.basketBallBet.odds_list.hilo.length-1].h}}</span>
+            </li>
+            <li
+              :ref="'id'+dataIndex+'_5'"
+              @click="push('2','5',list.basketBallBet.odds_list.hilo[list.basketBallBet.odds_list.hilo.length-1].l,index)"
+            >
+              <span>小</span>
+              <span>{{list.basketBallBet.odds_list.hilo[list.basketBallBet.odds_list.hilo.length-1].l}}</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -48,13 +82,106 @@
         </div>
         <div class="right">
           <ul>
-            <li v-for="(item,index) in 12" :key="index">
+            <li
+              :ref="'id'+dataIndex+'_6'"
+              @click="push('3','6',list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].l1,index)"
+            >
               <p>客胜(1-5)</p>
-              <p>4.05</p>
+              <p>{{list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].l1}}</p>
+            </li>
+
+            <li
+              :ref="'id'+dataIndex+'_7'"
+              @click="push('3','7',list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].l2,index)"
+            >
+              <p>客胜(6-10)</p>
+              <p>{{list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].l2}}</p>
+            </li>
+
+            <li
+              :ref="'id'+dataIndex+'_8'"
+              @click="push('3','8',list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].l3,index)"
+            >
+              <p>客胜(11-15)</p>
+              <p>{{list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].l3}}</p>
+            </li>
+
+            <li
+              :ref="'id'+dataIndex+'_9'"
+              @click="push('3','9',list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].l4,index)"
+            >
+              <p>客胜(16-20)</p>
+              <p>{{list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].l4}}</p>
+            </li>
+            <li
+              :ref="'id'+dataIndex+'_10'"
+              @click="push('3','10',list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].l5,index)"
+            >
+              <p>客胜(21-25)</p>
+              <p>{{list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].l5}}</p>
+            </li>
+
+            <li
+              :ref="'id'+dataIndex+'_11'"
+              @click="push('3','11',list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].l6,index)"
+            >
+              <p>客胜(26+)</p>
+              <p>{{list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].l6}}</p>
+            </li>
+            <li
+              :ref="'id'+dataIndex+'_12'"
+              @click="push('3','12',list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].w1,index)"
+            >
+              <p>客胜(1-5)</p>
+              <p>{{list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].w1}}</p>
+            </li>
+
+            <li
+              :ref="'id'+dataIndex+'_13'"
+              @click="push('3','13',list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].w2,index)"
+            >
+              <p>客胜(6-10)</p>
+              <p>{{list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].w2}}</p>
+            </li>
+
+            <li
+              :ref="'id'+dataIndex+'_14'"
+              @click="push('3','14',list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].w3,index)"
+            >
+              <p>客胜(11-15)</p>
+              <p>{{list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].w3}}</p>
+            </li>
+
+            <li
+              :ref="'id'+dataIndex+'_15'"
+              @click="push('3','15',list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].w4,index)"
+            >
+              <p>客胜(16-20)</p>
+              <p>{{list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].w4}}</p>
+            </li>
+
+            <li
+              :ref="'id'+dataIndex+'_16'"
+              @click="push('3','16',list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].w5,index)"
+            >
+              <p>客胜(21-25)</p>
+              <p>{{list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].w5}}</p>
+            </li>
+
+            <li
+              :ref="'id'+dataIndex+'_17'"
+              @click="push('3','17',list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].w6,index)"
+            >
+              <p>客胜(26+)</p>
+              <p>{{list.basketBallBet.odds_list.wnm[list.basketBallBet.odds_list.wnm.length-1].w6}}</p>
             </li>
           </ul>
         </div>
       </div>
+    </div>
+    <div class="btn">
+      <van-button type="default" size="large">取消</van-button>
+      <van-button type="danger" size="large" @click="reaply">确定</van-button>
     </div>
   </div>
 </template>
@@ -69,8 +196,12 @@ export default {
   props: {},
   data() {
     return {
-      list: this.$route.query.list,
-      box: this.$route.query.box
+      list: this.$store.state.bListData,
+      dataIndex: this.$store.state.bListData.index,
+      arr: this.$store.state.bArrData,
+      betArr: [],
+      index: 0,
+      bet: this.$store.state.bBetData
     };
   },
   computed: {},
@@ -81,18 +212,108 @@ export default {
         path: "/fenxinBasket"
       });
     },
-    change: function(e) {
-      if (this.box.includes(e)) {
-        this.box.splice(this.box.indexOf(e), 1);
+    push(i1, i2, val) {
+      if (
+        this.$refs["id" + this.$store.state.bListData.index + "_" + i2]
+          .className == "bgColor"
+      ) {
+        // 删除
+        if (this.$store.state.bActiveData[this.$store.state.bListData.index]) {
+          delete this.$store.state.bActiveData[
+            this.$store.state.bListData.index
+          ][i1][i2];
+        } else {
+          delete this.$store.state.bArrData[i1][i2];
+        }
+
+        this.$refs[
+          "id" + this.$store.state.bListData.index + "_" + i2
+        ].className = "";
       } else {
-        this.box.push(e);
-      } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box.length);
+        // 添加
+        this.count += 1;
+        this.$store.state.bArrData[i1][i2] = i2;
+        this.$refs[
+          "id" + this.$store.state.bListData.index + "_" + i2
+        ].className = "bgColor";
+      }
+    },
+    reaply() {
+      if (!this.$store.state.bActiveData[this.list.index]) {
+        this.$store.state.bActiveData[this.list.index] = [];
+      }
+      for (var i = 0; i < this.$store.state.bArrData.length; i++) {
+        for (var j = 0; j < this.$store.state.bArrData[i].length; j++) {
+          if (!this.$store.state.bActiveData[this.list.index][i]) {
+            this.$store.state.bActiveData[this.list.index][i] = [];
+          }
+          if (this.$store.state.bArrData[this.list.index]) {
+            this.$store.state.bActiveData[this.list.index][i][
+              j
+            ] = this.$store.state.bArrData[i][j];
+          }
+        }
+      }
+
+      console.log(this.$store.state.bActiveData);
+      // console.log(this.$store.state.activeData);
+      // this.$store.state.betData.push([...this.betArr]);
+      this.$store.state.replayData.push(this.list);
+      // for (var i = 0; i < this.$store.state.arrData.length; i++) {
+      //   if (this.$store.state.arrData[i].length) {
+      //     this.$store.state.replayData.push(this.list);
+      //   }
+      //   // } else {
+      //   //   console.log(this.$store.state.replayData);
+      //   //   this.$store.state.replayData = [];
+      //   // }
+      // }
+      // 选中的比赛去重
+      // for (var i = 0; i < this.$store.state.replayData.length; i++) {
+      //   for (var j = i + 1; j < this.$store.state.replayData.length; ) {
+      //     if (
+      //       this.$store.state.replayData[i].id ==
+      //       this.$store.state.replayData[j].id
+      //     ) {
+      //       //通过id属性进行匹配；
+      //       this.$store.state.replayData.splice(j, 1); //去除重复的对象；
+      //     } else {
+      //       j++;
+      //     }
+      //   }
+      // }
+      //点击确定之后清空vuex arrData状态
+      this.$store.state.bArrData = [[], [], [], [], []];
+      this.$router.go(-1);
     }
   },
   mounted() {
-    console.log(this.list);
-    console.log(this.box);
+    if (this.$store.state.bActiveData[this.list.index] != undefined) {
+      for (
+        var i = 0;
+        i < this.$store.state.bActiveData[this.list.index].length;
+        i++
+      ) {
+        if (this.$store.state.bActiveData[this.list.index][i]) {
+          for (
+            var j = 0;
+            j < this.$store.state.bActiveData[this.list.index][i].length;
+            j++
+          ) {
+            if (
+              this.$store.state.bActiveData[this.list.index][i][j] != undefined
+            ) {
+              this.$refs[
+                "id" +
+                  this.$store.state.bListData.index +
+                  "_" +
+                  this.$store.state.bActiveData[this.list.index][i][j]
+              ].className = "bgColor";
+            }
+          }
+        }
+      }
+    }
   }
 };
 </script>
@@ -287,5 +508,9 @@ export default {
   background-color: red;
   color: white !important;
   text-align: center !important;
+}
+.btn {
+  display: flex;
+  width: 100%;
 }
 </style>

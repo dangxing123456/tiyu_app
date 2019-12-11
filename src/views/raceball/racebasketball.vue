@@ -12,53 +12,74 @@
       </van-dropdown-menu>
     </navBar>
     <div class="main">
-      <van-collapse v-model="activeNames">
-        <van-collapse-item name="1">
-          <div class="title" slot="title">
-            <span>2019年11月8日</span>
-            <span>星期五</span>
-            <span>24场</span>
-            <span>可投注</span>
+      <div class="wrap" v-for="(item,index) in basketList" :key="index">
+        <div class="title">
+          <span>{{item.date}}</span>
+          <span>{{item.num}}</span>
+          <span v-if="item.showStatus==1">可投注</span>
+          <span v-if="item.showStatus==0">不可投注</span>
+        </div>
+        <div class="test">
+          <div class="left">
+            <p class="first">{{item.num}}</p>
+            <p>{{item.lcnAbbr}}</p>
+            <p>{{item.time}}截止</p>
           </div>
-          <div class="test">
-            <div class="left">
-              <p class="first">001</p>
-              <p>澳超</p>
-              <p>16:19截止</p>
+          <div class="right">
+            <div class="div1">
+              <span>{{item.hcn}}</span>
+              <span>VS</span>
+
+              <span>{{item.acnAbbr}}</span>
             </div>
-            <div class="right">
-              <div class="div1">
-                <span class="name">[1]墨尔本城</span>
-                <span class="name">[6]中央海岸水手</span>
-                <span>-1.5</span>
+            <div class="tab">
+              <div class="left1">
+                <p class="p1">
+                  <span class="p1-first">0</span>
+                </p>
+                <p class="p2">
+                  <span class="p2-first">让</span>
+                </p>
               </div>
-              <div class="tab">
-                <div class="left1">
-                  <p class="p1">
-                    <span class="p1-first">0</span>
-                  </p>
-                  <p class="p2">
-                    <span class="p2-first">0</span>
-                  </p>
-                </div>
-                <div class="center">
-                  <ul>
-                    <li
-                      :class="box.includes(item) ? 'bgColor':'' "
-                      v-for="(item,index) in list"
-                      :key="index"
-                      @click="change(item)"
-                    >{{item.score}}</li>
-                  </ul>
-                </div>
-                <div class="right1">
-                  <span ref="sp" @click="detailPlay">全部玩法</span>
-                </div>
+              <div class="center">
+                <ul>
+                  <li
+                    :ref="'id'+index+'_0'"
+                    @click="push('0','0',item.basketBallBet.odds_list.mnl[item.basketBallBet.odds_list.mnl.length-1].a,index)"
+                  >
+                    <span>胜</span>
+                    <span>{{item.basketBallBet.odds_list.mnl[item.basketBallBet.odds_list.mnl.length-1].a}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_1'"
+                    @click="push('0','1',item.basketBallBet.odds_list.mnl[item.basketBallBet.odds_list.mnl.length-1].h,index)"
+                  >
+                    <span>平</span>
+                    <span>{{item.basketBallBet.odds_list.mnl[item.basketBallBet.odds_list.mnl.length-1].h}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_2'"
+                    @click="push('1','2',item.basketBallBet.odds_list.hdc[item.basketBallBet.odds_list.hdc.length-1].a,index)"
+                  >
+                    <span>负</span>
+                    <span>{{item.basketBallBet.odds_list.hdc[item.basketBallBet.odds_list.hdc.length-1].a}}</span>
+                  </li>
+                  <li
+                    :ref="'id'+index+'_3'"
+                    @click="push('1','3',item.basketBallBet.odds_list.hdc[item.basketBallBet.odds_list.hdc.length-1].h,index)"
+                  >
+                    <span>胜</span>
+                    <span>{{item.basketBallBet.odds_list.hdc[item.basketBallBet.odds_list.hdc.length-1].h}}</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="right1">
+                <span ref="sp" @click="detailPlay(item,index)">全部比赛</span>
               </div>
             </div>
           </div>
-        </van-collapse-item>
-      </van-collapse>
+        </div>
+      </div>
       <!-- 底部按钮 -->
       <div class="bot-btn">
         <div class="text">
@@ -141,7 +162,7 @@ export default {
         { text: "胜分差", value: 2 },
         { text: "大小分", value: 3 },
         { text: "混合过关", value: 4 },
-        { text: "单关", value: 5 },
+        { text: "单关", value: 5 }
       ],
       show: false,
       actions: [],
@@ -152,66 +173,97 @@ export default {
         { score: "胜1.54" },
         { score: "胜1.53" },
         { score: "胜1.52" },
-        { score: "胜1.50" },
+        { score: "胜1.50" }
       ],
-      box: [],
-      box1: [],
-      box2: []
+      basketList: [],
+      a: []
     };
   },
   computed: {},
-  watch: {
-    box: function() {
-      if (this.box.length > 0) {
-        this.$refs.sp.innerHTML = "<span>已选" + this.box.length + "项</span>";
-        this.$refs.sp.style.background = "red";
-        this.$refs.sp.style.color = "white";
-      } else {
-        this.$refs.sp.innerHTML = "<span>全部玩法</span>";
-        this.$refs.sp.style.background = "white";
-        this.$refs.sp.style.color = "#4b4949";
+  watch: {},
+  updated() {
+    if (this.$store.state.bActiveData) {
+      for (var i = 0; i < this.$store.state.bActiveData.length; i++) {
+        if (this.$store.state.bActiveData[i] != undefined) {
+          for (var j = 0; j < this.$store.state.bActiveData[i].length; j++) {
+            if (this.$store.state.bActiveData[i][j] != undefined) {
+              for (
+                var k = 0;
+                k < this.$store.state.bActiveData[i][j].length;
+                k++
+              ) {
+                if (
+                  this.$store.state.bActiveData[i][j][k] != undefined &&
+                  this.$store.state.bActiveData[i][j][k] < 4
+                ) {
+                  this.$refs[
+                    "id" + i + "_" + this.$store.state.bActiveData[i][j][k]
+                  ][0].className = "bgColor";
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
   methods: {
-    detailPlay() {
+    detailPlay(item, i) {
+      item.index = i;
+      this.$store.state.bListData = item;
       this.$router.push({
-        path: "/allplayBasket",
-        query: {
-          list: this.list,
-          box: this.box
-        }
+        path: "/allplayBasket"
       });
     },
     alertMenu() {
       this.show = true;
     },
-    change: function(e) {
-      if (this.box.includes(e)) {
-        this.box.splice(this.box.indexOf(e), 1);
+    push(i1, i2, val, index) {
+      if (this.$refs["id" + index + "_" + i2][0].className == "bgColor") {
+        // 删除
+        this.$refs["id" + index + "_" + i2][0].className = "";
+        delete this.$store.state.bActiveData[index][i1][i2];
       } else {
-        this.box.push(e);
-      } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box.length);
-    },
-    change1: function(e) {
-      if (this.box1.includes(e)) {
-        this.box1.splice(this.box1.indexOf(e), 1);
-      } else {
-        this.box1.push(e);
-      } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box1.length);
-    },
-    change2: function(e) {
-      if (this.box2.includes(e)) {
-        this.box2.splice(this.box2.indexOf(e), 1);
-      } else {
-        this.box2.push(e);
-      } // 把点击的元素item放入box数组中                    this.box.push(e);
-      console.log(this.box2.length);
+        // 添加
+        // console.log(this.a);
+        this.a[index][i1][i2] = i2;
+        if (!this.$store.state.bActiveData[index]) {
+          this.$store.state.bActiveData[index] = [];
+        }
+        for (var i = 0; i < this.a[index].length; i++) {
+          for (var j = 0; j < this.a[index][i].length; j++) {
+            if (!this.$store.state.bActiveData[index][i]) {
+              this.$store.state.bActiveData[index][i] = [];
+            }
+            if (this.a[index]) {
+              this.$store.state.bActiveData[index][i][j] = this.a[index][i][j];
+            }
+          }
+        }
+
+        this.$refs["id" + index + "_" + i2][0].className = "bgColor";
+
+        console.log(this.$store.state.bActiveData);
+      }
     }
   },
-  mounted() {}
+  mounted() {},
+  created() {
+    this.$SERVER
+      .getBasketBallMatch({
+        pagenum: 1,
+        pagesize: 10
+      })
+      .then(res => {
+        if (res.code == 200) {
+          this.basketList = res.data.list;
+
+          for (var i = 0; i < this.basketList.length; i++) {
+            this.a.push([[], [], [], []]);
+          }
+        }
+      });
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -246,6 +298,7 @@ export default {
 }
 .title {
   color: #4b4949;
+  text-align: center;
 }
 .test {
   padding: 15px 10px;
@@ -259,7 +312,7 @@ export default {
       justify-content: space-around;
       font-size: 17px;
       color: #4b4949;
-      .name{
+      .name {
         display: inline-block;
         width: 111px;
       }
@@ -302,11 +355,12 @@ export default {
         }
       }
       .center {
+        font-size: 12px;
         ul {
           li {
             display: inline-block;
             height: 30px;
-            width: 111px;
+            width: 105px;
             border: 1px solid #eeeeee;
             float: left;
             text-align: center;
@@ -323,6 +377,7 @@ export default {
           width: 31px;
           border: 1px solid #eeeeee;
           line-height: 30px;
+          font-size: 14px;
         }
       }
     }

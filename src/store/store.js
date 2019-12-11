@@ -32,6 +32,8 @@ export default new Vuex.Store({
 
       { id: 3, done: true, text: "我是码农202号" }
     ],
+    //足球
+
     //当前比赛
     listData: {},
     //确认选中的比赛
@@ -42,7 +44,17 @@ export default new Vuex.Store({
     betData: [],
     arrData: [[], [], [], [], []],
     //倍数
-    value: 1
+    value: 1,
+    addData: [],
+    otherData: [],
+    sumData: [],
+    //篮球
+
+    bListData: {},
+    bReplayData: [],
+    bArrData: [[], [], [], []],
+    bActiveData: [],
+    bBetData: []
   },
   //方法
   mutations: {

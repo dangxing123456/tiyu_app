@@ -24,21 +24,16 @@
             <li
               :id="'id'+dataIndex+'_0'"
               :ref="'id'+dataIndex+'_0'"
-              @click="push('0','0',list.footBallBet.odds_list.had.odds
-
-[list.footBallBet.odds_list.had.odds.length-1].h)"
+              @click="push('0','0',list.footBallBet.odds_list.had.odds[list.footBallBet.odds_list.had.odds.length-1].d)"
             >
               <span>胜</span>
-              <span v-if="list.footBallBet.odds_list.had">
-                {{list.footBallBet.odds_list.had.odds
-                [list.footBallBet.odds_list.had.odds.length-1].h}}
-              </span>
+              <span
+                v-if="list.footBallBet.odds_list.had"
+              >{{list.footBallBet.odds_list.had.odds [list.footBallBet.odds_list.had.odds.length-1].h}}</span>
             </li>
             <li
               :ref="'id'+dataIndex+'_1'"
-              @click="push('0','1',list.footBallBet.odds_list.had.odds
-
-[list.footBallBet.odds_list.had.odds.length-1].d)"
+              @click="push('0','1',list.footBallBet.odds_list.had.odds[list.footBallBet.odds_list.had.odds.length-1].d)"
             >
               <span>平</span>
               <span v-if="list.footBallBet.odds_list.had">
@@ -48,51 +43,33 @@
             </li>
             <li
               :ref="'id'+dataIndex+'_2'"
-              @click="push('0','2',list.footBallBet.odds_list.had.odds
-
-[list.footBallBet.odds_list.had.odds.length-1].a)"
+              @click="push('0','2',list.footBallBet.odds_list.had.odds[list.footBallBet.odds_list.had.odds.length-1].a)"
             >
               <span>负</span>
-              <span v-if="list.footBallBet.odds_list.had">
-                {{list.footBallBet.odds_list.had.odds
-                [list.footBallBet.odds_list.had.odds.length-1].a}}
-              </span>
+              <span
+                v-if="list.footBallBet.odds_list.had"
+              >{{list.footBallBet.odds_list.had.odds [list.footBallBet.odds_list.had.odds.length-1].a}}</span>
             </li>
             <li
               :ref="'id'+dataIndex+'_3'"
-              @click="push('1','3',list.footBallBet.odds_list.hhad.odds
-
-[list.footBallBet.odds_list.hhad.odds.length-1].h)"
+              @click="push('1','3',list.footBallBet.odds_list.hhad.odds[list.footBallBet.odds_list.hhad.odds.length-1].h)"
             >
               <span>胜</span>
-              <span>
-                {{list.footBallBet.odds_list.hhad.odds
-                [list.footBallBet.odds_list.hhad.odds.length-1].h}}
-              </span>
+              <span>{{list.footBallBet.odds_list.hhad.odds[list.footBallBet.odds_list.hhad.odds.length-1].h}}</span>
             </li>
             <li
               :ref="'id'+dataIndex+'_4'"
-              @click="push('1','4',list.footBallBet.odds_list.hhad.odds
-
-[list.footBallBet.odds_list.hhad.odds.length-1].d)"
+              @click="push('1','4',list.footBallBet.odds_list.hhad.odds[list.footBallBet.odds_list.hhad.odds.length-1].d)"
             >
               <span>平</span>
-              <span>
-                {{list.footBallBet.odds_list.hhad.odds
-                [list.footBallBet.odds_list.hhad.odds.length-1].d}}
-              </span>
+              <span>{{list.footBallBet.odds_list.hhad.odds [list.footBallBet.odds_list.hhad.odds.length-1].d}}</span>
             </li>
             <li
               :ref="'id'+dataIndex+'_5'"
-              @click="push('1','5',list.footBallBet.odds_list.hhad.odds
-
-[list.footBallBet.odds_list.hhad.odds.length-1].a)"
+              @click="push('1','5',list.footBallBet.odds_list.hhad.odds[list.footBallBet.odds_list.hhad.odds.length-1].a)"
             >
               <span>负</span>
-              <span>
-                {{list.footBallBet.odds_list.hhad.odds
-                [list.footBallBet.odds_list.hhad.odds.length-1].a}}
-              </span>
+              <span>{{list.footBallBet.odds_list.hhad.odds [list.footBallBet.odds_list.hhad.odds.length-1].a}}</span>
             </li>
           </ul>
         </div>
@@ -106,99 +83,59 @@
           <ul>
             <li
               :ref="'id'+dataIndex+'_6'"
-              @click="push('2','6',list.footBallBet.odds_list.ttg.odds
-
-[list.footBallBet.odds_list.ttg.odds.length-1].s0)"
+              @click="push('2','6',list.footBallBet.odds_list.ttg.odds[list.footBallBet.odds_list.ttg.odds.length-1].s0)"
             >
               <p>0球</p>
-              <p>
-                {{list.footBallBet.odds_list.ttg.odds
-                [list.footBallBet.odds_list.ttg.odds.length-1].s0}}
-              </p>
+              <p>{{list.footBallBet.odds_list.ttg.odds[list.footBallBet.odds_list.ttg.odds.length-1].s0}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_7'"
-              @click="push('2','7',list.footBallBet.odds_list.ttg.odds
-
-[list.footBallBet.odds_list.ttg.odds.length-1].s1)"
+              @click="push('2','7',list.footBallBet.odds_list.ttg.odds[list.footBallBet.odds_list.ttg.odds.length-1].s1)"
             >
               <p>1球</p>
-              <p>
-                {{list.footBallBet.odds_list.ttg.odds
-                [list.footBallBet.odds_list.ttg.odds.length-1].s1}}
-              </p>
+              <p>{{list.footBallBet.odds_list.ttg.odds [list.footBallBet.odds_list.ttg.odds.length-1].s1}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_8'"
-              @click="push('2','8',list.footBallBet.odds_list.ttg.odds
-
-[list.footBallBet.odds_list.ttg.odds.length-1].s2)"
+              @click="push('2','8',list.footBallBet.odds_list.ttg.odds[list.footBallBet.odds_list.ttg.odds.length-1].s2)"
             >
               <p>2球</p>
-              <p>
-                {{list.footBallBet.odds_list.ttg.odds
-                [list.footBallBet.odds_list.ttg.odds.length-1].s2}}
-              </p>
+              <p>{{list.footBallBet.odds_list.ttg.odds [list.footBallBet.odds_list.ttg.odds.length-1].s2}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_9'"
-              @click="push('2','9',list.footBallBet.odds_list.ttg.odds
-
-[list.footBallBet.odds_list.ttg.odds.length-1].s3)"
+              @click="push('2','9',list.footBallBet.odds_list.ttg.odds[list.footBallBet.odds_list.ttg.odds.length-1].s3)"
             >
               <p>3球</p>
-              <p>
-                {{list.footBallBet.odds_list.ttg.odds
-                [list.footBallBet.odds_list.ttg.odds.length-1].s3}}
-              </p>
+              <p>{{list.footBallBet.odds_list.ttg.odds [list.footBallBet.odds_list.ttg.odds.length-1].s3}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_10'"
-              @click="push('2','10',list.footBallBet.odds_list.ttg.odds
-
-[list.footBallBet.odds_list.ttg.odds.length-1].s4)"
+              @click="push('2','10',list.footBallBet.odds_list.ttg.odds[list.footBallBet.odds_list.ttg.odds.length-1].s4)"
             >
               <p>4球</p>
-              <p>
-                {{list.footBallBet.odds_list.ttg.odds
-                [list.footBallBet.odds_list.ttg.odds.length-1].s4}}
-              </p>
+              <p>{{list.footBallBet.odds_list.ttg.odds [list.footBallBet.odds_list.ttg.odds.length-1].s4}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_11'"
-              @click="push('2','11',list.footBallBet.odds_list.ttg.odds
-
-[list.footBallBet.odds_list.ttg.odds.length-1].s5)"
+              @click="push('2','11',list.footBallBet.odds_list.ttg.odds[list.footBallBet.odds_list.ttg.odds.length-1].s5)"
             >
               <p>5球</p>
-              <p>
-                {{list.footBallBet.odds_list.ttg.odds
-                [list.footBallBet.odds_list.ttg.odds.length-1].s5}}
-              </p>
+              <p>{{list.footBallBet.odds_list.ttg.odds [list.footBallBet.odds_list.ttg.odds.length-1].s5}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_12'"
-              @click="push('2','12',list.footBallBet.odds_list.ttg.odds
-
-[list.footBallBet.odds_list.ttg.odds.length-1].s6)"
+              @click="push('2','12',list.footBallBet.odds_list.ttg.odds[list.footBallBet.odds_list.ttg.odds.length-1].s6)"
             >
               <p>6球</p>
-              <p>
-                {{list.footBallBet.odds_list.ttg.odds
-                [list.footBallBet.odds_list.ttg.odds.length-1].s6}}
-              </p>
+              <p>{{list.footBallBet.odds_list.ttg.odds [list.footBallBet.odds_list.ttg.odds.length-1].s6}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_13'"
-              @click="push('2','13',list.footBallBet.odds_list.ttg.odds
-
-[list.footBallBet.odds_list.ttg.odds.length-1].s7)"
+              @click="push('2','13',list.footBallBet.odds_list.ttg.odds[list.footBallBet.odds_list.ttg.odds.length-1].s7)"
             >
               <p>7+球</p>
-              <p>
-                {{list.footBallBet.odds_list.ttg.odds
-                [list.footBallBet.odds_list.ttg.odds.length-1].s7}}
-              </p>
+              <p>{{list.footBallBet.odds_list.ttg.odds [list.footBallBet.odds_list.ttg.odds.length-1].s7}}</p>
             </li>
           </ul>
         </div>
@@ -212,111 +149,66 @@
           <ul>
             <li
               :ref="'id'+dataIndex+'_14'"
-              @click="push('3','14',list.footBallBet.odds_list.hafu.odds
-
-[list.footBallBet.odds_list.hafu.odds.length-1].hh)"
+              @click="push('3','14',list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].hh)"
             >
               <p>胜胜</p>
-              <p>
-                {{list.footBallBet.odds_list.hafu.odds
-                [list.footBallBet.odds_list.hafu.odds.length-1].hh}}
-              </p>
+              <p>{{list.footBallBet.odds_list.hafu.odds [list.footBallBet.odds_list.hafu.odds.length-1].hh}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_15'"
-              @click="push('3','15',list.footBallBet.odds_list.hafu.odds
-
-[list.footBallBet.odds_list.hafu.odds.length-1].hd)"
+              @click="push('3','15',list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].hd)"
             >
               <p>胜平</p>
-              <p>
-                {{list.footBallBet.odds_list.hafu.odds
-                [list.footBallBet.odds_list.hafu.odds.length-1].hd}}
-              </p>
+              <p>{{list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].hd}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_16'"
-              @click="push('3','16',list.footBallBet.odds_list.hafu.odds
-
-[list.footBallBet.odds_list.hafu.odds.length-1].ha)"
+              @click="push('3','16',list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].ha)"
             >
               <p>胜负</p>
-              <p>
-                {{list.footBallBet.odds_list.hafu.odds
-                [list.footBallBet.odds_list.hafu.odds.length-1].ha}}
-              </p>
+              <p>{{list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].ha}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_17'"
-              @click="push('3','17',list.footBallBet.odds_list.hafu.odds
-
-[list.footBallBet.odds_list.hafu.odds.length-1].dh)"
+              @click="push('3','17',list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].dh)"
             >
               <p>平胜</p>
-              <p>
-                {{list.footBallBet.odds_list.hafu.odds
-                [list.footBallBet.odds_list.hafu.odds.length-1].dh}}
-              </p>
+              <p>{{list.footBallBet.odds_list.hafu.odds [list.footBallBet.odds_list.hafu.odds.length-1].dh}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_18'"
-              @click="push('3','18',list.footBallBet.odds_list.hafu.odds
-
-[list.footBallBet.odds_list.hafu.odds.length-1].dd)"
+              @click="push('3','18',list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].dd)"
             >
               <p>平平</p>
-              <p>
-                {{list.footBallBet.odds_list.hafu.odds
-                [list.footBallBet.odds_list.hafu.odds.length-1].dd}}
-              </p>
+              <p>{{list.footBallBet.odds_list.hafu.odds [list.footBallBet.odds_list.hafu.odds.length-1].dd}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_19'"
-              @click="push('3','19',list.footBallBet.odds_list.hafu.odds
-
-[list.footBallBet.odds_list.hafu.odds.length-1].da)"
+              @click="push('3','19',list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].da)"
             >
               <p>平负</p>
-              <p>
-                {{list.footBallBet.odds_list.hafu.odds
-                [list.footBallBet.odds_list.hafu.odds.length-1].da}}
-              </p>
+              <p>{{list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].da}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_20'"
-              @click="push('3','20',list.footBallBet.odds_list.hafu.odds
-
-[list.footBallBet.odds_list.hafu.odds.length-1].ah)"
+              @click="push('3','20',list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].ah)"
             >
               <p>负胜</p>
-              <p>
-                {{list.footBallBet.odds_list.hafu.odds
-                [list.footBallBet.odds_list.hafu.odds.length-1].ah}}
-              </p>
+              <p>{{list.footBallBet.odds_list.hafu.odds [list.footBallBet.odds_list.hafu.odds.length-1].ah}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_21'"
-              @click="push('3','21',list.footBallBet.odds_list.hafu.odds
-
-[list.footBallBet.odds_list.hafu.odds.length-1].ad)"
+              @click="push('3','21',list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].ad)"
             >
               <p>负平</p>
-              <p>
-                {{list.footBallBet.odds_list.hafu.odds
-                [list.footBallBet.odds_list.hafu.odds.length-1].ad}}
-              </p>
+              <p>{{list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].ad}}</p>
             </li>
             <li
               :ref="'id'+dataIndex+'_22'"
-              @click="push('3','22',list.footBallBet.odds_list.hafu.odds
-
-[list.footBallBet.odds_list.hafu.odds.length-1].aa)"
+              @click="push('3','22',list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].aa)"
             >
               <p>负负</p>
-              <p>
-                {{list.footBallBet.odds_list.hafu.odds
-                [list.footBallBet.odds_list.hafu.odds.length-1].aa}}
-              </p>
+              <p>{{list.footBallBet.odds_list.hafu.odds[list.footBallBet.odds_list.hafu.odds.length-1].aa}}</p>
             </li>
           </ul>
         </div>
@@ -331,159 +223,96 @@
             <ul>
               <li
                 :ref="'id'+dataIndex+'_23'"
-                @click="push('4','23',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0100)"
+                @click="push('4','23',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0100)"
               >
                 <p>1:0</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0100}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0100}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_24'"
-                @click="push('4','24',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0200)"
+                @click="push('4','24',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0200)"
               >
                 <p>2:0</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0200}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds [list.footBallBet.odds_list.crs.odds.length-1].b0200}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_25'"
-                @click="push('4','25',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0201)"
+                @click="push('4','25',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0201)"
               >
                 <p>2:1</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0201}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0201}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_26'"
-                @click="push('4','26',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0300)"
+                @click="push('4','26',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0300)"
               >
                 <p>3:0</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0300}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0300}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_27'"
-                @click="push('4','27',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0301)"
+                @click="push('4','27',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0301)"
               >
                 <p>3:1</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0301}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0301}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_28'"
-                @click="push('4','28',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0302)"
+                @click="push('4','28',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0302)"
               >
                 <p>3:2</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0302}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0302}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_29'"
-                @click="push('4','29',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0400)"
+                @click="push('4','29',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0400)"
               >
                 <p>4:0</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0400}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0400}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_30'"
-                @click="push('4','30',list.footBallBet.odds_list.crs.odds
+                @click="push('4','30',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0401)
 
-[list.footBallBet.odds_list.crs.odds.length-1].b0401)"
+"
               >
                 <p>4:1</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0401}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0401}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_31'"
-                @click="push('4','31',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0402)"
+                @click="push('4','31',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0402)"
               >
                 <p>4:2</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0402}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds [list.footBallBet.odds_list.crs.odds.length-1].b0402}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_32'"
-                @click="push('4','32',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0500)"
+                @click="push('4','32',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0500)"
               >
                 <p>5:0</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0500}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0500}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_33'"
-                @click="push('4','33',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0501)"
+                @click="push('4','33',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0501)"
               >
                 <p>5:1</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0501}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds [list.footBallBet.odds_list.crs.odds.length-1].b0501}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_34'"
-                @click="push('4','34',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0502)"
+                @click="push('4','34',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0502)"
               >
                 <p>5:2</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0502}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0502}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_35'"
-                @click="push('4','35',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].h1)"
+                @click="push('4','35',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].h1)"
               >
                 <p>胜其他</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].h1}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].h1}}</p>
               </li>
             </ul>
           </div>
@@ -496,62 +325,40 @@
             <ul>
               <li
                 :ref="'id'+dataIndex+'_36'"
-                @click="push('4','36',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0000)"
+                @click="push('4','36',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0000)"
               >
                 <p>0:0</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0000}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0000}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_37'"
-                @click="push('4','37',list.footBallBet.odds_list.crs.odds
+                @click="push('4','37',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0101)
 
-[list.footBallBet.odds_list.crs.odds.length-1].b0101)"
+"
               >
                 <p>1:1</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0101}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0101}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_38'"
-                @click="push('4','38',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0202)"
+                @click="push('4','38',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0202)"
               >
                 <p>2:2</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0202}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0202}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_39'"
-                @click="push('4','39',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0303)"
+                @click="push('4','39',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0303)"
               >
                 <p>3:3</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0303}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0303}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_40'"
-                @click="push('4','40',list.footBallBet.odds_list.crs.odd
-[list.footBallBet.odds_list.crs.odds.length-1].d1)"
+                @click="push('4','40',list.footBallBet.odds_list.crs.odd[list.footBallBet.odds_list.crs.odds.length-1].d1)"
               >
                 <p>平其他</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].d1}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].d1}}</p>
               </li>
             </ul>
           </div>
@@ -564,159 +371,94 @@
             <ul>
               <li
                 :ref="'id'+dataIndex+'_41'"
-                @click="push('4','41',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0001)"
+                @click="push('4','41',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0001)"
               >
                 <p>0:1</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0001}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0001}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_42'"
-                @click="push('4','42',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0002)"
+                @click="push('4','42',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0002)"
               >
                 <p>0:2</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0002}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0002}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_43'"
-                @click="push('4','43',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0102)"
+                @click="push('4','43',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0102)"
               >
                 <p>1:2</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0102}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0102}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_44'"
-                @click="push('4','44',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0003)"
+                @click="push('4','44',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0003)"
               >
                 <p>0:3</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0003}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds [list.footBallBet.odds_list.crs.odds.length-1].b0003}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_45'"
-                @click="push('4','45',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0103)"
+                @click="push('4','45',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0103)"
               >
                 <p>1:3</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0103}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0103}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_46'"
-                @click="push('4','46',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0203)"
+                @click="push('4','46',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0203)"
               >
                 <p>2:3</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0203}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds [list.footBallBet.odds_list.crs.odds.length-1].b0203}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_47'"
-                @click="push('4','47',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0004)"
+                @click="push('4','47',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0004)"
               >
                 <p>0:4</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0004}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0004}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_48'"
-                @click="push('4','48',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0104)"
+                @click="push('4','48',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0104)"
               >
                 <p>1:4</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0104}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0104}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_49'"
-                @click="push('4','49',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0204)"
+                @click="push('4','49',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0204)"
               >
                 <p>2:4</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0204}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds [list.footBallBet.odds_list.crs.odds.length-1].b0204}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_50'"
-                @click="push('4','50',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0005)"
+                @click="push('4','50',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0005)"
               >
                 <p>0:5</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0005}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0005}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_51'"
-                @click="push('4','51',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0105)"
+                @click="push('4','51',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0105)"
               >
                 <p>1:5</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0105}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0105}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_52'"
-                @click="push('4','52',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].b0205)"
+                @click="push('4','52',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0205)"
               >
                 <p>2:5</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].b0205}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].b0205}}</p>
               </li>
               <li
                 :ref="'id'+dataIndex+'_53'"
-                @click="push('4','53',list.footBallBet.odds_list.crs.odds
-
-[list.footBallBet.odds_list.crs.odds.length-1].a1)"
+                @click="push('4','53',list.footBallBet.odds_list.crs.odds[list.footBallBet.odds_list.crs.odds.length-1].a1)"
               >
                 <p>负其他</p>
-                <p>
-                  {{list.footBallBet.odds_list.crs.odds
-                  [list.footBallBet.odds_list.crs.odds.length-1].a1}}
-                </p>
+                <p>{{list.footBallBet.odds_list.crs.odds [list.footBallBet.odds_list.crs.odds.length-1].a1}}</p>
               </li>
             </ul>
           </div>
@@ -747,8 +489,7 @@ export default {
       betArr: [],
       dataIndex: this.$store.state.listData.index,
       index: 0,
-      bet: this.$store.state.betData,
-      count: 0
+      bet: this.$store.state.betData
     };
   },
   computed: {
@@ -776,184 +517,208 @@ export default {
         } else {
           delete this.$store.state.arrData[i1][i2];
         }
+        if (this.$store.state.sumData[this.$store.state.listData.index]) {
+          delete this.$store.state.sumData[this.$store.state.listData.index][
+            i2
+          ];
+        } else {
+          delete this.$store.state.otherData[i2];
+        }
         this.$refs[
           "id" + this.$store.state.listData.index + "_" + i2
         ].className = "";
       } else {
         // 添加
-        this.count += 1;
-
         this.$store.state.arrData[i1][i2] = i2;
         this.$refs[
           "id" + this.$store.state.listData.index + "_" + i2
         ].className = "bgColor";
+        if (i2 > 5) {
+          if (this.$store.state.sumData[this.$store.state.listData.index]) {
+            this.$store.state.sumData[this.$store.state.listData.index][
+              i2
+            ] = this.$refs[
+              "id" + this.$store.state.listData.index + "_" + i2
+            ].children[1].innerHTML;
+          } else {
+            console.log(1);
+            this.$store.state.otherData[i2] = this.$refs[
+              "id" + this.$store.state.listData.index + "_" + i2
+            ].children[1].innerHTML;
+          }
+        }
       }
     },
     reaply() {
-      this.betArr = [
-        this.list.footBallBet.odds_list.had.odds[
-          this.list.footBallBet.odds_list.had.odds.length - 1
-        ].h,
-        this.list.footBallBet.odds_list.had.odds[
-          this.list.footBallBet.odds_list.had.odds.length - 1
-        ].d,
-        this.list.footBallBet.odds_list.had.odds[
-          this.list.footBallBet.odds_list.had.odds.length - 1
-        ].a,
-        this.list.footBallBet.odds_list.hhad.odds[
-          this.list.footBallBet.odds_list.hhad.odds.length - 1
-        ].h,
-        this.list.footBallBet.odds_list.hhad.odds[
-          this.list.footBallBet.odds_list.hhad.odds.length - 1
-        ].d,
-        this.list.footBallBet.odds_list.hhad.odds[
-          this.list.footBallBet.odds_list.hhad.odds.length - 1
-        ].a,
-        this.list.footBallBet.odds_list.ttg.odds[
-          this.list.footBallBet.odds_list.ttg.odds.length - 1
-        ].s0,
-        this.list.footBallBet.odds_list.ttg.odds[
-          this.list.footBallBet.odds_list.ttg.odds.length - 1
-        ].s1,
-        this.list.footBallBet.odds_list.ttg.odds[
-          this.list.footBallBet.odds_list.ttg.odds.length - 1
-        ].s2,
-        this.list.footBallBet.odds_list.ttg.odds[
-          this.list.footBallBet.odds_list.ttg.odds.length - 1
-        ].s3,
-        this.list.footBallBet.odds_list.ttg.odds[
-          this.list.footBallBet.odds_list.ttg.odds.length - 1
-        ].s4,
-        this.list.footBallBet.odds_list.ttg.odds[
-          this.list.footBallBet.odds_list.ttg.odds.length - 1
-        ].s5,
-        this.list.footBallBet.odds_list.ttg.odds[
-          this.list.footBallBet.odds_list.ttg.odds.length - 1
-        ].s6,
-        this.list.footBallBet.odds_list.ttg.odds[
-          this.list.footBallBet.odds_list.ttg.odds.length - 1
-        ].s7,
-        this.list.footBallBet.odds_list.hafu.odds[
-          this.list.footBallBet.odds_list.hafu.odds.length - 1
-        ].hh,
-        this.list.footBallBet.odds_list.hafu.odds[
-          this.list.footBallBet.odds_list.hafu.odds.length - 1
-        ].hd,
-        this.list.footBallBet.odds_list.hafu.odds[
-          this.list.footBallBet.odds_list.hafu.odds.length - 1
-        ].ha,
-        this.list.footBallBet.odds_list.hafu.odds[
-          this.list.footBallBet.odds_list.hafu.odds.length - 1
-        ].dh,
-        this.list.footBallBet.odds_list.hafu.odds[
-          this.list.footBallBet.odds_list.hafu.odds.length - 1
-        ].dd,
-        this.list.footBallBet.odds_list.hafu.odds[
-          this.list.footBallBet.odds_list.hafu.odds.length - 1
-        ].da,
-        this.list.footBallBet.odds_list.hafu.odds[
-          this.list.footBallBet.odds_list.hafu.odds.length - 1
-        ].ah,
-        this.list.footBallBet.odds_list.hafu.odds[
-          this.list.footBallBet.odds_list.hafu.odds.length - 1
-        ].ad,
-        this.list.footBallBet.odds_list.hafu.odds[
-          this.list.footBallBet.odds_list.hafu.odds.length - 1
-        ].aa,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0100,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0200,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0201,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0300,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0301,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0302,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0400,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0401,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0402,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0500,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0501,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0502,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].h1,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0000,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0101,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0202,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0303,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].d1,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0001,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0002,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0102,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0003,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0103,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0203,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0004,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0104,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0204,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0005,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0105,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].b0205,
-        this.list.footBallBet.odds_list.crs.odds[
-          this.list.footBallBet.odds_list.crs.odds.length - 1
-        ].a1
-      ];
+      if (!this.$store.state.sumData[this.$store.state.listData.index]) {
+        this.$store.state.sumData.push(...[this.$store.state.otherData]);
+      }
+      this.$store.state.otherData = [];
+      console.log(this.$store.state.sumData);
+      // this.betArr = [
+      //   this.list.footBallBet.odds_list.had.odds[
+      //     this.list.footBallBet.odds_list.had.odds.length - 1
+      //   ].h,
+      //   this.list.footBallBet.odds_list.had.odds[
+      //     this.list.footBallBet.odds_list.had.odds.length - 1
+      //   ].d,
+      //   this.list.footBallBet.odds_list.had.odds[
+      //     this.list.footBallBet.odds_list.had.odds.length - 1
+      //   ].a,
+      //   this.list.footBallBet.odds_list.hhad.odds[
+      //     this.list.footBallBet.odds_list.hhad.odds.length - 1
+      //   ].h,
+      //   this.list.footBallBet.odds_list.hhad.odds[
+      //     this.list.footBallBet.odds_list.hhad.odds.length - 1
+      //   ].d,
+      //   this.list.footBallBet.odds_list.hhad.odds[
+      //     this.list.footBallBet.odds_list.hhad.odds.length - 1
+      //   ].a,
+      //   this.list.footBallBet.odds_list.ttg.odds[
+      //     this.list.footBallBet.odds_list.ttg.odds.length - 1
+      //   ].s0,
+      //   this.list.footBallBet.odds_list.ttg.odds[
+      //     this.list.footBallBet.odds_list.ttg.odds.length - 1
+      //   ].s1,
+      //   this.list.footBallBet.odds_list.ttg.odds[
+      //     this.list.footBallBet.odds_list.ttg.odds.length - 1
+      //   ].s2,
+      //   this.list.footBallBet.odds_list.ttg.odds[
+      //     this.list.footBallBet.odds_list.ttg.odds.length - 1
+      //   ].s3,
+      //   this.list.footBallBet.odds_list.ttg.odds[
+      //     this.list.footBallBet.odds_list.ttg.odds.length - 1
+      //   ].s4,
+      //   this.list.footBallBet.odds_list.ttg.odds[
+      //     this.list.footBallBet.odds_list.ttg.odds.length - 1
+      //   ].s5,
+      //   this.list.footBallBet.odds_list.ttg.odds[
+      //     this.list.footBallBet.odds_list.ttg.odds.length - 1
+      //   ].s6,
+      //   this.list.footBallBet.odds_list.ttg.odds[
+      //     this.list.footBallBet.odds_list.ttg.odds.length - 1
+      //   ].s7,
+      //   this.list.footBallBet.odds_list.hafu.odds[
+      //     this.list.footBallBet.odds_list.hafu.odds.length - 1
+      //   ].hh,
+      //   this.list.footBallBet.odds_list.hafu.odds[
+      //     this.list.footBallBet.odds_list.hafu.odds.length - 1
+      //   ].hd,
+      //   this.list.footBallBet.odds_list.hafu.odds[
+      //     this.list.footBallBet.odds_list.hafu.odds.length - 1
+      //   ].ha,
+      //   this.list.footBallBet.odds_list.hafu.odds[
+      //     this.list.footBallBet.odds_list.hafu.odds.length - 1
+      //   ].dh,
+      //   this.list.footBallBet.odds_list.hafu.odds[
+      //     this.list.footBallBet.odds_list.hafu.odds.length - 1
+      //   ].dd,
+      //   this.list.footBallBet.odds_list.hafu.odds[
+      //     this.list.footBallBet.odds_list.hafu.odds.length - 1
+      //   ].da,
+      //   this.list.footBallBet.odds_list.hafu.odds[
+      //     this.list.footBallBet.odds_list.hafu.odds.length - 1
+      //   ].ah,
+      //   this.list.footBallBet.odds_list.hafu.odds[
+      //     this.list.footBallBet.odds_list.hafu.odds.length - 1
+      //   ].ad,
+      //   this.list.footBallBet.odds_list.hafu.odds[
+      //     this.list.footBallBet.odds_list.hafu.odds.length - 1
+      //   ].aa,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0100,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0200,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0201,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0300,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0301,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0302,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0400,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0401,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0402,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0500,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0501,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0502,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].h1,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0000,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0101,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0202,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0303,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].d1,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0001,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0002,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0102,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0003,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0103,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0203,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0004,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0104,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0204,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0005,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0105,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].b0205,
+      //   this.list.footBallBet.odds_list.crs.odds[
+      //     this.list.footBallBet.odds_list.crs.odds.length - 1
+      //   ].a1
+      // ];
 
       if (!this.$store.state.activeData[this.list.index]) {
         this.$store.state.activeData[this.list.index] = [];
@@ -971,10 +736,9 @@ export default {
         }
       }
 
-      this.list.count = 3;
-      // console.log(this.$store.state.activeData);
+      console.log(this.$store.state.activeData);
       this.$store.state.betData.push([...this.betArr]);
-      this.$store.state.replayData.push(this.list);
+      // this.$store.state.replayData.push(this.list);
       // for (var i = 0; i < this.$store.state.arrData.length; i++) {
       //   if (this.$store.state.arrData[i].length) {
       //     this.$store.state.replayData.push(this.list);
@@ -1004,6 +768,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$store.state.activeData);
     if (this.$store.state.activeData[this.list.index] != undefined) {
       for (
         var i = 0;

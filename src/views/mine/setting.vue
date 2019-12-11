@@ -22,13 +22,13 @@ export default {
     navBar
   },
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     logout() {
-      
-    },
+      localStorage.removeItem("token");
+      this.$toast.success("退出登录成功");
+    }
   }
 };
 </script>

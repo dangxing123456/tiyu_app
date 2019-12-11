@@ -138,7 +138,7 @@ module.exports = {
     proxy: {
       // 配置多个代理(配置一个 proxy: "http://localhost:4000" )
       "/sport": {
-        target: "http://192.168.0.102:12000/sport/",
+        target: "http://192.168.0.103:12000/sport/",
         changeOrigin: true,
         ws: true,
         pathRewrite: {

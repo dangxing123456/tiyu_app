@@ -346,7 +346,7 @@ export default {
         .footBallBookOrder({
           wagers: this.arrData,
           userId: "10089",
-          times: 2,
+          times: this.$store.state.value,
           matchIds: this.arrID,
           bets: this.$store.state.betData,
           describeText: this.value,

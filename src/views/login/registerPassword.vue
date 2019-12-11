@@ -79,9 +79,10 @@ export default {
 
       this.regLoading = true;
       console.log(this.$store.state.register.newpassword);
+      console.log(this.$store.state.register.user_account);
       this.$SERVER
         .register({
-          mobile: 18302988038,
+          mobile: this.$store.state.register.user_account,
           password: this.$store.state.register.newpassword,
           nickname: "打豆豆",
           sex: 1

@@ -8,101 +8,108 @@
         <van-dropdown-item v-model="value1" :options="option1" />
       </van-dropdown-menu>
     </navBar>
-    <div class="main">
-      <div class="wrap" v-for="(item,index) in result" :key="index">
-        <div class="title">
-          <span>{{item.date}}</span>
-          <span>{{item.num}}</span>
-          <span v-if="item.showStatus==1">可投注</span>
-          <span v-if="item.showStatus==0">不可投注</span>
-        </div>
-        <div class="test">
-          <div class="left">
-            <p class="first">{{item.num}}</p>
-            <p>{{item.lcnAbbr}}</p>
-            <p>{{item.time}}截止</p>
-          </div>
-          <div class="right">
-            <div class="div1">
-              <span>{{item.hcn}}</span>
-              <span>VS</span>
 
-              <span>{{item.acnAbbr}}</span>
+    <div class="main">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <van-list v-model="loading" :finished="finished" @load="onLoad">
+          <!-- 加载的内容-->
+
+          <div class="wrap" v-for="(item,index) in result" :key="index">
+            <div class="title">
+              <span>{{item.date}}</span>
+              <span>{{item.num}}</span>
+              <span v-if="item.showStatus==1">可投注</span>
+              <span v-if="item.showStatus==0">不可投注</span>
             </div>
-            <div class="tab">
-              <div class="left1">
-                <p class="p1">
-                  <span class="p1-first">0</span>
-                </p>
-                <p class="p2">
-                  <span class="p2-first">{{item.footBallBet.odds_list.hhad.goalline}}</span>
-                </p>
+            <div class="test">
+              <div class="left">
+                <p class="first">{{item.num}}</p>
+                <p>{{item.lcnAbbr}}</p>
+                <p>{{item.time}}截止</p>
               </div>
-              <div class="center">
-                <ul>
-                  <li
-                    :ref="'id'+index+'_0'"
-                    @click="push('0','0',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].h,index)"
-                  >
-                    <span>胜</span>
-                    <span
-                      v-if="item.footBallBet.odds_list.had"
-                    >{{item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].h}}</span>
-                  </li>
-                  <li
-                    :ref="'id'+index+'_1'"
-                    @click="push('0','1',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].d,index)"
-                  >
-                    <span>平</span>
-                    <span
-                      v-if="item.footBallBet.odds_list.had"
-                    >{{item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].d}}</span>
-                  </li>
-                  <li
-                    :ref="'id'+index+'_2'"
-                    @click="push('0','2',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].a,index)"
-                  >
-                    <span>负</span>
-                    <span
-                      v-if="item.footBallBet.odds_list.had"
-                    >{{item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].a}}</span>
-                  </li>
-                  <li
-                    :ref="'id'+index+'_3'"
-                    @click="push('1','3',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].h,index)"
-                  >
-                    <span>胜</span>
-                    <span
-                      v-if="item.footBallBet.odds_list.hhad"
-                    >{{item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].h}}</span>
-                  </li>
-                  <li
-                    :ref="'id'+index+'_4'"
-                    @click="push('1','4',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].d,index)"
-                  >
-                    <span>平</span>
-                    <span
-                      v-if="item.footBallBet.odds_list.hhad"
-                    >{{item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].d}}</span>
-                  </li>
-                  <li
-                    :ref="'id'+index+'_5'"
-                    @click="push('1','5',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].a,index)"
-                  >
-                    <span>负</span>
-                    <span
-                      v-if="item.footBallBet.odds_list.hhad"
-                    >{{item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].a}}</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="right1">
-                <span ref="sp" @click="detailPlay(item,index)">全部比赛</span>
+              <div class="right">
+                <div class="div1">
+                  <span>{{item.hcn}}</span>
+                  <span>VS</span>
+
+                  <span>{{item.acnAbbr}}</span>
+                </div>
+                <div class="tab" v-if="item.footBallBet">
+                  <div class="left1">
+                    <p class="p1">
+                      <span class="p1-first">0</span>
+                    </p>
+                    <p class="p2">
+                      <span class="p2-first">{{item.footBallBet.odds_list.hhad.goalline}}</span>
+                    </p>
+                  </div>
+                  <div class="center" v-if="item.footBallBet">
+                    <ul>
+                      <li
+                        :ref="'id'+index+'_0'"
+                        @click="push('0','0',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].h,index,item)"
+                      >
+                        <span>胜</span>
+                        <span
+                          v-if="item.footBallBet.odds_list.had"
+                        >{{item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].h}}</span>
+                      </li>
+                      <li
+                        :ref="'id'+index+'_1'"
+                        @click="push('0','1',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].d,index,item)"
+                      >
+                        <span>平</span>
+                        <span
+                          v-if="item.footBallBet.odds_list.had"
+                        >{{item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].d}}</span>
+                      </li>
+                      <li
+                        :ref="'id'+index+'_2'"
+                        @click="push('0','2',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].a,index,item)"
+                      >
+                        <span>负</span>
+                        <span
+                          v-if="item.footBallBet.odds_list.had"
+                        >{{item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].a}}</span>
+                      </li>
+                      <li
+                        :ref="'id'+index+'_3'"
+                        @click="push('1','3',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].h,index,item)"
+                      >
+                        <span>胜</span>
+                        <span
+                          v-if="item.footBallBet.odds_list.hhad"
+                        >{{item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].h}}</span>
+                      </li>
+                      <li
+                        :ref="'id'+index+'_4'"
+                        @click="push('1','4',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].d,index,item)"
+                      >
+                        <span>平</span>
+                        <span
+                          v-if="item.footBallBet.odds_list.hhad"
+                        >{{item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].d}}</span>
+                      </li>
+                      <li
+                        :ref="'id'+index+'_5'"
+                        @click="push('1','5',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].a,index,item)"
+                      >
+                        <span>负</span>
+                        <span
+                          v-if="item.footBallBet.odds_list.hhad"
+                        >{{item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].a}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="right1">
+                    <span ref="sp" @click="detailPlay(item,index)">全部比赛</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </van-list>
+      </van-pull-refresh>
       <!-- 底部按钮 -->
       <div class="bot-btn">
         <div class="text">
@@ -151,20 +158,6 @@
         </div>
       </van-action-sheet>
     </div>
-<<<<<<< HEAD
-              <!-- 底部按钮 -->
-      <div class="bot-btn">
-        <div class="text">
-          <p>至少选择1场比赛</p>
-          <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
-        </div>
-        <div class="btn">
-          <van-button type="default" size="large">取消</van-button>
-          <van-button type="danger" size="large">确定</van-button>
-        </div>
-      </div>
-=======
->>>>>>> 2cba31119c81150a7786fc8041ce4f9350b5a493
   </div>
 </template>
 
@@ -180,8 +173,12 @@ export default {
   props: {},
   data() {
     return {
-      result: [1],
-      i: 0,
+      totalPage: 0,
+      pageNumber: 0,
+      loading: false, //控制上拉加载的加载动画
+      finished: false, //控制在页面往下移动到底部时是否调用接口获取数据
+      isLoading: false, //控制下拉刷新的加载动画
+      result: [],
       value1: 6,
       option1: [
         { text: "胜平负", value: 0 },
@@ -202,6 +199,7 @@ export default {
       list: []
 =======
       activeNames: 0,
+<<<<<<< HEAD
       changeColor: false,
       dataLen: [],
       dataRes: [],
@@ -210,11 +208,14 @@ export default {
       arr: [],
       textList: []
 >>>>>>> 2cba31119c81150a7786fc8041ce4f9350b5a493
+=======
+      changeColor: false
+>>>>>>> 73d833ddf6a4619c01cde64280a6bd8eddf71536
     };
   },
   computed: {
     ...mapState({
-      a: "qq",
+      // a: "qq",
       acdata: "activeData"
     }),
     ...mapGetters({
@@ -230,12 +231,23 @@ export default {
   updated() {
     if (this.$store.state.activeData) {
       for (var i = 0; i < this.$store.state.activeData.length; i++) {
-        for (var j = 0; j < this.$store.state.activeData[i].length; j++) {
-          for (var k = 0; k < this.$store.state.activeData[i][j].length; k++) {
-            if (this.$store.state.activeData[i][j][k] != undefined) {
-              this.$refs[
-                "id" + i + "_" + this.$store.state.activeData[i][j][k]
-              ][0].className = "bgColor";
+        if (this.$store.state.activeData[i] != undefined) {
+          for (var j = 0; j < this.$store.state.activeData[i].length; j++) {
+            if (this.$store.state.activeData[i][j] != undefined) {
+              for (
+                var k = 0;
+                k < this.$store.state.activeData[i][j].length;
+                k++
+              ) {
+                if (
+                  this.$store.state.activeData[i][j][k] != undefined &&
+                  this.$store.state.activeData[i][j][k] < 6
+                ) {
+                  this.$refs[
+                    "id" + i + "_" + this.$store.state.activeData[i][j][k]
+                  ][0].className = "bgColor";
+                }
+              }
             }
           }
         }
@@ -243,35 +255,43 @@ export default {
     }
   },
   mounted() {
-    var count = 0;
-    var that = this;
-    if (this.arrdata) {
-      for (var i = 0; i < this.arrdata.length; i++) {
-        if (!this.arrdata[i]) {
-          this.arrdata.splice(i, 1);
-          i--;
-        }
-      }
-      console.log(this.arrdata);
-      for (var i = 0; i < this.arrdata.length; i++) {
-        for (var j = 0; j < this.arrdata[i].length; j++) {
-          if (this.arrdata[i][j]) {
-            count += 1;
-          }
-        }
-      }
-    }
-    that.$nextTick(function() {
+    // var count = 0;
+    // var that = this;
+    // if (this.arrdata) {
+    //   for (var i = 0; i < this.arrdata.length; i++) {
+    //     if (!this.arrdata[i]) {
+    //       this.arrdata.splice(i, 1);
+    //       i--;
+    //     }
+    //   }
+    //   for (var i = 0; i < this.arrdata.length; i++) {
+    //     for (var j = 0; j < this.arrdata[i].length; j++) {
+    //       if (this.arrdata[i][j]) {
+    //         count += 1;
+    //       }
+    //     }
+    //   }
+    // }
+  },
+  methods: {
+    init() {
+      var that = this;
       that.$SERVER
         .getFootBall({
-          pagenum: 1,
+          pagenum: this.pageNumber + 1,
           pagesize: 10
         })
         .then(res => {
           if (res.code == 200) {
             that.result = res.data.list;
+
+            that.isLoading = false;
+            for (var i = 0; i < that.result.length; i++) {
+              this.$store.state.addData.push([[], [], [], [], []]);
+            }
           }
         });
+<<<<<<< HEAD
     });
   },
   created() {
@@ -309,25 +329,67 @@ export default {
         }
       }
 
+=======
+    },
+    //下拉刷新
+    onRefresh() {
+      let that = this;
+      setTimeout(() => {
+        that.totalPage = 0;
+        that.pageNumber = 0;
+        that.init(); //加载数据
+      }, 500);
+    },
+    onLoad() {
+      let that = this;
+      setTimeout(() => {
+        that.$SERVER
+          .getFootBall({
+            pagenum: this.pageNumber + 1,
+            pagesize: 10
+          })
+          .then(res => {
+            if (res.code == 200) {
+              that.totalPage = res.data.total;
+              that.result = that.result.concat(res.data.list);
+              that.loading = false;
+              that.pageNumber++;
+              that.isLoading = false;
+              //如果当前页码大于 总共的页码
+              if (that.pageNumber > parseInt(that.totalPage / 10)) {
+                console.log(1);
+                that.finished = true;
+              }
+              for (var i = 0; i < that.result.length; i++) {
+               this.$store.state.addData.push([[], [], [], [], []]);
+              }
+            }
+          });
+      }, 500);
+    },
+    push(i1, i2, val, index, item) {
+>>>>>>> 73d833ddf6a4619c01cde64280a6bd8eddf71536
       if (this.$refs["id" + index + "_" + i2][0].className == "bgColor") {
         // 删除
         this.$refs["id" + index + "_" + i2][0].className = "";
         delete this.$store.state.activeData[index][i1][i2];
+        console.log(this.$store.state.activeData);
       } else {
         // 添加
-        this.$store.state.arrData[i1][i2] = i2;
+        // console.log(this.a);
+        this.$store.state.addData[index][i1][i2] = i2;
         if (!this.$store.state.activeData[index]) {
           this.$store.state.activeData[index] = [];
         }
-        for (var i = 0; i < this.$store.state.arrData.length; i++) {
-          for (var j = 0; j < this.$store.state.arrData[i].length; j++) {
+        for (var i = 0; i < this.$store.state.addData[index].length; i++) {
+          for (var j = 0; j < this.$store.state.addData[index][i].length; j++) {
             if (!this.$store.state.activeData[index][i]) {
               this.$store.state.activeData[index][i] = [];
             }
-            if (this.$store.state.arrData[index]) {
+            if (this.$store.state.addData[index]) {
               this.$store.state.activeData[index][i][
                 j
-              ] = this.$store.state.arrData[i][j];
+              ] = this.$store.state.addData[index][i][j];
             }
           }
         }
@@ -342,11 +404,37 @@ export default {
       //往vuex中存入状态
       set: "setValue"
     }),
-    detailPlan(item) {
-      console.log(this.$store.state.replayData);
+    detailPlan() {
       this.$router.push({
         path: "/confirmPlan"
       });
+
+      console.log(this.$store.state.activeData);
+
+      if (this.$store.state.activeData) {
+        for (var i = 0; i < this.$store.state.activeData.length; i++) {
+          console.log(i);
+          if (this.$store.state.activeData[i] != undefined) {
+            if (this.$store.state.replayData.indexOf(this.result[i]) === -1) {
+              this.$store.state.replayData.push(this.result[i]);
+            }
+            for (var j = 0; j < this.$store.state.activeData[i].length; j++) {
+              console.log(this.$store.state.activeData[i][j]);
+              if (this.$store.state.activeData[i][j] != undefined) {
+                if (
+                  this.$store.state.activeData[i][j].every(
+                    (e, h) => e == undefined
+                  )
+                ) {
+                  this.$store.state.replayData.splice(i, 1);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      console.log(this.$store.state.replayData);
     },
     detailPlay(item, i) {
       item.index = i;
@@ -354,6 +442,7 @@ export default {
       this.$router.push({
         path: "/allplay"
       });
+      console.log(this.$store.state.activeData);
     },
     alertMenu() {
       this.show = true;

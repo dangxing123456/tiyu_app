@@ -127,7 +127,7 @@ export default {
         return;
       }
 
-      if (!regexUtil.isPassword(this.form.password)) {
+      if (regexUtil.isPassword(this.form.password)) {
         this.$toast.fail("请输入6-11位字母数字组合密码");
         return;
       }
@@ -137,10 +137,9 @@ export default {
       }
       this.regLoading = true;
       this.$SERVER
-        .pwdup({
-          user_account: this.form.telephone,
-          captcha: this.form.checknum,
-          newpassword: this.form.password
+        .resetPassword({
+          mobile: this.form.telephone,
+          password: this.form.password
         })
         .then(res => {
           this.$toast.success(res.msg);
@@ -172,11 +171,19 @@ export default {
     width: 90%;
   }
   .checknumbtn {
-    background: linear-gradient(90deg,rgba(249,74,81,1),rgba(247,109,98,1));
+    background: linear-gradient(
+      90deg,
+      rgba(249, 74, 81, 1),
+      rgba(247, 109, 98, 1)
+    );
     border: 0;
   }
   .regbtn {
-    background: linear-gradient(90deg,rgba(249,74,81,1),rgba(247,109,98,1));
+    background: linear-gradient(
+      90deg,
+      rgba(249, 74, 81, 1),
+      rgba(247, 109, 98, 1)
+    );
     border-radius: 100px;
     margin-top: 30px;
     font-size: 17px;
@@ -189,7 +196,7 @@ export default {
     text-align: right;
     color: #999;
     span {
-      color: rgba(249,74,81,1);
+      color: rgba(249, 74, 81, 1);
       margin-left: 5px;
     }
   }
