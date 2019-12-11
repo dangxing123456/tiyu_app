@@ -57,7 +57,6 @@ export default {
     };
   },
   created() {
-    console.log(this.$METHOD);
     if (this.$METHOD.getStore("token")) {
       this.$router.push("/");
     }
@@ -81,8 +80,10 @@ export default {
         })
         .then(res => {
           that.$toast.success("登录成功");
-          that.$METHOD.setStore("token", res.data.userinfo.token);
-          that.$store.state.token = res.data.userinfo.token;
+          console.log(res);
+          that.$METHOD.setStore("token", res.data.token);
+          that.$store.state.token = res.userinfo.token;
+          that.$router.go(-1);
           that.$store.state.userInfo = res.data.userinfo_first;
           that.$store.state.isActive = res.data.userinfo_first.setting;
           that.loginLoading = false;
@@ -94,7 +95,6 @@ export default {
             },
             function(ret, err) {}
           );
-          that.$router.go(-1);
         })
         .catch(res => {
           that.loginLoading = false;

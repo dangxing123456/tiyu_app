@@ -196,12 +196,18 @@ export default {
   },
   mounted() {
     // console.log(this.$route)
-
-   
   },
   created() {
-     console.log(this.$store.state.replayData);
-    console.log(this.$store.state.value);
+    console.log(this.$store.state.replayData);
+    console.log(this.$store.state.activeData);
+
+    for (var i = 0; i < this.$store.state.activeData.length; i++) {
+      for (var j = 0; j < this.$store.state.activeData[i].length; j++) {
+        console.log(this.$store.state.activeData[i][j]);
+        console.log(this.$store.state.activeData[i][j].every("undefined"));
+        for (var k = 0; k < this.$store.state.activeData[i][j].length; k++) {}
+      }
+    }
     const arr = [];
 
     var a = JSON.parse(JSON.stringify(this.$store.state.activeData));

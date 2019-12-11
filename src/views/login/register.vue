@@ -91,37 +91,54 @@ export default {
   },
   methods: {
     sendchecknum() {
-      if (regexUtil.isPhone(this.$store.state.register.user_account)) {
-        const timer_COUNT = 60;
-        if (!this.timer) {
-          this.countDown = timer_COUNT;
-          this.checkNumDisabled = true;
-          this.timer = setInterval(() => {
-            if (this.countDown > 0 && this.countDown <= timer_COUNT) {
-              this.countDown--;
+      this.$SERVER
+        .checkUserInfor({
+          mobile: this.$store.state.register.user_account
+        })
+        .then(res => {
+          if (res.data == false) {
+            if (regexUtil.isPhone(this.$store.state.register.user_account)) {
+              const timer_COUNT = 60;
+              if (!this.timer) {
+                this.countDown = timer_COUNT;
+                this.checkNumDisabled = true;
+                this.timer = setInterval(() => {
+                  if (this.countDown > 0 && this.countDown <= timer_COUNT) {
+                    this.countDown--;
+                  } else {
+                    this.checkNumDisabled = false;
+                    clearInterval(this.timer);
+                    this.timer = null;
+                  }
+                }, 1000);
+              }
             } else {
-              this.checkNumDisabled = false;
-              clearInterval(this.timer);
-              this.timer = null;
+              this.$toast.fail("请输入正确的手机号码");
             }
-          }, 1000);
-        }
-        this.$SERVER
-          .sendchecknum({
-            mobile: this.$store.state.register.user_account
-          })
-          .then(res => {
-            this.$toast.success("验证码发送成功！");
-          })
-          .catch(res => {
-            this.$store.state.register.captcha = "";
-            this.checkNumDisabled = false;
-            clearInterval(this.timer);
-            this.timer = null;
-          });
-      } else {
-        this.$toast.fail("请输入正确的手机号码");
-      }
+
+            this.$SERVER
+              .sendchecknum({
+                mobile: this.$store.state.register.user_account
+              })
+              .then(res => {
+                this.$toast.success("验证码发送成功！");
+              })
+              .catch(res => {
+                this.$store.state.register.captcha = "";
+                this.checkNumDisabled = false;
+                clearInterval(this.timer);
+                this.timer = null;
+              });
+          } else {
+            this.$toast.success("用户名已被注册");
+          }
+        })
+        .catch(res => {
+          // this.$store.state.register.captcha = "";
+          // this.checkNumDisabled = false;
+          // clearInterval(this.timer);
+          // this.timer = null;
+        });
     },
     regFn() {
       var that = this;
@@ -162,7 +179,7 @@ export default {
       font-size: 14px;
       span {
         text-decoration: underline;
-        color: rgba(249,74,81,1);
+        color: rgba(249, 74, 81, 1);
       }
     }
     .cell-group {
@@ -193,12 +210,20 @@ export default {
     }
   }
   .checknumbtn {
-    background: linear-gradient(90deg,rgba(249,74,81,1),rgba(247,109,98,1));
+    background: linear-gradient(
+      90deg,
+      rgba(249, 74, 81, 1),
+      rgba(247, 109, 98, 1)
+    );
     border: 0;
     border-radius: 18px;
   }
   .regbtn {
-    background: linear-gradient(90deg,rgba(249,74,81,1),rgba(247,109,98,1));
+    background: linear-gradient(
+      90deg,
+      rgba(249, 74, 81, 1),
+      rgba(247, 109, 98, 1)
+    );
     border-radius: 100px;
     margin-top: 30px;
     border: 0;
@@ -213,7 +238,7 @@ export default {
     color: #999;
     span {
       text-decoration: underline;
-      color: rgba(249,74,81,1);
+      color: rgba(249, 74, 81, 1);
     }
   }
 }

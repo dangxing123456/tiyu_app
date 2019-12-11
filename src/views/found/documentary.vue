@@ -27,20 +27,25 @@
               </van-dropdown-menu>
             </div>
             <div class="content">
-              <div @click="detailExpert">
+              <div
+                class="con"
+                @click="detailExpert"
+                v-for="(item,index) in foogBallList"
+                :key="index"
+              >
                 <div class="top">
                   <div class="left">
                     <img src="../../assets/images/default.png" alt />
-                    <h3>追命杀手</h3>
+                    <h3>{{item.userInfor.nickname}}</h3>
                   </div>
                   <div class="right">
-                    <p>一场稳单的推荐一场稳单的推荐一场稳单的推荐一场稳单的推荐一场稳单的推荐</p>
+                    <p>{{item.describeText}}</p>
                     <div>
                       <span class="span1">足</span>
                       <span class="span2">单关</span>
                       <span class="span3">4连红</span>
                       <span class="span4">起跟金额2元</span>
-                      <span class="time">截止: 11-07 21:49</span>
+                      <span class="time">截止:{{item.endTime | formatDate}}</span>
                     </div>
                   </div>
                 </div>
@@ -64,6 +69,59 @@
                     <van-button @click.stop="showPopup" type="danger">跟一单</van-button>
                   </div>
                 </div>
+                <van-popup position="bottom" v-model="show">
+                  <div class="popup">
+                    <div class="head">
+                      <div>
+                        <span class="peo">发单人：</span>
+                        <span class="com">红单一生一世</span>
+                      </div>
+                      <div>
+                        <span class="peo">投注方式</span>
+                        <span class="com">2串1</span>
+                      </div>
+                    </div>
+                    <div class="con">
+                      <div>
+                        <p class="money">8.0元</p>
+                        <p class="text">自购</p>
+                      </div>
+                      <div>
+                        <p class="money">2元</p>
+                        <p class="text">起跟金额</p>
+                      </div>
+                      <div>
+                        <p class="money">221人</p>
+                        <p class="text">跟单人气</p>
+                      </div>
+                    </div>
+                    <div class="wrap">
+                      <div>
+                        <p class="mon">
+                          实付金额
+                          <span>{{item.times}}</span>
+                        </p>
+                        <p class="yong">
+                          佣金比例：
+                          <span>10%</span>
+                        </p>
+                      </div>
+                      <div>
+                        <div class="num">
+                          <p>投</p>
+                          
+                          <van-stepper :value="bei" @change="onChange" />
+                          <p>倍</p>
+                          <p />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="btn">
+                      <van-button type="default" size="large">取消</van-button>
+                      <van-button type="danger" size="large">确定</van-button>
+                    </div>
+                  </div>
+                </van-popup>
               </div>
             </div>
           </van-tab>
@@ -112,58 +170,7 @@
         </van-tabs>
       </div>
     </div>
-    <van-popup position="bottom" v-model="show">
-      <div class="popup">
-        <div class="head">
-          <div>
-            <span class="peo">发单人：</span>
-            <span class="com">红单一生一世</span>
-          </div>
-          <div>
-            <span class="peo">投注方式</span>
-            <span class="com">2串1</span>
-          </div>
-        </div>
-        <div class="con">
-          <div>
-            <p class="money">8.0元</p>
-            <p class="text">自购</p>
-          </div>
-          <div>
-            <p class="money">2元</p>
-            <p class="text">起跟金额</p>
-          </div>
-          <div>
-            <p class="money">221人</p>
-            <p class="text">跟单人气</p>
-          </div>
-        </div>
-        <div class="wrap">
-          <div>
-            <p class="mon">
-              实付金额
-              <span>20元</span>
-            </p>
-            <p class="yong">
-              佣金比例：
-              <span>10%</span>
-            </p>
-          </div>
-          <div>
-            <div class="num">
-              <p>投</p>
-              <van-stepper value="10" bind:change="onChange" />
-              <p>倍</p>
-              <p />
-            </div>
-          </div>
-        </div>
-        <div class="btn">
-          <van-button type="default" size="large">取消</van-button>
-          <van-button type="danger" size="large">确定</van-button>
-        </div>
-      </div>
-    </van-popup>
+
     <van-popup v-model="shiliShow" round>
       <div class="shili">
         <h3>实力专家指数</h3>
@@ -198,6 +205,7 @@
 </template>
 
 <script>
+import { format } from "../../common/js/mixin";
 export default {
   name: "documentary",
   props: {},
@@ -205,16 +213,49 @@ export default {
     return {
       value1: 0,
       value2: "a",
+      bei: 10,
+      mon: 20,
       option1: [{ text: "按实力", value: 0 }, { text: "按人气", value: 1 }],
       option2: [{ text: "竞足", value: "a" }, { text: "竞篮", value: "b" }],
       show: false,
       shiliShow: false,
-      mingShow: false
+      mingShow: false,
+      foogBallList: []
     };
   },
   computed: {},
   watch: {},
+  filters: {
+    formatDate: function(value) {
+      let date = new Date(value);
+      let y = date.getFullYear();
+      let MM = date.getMonth() + 1;
+      MM = MM < 10 ? "0" + MM : MM;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      let h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      let m = date.getMinutes();
+      m = m < 10 ? "0" + m : m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      return MM + "-" + d + " " + h + ":" + m;
+    }
+  },
   methods: {
+    //获取跟单列表
+    getList() {
+      this.$SERVER
+        .getFootBallCanFollowOrderList({})
+        .then(res => {
+          this.foogBallList = res.data.list;
+          console.log(res);
+        })
+        .catch(err => {});
+    },
+    onChange(value) {
+      this.mon = value * 2;
+    },
     changeValue(value) {
       console.log(value);
     },
@@ -253,6 +294,9 @@ export default {
         path: "/ExpertsSuggest"
       });
     }
+  },
+  created() {
+    this.getList();
   }
 };
 </script>
@@ -392,15 +436,19 @@ export default {
   .select {
   }
   .content {
+    .con {
+      border-bottom: 1px solid #cccccc;
+    }
     padding: 10px 0px;
     background-color: #fff;
-    border-bottom: 1px solid #cccccc;
+
     .top {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #cccccc;
+      padding-top: 10px;
       .left {
         width: 35%;
         text-align: center;
@@ -485,7 +533,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 10px 0 10px;
+      padding: 10px;
       div {
         width: 25%;
         text-align: center;
