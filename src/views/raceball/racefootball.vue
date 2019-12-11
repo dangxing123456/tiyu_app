@@ -123,7 +123,9 @@ export default {
   },
   props: {},
   data() {
-    return {};
+    return {
+      a: ""
+    };
   },
   mounted() {},
   methods: {
@@ -131,41 +133,258 @@ export default {
       var that = this;
       that.$SERVER
         .getFootBall({
-          pagenum: this.pageNumber + 1,
+          pagenum: 1,
           pagesize: 10
         })
         .then(res => {
           if (res.code == 200) {
-            that.result = res.data.list;
-
-            that.isLoading = false;
-            for (var i = 0; i < that.result.length; i++) {
-              this.$store.state.addData.push([[], [], [], [], []]);
+            console.log(res.data.list);
+            for (var i = 0; i < res.data.list.length; i++) {
+              this.$store.state.selectResult.push([[], [], [], [], []]);
+              this.$store.state.selectValue.push([[], [], [], [], []]);
             }
+            res.data.list.forEach(e => {
+              var a;
+              var b;
+              var c;
+              if (!e.footBallBet.odds_list.had) {
+                a = "";
+                b = "";
+                c = "";
+              } else {
+                a =
+                  e.footBallBet.odds_list.had.odds[
+                    e.footBallBet.odds_list.had.odds.length - 1
+                  ].h;
+                b =
+                  e.footBallBet.odds_list.had.odds[
+                    e.footBallBet.odds_list.had.odds.length - 1
+                  ].d;
+                c =
+                  e.footBallBet.odds_list.had.odds[
+                    e.footBallBet.odds_list.had.odds.length - 1
+                  ].a;
+              }
+              this.$store.state.result.push({
+                date: e.date,
+                num: e.num,
+                lcnAbbr: e.lcnAbbr,
+                time: e.time,
+                hcn: e.hcn,
+                acnAbbr: e.acnAbbr,
+                goalline: e.footBallBet.odds_list.hhad.goalline,
+                footBallBet: [
+                  a,
+                  b,
+                  c,
+                  e.footBallBet.odds_list.hhad.odds[
+                    e.footBallBet.odds_list.hhad.odds.length - 1
+                  ].h,
+                  e.footBallBet.odds_list.hhad.odds[
+                    e.footBallBet.odds_list.hhad.odds.length - 1
+                  ].d,
+                  e.footBallBet.odds_list.hhad.odds[
+                    e.footBallBet.odds_list.hhad.odds.length - 1
+                  ].a,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s0,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s1,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s2,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s3,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s4,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s5,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s6,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s7,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].hh,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].hd,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].ha,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].dh,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].dd,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].da,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].ah,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].ad,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].aa,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0100,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0200,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0201,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0300,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0301,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0302,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0400,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0401,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0402,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0500,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0501,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0502,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].h1,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0000,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0101,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0202,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0303,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].d1,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0001,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0002,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0102,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0003,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0103,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0203,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0004,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0104,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0204,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0005,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0105,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0205,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].a1
+                ]
+              });
+            });
+
+            console.log(this.$store.state.result);
           }
         });
     },
     addColor(i, i2) {
-      if (
-        this.$store.state.selectResult[i][i2] == undefined ||
-        this.$store.state.selectResult[i][i2] == ""
-      ) {
-        return "";
-      } else {
-        return "bgColor";
+      if (i2 < 3) {
+        if (this.$store.state.selectResult[i][0] != undefined) {
+          if (
+            this.$store.state.selectResult[i][0][i2] == undefined ||
+            this.$store.state.selectResult[i][0][i2] == ""
+          ) {
+            return "";
+          } else {
+            return "bgColor";
+          }
+        }
+      } else if (i2 >= 3 && i2 < 6) {
+        if (this.$store.state.selectResult[i][1] != undefined) {
+          if (
+            this.$store.state.selectResult[i][1][i2] == undefined ||
+            this.$store.state.selectResult[i][1][i2] == ""
+          ) {
+            return "";
+          } else {
+            return "bgColor";
+          }
+        }
       }
     },
-
     push(index, i, val) {
-      if (
-        this.$store.state.selectResult[index][i] == undefined ||
-        this.$store.state.selectResult[index][i] == ""
-      ) {
-        this.$set(this.$store.state.selectResult[index], i, val);
+      if (i >= 0 && i < 3) {
+        this.a = 0;
       } else {
-        this.$set(this.$store.state.selectResult[index], i, "");
+        this.a = 1;
       }
+      if (
+        this.$store.state.selectResult[index][this.a][i] == undefined ||
+        this.$store.state.selectResult[index][this.a][i] == ""
+      ) {
+        this.$set(this.$store.state.selectResult[index][this.a], i, val);
+        this.$set(this.$store.state.selectValue[index][this.a], i, val);
+      } else {
+        this.$set(this.$store.state.selectResult[index][this.a], i, "");
+        this.$set(this.$store.state.selectValue[index][this.a], i, "");
+      }
+
+      console.log(this.$store.state.selectResult);
     }
+  },
+  created() {
+    this.init();
   }
 };
 </script>

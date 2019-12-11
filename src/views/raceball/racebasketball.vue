@@ -307,10 +307,12 @@ export default {
   align-items: center;
   .right {
     width: 80%;
+    font-size: 14px;
     .div1 {
       display: flex;
       justify-content: space-around;
-      font-size: 17px;
+      padding-bottom: 15px;
+      font-size: 14px;
       color: #4b4949;
       .name {
         display: inline-block;
@@ -384,9 +386,10 @@ export default {
   }
   .left {
     text-align: center;
+    font-size: 12px;
     .first {
       padding-bottom: 20px;
-      font-size: 16px;
+      
       color: #4b4949;
     }
   }
@@ -411,7 +414,7 @@ export default {
     justify-content: space-between;
     padding: 8px 10px;
     h3 {
-      font-size: 16px;
+      font-size: 14px;
     }
     span {
       font-size: 14px;
@@ -439,7 +442,7 @@ export default {
   .senf {
     padding: 8px 10px;
     h3 {
-      font-size: 16px;
+      font-size: 14px;
     }
   }
   .bottom {
