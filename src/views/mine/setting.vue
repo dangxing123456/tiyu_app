@@ -26,8 +26,9 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.removeItem("token");
+      this.$METHOD.removeStore("token")
       this.$toast.success("退出登录成功");
+      this.$router.push('/')
     }
   }
 };

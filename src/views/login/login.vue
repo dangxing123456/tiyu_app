@@ -80,22 +80,11 @@ export default {
         })
         .then(res => {
           that.$toast.success("登录成功");
-          console.log(res);
-          this.$store.state.userInfo.userid = res.data.userId;
           that.$METHOD.setStore("token", res.data.token);
-          that.$store.state.token = res.userinfo.token;
+          that.$store.state.token = res.data.token;
           that.$router.go(-1);
-          that.$store.state.userInfo = res.data.userinfo_first;
-          that.$store.state.isActive = res.data.userinfo_first.setting;
+          that.$store.state.userInfo = res.data;
           that.loginLoading = false;
-          var push = api.require("push");
-          push.bind(
-            {
-              userName: res.data.userinfo_first.user_nickname,
-              userId: res.data.userinfo_first.use_rid
-            },
-            function(ret, err) {}
-          );
         })
         .catch(res => {
           that.loginLoading = false;

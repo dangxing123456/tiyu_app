@@ -39,11 +39,7 @@ axios.interceptors.request.use(
     }
     // qs转换
     if (config.method.toUpperCase() !== "GET") {
-<<<<<<< HEAD
-      // if (Object.prototype.toString.call(config.data) !== '[object FormData]') config.data = qs.stringify(config.data);
-=======
       // if (Object.prototype.toString.call(config.data) !== "[object FormData]") config.data = qs.stringify(config.data);
->>>>>>> 2cba31119c81150a7786fc8041ce4f9350b5a493
     }
     return config;
   },

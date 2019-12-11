@@ -207,7 +207,7 @@ const router = new Router({
     },
     //足球全部玩法
     {
-      path: "/allplay",
+      path: "/allplay/:i",
       name: "allplay",
       component: () => import("@/views/raceball/allplay.vue"),
       meta: {
