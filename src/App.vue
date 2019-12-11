@@ -160,26 +160,26 @@ export default {
       );
     },
     setVux() {
-      if (this.$METHOD.getStore("token")) {
-        this.$store.state.token = this.$METHOD.getStore("token");
-        this.$SERVER.information().then(res => {
-          this.$store.state.userInfo = res.data;
-          this.$store.state.isActive = Boolean(res.data.setting);
-          this.push.joinGroup(
-            {
-              groupName: "department"
-            },
-            function(ret, err) {}
-          );
-          this.push.bind(
-            {
-              userName: res.data.user_nickname,
-              userId: res.data.use_rid
-            },
-            function(ret, err) {}
-          );
-        });
-      }
+      // if (this.$METHOD.getStore("token")) {
+      //   this.$store.state.token = this.$METHOD.getStore("token");
+      //   this.$SERVER.information().then(res => {
+      //     this.$store.state.userInfo = res.data;
+      //     this.$store.state.isActive = Boolean(res.data.setting);
+      //     this.push.joinGroup(
+      //       {
+      //         groupName: "department"
+      //       },
+      //       function(ret, err) {}
+      //     );
+      //     this.push.bind(
+      //       {
+      //         userName: res.data.user_nickname,
+      //         userId: res.data.use_rid
+      //       },
+      //       function(ret, err) {}
+      //     );
+      //   });
+      // }
     }
   }
 };

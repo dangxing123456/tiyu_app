@@ -37,7 +37,7 @@
 
                   <span>{{item.acnAbbr}}</span>
                 </div>
-                <div class="tab">
+                <div class="tab" v-if="item.footBallBet">
                   <div class="left1">
                     <p class="p1">
                       <span class="p1-first">0</span>
@@ -46,11 +46,11 @@
                       <span class="p2-first">{{item.footBallBet.odds_list.hhad.goalline}}</span>
                     </p>
                   </div>
-                  <div class="center">
+                  <div class="center" v-if="item.footBallBet">
                     <ul>
                       <li
                         :ref="'id'+index+'_0'"
-                        @click="push('0','0',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].h,index)"
+                        @click="push('0','0',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].h,index,item)"
                       >
                         <span>胜</span>
                         <span
@@ -59,7 +59,7 @@
                       </li>
                       <li
                         :ref="'id'+index+'_1'"
-                        @click="push('0','1',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].d,index)"
+                        @click="push('0','1',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].d,index,item)"
                       >
                         <span>平</span>
                         <span
@@ -68,7 +68,7 @@
                       </li>
                       <li
                         :ref="'id'+index+'_2'"
-                        @click="push('0','2',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].a,index)"
+                        @click="push('0','2',item.footBallBet.odds_list.had.odds[item.footBallBet.odds_list.had.odds.length-1].a,index,item)"
                       >
                         <span>负</span>
                         <span
@@ -77,7 +77,7 @@
                       </li>
                       <li
                         :ref="'id'+index+'_3'"
-                        @click="push('1','3',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].h,index)"
+                        @click="push('1','3',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].h,index,item)"
                       >
                         <span>胜</span>
                         <span
@@ -86,7 +86,7 @@
                       </li>
                       <li
                         :ref="'id'+index+'_4'"
-                        @click="push('1','4',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].d,index)"
+                        @click="push('1','4',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].d,index,item)"
                       >
                         <span>平</span>
                         <span
@@ -95,7 +95,7 @@
                       </li>
                       <li
                         :ref="'id'+index+'_5'"
-                        @click="push('1','5',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].a,index)"
+                        @click="push('1','5',item.footBallBet.odds_list.hhad.odds[item.footBallBet.odds_list.hhad.odds.length-1].a,index,item)"
                       >
                         <span>负</span>
                         <span
@@ -197,9 +197,7 @@ export default {
       actions: [],
       checked: true,
       activeNames: 0,
-      changeColor: false,
-
-      a: []
+      changeColor: false
     };
   },
   computed: {
@@ -244,24 +242,23 @@ export default {
     }
   },
   mounted() {
-    var count = 0;
-    var that = this;
-    if (this.arrdata) {
-      for (var i = 0; i < this.arrdata.length; i++) {
-        if (!this.arrdata[i]) {
-          this.arrdata.splice(i, 1);
-          i--;
-        }
-      }
-      console.log(this.arrdata);
-      for (var i = 0; i < this.arrdata.length; i++) {
-        for (var j = 0; j < this.arrdata[i].length; j++) {
-          if (this.arrdata[i][j]) {
-            count += 1;
-          }
-        }
-      }
-    }
+    // var count = 0;
+    // var that = this;
+    // if (this.arrdata) {
+    //   for (var i = 0; i < this.arrdata.length; i++) {
+    //     if (!this.arrdata[i]) {
+    //       this.arrdata.splice(i, 1);
+    //       i--;
+    //     }
+    //   }
+    //   for (var i = 0; i < this.arrdata.length; i++) {
+    //     for (var j = 0; j < this.arrdata[i].length; j++) {
+    //       if (this.arrdata[i][j]) {
+    //         count += 1;
+    //       }
+    //     }
+    //   }
+    // }
   },
   methods: {
     init() {
@@ -277,7 +274,7 @@ export default {
 
             that.isLoading = false;
             for (var i = 0; i < that.result.length; i++) {
-              this.a.push([[], [], [], [], []]);
+              this.$store.state.addData.push([[], [], [], [], []]);
             }
           }
         });
@@ -312,35 +309,38 @@ export default {
                 that.finished = true;
               }
               for (var i = 0; i < that.result.length; i++) {
-                this.a.push([[], [], [], [], []]);
+               this.$store.state.addData.push([[], [], [], [], []]);
               }
             }
           });
       }, 500);
     },
-    push(i1, i2, val, index) {
+    push(i1, i2, val, index, item) {
       if (this.$refs["id" + index + "_" + i2][0].className == "bgColor") {
         // 删除
         this.$refs["id" + index + "_" + i2][0].className = "";
         delete this.$store.state.activeData[index][i1][i2];
+        console.log(this.$store.state.activeData);
       } else {
         // 添加
         // console.log(this.a);
-        this.a[index][i1][i2] = i2;
+        this.$store.state.addData[index][i1][i2] = i2;
         if (!this.$store.state.activeData[index]) {
           this.$store.state.activeData[index] = [];
         }
-        for (var i = 0; i < this.a[index].length; i++) {
-          for (var j = 0; j < this.a[index][i].length; j++) {
+        for (var i = 0; i < this.$store.state.addData[index].length; i++) {
+          for (var j = 0; j < this.$store.state.addData[index][i].length; j++) {
             if (!this.$store.state.activeData[index][i]) {
               this.$store.state.activeData[index][i] = [];
             }
-            if (this.a[index]) {
-              this.$store.state.activeData[index][i][j] = this.a[index][i][j];
+            if (this.$store.state.addData[index]) {
+              this.$store.state.activeData[index][i][
+                j
+              ] = this.$store.state.addData[index][i][j];
             }
           }
         }
-
+        console.log(this.$store.state.activeData);
         this.$refs["id" + index + "_" + i2][0].className = "bgColor";
       }
     },
@@ -351,52 +351,32 @@ export default {
       //往vuex中存入状态
       set: "setValue"
     }),
-    detailPlan(item) {
+    detailPlan() {
       this.$router.push({
         path: "/confirmPlan"
       });
+
+      console.log(this.$store.state.activeData);
+
       if (this.$store.state.activeData) {
         for (var i = 0; i < this.$store.state.activeData.length; i++) {
+          console.log(i);
           if (this.$store.state.activeData[i] != undefined) {
+            if (this.$store.state.replayData.indexOf(this.result[i]) === -1) {
+              this.$store.state.replayData.push(this.result[i]);
+            }
             for (var j = 0; j < this.$store.state.activeData[i].length; j++) {
+              console.log(this.$store.state.activeData[i][j]);
               if (this.$store.state.activeData[i][j] != undefined) {
-                for (
-                  var k = 0;
-                  k < this.$store.state.activeData[i][j].length;
-                  k++
+                if (
+                  this.$store.state.activeData[i][j].every(
+                    (e, h) => e == undefined
+                  )
                 ) {
-                  if (
-                    this.$store.state.activeData[i][j][k] != undefined &&
-                    this.$store.state.activeData[i][j][k] < 6
-                  ) {
-                    if (
-                      (this.$refs[
-                        "id" + i + "_" + this.$store.state.activeData[i][j][k]
-                      ][0].className = "bgColor")
-                    ) {
-                      this.$store.state.replayData.push(this.result[i]);
-                    } else {
-                    }
-                  }
+                  this.$store.state.replayData.splice(i, 1);
                 }
               }
-
-              console.log(this.$store.state.activeData[i][j]);
             }
-          } else {
-          }
-        }
-      }
-      for (var i = 0; i < this.$store.state.replayData.length; i++) {
-        for (var j = i + 1; j < this.$store.state.replayData.length; ) {
-          if (
-            this.$store.state.replayData[i].id ==
-            this.$store.state.replayData[j].id
-          ) {
-            //通过id属性进行匹配；
-            this.$store.state.replayData.splice(j, 1); //去除重复的对象；
-          } else {
-            j++;
           }
         }
       }

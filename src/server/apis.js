@@ -48,6 +48,14 @@ class Api extends Axios {
       params
     );
   }
+  //足球跟单
+  async footBallFollowOrder(params = {}) {
+    return await this.axios("POST", "football/footBallFollowOrder", params);
+  }
+  //获取篮彩比赛列表
+  async getBasketBallMatch(params = {}) {
+    return await this.axios("POST", "basketball/getBasketBallMatch", params);
+  }
 }
 
 export default new Api();
