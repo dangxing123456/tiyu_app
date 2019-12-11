@@ -18,7 +18,6 @@ import Vant from "vant";
 import "vant/lib/index.less";
 import "vant/lib/icon/local.css"; // vant图标库
 import echarts from "echarts";
-import $ from "jquery";
 Vue.prototype.$echarts = echarts;
 Vue.use(Vant);
 Vue.use(touch);
@@ -27,7 +26,6 @@ Vue.config.productionTip = false;
 Vue.prototype.$METHOD = method;
 // 全局引入API
 Vue.prototype.$SERVER = API;
-Vue.prototype.$ = $;
 // 引入路由记录插件
 Vue.use(Navigation, {
   router,

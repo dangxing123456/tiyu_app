@@ -44,6 +44,7 @@
     "jquery": "^3.4.1",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
+    "mockjs": "^1.1.0",
     "on-build-webpack": "^0.1.0",
     "postcss-pxtorem": "^4.0.1",
     "style-loader": "^0.23.1",
