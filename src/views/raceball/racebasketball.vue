@@ -1,15 +1,15 @@
 <template>
   <div class="container" id="shop">
-    <navBar :goback="true" title>
-      <div class="right" slot="right">
-        <span class="shai" @click="alertMenu">筛</span>
+    <navBar :goback="true" title="竞彩篮球">
+      <!-- <div class="right" slot="right">
+        <span class="shai">筛</span>
         <span>
           <img src="../../assets/images/shuaxin.png" alt />
         </span>
-      </div>
-      <van-dropdown-menu class="menu" slot="title">
+      </div> -->
+      <!-- <van-dropdown-menu class="menu" slot="title">
         <van-dropdown-item v-model="value1" :options="option1" />
-      </van-dropdown-menu>
+      </van-dropdown-menu>-->
     </navBar>
     <div class="main">
       <div class="wrap" v-for="(item,index) in $store.state.basketResult" :key="index">

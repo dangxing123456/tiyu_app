@@ -82,27 +82,27 @@ const router = new Router({
           path: "/find",
           name: "find",
           component: () => import("@/views/index/subviews/find.vue"),
-          redirect: { name: "documentary" },
-          children: [
-            {
-              // 跟单
-              path: "/documentary",
-              name: "documentary",
-              component: () => import("@/views/found/documentary.vue")
-            },
-            {
-              // 推荐
-              path: "/recommended",
-              name: "recommended",
-              component: () => import("@/views/found/recommended.vue")
-            },
-            {
-              // 合买
-              path: "/chipped",
-              name: "chipped",
-              component: () => import("@/views/found/chipped.vue")
-            }
-          ],
+          // redirect: { name: "documentary" },
+          // children: [
+          //   {
+          //     // 跟单
+          //     path: "/documentary",
+          //     name: "documentary",
+          //     component: () => import("@/views/found/documentary.vue")
+          //   },
+          //   {
+          //     // 推荐
+          //     path: "/recommended",
+          //     name: "recommended",
+          //     component: () => import("@/views/found/recommended.vue")
+          //   },
+          //   {
+          //     // 合买
+          //     path: "/chipped",
+          //     name: "chipped",
+          //     component: () => import("@/views/found/chipped.vue")
+          //   }
+          // ],
           meta: {
             keepAlive: false,
             isTransition: true,
@@ -538,6 +538,30 @@ const router = new Router({
         keepAlive: false,
         isTransition: true,
         title: "中奖纪录",
+        isMember: false
+      }
+    },
+    //账本明细
+    {
+      path: "/wallet",
+      name: "wallet",
+      component: () => import("../views/mine/wallet.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "账本明细",
+        isMember: false
+      }
+    },
+    //彩店信息
+    {
+      path: "/kefu",
+      name: "kefu",
+      component: () => import("../views/mine/kefu.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "彩店信息",
         isMember: false
       }
     },
