@@ -22,7 +22,6 @@
           <van-tab title="关注专家">
             <div slot="title">
               <van-dropdown-menu class="item" active-color="#ee0a24">
-                <van-dropdown-item v-model="value1" :options="option1" />
                 <van-dropdown-item v-model="value2" :options="option2" @change="changeValue" />
               </van-dropdown-menu>
             </div>

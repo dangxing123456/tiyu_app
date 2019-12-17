@@ -22,7 +22,6 @@
       </van-grid>
       <div class="title">
         <h3>热门赛事</h3>
-        <van-icon name="arrow" />
       </div>
       <van-swipe class="hot">
         <van-swipe-item v-for="(image, index) in 4" :key="index">
@@ -51,7 +50,7 @@
 
       <div class="title">
         <h3>大神推单</h3>
-        <van-icon name="arrow" />
+        <van-icon name="arrow" @click="$router.push('/documentary')" />
       </div>
       <div class="user-list" @click="show">
         <div class="item">
