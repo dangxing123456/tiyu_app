@@ -47,7 +47,7 @@
           </div>
         </div>
         <div class="btn">
-          <van-button type="default" size="large">取消</van-button>
+          <van-button type="default" size="large" @click="quxiao()">取消</van-button>
           <van-button type="danger" @click="postFootBallFollowOrder()" size="large">确定</van-button>
         </div>
       </div>
@@ -79,6 +79,9 @@ export default {
     },
     onChange(value) {
       //   console.log(value);
+    },
+    quxiao() {
+      this.show = false;
     },
     postFootBallFollowOrder() {
       if (this.list.type == 1) {

@@ -72,17 +72,17 @@ export default {
   .con {
     background-color: #fff;
     border-bottom: 2px solid rgb(243, 243, 243);
-    padding: 8px;
+    padding: 5px;
     height: 140px;
     .head {
       padding: 2px 7px;
-      font-size: 14px;
+      font-size: 12px;
       color: rgb(160, 160, 160);
       .rady {
         color: rgb(106, 177, 244);
       }
       .time {
-        margin-left: 10px;
+        margin-left: 60px;
         display: inline-block;
         width: 50px;
         height: 20px;

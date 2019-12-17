@@ -21,13 +21,12 @@
         </van-grid-item>
       </van-grid>
       <div class="title">
-        <h3>热门赛事</h3>
+        <h3>最新赛事</h3>
       </div>
       <van-swipe class="hot">
         <van-swipe-item v-for="(image, index) in 4" :key="index">
           <div class="top">
             <div class="img">
-              <img src="https://picsum.photos/640/320" />
               <h3>asd</h3>
             </div>
             <div class="text">
@@ -35,7 +34,6 @@
               <p>2019-01-01 11:11:11</p>
             </div>
             <div class="img">
-              <img src="https://picsum.photos/640/320" />
               <h3>asd</h3>
             </div>
           </div>
@@ -79,7 +77,7 @@
         </div>
       </div>
 
-      <div class="title">
+      <!-- <div class="title">
         <h3>精选推荐</h3>
         <van-icon name="arrow" />
       </div>
@@ -122,7 +120,7 @@
             <span>315</span>
           </div>
         </div>
-      </div>
+      </div>-->
       <van-popup position="bottom" v-model="show1">
         <div class="popup">
           <div class="head">
@@ -221,9 +219,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.main {
-  padding: 10px 0;
-}
 .banner {
   width: 100%;
   height: 230px;
@@ -317,7 +312,8 @@ export default {
       font-size: 14px;
     }
     .btn {
-      flex-grow: 1;
+      font-size: 16px;
+      width: 100px;
       color: #fff;
       background: #e73736;
     }
@@ -465,7 +461,7 @@ export default {
     line-height: 40px;
     border-radius: 3px;
     color: #fff;
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     background: #e73736;
   }

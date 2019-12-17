@@ -56,7 +56,7 @@
                     <p class="money">{{item.buyWagers*2}}元</p>
                   </div>
                   <div>
-                    <van-button @click.stop="showPopup(item)" type="danger">跟一单</van-button>
+                    <van-button @click.stop="showPopup(item)" type="danger" size="small">跟一单</van-button>
                   </div>
                 </div>
               </div>
@@ -143,6 +143,7 @@
 import user_img from "../../assets/images/default.png";
 import { format } from "../../common/js/mixin";
 import popup from "../../components/popup/popup";
+
 export default {
   name: "documentary",
   props: {},
@@ -165,7 +166,8 @@ export default {
     };
   },
   components: {
-    popup
+    popup,
+    navBar
   },
   computed: {},
   watch: {},
@@ -377,6 +379,9 @@ export default {
     }
     div {
       text-align: center;
+      span {
+        font-size: 14px;
+      }
       .img {
         display: block;
         width: 30px;
@@ -498,10 +503,13 @@ export default {
       /deep/ .van-icon-question-o {
         color: #ffd700;
       }
+      /deep/ .van-button--small {
+        font-size: 14px;
+      }
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px;
+      padding: 5px;
       div {
         width: 25%;
         text-align: center;
@@ -510,7 +518,7 @@ export default {
           color: #999;
         }
         .money {
-          font-size: 16px;
+          font-size: 14px;
           margin-top: 5px;
           color: rgb(220, 60, 80);
         }

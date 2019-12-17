@@ -59,7 +59,7 @@ export default {
   .con {
     background-color: #fff;
     border-bottom: 2px solid rgb(243, 243, 243);
-    padding: 8px;
+    padding: 5px;
     .head {
       padding: 2px 7px;
       font-size: 12px;
@@ -90,7 +90,7 @@ export default {
           margin-left: 3px;
         }
         .last {
-          font-size: 16px;
+          font-size: 12px;
           color: rgb(205, 165, 105);
         }
         .last1 {

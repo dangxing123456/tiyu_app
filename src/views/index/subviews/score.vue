@@ -1,45 +1,49 @@
 <template>
   <div class="container" id="shop">
-    <navBar :goback="false" title class="tab">
-      <van-tabs
-        class="menu"
-        @click="onClick"
-        slot="title"
-        background="#f24a44"
-        color="white"
-        title-active-color="white"
-        title-inactive-color="rgb(240,240,240)"
-      >
-        <van-tab title="比分"></van-tab>
-        <van-tab title="开奖"></van-tab>
-      </van-tabs>
-    </navBar>
+    <navBar :goback="false" title="比分"></navBar>
     <div class="main">
-      <router-view />
+      <van-tabs class="tab" @click="onClick">
+        <van-tab title="足球"></van-tab>
+        <van-tab title="篮球"></van-tab>
+      </van-tabs>
     </div>
+    <router-view />
   </div>
 </template>
 
 <script>
-import navBar from "@/components/navbar/navbar.vue";
+import navBar from "../../../components/navbar/navbar";
 export default {
-  name: "score",
+  name: "theScore",
   components: {
     navBar
   },
-  data() {
-    return {};
+  props: {
+    value: {
+      type: Boolean,
+      default: true
+    },
+    text: {
+      type: String,
+      default: ""
+    }
   },
-  created() {},
+  data() {
+    return {
+      isChecked: this.value
+    };
+  },
+  computed: {},
+  watch: {},
   methods: {
     onClick(name, title) {
-      if (title == "比分") {
+      if (title == "足球") {
         this.$router.push({
-          path: "/theScore"
+          path: "/football"
         });
       } else {
         this.$router.push({
-          path: "/lottery"
+          path: "/basketball"
         });
       }
     }
@@ -47,9 +51,24 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.tab .menu {
-  /deep/ [class*="van-hairline"]::after {
-    border: none;
+.tab {
+  width: 100%;
+  background-color: white;
+  /deep/ .van-tabs__nav--line {
+    width: 35%;
+    margin: 0 auto;
+
+    .van-tab {
+      border-radius: 0.3rem;
+      background-color: #eeeeee;
+      height: 25px;
+      line-height: 25px;
+      margin-top: 8px;
+    }
+    .van-tab--active {
+      background-color: #f24a44;
+      color: #ffffff;
+    }
   }
 }
 </style>

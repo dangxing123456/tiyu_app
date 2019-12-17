@@ -56,7 +56,7 @@
           </van-grid-item>
         </van-grid>
       </van-panel>
-      <van-panel title="我的服务" class="panel">
+      <!-- <van-panel title="我的服务" class="panel">
         <van-grid :column-num="3">
           <van-grid-item
             v-for="(item,i) in menu2"
@@ -69,7 +69,7 @@
             <van-icon :name="item.icon" :color="item.color" slot="icon" size="25px" class="ico" />
           </van-grid-item>
         </van-grid>
-      </van-panel>
+      </van-panel> -->
     </div>
   </div>
 </template>
@@ -86,7 +86,7 @@ export default {
     return {
       menu1: [
         {
-          name: "店内账本",
+          name: "账本明细",
           path: "/wallet",
           icon: "balance-list",
           color: "#e73736"
@@ -103,12 +103,7 @@ export default {
           icon: "point-gift",
           color: "#2196F3"
         },
-        {
-          name: "实名认证",
-          path: "/qrcode",
-          icon: "manager",
-          color: "#4CAF50"
-        },
+       
         { name: "彩店信息", path: "/kefu", icon: "shop", color: "#E91E63" }
       ],
       menu2: [

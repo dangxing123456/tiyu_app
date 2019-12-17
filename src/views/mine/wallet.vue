@@ -2,24 +2,40 @@
   <div class="container">
     <navBar />
     <div class="main">
-      <div class="balance">
-        <h3>体力值</h3>
-        <p>{{$store.state.userInfo.ac_balance}}</p>
+      <div class="top">
+        <p class="money">￥0.00</p>
       </div>
-      <div class="profit">
-        <dl>
-          <dt>昨日承兑</dt>
-          <dd>{{$store.state.userInfo.zuo_amount}}</dd>
-        </dl>
-        <dl>
-          <dt>已承兑</dt>
-          <dd>{{$store.state.userInfo.order_amount}}</dd>
-        </dl>
+      <div class="wallet-box">
+        <div class="wallet">
+          <div class="money">
+            <p>
+              可用余额:
+              <span>0.07元</span>
+            </p>
+            <p>
+              冻结资金:
+              <span>0.07元</span>
+              <van-icon name="warning-o" size="18px" @click="show()" />
+            </p>
+          </div>
+        </div>
       </div>
-      <p class="liushui" @click="$router.push('/capitalFlow')">查看资金流水</p>
-      <div class="btn-group">
-        <div class="btn" @click="$router.push('/recharge')">充值</div>
-        <van-button type="default" class="btn" @click="withdraw">提现</van-button>
+
+      <div class="content">
+        <p>2019-12-16</p>
+        <div class="wrap">
+          <div>
+            <span>15:31</span>
+          </div>
+          <div>
+            <p>-2.0</p>
+            <p>账户余额:0.07</p>
+            <p class="type">余额支付,订单[322990751],支付2元</p>
+          </div>
+          <div>
+            <span>类型:代购出票</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -32,87 +48,87 @@ export default {
   components: {
     navBar
   },
-  data(){
+  data() {
     return {
-      loading:false
-    }
+      loading: false
+    };
   },
-  methods:{
-    withdraw(){
-      this.loading = true
-      this.$SERVER.withdraw().then(res=>{
-        this.$toast.success(res.msg)
-        this.loading = false
-      })
+  methods: {
+    withdraw() {
+      this.loading = true;
+    },
+    show() {
+      var message = (
+        <div>
+          <p>冻结状态</p>
+          <p>1.下单后至店主未出票前,下单金额为冻结状态;</p>
+          <p>2.店主未处理的提款金额,为冻结状态</p>
+        </div>
+      );
+      this.$toast({
+        message: message
+      });
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.main {
-  padding: 0 25px;
-}
-.balance {
-  margin-top: 20px;
-  margin-bottom: 35px;
-  padding: 0 10px;
-  h3 {
-    font-size: 13px;
-    font-weight: 400;
-    color: rgba(51, 51, 51, 1);
-  }
-  p {
-    font-size: 30px;
-    font-weight: 400;
-    font-family: Bahnschrift;
-    color: rgba(51, 51, 51, 1);
-  }
-}
-.profit {
-  display: flex;
-  margin-bottom: 40px;
-  padding: 0 10px;
-  dl {
-    margin-right: 30px;
-    dt {
-      font-size: 13px;
-      font-weight: 400;
-      color: rgba(51, 51, 51, 1);
-    }
-    dd {
-      font-size: 20px;
-      font-weight: 400;
-      color: rgba(51, 51, 51, 1);
-      font-family: Bahnschrift;
-    }
-  }
-}
-.liushui {
-  padding: 0 10px;
-  font-size: 15px;
-  font-weight: 400;
-  color: rgba(153, 153, 153, 1);
-  margin-bottom: 50px;
-}
-.btn-group {
+.top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .btn {
-    width: 150px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    background: linear-gradient(
-      90deg,
-      rgba(249, 74, 81, 1),
-      rgba(247, 109, 98, 1)
-    );
-    border-radius: 20px;
-    font-size: 15px;
-    font-weight: 400;
-    color: rgba(255, 254, 254, 1);
+  background: #f24a44;
+  padding: 15px 15px 35px;
+  p {
+    font-size: 30px;
+    color: #fff;
+  }
+}
+.wallet-box {
+  padding: 15px;
+  margin-top: -42px;
+  .wallet {
+    border-radius: 50px;
+    background: #fff;
+    padding: 15px 15px;
+    .money {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 14px;
+
+      span {
+        color: #f24a44;
+      }
+    }
+  }
+  .btn-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+  }
+}
+.content {
+  .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    background: #fff;
+    padding: 10px;
+    color: #777;
+    div {
+      .type {
+        font-size: 12px;
+        color: #ccc;
+      }
+
+      p {
+        margin-top: 5px;
+      }
+    }
   }
 }
 </style>

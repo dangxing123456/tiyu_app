@@ -1,11 +1,6 @@
 <template>
   <div class="container" id="shop">
-    <div class="main">
-      <van-tabs class="tab" @click="onClick">
-        <van-tab title="足球"></van-tab>
-        <van-tab title="篮球"></van-tab>
-      </van-tabs>
-    </div>
+   
     <router-view />
   </div>
 </template>
