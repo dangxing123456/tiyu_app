@@ -2,24 +2,30 @@
   <div class="container">
     <navBar />
     <div class="main">
-      <div class="btn-group">
-        <div class="btn" @click="$router.push('/recharge')">体力值充值</div>
-        <div class="btn" @click="$router.push('/')">立即去抢单</div>
-      </div>
-      <van-collapse v-model="activeTime" :border="false " accordion @change="getMon">
-        <van-collapse-item :title="key" :name="key" :border="false" v-for="(i,key) in list" :key="key">
-          <div class="list">
-            <div class="item" v-for="(j,index) in i" :key="index">
-              <h5>{{j.time}}</h5>
-              <p>
-                通过 <span v-if="j.payment==1">微信</span><span v-else-if="j.payment==2">支付宝</span>二维码 收款
-                <span>{{j.price}}元</span>
-              </p>
-            </div>
+      <div class="content" v-for="(item,index) in list" :key="index">
+        <div class="left">
+          <van-icon
+            v-if="item.type==1"
+            class-prefix="icon"
+            name="football"
+            color="green"
+            size="45px"
+          />
+          <van-icon v-if="item.type==2" class-prefix="icon" name="lanqiu" color="blue" size="45px" />
+          <div>
+            <p>金额: {{item.times*item.buyWagers}}元</p>
+            <p class="time">{{item.endTime | formatDate}}</p>
           </div>
-        </van-collapse-item>
-      </van-collapse>
-      <van-divider v-if="JSON.stringify(list)=='{}'">暂无数据</van-divider>
+        </div>
+        <div class="right">
+          <div>
+            <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+            <p class="type">已消费</p>
+          </div>
+
+          <van-icon name="arrow" size="30px" color="#ccc" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -33,83 +39,106 @@ export default {
   },
   data() {
     return {
-      activeTime: null,
-      list:{}
+      list: [],
+      basketlist: []
     };
   },
-  created(){
-    this.getList()
+  created() {
+    this.getList();
+    this.getBasketList();
   },
-  methods:{
-    getList(){
-      this.$SERVER.log_list().then(res=>{
-        this.list = res.data
-      })
+  methods: {
+    getList() {
+      this.$SERVER
+        .getUserFootBallOrders({
+          userId: this.$store.state.userInfo.userid,
+          pagenum: 1,
+          pagesize: 999
+        })
+        .then(res => {
+          res.data.list.forEach(e => {
+            e.type = 1;
+          });
+          this.list = res.data.list;
+          this.list.type = 1;
+        });
     },
-    getMon(activeNames){
-      this.$SERVER.log_list({
-        time:activeNames
-      }).then(res=>{
-        this.list[activeNames] = res.data[activeNames]
-      })
+    getBasketList() {
+      this.$SERVER
+        .getUserBasketBallOrder({
+          userId: this.$store.state.userInfo.userid,
+          pagenum: 1,
+          pagesize: 999
+        })
+        .then(res => {
+          res.data.list.forEach(e => {
+            e.type = 2;
+          });
+          this.list = this.list.concat(res.data.list);
+
+          this.list.sort(function(a, b) {
+            return b.bookTime - a.bookTime; //时间反序
+          });
+          console.log(this.list);
+        });
+    },
+    getMon(activeNames) {}
+  },
+  filters: {
+    formatDate: function(value) {
+      let date = new Date(value);
+      let y = date.getFullYear();
+      let MM = date.getMonth() + 1;
+      MM = MM < 10 ? "0" + MM : MM;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      let h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      let m = date.getMinutes();
+      m = m < 10 ? "0" + m : m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.main {
-  padding: 0 15px;
-  background: rgba(255, 255, 255, 1) url(../../assets/images/bg3.png) no-repeat
-    250px 150px;
-  background-size: auto 270px;
-}
-.btn-group {
+.content {
+  background-color: #fff;
+  padding: 8px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin: 35px 0;
-  padding: 0 10px;
-  .btn {
-    width: 150px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    background: linear-gradient(
-      90deg,
-      rgba(249, 74, 81, 1),
-      rgba(247, 109, 98, 1)
-    );
-    border-radius: 20px;
-    font-size: 15px;
-    font-weight: 400;
-    color: rgba(255, 254, 254, 1);
+  justify-content: space-between;
+  border-bottom: 1px solid #cccccc;
+  p {
+    padding: 4px 0;
   }
-}
-.list {
-  padding: 15px 15px 0 15px;
-  background: rgba(247, 247, 247, 1);
-  .item {
-    padding-bottom: 30px;
-    h5 {
-      font-size: 13px;
-      font-weight: 400;
-      color: rgba(153, 153, 153, 1);
-      line-height: 24px;
-    }
-    p {
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 24px;
-      color: #333333;
-      span {
-        &:first-child {          
-        color: #999999;
-        }
-        &:last-child {
-          color: #ff474e;
-        }
+  .left {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    div {
+      padding: 0 10px;
+      color: #777;
+      .time {
+        font-size: 12px;
       }
+    }
+  }
+  .right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: right;
+    .money {
+      font-size: 18px;
+      color: #f24a44;
+    }
+    .type {
+      font-size: 14px;
+      color: #777;
     }
   }
 }

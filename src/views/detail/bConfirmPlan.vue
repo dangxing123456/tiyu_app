@@ -2,7 +2,7 @@
   <div class="container" id="shop">
     <navBar :goback="true"></navBar>
     <div class="head">
-      <div class="div1" @click="$router.push('/racefootball')">+添加/编辑赛事</div>
+      <div class="div1" @click="$router.push('/racebasketball')">+添加/编辑赛事</div>
       <div @click="removeAll">清空列表</div>
     </div>
     <div class="main">
@@ -21,7 +21,7 @@
                 <span class="p1-first">0</span>
               </p>
               <p class="p2">
-                <span class="p2-first">{{item.goalline}}</span>
+                <span class="p2-first">让</span>
               </p>
               <p class="p3">
                 <span class="p3-first">其他</span>
@@ -31,23 +31,21 @@
               <div class="center">
                 <ul>
                   <li
-                    v-for="(item,i) in item.footBallBet"
+                    v-for="(item,i) in item.basketBallBet"
                     :key="i"
-                    v-if="i<6"
+                    v-if="i<4"
                     :class="addColor(index,i)"
                     @click="push(index,i,item)"
                   >
-                    <span v-show="i==0">胜</span>
-                    <span v-show="i==1">平</span>
-                    <span v-show="i==2">负</span>
-                    <span v-show="i==3">胜</span>
-                    <span v-show="i==4">平</span>
-                    <span v-show="i==5">胜</span>
+                    <span v-if="i==0 || i==2">客胜</span>
+                    <span v-else-if="i==1 || i==3">主胜</span>
+
                     <span>{{item}}</span>
                   </li>
                 </ul>
               </div>
-              <div class="bot" @click="$router.push('/allplay/'+index)">
+
+              <div class="bot" @click="$router.push('/allplayBasket/'+index)">
                 <p :class="show1(index).length>0  ? 'aa' : '' ">未选择更多玩法</p>
                 <ul>
                   <li v-for="(item1,i) in show1(index)" :key="i" class="bgColor">
@@ -63,14 +61,14 @@
     </div>
     <div class="bot-btn">
       <div class="text">
-        <span>{{zhu}}注{{this.$store.state.value}}倍</span>
+        <span>{{zhu}}注{{this.$store.state.basketValue}}倍</span>
         <span>
           共
-          <span class="color">{{this.$store.state.money*this.$store.state.value}}元</span>
+          <span class="color">{{this.$store.state.basketMoney*this.$store.state.basketValue}}元</span>
         </span>
         <span>
           [奖金范围：
-          <span class="color">{{maxBonus*this.$store.state.value}}</span> 元]
+          <span class="color">{{maxBonus*this.$store.state.basketValue}}</span> 元]
         </span>
       </div>
       <div class="con">
@@ -86,7 +84,7 @@
       </div>
       <div class="btn">
         <van-button type="default" size="large">发起合买</van-button>
-        <van-button type="danger" size="large" @click="confirmOrder">下一步</van-button>
+        <van-button type="danger" size="large" @click="$router.push('/bConfirmOrder')">下一步</van-button>
       </div>
     </div>
     <van-action-sheet v-model="showmenu">
@@ -133,13 +131,13 @@
 <script>
 import navBar from "@/components/navbar/navbar.vue";
 export default {
-  name: "confirmPlan",
+  name: "bConfirmPlan",
   components: {
     navBar
   },
   data() {
     return {
-      list: this.$store.state.result,
+      list: this.$store.state.basketResult,
       replayRe: [],
       a: "",
       bet: [],
@@ -149,7 +147,6 @@ export default {
       maxBonus: "",
       showmenu: false,
       StringMethod: [
-        "1串1",
         "2串1",
         "3串1",
         "4串1",
@@ -201,84 +198,49 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    confirmOrder() {
-      if (this.$store.state.sumcount >= 2) {
-        this.$router.push("/confirmOrder");
-      } else {
-        this.$toast({
-          message: "非单关至少选择两场比赛"
-        });
-      }
-
-      if (this.$store.state.sumcount == 1) {
-        var i1 = 0;
-        var arr = JSON.parse(JSON.stringify(this.$store.state.selectResult));
-        for (var i = 0; i < arr.length; i++) {
-          for (var j = 0; j < arr[i].length; j++) {
-            if (arr[i][j] == "" || arr[i][j] == undefined) {
-              arr[i].splice(j, 1);
-              j--;
-            }
-          }
-        }
-        for (var i = 0; i < arr.length; i++) {
-          if (arr[i].length > 0) {
-            i1 = i;
-          }
-        }
-        if (this.$store.state.result[i1].single == 1) {
-          this.$router.push("/confirmOrder");
-          this.$toast({
-            message: "进入单关模式"
-          });
-        }
-      }
-    },
     showMethod() {
-      if (this.$store.state.sumcount <= 1) {
+      if (this.$store.state.basketSumcount <= 2) {
         return this.StringMethod.slice(0, 1);
-      } else if (this.$store.state.sumcount <= 2) {
-        return this.StringMethod.slice(1, 2);
-      } else if (this.$store.state.sumcount <= 3) {
-        return this.StringMethod.slice(1, 3);
-      } else if (this.$store.state.sumcount <= 4) {
-        return this.StringMethod.slice(1, 4);
-      } else if (this.$store.state.sumcount <= 5) {
-        return this.StringMethod.slice(1, 5);
-      } else if (this.$store.state.sumcount <= 6) {
-        return this.StringMethod.slice(1, 6);
-      } else if (this.$store.state.sumcount <= 7) {
-        return this.StringMethod.slice(1, 7);
-      } else if (this.$store.state.sumcount <= 9999) {
-        return this.StringMethod.slice(1, 8);
+      } else if (this.$store.state.basketSumcount <= 3) {
+        return this.StringMethod.slice(0, 2);
+      } else if (this.$store.state.basketSumcount <= 4) {
+        return this.StringMethod.slice(0, 3);
+      } else if (this.$store.state.basketSumcount <= 5) {
+        return this.StringMethod.slice(0, 4);
+      } else if (this.$store.state.basketSumcount <= 6) {
+        return this.StringMethod.slice(0, 5);
+      } else if (this.$store.state.basketSumcount <= 7) {
+        return this.StringMethod.slice(0, 6);
+      } else if (this.$store.state.basketSumcount <= 9999) {
+        return this.StringMethod.slice(0, 7);
       }
     },
     showMethod1() {
-      if (this.$store.state.sumcount <= 2) {
+      if (this.$store.state.basketSumcount <= 2) {
         return this.StringMethod.slice(0, 0);
-      } else if (this.$store.state.sumcount <= 3) {
-        return this.StringMethod.slice(8, 10);
-      } else if (this.$store.state.sumcount <= 4) {
-        return this.StringMethod.slice(8, 14);
-      } else if (this.$store.state.sumcount <= 5) {
-        return this.StringMethod.slice(8, 20);
-      } else if (this.$store.state.sumcount <= 6) {
-        return this.StringMethod.slice(8, 29);
-      } else if (this.$store.state.sumcount <= 7) {
-        return this.StringMethod.slice(8, 34);
-      } else if (this.$store.state.sumcount <= 9999) {
-        return this.StringMethod.slice(8, 40);
+      } else if (this.$store.state.basketSumcount <= 3) {
+        return this.StringMethod.slice(7, 9);
+      } else if (this.$store.state.basketSumcount <= 4) {
+        return this.StringMethod.slice(7, 13);
+      } else if (this.$store.state.basketSumcount <= 5) {
+        return this.StringMethod.slice(7, 19);
+      } else if (this.$store.state.basketSumcount <= 6) {
+        return this.StringMethod.slice(7, 28);
+      } else if (this.$store.state.basketSumcount <= 7) {
+        return this.StringMethod.slice(7, 33);
+      } else if (this.$store.state.basketSumcount <= 9999) {
+        return this.StringMethod.slice(7, 39);
       }
     },
     menu() {
       this.showmenu = true;
     },
     change(value) {
-      this.$store.state.value = value;
+      this.$store.state.basketValue = value;
     },
     show(index) {
       var r = false;
-      this.$store.state.selectResult[index].forEach((e, i1) => {
+      this.$store.state.basketSelectResult[index].forEach((e, i1) => {
         if (e != undefined && e != "") {
           r = true;
         }
@@ -286,27 +248,26 @@ export default {
       return r;
     },
     removeAll() {
-      for (var i = 0; i < this.$store.state.selectResult.length; i++) {
-        this.$store.state.selectResult[i] = [];
+      for (var i = 0; i < this.$store.state.basketSelectResult.length; i++) {
+        this.$store.state.basketSelectResult[i] = [];
       }
-      this.$store.state.sumcount = 0;
+      this.$store.state.basketSumcount = 0;
       this.getMoney();
       this.confirm();
       this.f = [];
       this.$router.go(-1);
     },
     removeFootball(index) {
-      this.$store.state.selectResult[index] = [];
+      this.$store.state.basketSelectResult[index] = [];
       this.getMoney();
       this.confirm();
-      this.$store.state.sumcount--;
-
+      this.$store.state.basketSumcount--;
       this.f = [];
     },
     show1(index) {
       var arr = [];
-      this.$store.state.selectValue[index].forEach((e, i) => {
-        if (i >= 6 && e != "") {
+      this.$store.state.basketSelectValue[index].forEach((e, i) => {
+        if (i >= 4 && e != "") {
           arr.push(e);
         }
       });
@@ -314,8 +275,8 @@ export default {
     },
     addColor(i, i2) {
       if (
-        this.$store.state.selectResult[i][i2] == undefined ||
-        this.$store.state.selectResult[i][i2] == ""
+        this.$store.state.basketSelectResult[i][i2] == undefined ||
+        this.$store.state.basketSelectResult[i][i2] == ""
       ) {
         return "";
       } else {
@@ -338,14 +299,16 @@ export default {
     },
     push(index, i, val) {
       if (
-        this.$store.state.selectResult[index][i] == undefined ||
-        this.$store.state.selectResult[index][i] == ""
+        this.$store.state.basketSelectResult[index][i] == undefined ||
+        this.$store.state.basketSelectResult[index][i] == ""
       ) {
-        this.$set(this.$store.state.selectResult[index], i, val);
+        this.$set(this.$store.state.basketSelectResult[index], i, val);
       } else {
-        this.$set(this.$store.state.selectResult[index], i, "");
+        this.$set(this.$store.state.basketSelectResult[index], i, "");
       }
-      var arr = JSON.parse(JSON.stringify(this.$store.state.selectResult));
+      var arr = JSON.parse(
+        JSON.stringify(this.$store.state.basketSelectResult)
+      );
       for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < arr[i].length; j++) {
           if (arr[i][j] == "" || arr[i][j] == undefined) {
@@ -361,8 +324,7 @@ export default {
           i--;
         }
       }
-
-      this.$store.state.sumcount = arr.length;
+      this.$store.state.basketSumcount = arr.length;
       this.getMoney();
       this.confirm();
       this.f = [];
@@ -401,75 +363,84 @@ export default {
       this.b = [];
     },
     getMoney() {
+      var betArr = [];
       var resu = [];
-      for (var i = 0; i < this.$store.state.result.length; i++) {
+      for (var i = 0; i < this.$store.state.basketResult.length; i++) {
         if (this.show(i)) {
-          resu.push(this.$store.state.selectResult[i]);
-          this.$store.state.betArr[i] = this.$store.state.result[i].footBallBet;
-          this.$store.state.footId[i] = this.$store.state.result[i].id;
+          resu.push(this.$store.state.basketSelectResult[i]);
+          this.$store.state.basketBetArr[i] = this.$store.state.basketResult[
+            i
+          ].basketBallBet;
+          this.$store.state.basketFootId[i] = this.$store.state.basketResult[
+            i
+          ].id;
         } else {
-          delete this.$store.state.betArr[i];
-          delete this.$store.state.footId[i];
+          delete this.$store.state.basketBetArr[i];
+          delete this.$store.state.basketFootId[i];
         }
       }
 
       var arr = [];
+
       for (var i = 0; i < resu.length; i++) {
         var a = [];
         var b = [];
         var c = [];
         var d = [];
-        var e = [];
         for (var j = 0; j < resu[i].length; j++) {
           if (resu[i][j]) {
-            if (j >= 0 && j < 3) {
+            if (j >= 0 && j < 2) {
               a.push(j);
-            } else if (j >= 3 && j < 6) {
+            } else if (j >= 2 && j < 4) {
               b.push(j);
-            } else if (j >= 6 && j < 14) {
+            } else if (j >= 4 && j < 6) {
               c.push(j);
-            } else if (j >= 14 && j < 23) {
+            } else if (j >= 6 && j < 18) {
               d.push(j);
-            } else if (j >= 23 && j < 54) {
-              e.push(j);
             }
           }
         }
-        arr.push([a, b, c, d, e]);
+        arr.push([a, b, c, d]);
       }
 
-      //   var arr = JSON.parse(JSON.stringify(this.$store.state.selectResult));
-      //   for (var i = 0; i < arr.length; i++) {
-      //     for (var j = 0; j < arr[i].length; j++) {
-      //       if (arr[i][j].length == 0) {
-      //         arr[i].splice(j, 1);
-      //         j--;
+      // for (var i = 0; i < arr.length; i++) {
+      //   for (var j = 0; j < arr[i].length; j++) {
+      //     if (arr[i][j].length == 0) {
+      //       arr[i].splice(j, 1);
+      //       j--;
+      //     }
+      //   }
+      // }
+      // for (var i = 0; i < arr.length; i++) {
+      //   if (arr[i].length == 0) {
+      //     arr.splice(i, 1);
+      //     i--;
+      //   }
+      // }
+      // //   去掉索引为empty
+      // for (var i = 0; i < arr.length; i++) {
+      //   for (var j = 0; j < arr[i].length; j++) {
+      //     for (var k = 0; k < arr[i][j].length; k++) {
+      //       if (!arr[i][j][k]) {
+      //         arr[i][j].splice(k, 1);
+      //         k--;
       //       }
       //     }
       //   }
-      //   for (var i = 0; i < arr.length; i++) {
-      //     if (arr[i].length == 0) {
-      //       arr.splice(i, 1);
-      //       i--;
-      //     }
-      //   }
-      //   //   去掉索引为empty
-      //   for (var i = 0; i < arr.length; i++) {
-      //     for (var j = 0; j < arr[i].length; j++) {
-      //       for (var k = 0; k < arr[i][j].length; k++) {
-      //         if (!arr[i][j][k]) {
-      //           arr[i][j].splice(k, 1);
-      //           k--;
-      //         }
-      //       }
-      //     }
-      //   }
+      // }
 
-      // 为每一项添加索引;
       for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < arr[i].length; j++) {
-          for (var k = 0; k < arr[i][j].length; k++) {
-            arr[i][j][k] = i + "_" + arr[i][j][k];
+          if (arr[i][j]) {
+            for (var k = 0; k < arr[i][j].length; k++) {
+              if (arr[i][j]) {
+                arr[i][j][k] = i + "_" + arr[i][j][k];
+                if (arr[i][j][k] == i + "_undefined") {
+                  arr[i][j].splice(k, 1);
+                  k--;
+                }
+              }
+            }
           }
         }
       }
@@ -643,15 +614,13 @@ export default {
             else return "0";
         }
       }
-
-      for (var i = 0; i < this.$store.state.betArr.length; i++) {
-        if (!this.$store.state.betArr[i]) {
-          this.$store.state.betArr.splice(i, 1);
+      for (var i = 0; i < this.$store.state.basketBetArr.length; i++) {
+        if (!this.$store.state.basketBetArr[i]) {
+          this.$store.state.basketBetArr.splice(i, 1);
           i--;
         }
       }
-      var source = this.$store.state.betArr;
-
+      var source = this.$store.state.basketBetArr;
       function parse(data, source) {
         //取几串几 ，二维数组的行(如[1,2,3]2串1，组合为[[1,2],[1,3],[2,3]])
 
@@ -710,9 +679,10 @@ export default {
         var bisaiArr = wagers.wagers;
         // for()
       }
-      this.$store.state.wagers = parse(arr, source).wagers;
+
+      this.$store.state.basketWagers = parse(arr, source).wagers;
       this.zhu = parse(arr, source).wagerCount;
-      this.$store.state.money = parse(arr, source).payMoney;
+      this.$store.state.basketMoney = parse(arr, source).payMoney;
       this.maxBonus = parse(arr, source).maxBonus;
     }
   },
@@ -831,7 +801,7 @@ export default {
             background-color: #fff;
             display: inline-block;
             height: 30px;
-            width: 1.4rem;
+            width: 107px;
             border: 0.02rem solid #eeeeee;
             float: left;
             text-align: center;

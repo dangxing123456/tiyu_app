@@ -130,7 +130,7 @@ export default {
                 this.timer = null;
               });
           } else {
-            this.$toast.success("用户名已被注册");
+            this.$toast.success("手机号已被注册");
           }
         })
         .catch(res => {

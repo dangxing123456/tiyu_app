@@ -181,7 +181,7 @@
     </div>
     <div class="btn">
       <van-button type="default" size="large">取消</van-button>
-      <van-button type="danger" size="large">确定</van-button>
+      <van-button type="danger" size="large" @click="$router.go(-1)">确定</van-button>
     </div>
   </div>
 </template>
@@ -205,100 +205,25 @@ export default {
   watch: {},
   methods: {
     push(i, val) {
-      if (i >= 0 && i < 3) {
-        this.a = 0;
-      } else if (i >= 3 && i < 6) {
-        this.a = 1;
-      } else if (i >= 6 && i < 14) {
-        this.a = 2;
-      } else if (i >= 14 && i < 23) {
-        this.a = 3;
-      } else if (i >= 23 && i < 54) {
-        this.a = 4;
-      }
       if (
-        this.$store.state.selectResult[this.$route.params.i][this.a][i] == undefined ||
-        this.$store.state.selectResult[this.$route.params.i][this.a][i] == ""
+        this.$store.state.selectResult[this.$route.params.i][i] == undefined ||
+        this.$store.state.selectResult[this.$route.params.i][i] == ""
       ) {
-        this.$set(this.$store.state.selectResult[this.$route.params.i][this.a], i, i);
-        this.$set(this.$store.state.selectValue[this.$route.params.i][this.a], i, val);
-      
+        this.$set(this.$store.state.selectResult[this.$route.params.i], i, val);
+        this.$set(this.$store.state.selectValue[this.$route.params.i], i, val);
       } else {
-        this.$set(this.$store.state.selectResult[this.$route.params.i][this.a], i, "");
-        this.$set(this.$store.state.selectValue[this.$route.params.i][this.a], i, "");
+        this.$set(this.$store.state.selectResult[this.$route.params.i], i, "");
+        this.$set(this.$store.state.selectValue[this.$route.params.i], i, "");
       }
     },
     addColor(i) {
-      if (i >= 0 && i < 3) {
-        if (
-          this.$store.state.selectResult[this.$route.params.i][0] != undefined
-        ) {
-          if (
-            this.$store.state.selectResult[this.$route.params.i][0][i] ==
-              undefined ||
-            this.$store.state.selectResult[this.$route.params.i][0][i] == ""
-          ) {
-            return "";
-          } else {
-            return "bgColor";
-          }
-        }
-      } else if (i >= 3 && i < 6) {
-        if (
-          this.$store.state.selectResult[this.$route.params.i][1] != undefined
-        ) {
-          if (
-            this.$store.state.selectResult[this.$route.params.i][1][i] ==
-              undefined ||
-            this.$store.state.selectResult[this.$route.params.i][1][i] == ""
-          ) {
-            return "";
-          } else {
-            return "bgColor";
-          }
-        }
-      } else if (i >= 6 && i < 14) {
-        if (
-          this.$store.state.selectResult[this.$route.params.i][1] != undefined
-        ) {
-          if (
-            this.$store.state.selectResult[this.$route.params.i][2][i] ==
-              undefined ||
-            this.$store.state.selectResult[this.$route.params.i][2][i] == ""
-          ) {
-            return "";
-          } else {
-            return "bgColor";
-          }
-        }
-      } else if (i >= 14 && i < 23) {
-        if (
-          this.$store.state.selectResult[this.$route.params.i][1] != undefined
-        ) {
-          if (
-            this.$store.state.selectResult[this.$route.params.i][3][i] ==
-              undefined ||
-            this.$store.state.selectResult[this.$route.params.i][3][i] == ""
-          ) {
-            return "";
-          } else {
-            return "bgColor";
-          }
-        }
-      } else if (i >= 23 && i < 54) {
-        if (
-          this.$store.state.selectResult[this.$route.params.i][1] != undefined
-        ) {
-          if (
-            this.$store.state.selectResult[this.$route.params.i][4][i] ==
-              undefined ||
-            this.$store.state.selectResult[this.$route.params.i][4][i] == ""
-          ) {
-            return "";
-          } else {
-            return "bgColor";
-          }
-        }
+      if (
+        this.$store.state.selectResult[this.$route.params.i][i] == undefined ||
+        this.$store.state.selectResult[this.$route.params.i][i] == ""
+      ) {
+        return "";
+      } else {
+        return "bgColor";
       }
     }
   },

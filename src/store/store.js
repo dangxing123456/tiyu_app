@@ -11,7 +11,11 @@ export default new Vuex.Store({
     color: "#ffc21c", //全局颜色
     navAn: "slide-left",
     userInfo: {
-      userid: ""
+      userid: "",
+      nickname: "",
+      mobile: "",
+      sex: "",
+      avatar: ""
     },
     isActive: false,
     isMember: false, //是否是会员
@@ -21,7 +25,9 @@ export default new Vuex.Store({
       lat: 108.222
     }, //用户定位
     qiniuaddr: "http://95youhe.com/", //七牛地址
-    register: {},
+    register: {
+      newpassword: ""
+    },
     message: null,
     recharge: null,
     qq: 10000,
@@ -53,10 +59,10 @@ export default new Vuex.Store({
     //比赛选中的索引
     activeData: [],
     //比赛选中的赔率
-    betData: [],
+
     arrData: [[], [], [], [], []],
     //倍数
-    value: 1,
+
     addData: [],
     otherData: [],
     sumData: [],
@@ -68,9 +74,26 @@ export default new Vuex.Store({
     bActiveData: [],
     bBetData: [],
 
+    //足球
+    value: 1,
+    betArr: [],
     result: [],
     selectResult: [],
-    selectValue: []
+    selectValue: [],
+    wagers: [],
+    footId: [],
+    sumcount: 0,
+    money: 0,
+    //蓝球
+    basketResult: [],
+    basketSelectResult: [],
+    basketSelectValue: [],
+    basketBetArr: [],
+    basketWagers: [],
+    basketFootId: [],
+    basketValue: 1,
+    basketSumcount: 0,
+    basketMoney: 0
   },
   //方法
   mutations: {

@@ -222,7 +222,7 @@ const router = new Router({
     },
     //篮球全部玩法
     {
-      path: "/allplayBasket",
+      path: "/allplayBasket/:i",
       name: "allplayBasket",
       component: () => import("@/views/raceball/allplayBasket.vue"),
       meta: {
@@ -457,7 +457,7 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
-    //确认方案
+    //足球确认方案
     {
       path: "/confirmPlan",
       name: "confirmPlan",
@@ -472,7 +472,22 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
-    //确认下单
+    //蓝球确认方案
+    {
+      path: "/bConfirmPlan",
+      name: "bConfirmPlan",
+      component: () => import("@/views/detail/bConfirmPlan.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "确认方案",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //足球确认下单
     {
       path: "/confirmOrder",
       name: "confirmOrder",
@@ -487,7 +502,33 @@ const router = new Router({
         icon_press: "4-2"
       }
     },
-
+    //蓝球确认下单
+    {
+      path: "/bConfirmOrder",
+      name: "bConfirmOrder",
+      component: () => import("@/views/detail/bConfirmOrder.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "确认",
+        isMember: false,
+        isLogin: false,
+        icon: "4-1",
+        icon_press: "4-2"
+      }
+    },
+    //我的订单
+    {
+      path: "/orderRecord",
+      name: "orderRecord",
+      component: () => import("../views/mine/orderRecord.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "我的订单",
+        isMember: false
+      }
+    },
     // 注册登录
     {
       path: "/login/:name?",

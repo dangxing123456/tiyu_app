@@ -6,6 +6,10 @@
         <van-cell-group class="cell-group" :border="false">
           <div class="cell-group">
             <van-icon class-prefix="icon" name="mima" class="phoneIcon" />
+            <van-field v-model="$store.state.userInfo.nickname" placeholder="请输入用户名"></van-field>
+          </div>
+          <div class="cell-group">
+            <van-icon class-prefix="icon" name="mima" class="phoneIcon" />
             <van-field
               v-model="$store.state.register.newpassword"
               clearable
@@ -78,31 +82,20 @@ export default {
       }
 
       this.regLoading = true;
-      console.log(this.$store.state.register.newpassword);
-      console.log(this.$store.state.register.user_account);
+   
       this.$SERVER
         .register({
           mobile: this.$store.state.register.user_account,
           password: this.$store.state.register.newpassword,
-          nickname: "打豆豆",
+          nickname: this.$store.state.userInfo.nickname,
           sex: 1
         })
         .then(res => {
           console.log(res);
-          that.regLoading = false;
-          that.$METHOD.setStore("token", res.data.userinfo.token);
-          that.$store.state.token = res.data.userinfo.token;
-          that.$store.state.userInfo = res.data.userinfo_first;
-          that.$toast.success(res.msg);
-          var push = api.require("push");
-          push.bind(
-            {
-              userName: res.data.userinfo_first.user_nickname,
-              userId: res.data.userinfo_first.use_rid
-            },
-            function(ret, err) {}
-          );
           that.$router.push("/");
+          that.regLoading = false;
+          that.$store.state.token = res.data.userinfo.token;
+          that.$toast.success(res.msg);
         })
         .catch(err => {
           that.regLoading = false;
