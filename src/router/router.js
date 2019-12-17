@@ -529,6 +529,18 @@ const router = new Router({
         isMember: false
       }
     },
+    //中奖纪录
+    {
+      path: "/invitation",
+      name: "invitation",
+      component: () => import("../views/mine/invitation.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "中奖纪录",
+        isMember: false
+      }
+    },
     // 注册登录
     {
       path: "/login/:name?",

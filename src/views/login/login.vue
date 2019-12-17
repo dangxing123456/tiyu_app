@@ -57,6 +57,7 @@ export default {
     };
   },
   created() {
+    console.log(this.$METHOD.getStore("token"));
     if (this.$METHOD.getStore("token")) {
       this.$router.push("/");
     }

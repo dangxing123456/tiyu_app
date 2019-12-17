@@ -125,12 +125,12 @@ export default class Axios {
         res => {
           if (res.data.code == 200) {
             resolve(res.data);
-          } else if (res.data.code == 201) {
+          } else if (res.data.code == -1) {
             Toast.fail(res.data.msg);
-            window.localStorage.removeItem("token");
+            window.localStorage.removeItem("token" );
           } else {
             if (!config || !config.fail) {
-              Toast.fail("请登录后再操作！");
+              Toast.fail(res.data.msg);
             }
             reject(res.data);
           }

@@ -1,29 +1,73 @@
 <template>
   <div class="container">
-    <navBar stl="nobg"/>
+    <navBar />
     <div class="main">
-      <div class="info">
-        <dl>
-          <dt>我的会员人数</dt>
-          <dd>{{info.my_vip_count}}</dd>
-        </dl>
-        <dl>
-          <dt>我的累计收益</dt>
-          <dd>{{info.zong_yingkui}}</dd>
-        </dl>
-        <dl>
-          <dt>本月收益</dt>
-          <dd>{{info.month_yingkui}}</dd>
-        </dl>
-      </div>
-      <h3>扫码下方二维码</h3>
-      <div class="qrcode">
-        <img :src="info.down_url" alt />
-      </div>
-      <div class="btn-group">
-        <div class="btn" @click="saveimg">保存二维码</div>
-        <div class="btn" @click="copyFn">复制推广链接</div>
-      </div>
+      <van-tabs class="tab" @click="onClick">
+        <van-tab title="足球">
+          <div class="content" v-for="(item,index) in list" :key="index">
+            <div class="left">
+              <van-icon
+                v-if="item.type==1"
+                class-prefix="icon"
+                name="football"
+                color="green"
+                size="45px"
+              />
+              <van-icon
+                v-if="item.type==2"
+                class-prefix="icon"
+                name="lanqiu"
+                color="blue"
+                size="45px"
+              />
+              <div>
+                <p>金额: {{item.times*item.buyWagers}}元</p>
+                <p class="time">{{item.endTime | formatDate}}</p>
+              </div>
+            </div>
+            <div class="right">
+              <div>
+                <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+                <p class="type">已消费</p>
+              </div>
+
+              <van-icon name="arrow" size="30px" color="#ccc" />
+            </div>
+          </div>
+        </van-tab>
+        <van-tab title="篮球">
+          <div class="content" v-for="(item,index) in basketlist" :key="index">
+            <div class="left">
+              <van-icon
+                v-if="item.type==1"
+                class-prefix="icon"
+                name="football"
+                color="green"
+                size="45px"
+              />
+              <van-icon
+                v-if="item.type==2"
+                class-prefix="icon"
+                name="lanqiu"
+                color="blue"
+                size="45px"
+              />
+              <div>
+                <p>金额: {{item.times*item.buyWagers}}元</p>
+                <p class="time">{{item.endTime | formatDate}}</p>
+              </div>
+            </div>
+            <div class="right">
+              <div>
+                <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+                <p class="type">已消费</p>
+              </div>
+
+              <van-icon name="arrow" size="30px" color="#ccc" />
+            </div>
+          </div>
+        </van-tab>
+      </van-tabs>
     </div>
   </div>
 </template>
@@ -31,150 +75,144 @@
 <script>
 import navBar from "@/components/navbar/navbar.vue";
 export default {
-  name: "invitation",
+  name: "qrcode",
   components: {
     navBar
   },
   data() {
     return {
-      info: {}
+      list: [],
+      basketlist: []
     };
   },
-  created() {
-    this.$SERVER.spread().then(res => {
-      this.info = res.data;
-    });
-  },
   methods: {
-    saveimg() {
-      var that = this;
-      if (window.navigator.userAgent.match(/APICloud/i)) {
-        api.download(
-          {
-            url: this.info.down_url,
-            report: true,
-            cache: true,
-            allowResume: true
-          },
-          function(ret, err) {
-            if (ret.percent == 100) {
-              api.saveMediaToAlbum(
-                {
-                  path: ret.savePath
-                },
-                function(albumret, albumreterr) {
-                  if (albumret && albumret.status) {
-                    that.$toast.success("保存成功!");
-                  }
-                }
-              );
+    getList() {
+      this.$SERVER
+        .getUserFootBallOrders({
+          userId: this.$store.state.userInfo.userid,
+          pagenum: 1,
+          pagesize: 999
+        })
+        .then(res => {
+          res.data.list.forEach(e => {
+            e.type = 1;
+          });
+
+          for (var i = 0; i < res.data.list.length; i++) {
+            if (res.data.list[i].finishTime) {
+              this.list.push(res.data.list[i]);
             }
           }
-        );
-      }
+          // this.list = res.data.list;
+          this.list.type = 1;
+        });
     },
-    copyFn() {
-      var that = this
-      if (window.navigator.userAgent.match(/APICloud/i)) {
-        var clipBoard = api.require("clipBoard");
-        clipBoard.set(
-          {
-            value: that.info.register_url
-          },
-          function(ret, err) {
-            if (ret) {
-              that.$toast.success("复制成功!");
-            } else {
+    getBasketList() {
+      this.$SERVER
+        .getUserBasketBallOrder({
+          userId: this.$store.state.userInfo.userid,
+          pagenum: 1,
+          pagesize: 999
+        })
+        .then(res => {
+          res.data.list.forEach(e => {
+            e.type = 2;
+          });
+          for (var i = 0; i < res.data.list.length; i++) {
+            if (res.data.list[i].finishTime) {
+              this.basketlist.push(res.data.list[i]);
             }
           }
-        );
-      } 
+          // this.list.sort(function(a, b) {
+          //   return b.bookTime - a.bookTime; //时间反序
+          // });
+          // console.log(this.list);
+        });
+    },
+    getMon(activeNames) {}
+  },
+  created() {
+    this.getList();
+    this.getBasketList();
+    console.log(this.basketlist);
+  },
+
+  filters: {
+    formatDate: function(value) {
+      let date = new Date(value);
+      let y = date.getFullYear();
+      let MM = date.getMonth() + 1;
+      MM = MM < 10 ? "0" + MM : MM;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      let h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      let m = date.getMinutes();
+      m = m < 10 ? "0" + m : m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.main {
-  background: #fa4a54 url(../../assets/images/bg1.jpg) no-repeat center top;
-  background-size: 100%;
-  overflow: hidden;
-  .help {
-    width: 47px;
-    height: 27px;
-    line-height: 27px;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-    font-size: 13px;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 1);
-    position: absolute;
-    right: 17px;
-    top: 17px;
+.tab {
+  width: 100%;
+  background-color: white;
+  /deep/ .van-tabs__nav--line {
+    width: 35%;
+    margin: 0 auto;
+
+    .van-tab {
+      border-radius: 0.3rem;
+      background-color: #eeeeee;
+      height: 25px;
+      line-height: 25px;
+      margin-top: 8px;
+    }
+    .van-tab--active {
+      background-color: #f24a44;
+      color: #ffffff;
+    }
   }
-  .info {
-    margin-top: 190px;
+}
+.content {
+  background-color: #fff;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #cccccc;
+  p {
+    padding: 4px 0;
+  }
+  .left {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    padding: 10px;
-    dl {
-      width: 33%;
-      height: 70px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 5px 5px 0 #f85654;
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      dt {
-        font-size: 15px;
-        font-weight: 400;
-        color: #f85654;
-      }
-      dd {
-        font-size: 17px;
-        font-weight: bold;
-        color: #f85654;
+    div {
+      padding: 0 10px;
+      color: #777;
+      .time {
+        font-size: 12px;
       }
     }
   }
-  h3 {
-    margin: 30px auto 20px;
-    font-size: 25px;
-    font-family: HYJinKaiJ;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 1);
-    text-align: center;
-  }
-  .qrcode {
-    text-align: center;
-    img {
-      width: 140px;
-      height: 140px;
-      border: 10px solid rgba(255, 255, 255, 0.33);
-    }
-  }
-  .btn-group {
+  .right {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
-    margin-top: 40px;
-    .btn {
-      width: 140px;
-      height: 40px;
-      line-height: 40px;
-      text-align: center;
-      background: #fff;
-      border: 1px solid rgba(204, 204, 204, 1);
-      border-radius: 20px;
-      font-size: 15px;
-      font-weight: 400;
-      color: #f85654;
+    text-align: right;
+    .money {
+      font-size: 18px;
+      color: #f24a44;
+    }
+    .type {
+      font-size: 14px;
+      color: #777;
     }
   }
 }
 </style>
-

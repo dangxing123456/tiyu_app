@@ -2,30 +2,72 @@
   <div class="container">
     <navBar />
     <div class="main">
-      <div class="content" v-for="(item,index) in list" :key="index">
-        <div class="left">
-          <van-icon
-            v-if="item.type==1"
-            class-prefix="icon"
-            name="football"
-            color="green"
-            size="45px"
-          />
-          <van-icon v-if="item.type==2" class-prefix="icon" name="lanqiu" color="blue" size="45px" />
-          <div>
-            <p>金额: {{item.times*item.buyWagers}}元</p>
-            <p class="time">{{item.endTime | formatDate}}</p>
-          </div>
-        </div>
-        <div class="right">
-          <div>
-            <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
-            <p class="type">已消费</p>
-          </div>
+      <van-tabs class="tab" @click="onClick">
+        <van-tab title="足球">
+          <div class="content" v-for="(item,index) in list" :key="index">
+            <div class="left">
+              <van-icon
+                v-if="item.type==1"
+                class-prefix="icon"
+                name="football"
+                color="green"
+                size="45px"
+              />
+              <van-icon
+                v-if="item.type==2"
+                class-prefix="icon"
+                name="lanqiu"
+                color="blue"
+                size="45px"
+              />
+              <div>
+                <p>金额: {{item.times*item.buyWagers}}元</p>
+                <p class="time">{{item.endTime | formatDate}}</p>
+              </div>
+            </div>
+            <div class="right">
+              <div>
+                <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+                <p class="type">已消费</p>
+              </div>
 
-          <van-icon name="arrow" size="30px" color="#ccc" />
-        </div>
-      </div>
+              <van-icon name="arrow" size="30px" color="#ccc" />
+            </div>
+          </div>
+        </van-tab>
+        <van-tab title="篮球">
+            <div class="content" v-for="(item,index) in basketlist" :key="index">
+            <div class="left">
+              <van-icon
+                v-if="item.type==1"
+                class-prefix="icon"
+                name="football"
+                color="green"
+                size="45px"
+              />
+              <van-icon
+                v-if="item.type==2"
+                class-prefix="icon"
+                name="lanqiu"
+                color="blue"
+                size="45px"
+              />
+              <div>
+                <p>金额: {{item.times*item.buyWagers}}元</p>
+                <p class="time">{{item.endTime | formatDate}}</p>
+              </div>
+            </div>
+            <div class="right">
+              <div>
+                <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+                <p class="type">已消费</p>
+              </div>
+
+              <van-icon name="arrow" size="30px" color="#ccc" />
+            </div>
+          </div>
+        </van-tab>
+      </van-tabs>
     </div>
   </div>
 </template>
@@ -42,10 +84,6 @@ export default {
       list: [],
       basketlist: []
     };
-  },
-  created() {
-    this.getList();
-    this.getBasketList();
   },
   methods: {
     getList() {
@@ -74,16 +112,21 @@ export default {
           res.data.list.forEach(e => {
             e.type = 2;
           });
-          this.list = this.list.concat(res.data.list);
-
-          this.list.sort(function(a, b) {
-            return b.bookTime - a.bookTime; //时间反序
-          });
-          console.log(this.list);
+          this.basketlist = res.data.list;
+          // this.list.sort(function(a, b) {
+          //   return b.bookTime - a.bookTime; //时间反序
+          // });
+          // console.log(this.list);
         });
     },
     getMon(activeNames) {}
   },
+  created() {
+    this.getList();
+    this.getBasketList();
+    console.log(this.basketlist);
+  },
+
   filters: {
     formatDate: function(value) {
       let date = new Date(value);
@@ -105,6 +148,26 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.tab {
+  width: 100%;
+  background-color: white;
+  /deep/ .van-tabs__nav--line {
+    width: 35%;
+    margin: 0 auto;
+
+    .van-tab {
+      border-radius: 0.3rem;
+      background-color: #eeeeee;
+      height: 25px;
+      line-height: 25px;
+      margin-top: 8px;
+    }
+    .van-tab--active {
+      background-color: #f24a44;
+      color: #ffffff;
+    }
+  }
+}
 .content {
   background-color: #fff;
   padding: 8px;
