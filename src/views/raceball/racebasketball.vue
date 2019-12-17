@@ -12,7 +12,7 @@
       </van-dropdown-menu>
     </navBar>
     <div class="main">
-      <div class="wrap" v-for="(item,index) in basketList" :key="index">
+      <div class="wrap" v-for="(item,index) in $store.state.basketResult" :key="index">
         <div class="title">
           <span>{{item.date}}</span>
           <span>{{item.num}}</span>
@@ -27,10 +27,9 @@
           </div>
           <div class="right">
             <div class="div1">
-              <span>{{item.hcn}}</span>
+              <span>{{item.acnAbbr}}(客)</span>
               <span>VS</span>
-
-              <span>{{item.acnAbbr}}</span>
+              <span>{{item.hcn}}(主)</span>
             </div>
             <div class="tab">
               <div class="left1">
@@ -44,37 +43,24 @@
               <div class="center">
                 <ul>
                   <li
-                    :ref="'id'+index+'_0'"
-                    @click="push('0','0',item.basketBallBet.odds_list.mnl[item.basketBallBet.odds_list.mnl.length-1].a,index)"
+                    v-for="(item,i) in item.basketBallBet"
+                    :key="i"
+                    v-if="i<4"
+                    :class="addColor(index,i)"
+                    @click="push(index,i,item)"
                   >
-                    <span>胜</span>
-                    <span>{{item.basketBallBet.odds_list.mnl[item.basketBallBet.odds_list.mnl.length-1].a}}</span>
-                  </li>
-                  <li
-                    :ref="'id'+index+'_1'"
-                    @click="push('0','1',item.basketBallBet.odds_list.mnl[item.basketBallBet.odds_list.mnl.length-1].h,index)"
-                  >
-                    <span>平</span>
-                    <span>{{item.basketBallBet.odds_list.mnl[item.basketBallBet.odds_list.mnl.length-1].h}}</span>
-                  </li>
-                  <li
-                    :ref="'id'+index+'_2'"
-                    @click="push('1','2',item.basketBallBet.odds_list.hdc[item.basketBallBet.odds_list.hdc.length-1].a,index)"
-                  >
-                    <span>负</span>
-                    <span>{{item.basketBallBet.odds_list.hdc[item.basketBallBet.odds_list.hdc.length-1].a}}</span>
-                  </li>
-                  <li
-                    :ref="'id'+index+'_3'"
-                    @click="push('1','3',item.basketBallBet.odds_list.hdc[item.basketBallBet.odds_list.hdc.length-1].h,index)"
-                  >
-                    <span>胜</span>
-                    <span>{{item.basketBallBet.odds_list.hdc[item.basketBallBet.odds_list.hdc.length-1].h}}</span>
+                    <span v-if="i==0 || i==2">客胜</span>
+                    <span v-else-if="i==1 || i==3">主胜</span>
+
+                    <span>{{item}}</span>
                   </li>
                 </ul>
               </div>
               <div class="right1">
-                <span ref="sp" @click="detailPlay(item,index)">全部比赛</span>
+                <span
+                  :class="bgc(index)"
+                  @click="$router.push('/allplayBasket/'+index)"
+                >{{coun(index)}}</span>
               </div>
             </div>
           </div>
@@ -83,12 +69,13 @@
       <!-- 底部按钮 -->
       <div class="bot-btn">
         <div class="text">
-          <p>至少选择1场比赛</p>
+          <p v-if="$store.state.basketSumcount==0">至少选择2场比赛</p>
+          <p v-if="$store.state.basketSumcount>=1">已选择{{$store.state.basketSumcount}}场比赛</p>
           <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
         </div>
         <div class="btn">
           <van-button type="default" size="large">取消</van-button>
-          <van-button type="danger" size="large">确定</van-button>
+          <van-button type="danger" size="large" @click="$router.push('/bConfirmPlan')">确定</van-button>
         </div>
       </div>
       <!-- 下拉菜单 -->
@@ -176,75 +163,85 @@ export default {
         { score: "胜1.50" }
       ],
       basketList: [],
-      a: []
+      a: [],
+      count: 0
     };
   },
   computed: {},
   watch: {},
-  updated() {
-    if (this.$store.state.bActiveData) {
-      for (var i = 0; i < this.$store.state.bActiveData.length; i++) {
-        if (this.$store.state.bActiveData[i] != undefined) {
-          for (var j = 0; j < this.$store.state.bActiveData[i].length; j++) {
-            if (this.$store.state.bActiveData[i][j] != undefined) {
-              for (
-                var k = 0;
-                k < this.$store.state.bActiveData[i][j].length;
-                k++
-              ) {
-                if (
-                  this.$store.state.bActiveData[i][j][k] != undefined &&
-                  this.$store.state.bActiveData[i][j][k] < 4
-                ) {
-                  this.$refs[
-                    "id" + i + "_" + this.$store.state.bActiveData[i][j][k]
-                  ][0].className = "bgColor";
-                }
-              }
-            }
-          }
+  updated() {},
+  methods: {
+    bgc(index) {
+      if (this.coun(index) == "更多玩法") {
+        return "";
+      } else {
+        return "bgColor";
+      }
+    },
+    coun(index) {
+      var arr = JSON.parse(
+        JSON.stringify(this.$store.state.basketSelectResult[index])
+      );
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == "") {
+          arr.splice(i, 1);
+          i--;
         }
       }
-    }
-  },
-  methods: {
-    detailPlay(item, i) {
-      item.index = i;
-      this.$store.state.bListData = item;
-      this.$router.push({
-        path: "/allplayBasket"
-      });
+
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == null) {
+          arr.splice(i, 1);
+          i--;
+        }
+      }
+      if (arr.length == 0) {
+        return "更多玩法";
+      }
+      return "已选" + arr.length + "项";
     },
     alertMenu() {
       this.show = true;
     },
-    push(i1, i2, val, index) {
-      if (this.$refs["id" + index + "_" + i2][0].className == "bgColor") {
-        // 删除
-        this.$refs["id" + index + "_" + i2][0].className = "";
-        delete this.$store.state.bActiveData[index][i1][i2];
+    addColor(i, i2) {
+      if (
+        this.$store.state.basketSelectResult[i][i2] == undefined ||
+        this.$store.state.basketSelectResult[i][i2] == ""
+      ) {
+        return "";
       } else {
-        // 添加
-        // console.log(this.a);
-        this.a[index][i1][i2] = i2;
-        if (!this.$store.state.bActiveData[index]) {
-          this.$store.state.bActiveData[index] = [];
-        }
-        for (var i = 0; i < this.a[index].length; i++) {
-          for (var j = 0; j < this.a[index][i].length; j++) {
-            if (!this.$store.state.bActiveData[index][i]) {
-              this.$store.state.bActiveData[index][i] = [];
-            }
-            if (this.a[index]) {
-              this.$store.state.bActiveData[index][i][j] = this.a[index][i][j];
-            }
+        return "bgColor";
+      }
+    },
+    push(index, i, val) {
+      if (
+        this.$store.state.basketSelectResult[index][i] == undefined ||
+        this.$store.state.basketSelectResult[index][i] == ""
+      ) {
+        this.$set(this.$store.state.basketSelectResult[index], i, val);
+      } else {
+        this.$set(this.$store.state.basketSelectResult[index], i, "");
+      }
+      var arr = JSON.parse(
+        JSON.stringify(this.$store.state.basketSelectResult)
+      );
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < arr[i].length; j++) {
+          if (arr[i][j] == "" || arr[i][j] == undefined) {
+            arr[i].splice(j, 1);
+            j--;
           }
         }
-
-        this.$refs["id" + index + "_" + i2][0].className = "bgColor";
-
-        console.log(this.$store.state.bActiveData);
       }
+
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].length == 0) {
+          arr.splice(i, 1);
+          i--;
+        }
+      }
+
+      this.$store.state.basketSumcount = arr.length;
     }
   },
   mounted() {},
@@ -252,21 +249,129 @@ export default {
     this.$SERVER
       .getBasketBallMatch({
         pagenum: 1,
-        pagesize: 10
+        pagesize: 50
       })
       .then(res => {
         if (res.code == 200) {
-          this.basketList = res.data.list;
-
-          for (var i = 0; i < this.basketList.length; i++) {
-            this.a.push([[], [], [], []]);
+          for (var i = 0; i < res.data.list.length; i++) {
+            this.$store.state.basketSelectResult.push([]);
+            this.$store.state.basketSelectValue.push([]);
           }
+          res.data.list.forEach(e => {
+            var a;
+            var b;
+
+            if (!e.basketBallBet.odds_list.mnl) {
+              a = "";
+              b = "";
+            } else {
+              a =
+                e.basketBallBet.odds_list.mnl[
+                  e.basketBallBet.odds_list.mnl.length - 1
+                ].a;
+              b =
+                e.basketBallBet.odds_list.mnl[
+                  e.basketBallBet.odds_list.mnl.length - 1
+                ].h;
+            }
+            this.$store.state.basketResult.push({
+              id: e.id,
+              date: e.date,
+              num: e.num,
+              lcnAbbr: e.lcnAbbr,
+              time: e.time,
+              hcn: e.hcn,
+              acnAbbr: e.acnAbbr,
+              fen:
+                e.basketBallBet.odds_list.hdc[
+                  e.basketBallBet.odds_list.hdc.length - 1
+                ].fixedodds,
+              sum:
+                e.basketBallBet.odds_list.hilo[
+                  e.basketBallBet.odds_list.hilo.length - 1
+                ].fixedodds,
+              // goalline: e.basketBallBet.odds_list.hhad.goalline,
+              basketBallBet: [
+                a,
+                b,
+                e.basketBallBet.odds_list.hdc[
+                  e.basketBallBet.odds_list.hdc.length - 1
+                ].a,
+                e.basketBallBet.odds_list.hdc[
+                  e.basketBallBet.odds_list.hdc.length - 1
+                ].h,
+                e.basketBallBet.odds_list.hilo[
+                  e.basketBallBet.odds_list.hilo.length - 1
+                ].h,
+                e.basketBallBet.odds_list.hilo[
+                  e.basketBallBet.odds_list.hilo.length - 1
+                ].l,
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].l1,
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].l2,
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].l3,
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].l4,
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].l5,
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].l6,
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].w1,
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].w2,
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].w3,
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].w4,
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].w5,
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].w6
+              ]
+            });
+          });
         }
       });
+
+    var arr = JSON.parse(JSON.stringify(this.$store.state.basketSelectResult));
+    for (var i = 0; i < arr.length; i++) {
+      for (var j = 0; j < arr[i].length; j++) {
+        if (arr[i][j] == "" || arr[i][j] == undefined) {
+          arr[i].splice(j, 1);
+          j--;
+        }
+      }
+    }
+
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i].length == 0) {
+        arr.splice(i, 1);
+        i--;
+      }
+    }
+    this.$store.state.basketSumcount = arr.length;
   }
 };
 </script>
 <style lang="less" scoped>
+.main {
+  padding-bottom: 120px;
+}
 // 修改vant ui内置样式
 .menu {
   background: none;
@@ -299,6 +404,7 @@ export default {
 .title {
   color: #4b4949;
   text-align: center;
+  margin-top: 10px;
 }
 .test {
   padding: 15px 10px;
@@ -307,10 +413,12 @@ export default {
   align-items: center;
   .right {
     width: 80%;
+    font-size: 14px;
     .div1 {
       display: flex;
       justify-content: space-around;
-      font-size: 17px;
+      padding-bottom: 15px;
+      font-size: 14px;
       color: #4b4949;
       .name {
         display: inline-block;
@@ -384,9 +492,10 @@ export default {
   }
   .left {
     text-align: center;
+    font-size: 12px;
     .first {
       padding-bottom: 20px;
-      font-size: 16px;
+
       color: #4b4949;
     }
   }
@@ -411,7 +520,7 @@ export default {
     justify-content: space-between;
     padding: 8px 10px;
     h3 {
-      font-size: 16px;
+      font-size: 14px;
     }
     span {
       font-size: 14px;
@@ -439,7 +548,7 @@ export default {
   .senf {
     padding: 8px 10px;
     h3 {
-      font-size: 16px;
+      font-size: 14px;
     }
   }
   .bottom {

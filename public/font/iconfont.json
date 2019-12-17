@@ -27,6 +27,13 @@
       "unicode_decimal": 58886
     },
     {
+      "icon_id": "1314972",
+      "name": "篮球",
+      "font_class": "lanqiu",
+      "unicode": "e672",
+      "unicode_decimal": 58994
+    },
+    {
       "icon_id": "2409081",
       "name": "问号",
       "font_class": "wenhao",
@@ -81,6 +88,20 @@
       "font_class": "suozi1",
       "unicode": "e760",
       "unicode_decimal": 59232
+    },
+    {
+      "icon_id": "9413107",
+      "name": "足球",
+      "font_class": "football",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "12305432",
+      "name": "97",
+      "font_class": "icon-test",
+      "unicode": "ed1f",
+      "unicode_decimal": 60703
     }
   ]
 }

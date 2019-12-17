@@ -181,7 +181,7 @@
     </div>
     <div class="btn">
       <van-button type="default" size="large">取消</van-button>
-      <van-button type="danger" size="large">确定</van-button>
+      <van-button type="danger" size="large" @click="$router.go(-1)">确定</van-button>
     </div>
   </div>
 </template>
@@ -198,7 +198,8 @@ export default {
   props: {},
   data() {
     return {
-      list: this.$store.state.result[this.$route.params.i]
+      list: this.$store.state.result[this.$route.params.i],
+      a: ""
     };
   },
   watch: {},
@@ -209,8 +210,10 @@ export default {
         this.$store.state.selectResult[this.$route.params.i][i] == ""
       ) {
         this.$set(this.$store.state.selectResult[this.$route.params.i], i, val);
+        this.$set(this.$store.state.selectValue[this.$route.params.i], i, val);
       } else {
         this.$set(this.$store.state.selectResult[this.$route.params.i], i, "");
+        this.$set(this.$store.state.selectValue[this.$route.params.i], i, "");
       }
     },
     addColor(i) {

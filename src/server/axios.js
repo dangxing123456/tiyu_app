@@ -94,7 +94,7 @@ export default class Axios {
           baseURL: envconfig.baseURL,
           timeout: 30000,
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
             // "Content-Type": "application/x-www-form-urlencoded"
           }
           // withCredentials: true, //是否携带cookies发起请求
@@ -104,7 +104,7 @@ export default class Axios {
       // 添加token
       _option.headers = {
         ..._option.headers,
-        authorization: "Bearer " + store.state.token || ""
+        token: store.state.token || ""
         // userid: store.state.userInfo.userid || ""
         // Cookie: "JSESSIONID=" + window.localStorage.getItem('Cookie')
       };
@@ -125,9 +125,9 @@ export default class Axios {
         res => {
           if (res.data.code == 200) {
             resolve(res.data);
-          } else if (res.data.code == 201) {
+          } else if (res.data.code == -1) {
             Toast.fail(res.data.msg);
-            window.localStorage.removeItem("token");
+            window.localStorage.removeItem("token" );
           } else {
             if (!config || !config.fail) {
               Toast.fail(res.data.msg);

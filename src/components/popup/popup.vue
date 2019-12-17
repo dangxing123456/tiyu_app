@@ -81,18 +81,39 @@ export default {
       //   console.log(value);
     },
     postFootBallFollowOrder() {
-      console.log(this.$store.state.userInfo.userid);
-      this.$SERVER
-        .footBallFollowOrder({
-          userId: this.$store.state.userInfo.userid,
-          id: this.list.id,
-          times: this.bei * this.list.times
-        })
-        .then(res => {
-          if (res.code == 200) {
-            that.$toast.success(res.data);
-          }
-        });
+      if (this.list.type == 1) {
+        console.log(this.$store.state.userInfo.userid);
+        this.$SERVER
+          .footBallFollowOrder({
+            userId: this.$store.state.userInfo.userid,
+            id: this.list.id,
+            times: this.bei * this.list.times
+          })
+          .then(res => {
+            if (res.code == 200) {
+              this.$toast.success(res.data);
+            }
+          })
+          .catch(res => {
+            this.$toast.fail(res.message);
+          });
+      }
+      if (this.list.type == 2) {
+        this.$SERVER
+          .basketBallFollowOrder({
+            userId: this.$store.state.userInfo.userid,
+            id: this.list.id,
+            times: this.bei * this.list.times
+          })
+          .then(res => {
+            if (res.code == 200) {
+              this.$toast.success(res.data);
+            }
+          })
+          .catch(res => {
+            this.$toast.fail("您未登录");
+          });
+      }
     }
   }
 };

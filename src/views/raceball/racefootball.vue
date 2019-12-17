@@ -13,51 +13,53 @@
     </navBar>
 
     <div class="main">
-      <div class="wrap" v-for="(item,index) in $store.state.result" :key="index">
+      <div class="wrap" v-for="(item1,index) in $store.state.result" :key="index">
         <div class="title">
-          <span>{{item.date}}</span>
-          <span>{{item.num}}</span>
+          <span>{{item1.date}}</span>
+          <span>{{item1.num}}</span>
         </div>
         <div class="test">
           <div class="left">
-            <p class="first">{{item.num}}</p>
-            <p>{{item.lcnAbbr}}</p>
-            <p>{{item.time}}截止</p>
+            <p class="first">{{item1.num}}</p>
+            <p>{{item1.lcnAbbr}}</p>
+            <p>{{item1.time}}截止</p>
           </div>
           <div class="right">
             <div class="div1">
-              <span>{{item.hcn}}</span>
+              <span>{{item1.hcn}}</span>
               <span>VS</span>
 
-              <span>{{item.acnAbbr}}</span>
+              <span>{{item1.acnAbbr}}</span>
             </div>
-            <div class="tab" v-if="item.footBallBet">
+            <div class="tab" v-if="item1.footBallBet">
               <div class="left1">
                 <p class="p1">
-                  <span class="p1-first">{{item.single}}</span>
+                  <span class="p1-first">0</span>
                 </p>
                 <p class="p2">
-                  <span class="p2-first">{{item.goalline}}</span>
+                  <span class="p2-first">{{item1.goalline}}</span>
                 </p>
               </div>
-              <div class="center" v-if="item.footBallBet">
+              <div class="center" v-if="item1.footBallBet">
                 <ul>
                   <li
-                    v-for="(item,i) in item.footBallBet"
+                    v-for="(item,i) in item1.footBallBet"
                     :key="i"
                     v-if="i<6"
                     :class="addColor(index,i)"
                     @click="push(index,i,item)"
                   >
                     <span v-if="i==0 || i==3">胜</span>
-                    <span v-else-if="i==1 || i==3">平</span>
-                    <span v-else-if="i==2 || i==3">负</span>
+                    <span v-else-if="i==1 || i==4">平</span>
+                    <span v-else-if="i==2 || i==5">负</span>
                     <span>{{item}}</span>
+
+                    <span class="dan" v-if="item1.single==1">单</span>
                   </li>
                 </ul>
               </div>
               <div class="right1">
-                <span ref="sp" @click="$router.push('/allplay/'+index)">全部比赛</span>
+                <span :class="bgc(index)" @click="$router.push('/allplay/'+index)">{{coun(index)}}</span>
               </div>
             </div>
           </div>
@@ -66,12 +68,13 @@
       <!-- 底部按钮 -->
       <div class="bot-btn">
         <div class="text">
-          <p>至少选择{{this.$store.state.replayData.length}}场比赛</p>
+          <p v-if="$store.state.sumcount==0">至少选择1场比赛</p>
+          <p v-if="$store.state.sumcount>=1">已选择{{$store.state.sumcount}}场比赛</p>
           <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
         </div>
         <div class="btn">
           <van-button type="default" size="large">清空</van-button>
-          <van-button type="danger" size="large" @click="$router.push('/confirmPlan')">确定</van-button>
+          <van-button type="danger" size="large" @click="confirm">确定</van-button>
         </div>
       </div>
       <!-- 下拉菜单 -->
@@ -123,29 +126,86 @@ export default {
   },
   props: {},
   data() {
-    return {};
+    return {
+      a: "",
+      count: 0
+    };
   },
   mounted() {},
   methods: {
-    init() {
-      var that = this;
-      that.$SERVER
-        .getFootBall({
-          pagenum: this.pageNumber + 1,
-          pagesize: 10
-        })
-        .then(res => {
-          if (res.code == 200) {
-            that.result = res.data.list;
+    confirm() {
+      if (this.$store.state.sumcount >= 2) {
+        this.$router.push("/confirmPlan");
+      } else {
+        this.$toast({
+          message: "非单关至少选择两场比赛"
+        });
+      }
 
-            that.isLoading = false;
-            for (var i = 0; i < that.result.length; i++) {
-              this.$store.state.addData.push([[], [], [], [], []]);
+      if (this.$store.state.sumcount == 1) {
+        var i1 = 0;
+        var arr = JSON.parse(JSON.stringify(this.$store.state.selectResult));
+        for (var i = 0; i < arr.length; i++) {
+          for (var j = 0; j < arr[i].length; j++) {
+            if (arr[i][j] == "" || arr[i][j] == undefined) {
+              arr[i].splice(j, 1);
+              j--;
             }
           }
-        });
+        }
+        for (var i = 0; i < arr.length; i++) {
+          if (arr[i].length > 0) {
+            i1 = i;
+          }
+        }
+        if (this.$store.state.result[i1].single == 1) {
+          this.$router.push("/confirmPlan");
+          this.$toast({
+            message: "进入单关模式"
+          });
+        }
+      }
+    },
+    show(index) {
+      var r = false;
+      this.$store.state.selectResult[index].forEach((e, i1) => {
+        if (e != undefined && e != "") {
+          r = true;
+        }
+      });
+      return this.$store.state.selectResult[index];
+    },
+    bgc(index) {
+      if (this.coun(index) == "更多玩法") {
+        return "";
+      } else {
+        return "bgColor";
+      }
+    },
+    coun(index) {
+      var arr = JSON.parse(
+        JSON.stringify(this.$store.state.selectResult[index])
+      );
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == "") {
+          arr.splice(i, 1);
+          i--;
+        }
+      }
+
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == null) {
+          arr.splice(i, 1);
+          i--;
+        }
+      }
+      if (arr.length == 0) {
+        return "更多玩法";
+      }
+      return "已选" + arr.length + "项";
     },
     addColor(i, i2) {
+      // if (i2 < 6) {
       if (
         this.$store.state.selectResult[i][i2] == undefined ||
         this.$store.state.selectResult[i][i2] == ""
@@ -155,7 +215,6 @@ export default {
         return "bgColor";
       }
     },
-
     push(index, i, val) {
       if (
         this.$store.state.selectResult[index][i] == undefined ||
@@ -165,7 +224,260 @@ export default {
       } else {
         this.$set(this.$store.state.selectResult[index], i, "");
       }
+      var arr = JSON.parse(JSON.stringify(this.$store.state.selectResult));
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < arr[i].length; j++) {
+          if (arr[i][j] == "" || arr[i][j] == undefined) {
+            arr[i].splice(j, 1);
+            j--;
+          }
+        }
+      }
+
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].length == 0) {
+          arr.splice(i, 1);
+          i--;
+        }
+      }
+
+      this.$store.state.sumcount = arr.length;
+    },
+    init() {
+      var that = this;
+      that.$SERVER
+        .getFootBall({
+          pagenum: 1,
+          pagesize: 50
+        })
+        .then(res => {
+          if (res.code == 200) {
+            for (var i = 0; i < res.data.list.length; i++) {
+              this.$store.state.selectResult.push([]);
+              this.$store.state.selectValue.push([]);
+            }
+            res.data.list.forEach(e => {
+              var a;
+              var b;
+              var c;
+              var f;
+              if (!e.footBallBet.odds_list.had) {
+                a = "";
+                b = "";
+                c = "";
+              } else {
+                a =
+                  e.footBallBet.odds_list.had.odds[
+                    e.footBallBet.odds_list.had.odds.length - 1
+                  ].h;
+                b =
+                  e.footBallBet.odds_list.had.odds[
+                    e.footBallBet.odds_list.had.odds.length - 1
+                  ].d;
+                c =
+                  e.footBallBet.odds_list.had.odds[
+                    e.footBallBet.odds_list.had.odds.length - 1
+                  ].a;
+              }
+
+              if (!e.footBallBet.odds_list.had) {
+                f = 0;
+              } else {
+                f = e.footBallBet.odds_list.had.single;
+              }
+
+              this.$store.state.result.push({
+                id: e.id,
+                date: e.date,
+                num: e.num,
+                lcnAbbr: e.lcnAbbr,
+                time: e.time,
+                hcn: e.hcn,
+                acnAbbr: e.acnAbbr,
+                goalline: e.footBallBet.odds_list.hhad.goalline,
+                single: f,
+                footBallBet: [
+                  a,
+                  b,
+                  c,
+                  e.footBallBet.odds_list.hhad.odds[
+                    e.footBallBet.odds_list.hhad.odds.length - 1
+                  ].h,
+                  e.footBallBet.odds_list.hhad.odds[
+                    e.footBallBet.odds_list.hhad.odds.length - 1
+                  ].d,
+                  e.footBallBet.odds_list.hhad.odds[
+                    e.footBallBet.odds_list.hhad.odds.length - 1
+                  ].a,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s0,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s1,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s2,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s3,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s4,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s5,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s6,
+                  e.footBallBet.odds_list.ttg.odds[
+                    e.footBallBet.odds_list.ttg.odds.length - 1
+                  ].s7,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].hh,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].hd,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].ha,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].dh,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].dd,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].da,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].ah,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].ad,
+                  e.footBallBet.odds_list.hafu.odds[
+                    e.footBallBet.odds_list.hafu.odds.length - 1
+                  ].aa,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0100,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0200,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0201,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0300,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0301,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0302,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0400,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0401,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0402,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0500,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0501,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0502,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].h1,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0000,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0101,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0202,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0303,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].d1,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0001,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0002,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0102,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0003,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0103,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0203,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0004,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0104,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0204,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0005,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0105,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].b0205,
+                  e.footBallBet.odds_list.crs.odds[
+                    e.footBallBet.odds_list.crs.odds.length - 1
+                  ].a1
+                ]
+              });
+            });
+          }
+        });
     }
+  },
+  created() {
+    this.init();
+    var arr = JSON.parse(JSON.stringify(this.$store.state.selectResult));
+    for (var i = 0; i < arr.length; i++) {
+      for (var j = 0; j < arr[i].length; j++) {
+        if (arr[i][j] == "" || arr[i][j] == undefined) {
+          arr[i].splice(j, 1);
+          j--;
+        }
+      }
+    }
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i].length == 0) {
+        arr.splice(i, 1);
+        i--;
+      }
+    }
+    this.$store.state.sumcount = arr.length;
   }
 };
 </script>
@@ -213,6 +525,9 @@ export default {
     text-align: center;
     margin-top: 10px;
   }
+  .wrap {
+    position: relative;
+  }
   .test {
     padding: 15px 10px;
     display: flex;
@@ -220,6 +535,7 @@ export default {
     align-items: center;
     border-bottom: 1px solid #eeeeee;
     font-size: 14px;
+
     .right {
       font-size: 14px;
       width: 80%;
@@ -274,6 +590,7 @@ export default {
         }
         .center {
           font-size: 12px;
+
           ul {
             li {
               display: inline-block;
@@ -284,6 +601,13 @@ export default {
               text-align: center;
               line-height: 30px;
               color: #4b4949;
+
+              .dan {
+                position: absolute;
+                top: -18px;
+                left: 0;
+                color: rgb(255, 187, 0);
+              }
             }
           }
         }

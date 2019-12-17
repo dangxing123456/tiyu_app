@@ -11,7 +11,11 @@ export default new Vuex.Store({
     color: "#ffc21c", //全局颜色
     navAn: "slide-left",
     userInfo: {
-      userid: ""
+      userid: "",
+      nickname: "",
+      mobile: "",
+      sex: "",
+      avatar: ""
     },
     isActive: false,
     isMember: false, //是否是会员
@@ -21,11 +25,14 @@ export default new Vuex.Store({
       lat: 108.222
     }, //用户定位
     qiniuaddr: "http://95youhe.com/", //七牛地址
-    register: {},
+    register: {
+      newpassword: ""
+    },
     message: null,
     recharge: null,
     qq: 10000,
-    todos: [{
+    todos: [
+      {
         id: 1,
         done: true,
         text: "我是码农"
@@ -52,16 +59,10 @@ export default new Vuex.Store({
     //比赛选中的索引
     activeData: [],
     //比赛选中的赔率
-    betData: [],
-    arrData: [
-      [],
-      [],
-      [],
-      [],
-      []
-    ],
+
+    arrData: [[], [], [], [], []],
     //倍数
-    value: 1,
+
     addData: [],
     otherData: [],
     sumData: [],
@@ -69,50 +70,34 @@ export default new Vuex.Store({
 
     bListData: {},
     bReplayData: [],
-    bArrData: [
-      [],
-      [],
-      [],
-      []
-    ],
+    bArrData: [[], [], [], []],
     bActiveData: [],
     bBetData: [],
 
-
-
-
-    result: [{
-        date: "2019-12-11",
-        num: "001",
-        lcnAbbr: "世界杯",
-        time: "18:20",
-        hcn: "韩国",
-        acnAbbr: "中国",
-        single: "0",
-        goalline: "-3",
-        footBallBet: ["", "", "", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20", "2.25", "4.35", "2.20"]
-      },
-      {
-        date: "2019-12-11",
-        num: "001",
-        lcnAbbr: "世界杯",
-        time: "18:20",
-        hcn: "韩国",
-        acnAbbr: "中国",
-        single: "0",
-        goalline: "-3",
-        footBallBet: ["4.45", "3.50", "2.26", "2.25", "4.35", "2.20", "4.45", "3.50", "2.26", "2.25", "4.35", "2.20", "4.45", "3.50", "2.26", "2.25", "4.35", "2.20", "4.45", "3.50", "2.26", "2.25", "4.35", "2.20", "4.45", "3.50", "2.26", "2.25", "4.35", "2.20", "4.45", "3.50", "2.26", "2.25", "4.35", "2.20", "4.45", "3.50", "2.26", "2.25", "4.35", "2.20", "4.45", "3.50", "2.26", "2.25", "4.35", "2.20", "4.45", "3.50", "2.26", "2.25", "4.35", "2.20"]
-      }
-    ],
-    selectResult:[
-      [],
-      []
-    ]
-
+    //足球
+    value: 1,
+    betArr: [],
+    result: [],
+    selectResult: [],
+    selectValue: [],
+    wagers: [],
+    footId: [],
+    sumcount: 0,
+    money: 0,
+    //蓝球
+    basketResult: [],
+    basketSelectResult: [],
+    basketSelectValue: [],
+    basketBetArr: [],
+    basketWagers: [],
+    basketFootId: [],
+    basketValue: 1,
+    basketSumcount: 0,
+    basketMoney: 0
   },
   //方法
   mutations: {
-    clickTotal(state) {      
+    clickTotal(state) {
       state.qq++;
     },
     //存值

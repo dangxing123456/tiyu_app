@@ -18,33 +18,23 @@
         </div>
       </div>
       <div class="select">
-        <van-tabs title-inactive-color="#333" title-active-color="#f24a44">
-          <van-tab>
+        <van-tabs title-inactive-color="#333" title-active-color="#f24a44" sticky>
+          <van-tab title="关注专家">
             <div slot="title">
               <van-dropdown-menu class="item" active-color="#ee0a24">
-                <van-dropdown-item v-model="value1" :options="option1" @change="changeValue" />
-                <van-dropdown-item v-model="value2" :options="option2" />
+                <van-dropdown-item v-model="value2" :options="option2" @change="changeValue" />
               </van-dropdown-menu>
             </div>
             <div class="content">
-              <div
-                class="con"
-                @click="detailExpert"
-                v-for="(item,index) in foogBallList"
-                :key="index"
-              >
+              <div class="con" @click="detailExpert" v-for="(item,index) in list" :key="index">
                 <div class="top">
                   <div class="left">
-                    <img src="../../assets/images/default.png" alt />
+                    <img :src="$store.state.userInfo.avatar || user_img" />
                     <h3>{{item.userInfor.nickname}}</h3>
                   </div>
                   <div class="right">
                     <p>{{item.describeText}}</p>
                     <div>
-                      <!-- <span class="span1">足</span>
-                      <span class="span2">单关</span>
-                      <span class="span3">4连红</span>
-                      <span class="span4">起跟金额2元</span>-->
                       <span class="time">截止:{{item.endTime | formatDate}}</span>
                     </div>
                   </div>
@@ -107,9 +97,7 @@
                     </p>
                     <p class="money">67%</p>
                   </div>
-                  <div>
-                    <!-- <van-button @click.stop="showPopup" type="danger">跟一单</van-button> -->
-                  </div>
+                  <div></div>
                 </div>
               </div>
             </div>
@@ -152,6 +140,7 @@
 </template>
 
 <script>
+import user_img from "../../assets/images/default.png";
 import { format } from "../../common/js/mixin";
 import popup from "../../components/popup/popup";
 export default {
@@ -169,7 +158,10 @@ export default {
       shiliShow: false,
       mingShow: false,
       foogBallList: [],
-      currentValue: false
+      basketBallList: [],
+      list: [],
+      currentValue: false,
+      user_img: user_img
     };
   },
   components: {
@@ -195,27 +187,41 @@ export default {
     }
   },
   methods: {
-    //获取跟单列表
+    //获取足球球跟单列表
     getList() {
       this.$SERVER
         .getFootBallCanFollowOrderList({})
         .then(res => {
           this.foogBallList = res.data.list;
+          this.list = res.data.list;
+          console.log(this.list);
+        })
+        .catch(err => {});
+    },
+    getBasketList() {
+      this.$SERVER
+        .getBasketBallCanFollowOrderList({})
+        .then(res => {
+          this.basketBallList = res.data.list;
           console.log(res);
         })
         .catch(err => {});
     },
-
     changeValue(value) {
+      if (value == "a") {
+        this.list = this.foogBallList;
+      }
       console.log(value);
+      if (value == "b") {
+        this.list = this.basketBallList;
+        console.log(this.list);
+      }
     },
     showPopup(item) {
       this.show = true;
       this.currentValue = true;
       this.$refs.pop.show = true;
       this.$refs.pop.list = item;
-      console.log(this.$refs);
-      console.log(item);
     },
     shiliPopup() {
       this.shiliShow = true;
@@ -252,6 +258,7 @@ export default {
   },
   created() {
     this.getList();
+    this.getBasketList();
   }
 };
 </script>
@@ -259,6 +266,9 @@ export default {
 .select {
   /deep/ .van-tabs__line {
     display: none;
+  }
+  /deep/ .van-sticky--fixed {
+    top: 46px;
   }
 }
 .shili {
@@ -349,6 +359,7 @@ export default {
   }
 }
 .main {
+  height: 100%;
   padding: 10px 0px;
   .head {
     display: flex;
@@ -416,6 +427,7 @@ export default {
           display: inline;
           margin: 0 auto;
           padding-bottom: 15px;
+          border-radius: 50%;
         }
       }
       .left1 {

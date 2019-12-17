@@ -56,6 +56,38 @@ class Api extends Axios {
   async getBasketBallMatch(params = {}) {
     return await this.axios("POST", "basketball/getBasketBallMatch", params);
   }
+  //篮球下注
+  async basketBallBookOrder(params = {}) {
+    return await this.axios("POST", "basketball/basketBallBookOrder  ", params);
+  }
+  //篮彩查询可以跟单的订单列表
+  async getBasketBallCanFollowOrderList(params = {}) {
+    return await this.axios(
+      "POST",
+      "basketball/getBasketBallCanFollowOrderList",
+      params
+    );
+  }
+  //篮彩跟单下注
+  async basketBallFollowOrder(params = {}) {
+    return await this.axios("POST", "basketball/basketBallFollowOrder", params);
+  }
+  //足彩查询自己下单历史记录
+  async getUserFootBallOrders(params = {}) {
+    return await this.axios("POST", "football/getUserFootBallOrders", params);
+  }
+  //篮彩查询自己下单历史记录
+  async getUserBasketBallOrder(params = {}) {
+    return await this.axios(
+      "POST",
+      "basketball/getUserBasketBallOrder",
+      params
+    );
+  }
+  //上传头像
+  async uploadUserImage(params = {}) {
+    return await this.axios("POST", "user/uploadUserImage", params);
+  }
 }
 
 export default new Api();

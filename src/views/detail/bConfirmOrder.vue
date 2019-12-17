@@ -24,7 +24,7 @@
     <div class="bottom">
       <div class="money">
         需支付:
-        <span>{{$store.state.money*this.$store.state.value}}元</span>
+        <span>{{this.$store.state.basketMoney*this.$store.state.basketValue}}元</span>
       </div>
       <div>
         <van-button type="danger" @click="confirmOrder">确认支付</van-button>
@@ -36,7 +36,7 @@
 <script>
 import navBar from "@/components/navbar/navbar.vue";
 export default {
-  name: "confirmOrder",
+  name: "bConfirmOrder",
   props: {},
   components: {
     navBar
@@ -55,46 +55,40 @@ export default {
   methods: {
     confirmOrder() {
       this.$SERVER
-        .footBallBookOrder({
-          wagers: this.$store.state.wagers,
+        .basketBallBookOrder({
+          wagers: this.$store.state.basketWagers,
           userId: this.$store.state.userInfo.userid,
-          times: this.$store.state.value,
-          matchIds: this.$store.state.footId,
-          bets: this.$store.state.betArr,
+          times: this.$store.state.basketValue,
+          matchIds: this.$store.state.basketFootId,
+          bets: this.$store.state.basketBetArr,
           describeText: this.value,
           promiseBet: this.bei
         })
         .then(res => {
           //下单成功
           if (res.code == 200) {
-            this.$toast.success("下单成功");
-
-            this.$store.state.value = 1;
-            for (var i = 0; i < this.$store.state.selectResult.length; i++) {
-              this.$store.state.selectResult[i] = [];
-              this.$store.state.money = 0;
+              this.$toast.success("下单成功");
+              this.$store.state.basketValue = 1;
+            for (var i = 0; i < this.$store.state.basketSelectResult.length; i++) {
+              this.$store.state.basketSelectResult[i] = [];
             }
           }
         });
     }
   },
   created() {
-    for (var i = 0; i < this.$store.state.betArr.length; i++) {
-      if (!this.$store.state.betArr[i]) {
-        this.$store.state.betArr.splice(i, 1);
+    for (var i = 0; i < this.$store.state.basketBetArr.length; i++) {
+      if (!this.$store.state.basketBetArr[i]) {
+        this.$store.state.basketBetArr.splice(i, 1);
         i--;
       }
     }
-    for (var i = 0; i < this.$store.state.footId.length; i++) {
-      if (!this.$store.state.footId[i]) {
-        this.$store.state.footId.splice(i, 1);
+    for (var i = 0; i < this.$store.state.basketFootId.length; i++) {
+      if (!this.$store.state.basketFootId[i]) {
+        this.$store.state.basketFootId.splice(i, 1);
         i--;
       }
     }
-
-    console.log(this.$store.state.betArr);
-    console.log(this.$store.state.footId);
-    console.log(this.$store.state.value);
   }
 };
 </script>
