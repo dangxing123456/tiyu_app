@@ -20,9 +20,7 @@
           </div>
         </div>
         <div class="right" ref="right">
-          <div class="info"  @click="change">
-           {{content}}
-          </div>
+          <div class="info" @click="change">{{content}}</div>
         </div>
       </div>
       <div class="tab">
@@ -136,25 +134,31 @@
               <p class="p1">自购金额</p>
               <p class="p2">2.0</p>
             </div>
-            <i></i>
+            <i class="ii"></i>
             <div>
               <p class="p1">跟单总额</p>
               <p class="p2">0元</p>
             </div>
-            <i></i>
+            <i class="ii"></i>
             <div>
               <p class="p1">跟单人气</p>
               <p class="renqi">0</p>
             </div>
-            <i></i>
+            <i class="ii"></i>
             <div>
-              <img src="../../assets/images/default.png" alt />
+              <van-icon class-prefix="icon" name="yizhongjiang" font-size="50px" color="#f24a44" />
+              <van-icon
+                v-if="false"
+                class-prefix="icon"
+                name="weizhongjiang"
+                font-size="50px"
+                color="#f24a44"
+              />
             </div>
           </div>
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 
@@ -170,7 +174,7 @@ export default {
     return {
       title: this.$route.meta.title,
       flag: false,
-      content: "+关注",
+      content: "+关注"
     };
   },
   computed: {},
@@ -180,10 +184,8 @@ export default {
       this.flag = !this.flag;
       if (this.flag) {
         this.content = "已关注";
-       
       } else {
         this.content = "+关注";
-         
       }
     }
   },
@@ -404,7 +406,7 @@ export default {
   .head {
     padding: 5px;
     font-size: 14px;
-    i {
+    .ii {
       display: inline-block;
       width: 4px;
       height: 14px;
@@ -437,6 +439,9 @@ export default {
       padding: 5px;
       width: 100%;
       border-bottom: 1px solid #eeeeee;
+      /deep/ .icon {
+        font-size: 50px;
+      }
       div {
         text-align: center;
         width: 33%;
@@ -454,7 +459,7 @@ export default {
           color: #f24a44;
         }
       }
-      i {
+      .ii {
         display: inline-block;
         width: 2px;
         height: 25px;

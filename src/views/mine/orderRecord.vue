@@ -2,72 +2,74 @@
   <div class="container">
     <navBar />
     <div class="main">
-      <van-tabs class="tab" @click="onClick">
-        <van-tab title="足球">
-          <div class="content" v-for="(item,index) in list" :key="index">
-            <div class="left">
-              <van-icon
-                v-if="item.type==1"
-                class-prefix="icon"
-                name="football"
-                color="green"
-                size="45px"
-              />
-              <van-icon
-                v-if="item.type==2"
-                class-prefix="icon"
-                name="lanqiu"
-                color="blue"
-                size="45px"
-              />
-              <div>
-                <p>金额: {{item.times*item.buyWagers}}元</p>
-                <p class="time">{{item.endTime | formatDate}}</p>
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <van-tabs class="tab">
+          <van-tab title="足球">
+            <div class="content" v-for="(item,index) in list" :key="index">
+              <div class="left">
+                <van-icon
+                  v-if="item.type==1"
+                  class-prefix="icon"
+                  name="football"
+                  color="green"
+                  size="45px"
+                />
+                <van-icon
+                  v-if="item.type==2"
+                  class-prefix="icon"
+                  name="lanqiu"
+                  color="blue"
+                  size="45px"
+                />
+                <div>
+                  <p>金额: {{item.times*item.buyWagers}}元</p>
+                  <p class="time">{{item.endTime | formatDate}}</p>
+                </div>
               </div>
-            </div>
-            <div class="right">
-              <div>
-                <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
-                <p class="type">已消费</p>
-              </div>
+              <div class="right">
+                <div>
+                  <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+                  <p class="type">已消费</p>
+                </div>
 
-              <van-icon name="arrow" size="30px" color="#ccc" />
+                <van-icon name="arrow" size="30px" color="#ccc" />
+              </div>
             </div>
-          </div>
-        </van-tab>
-        <van-tab title="篮球">
+          </van-tab>
+          <van-tab title="篮球">
             <div class="content" v-for="(item,index) in basketlist" :key="index">
-            <div class="left">
-              <van-icon
-                v-if="item.type==1"
-                class-prefix="icon"
-                name="football"
-                color="green"
-                size="45px"
-              />
-              <van-icon
-                v-if="item.type==2"
-                class-prefix="icon"
-                name="lanqiu"
-                color="blue"
-                size="45px"
-              />
-              <div>
-                <p>金额: {{item.times*item.buyWagers}}元</p>
-                <p class="time">{{item.endTime | formatDate}}</p>
+              <div class="left">
+                <van-icon
+                  v-if="item.type==1"
+                  class-prefix="icon"
+                  name="football"
+                  color="green"
+                  size="45px"
+                />
+                <van-icon
+                  v-if="item.type==2"
+                  class-prefix="icon"
+                  name="lanqiu"
+                  color="blue"
+                  size="45px"
+                />
+                <div>
+                  <p>金额: {{item.times*item.buyWagers}}元</p>
+                  <p class="time">{{item.endTime | formatDate}}</p>
+                </div>
               </div>
-            </div>
-            <div class="right">
-              <div>
-                <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
-                <p class="type">已消费</p>
-              </div>
+              <div class="right">
+                <div>
+                  <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+                  <p class="type">已消费</p>
+                </div>
 
-              <van-icon name="arrow" size="30px" color="#ccc" />
+                <van-icon name="arrow" size="30px" color="#ccc" />
+              </div>
             </div>
-          </div>
-        </van-tab>
-      </van-tabs>
+          </van-tab>
+        </van-tabs>
+      </van-pull-refresh>
     </div>
   </div>
 </template>
@@ -82,10 +84,24 @@ export default {
   data() {
     return {
       list: [],
-      basketlist: []
+      basketlist: [],
+      isLoading: false, //下拉刷新
+      pageIndex: 1, //页码
+      isUpLoading: false, //上拉加载
+      upFinished: false //上拉加载完毕
     };
   },
   methods: {
+    onRefresh() {
+      // 下拉调用此函数
+      setTimeout(() => {
+        this.$toast("刷新成功"); //弹出
+        this.getList();
+        this.getBasketList();
+        this.isLoading = false;
+      }, 500);
+    },
+
     getList() {
       this.$SERVER
         .getUserFootBallOrders({

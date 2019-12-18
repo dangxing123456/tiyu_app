@@ -127,7 +127,7 @@ export default class Axios {
             resolve(res.data);
           } else if (res.data.code == -1) {
             Toast.fail(res.data.msg);
-            window.localStorage.removeItem("token" );
+            // window.localStorage.removeItem("token");
           } else {
             if (!config || !config.fail) {
               Toast.fail(res.data.msg);

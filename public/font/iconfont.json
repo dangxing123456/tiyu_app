@@ -104,6 +104,20 @@
       "unicode_decimal": 59461
     },
     {
+      "icon_id": "9728229",
+      "name": "未中奖",
+      "font_class": "weizhongjiang",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "10046366",
+      "name": "已中奖",
+      "font_class": "yizhongjiang",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
       "icon_id": "12305432",
       "name": "97",
       "font_class": "icon-test",

@@ -54,6 +54,17 @@ export default {
     };
   },
   methods: {
+    getList() {
+      this.$SERVER
+        .getUserWalletExchangeHIstory({
+          userId: this.$store.state.userInfo.userid,
+          pagenum: 1,
+          pagesize: 10
+        })
+        .then(res => {
+          console.log(res.data);
+        });
+    },
     withdraw() {
       this.loading = true;
     },
@@ -69,6 +80,9 @@ export default {
         message: message
       });
     }
+  },
+  created() {
+    this.getList();
   }
 };
 </script>

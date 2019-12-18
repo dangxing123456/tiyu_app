@@ -46,10 +46,23 @@
               </div>
 
               <div class="bot" @click="$router.push('/allplayBasket/'+index)">
-                <p :class="show1(index).length>0  ? 'aa' : '' ">未选择更多玩法</p>
-                <ul>
-                  <li v-for="(item1,i) in show1(index)" :key="i" class="bgColor">
-                    <p></p>
+                <p :class="show1(index).length>0  ? 'aa' : 'bb' ">未选择更多玩法</p>
+                <ul v-for="(item1,i) in show1(index)" :key="i" >
+                  <li v-if="item1" class="bgColor">
+                    <span v-if="i==4">大分</span>
+                    <span v-if="i==5">小分</span>
+                    <span v-if="i==6">客胜(1-5)</span>
+                    <span v-if="i==7">客胜(6-10)</span>
+                    <span v-if="i==8">客胜(11-15)</span>
+                    <span v-if="i==9">客胜(16-20)</span>
+                    <span v-if="i==10">客胜(21-25)</span>
+                    <span v-if="i==11">客胜(26+)</span>
+                    <span v-if="i==12">主胜(1-5)</span>
+                    <span v-if="i==13">主胜(6-10)</span>
+                    <span v-if="i==14">主胜(11-15)</span>
+                    <span v-if="i==15">主胜(16-20)</span>
+                    <span v-if="i==16">主胜(21-25)</span>
+                    <span v-if="i==17">主胜(26+)</span>
                     {{item1}}
                   </li>
                 </ul>
@@ -84,7 +97,7 @@
       </div>
       <div class="btn">
         <van-button type="default" size="large">发起合买</van-button>
-        <van-button type="danger" size="large" @click="$router.push('/bConfirmOrder')">下一步</van-button>
+        <van-button type="danger" size="large" @click="confirmOrder()">下一步</van-button>
       </div>
     </div>
     <van-action-sheet v-model="showmenu">
@@ -198,6 +211,15 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    confirmOrder() {
+      if (this.f.length == 0) {
+        this.$toast({
+          message: "请选择串法"
+        });
+      } else {
+        this.$router.push("/bConfirmOrder");
+      }
+    },
     showMethod() {
       if (this.$store.state.basketSumcount <= 2) {
         return this.StringMethod.slice(0, 1);
@@ -268,7 +290,7 @@ export default {
       var arr = [];
       this.$store.state.basketSelectValue[index].forEach((e, i) => {
         if (i >= 4 && e != "") {
-          arr.push(e);
+          arr[i] = e;
         }
       });
       return arr;
@@ -694,6 +716,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.bb {
+  border: 1px solid #eeeeee;
+}
 .aa {
   display: none;
 }
@@ -801,7 +826,7 @@ export default {
             background-color: #fff;
             display: inline-block;
             height: 30px;
-            width: 107px;
+            width: 105px;
             border: 0.02rem solid #eeeeee;
             float: left;
             text-align: center;
@@ -813,13 +838,13 @@ export default {
           display: inline-block;
           width: 214px;
 
-          border: 1px solid #eeeeee;
+          // border: 1px solid #eeeeee;
           text-align: center;
           line-height: 32px;
           background-color: #fff;
           ul {
             li {
-              width: 69px;
+              width: 105px;
             }
           }
         }

@@ -88,6 +88,14 @@ class Api extends Axios {
   async uploadUserImage(params = {}) {
     return await this.axios("POST", "user/uploadUserImage", params);
   }
+  //消费记录
+  async getUserWalletExchangeHIstory(params = {}) {
+    return await this.axios(
+      "POST",
+      "wallet/getUserWalletExchangeHIstory",
+      params
+    );
+  }
 }
 
 export default new Api();
