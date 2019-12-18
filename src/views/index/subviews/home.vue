@@ -24,7 +24,7 @@
         <h3>最新赛事</h3>
       </div>
       <van-swipe class="hot">
-        <van-swipe-item v-for="(image, index) in 4" :key="index">
+        <van-swipe-item v-for="(image, index) in list" :key="index">
           <div class="top">
             <div class="img">
               <h3>asd</h3>
@@ -182,26 +182,30 @@ export default {
   name: "home",
   data() {
     return {
-      show1: false
+      show1: false,
+      list:[],
+      person:[]
     };
   },
   components: {
     navBar
   },
   created() {
-    for (var i = 0; i < this.$store.state.selectResult.length; i++) {
-      this.$store.state.selectResult[i] = [];
-    }
-
-    console.log(this.$store.state.selectResult)
-    this.$store.state.money = 0;
-    for (var i = 0; i < this.$store.state.basketSelectResult.length; i++) {
-      this.$store.state.basketSelectResult[i] = [];
-    }
-    this.$store.state.basketMoney = 0;
+   this.getList()
+   this.getTopPerson()
   },
   mounted() {},
   methods: {
+    getList(){
+      this.$SERVER.getHotMatchs().then(res=>{
+        this.list =  res.data
+      })
+    },
+    getTopPerson(){
+      this.$SERVER.getShootTop().then(res=>{
+        this.person = res.data
+      })
+    },
     showPopup() {
       this.show1 = true;
     },

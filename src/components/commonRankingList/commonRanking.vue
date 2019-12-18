@@ -1,46 +1,58 @@
 <template>
-  <div class="container" id="shop">
-    <div class="main">
-      <div class="content">
-        <div class="left">
-          <img src="../../assets/images/default.png" alt />
-          <div>
-            <p class="p1">
-              <span class="sp">发高赔单</span>
-              <span class="span1">发12单中9单</span>
-            </p>
-            <p class="p2">
-              <span>总粉丝数</span>
-              <span class="span1">1735</span>
-            </p>
-          </div>
-        </div>
-        <div class="right" ref="right">
-          <div class="info">
-            <p>近期</p>
-            <p>连红</p>
-            <p>历史最高</p>
-          </div>
-          <div class="num">
-            <span>7</span>
-          </div>
-        </div>
+  <div class="content">
+    <div class="left">
+      <img :src="icon||'../../assets/images/default.png'" />
+      <div>
+        <p class="p1">
+          <span class="sp">{{data.nickname}}</span>
+          <span class="span1" v-if="type==1">发{{data.buyWagers}}单中{{data.winWagers}}单</span>
+          <span class="span1" v-else>发{{data.totalCount}}单中{{data.winCount}}单</span>
+        </p>
+        <p class="p2">
+          <span>总粉丝数</span>
+          <span class="span1">{{data.fensiCount}}</span>
+        </p>
       </div>
     </div>
-    <router-view />
+    <div class="right" ref="right" v-if="type==1">
+      <div class="info">
+        <p>近期</p>
+        <p>连红</p>
+        <p>历史最高</p>
+      </div>
+      <div class="num">
+        <span>{{data.winCount}}</span>
+      </div>
+    </div>
+    <div class="right" v-else-if="type==2">
+      <div class="info">
+        <h3>{{data.winRate*100}}%</h3>
+        <h4>命中率</h4>
+      </div>
+    </div>
+    <div class="right" v-else-if="type==3">
+      <div class="info">
+        <h3>{{data.winRate*100}}%</h3>
+        <h4>均盈利</h4>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "commonRanking",
-  props: {},
-  data() {
-    return {};
-  },
-  computed: {},
-  watch: {},
-  methods: {}
+  props: {
+    data: {
+      type: Object
+    },
+    type: {
+      type: Number,
+      default() {
+        return 0;
+      }
+    }
+  }
 };
 </script>
 <style lang="less" scoped>

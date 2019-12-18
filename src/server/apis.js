@@ -88,6 +88,37 @@ class Api extends Axios {
   async uploadUserImage(params = {}) {
     return await this.axios("POST", "user/uploadUserImage", params);
   }
+
+  async getMetchantInfor(params = {}) {
+    return await this.axios("POST", "query/getMetchantInfor", params);
+  }
+  async getHotMatchs(params = {}) {
+    return await this.axios("POST", "query/getHotMatchs", params);
+  }
+  async getTopPerson(params = {}) {
+    return await this.axios("POST", "query/getTopPerson", params);
+  }
+
+  async getShootTop(params = {}) {
+    return await this.axios("POST", "query/getShootTop", params);
+  }
+  async getWinTop(params = {}) {
+    return await this.axios("POST", "query/getWinTop", params);
+  }
+  async updateAttention(params = {}) {
+    return await this.axios("POST", "user/updateAttention", params);
+  }
+  async joinWinTop(params = {}) {
+    return await this.axios("POST", "query/joinWinTop", params);
+  }
+  async getUserInfoByToken(params = {}) {
+    return await this.axios("POST", "user/getUserInfoByToken", params);
+  }
+  
+  
+
+  
+  
   //消费记录
   async getUserWalletExchangeHIstory(params = {}) {
     return await this.axios(

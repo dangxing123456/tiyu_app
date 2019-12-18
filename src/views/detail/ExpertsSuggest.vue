@@ -8,10 +8,10 @@
     <div class="main">
       <div class="content">
         <div class="left">
-          <img src="../../assets/images/default.png" alt />
+          <img :src="userinfo.icon" alt />
           <div>
             <p class="p1">
-              <span class="sp">最佳大神推荐</span>
+              <span class="sp">{{userinfo.nickname}}</span>
             </p>
             <p class="p2">
               <span>砖粉</span>
@@ -20,10 +20,13 @@
           </div>
         </div>
         <div class="right" ref="right">
-          <div class="info" @click="change">{{content}}</div>
+          <div class="info"  @click="follow">
+           <span v-if="isFans==0">+关注</span>
+           <span v-else>已关注</span>
+          </div>
         </div>
       </div>
-      <div class="tab">
+      <!-- <div class="tab">
         <van-tabs>
           <van-tab title="7天">
             <div class="tab-top">
@@ -70,7 +73,7 @@
             </div>
           </van-tab>
         </van-tabs>
-      </div>
+      </div> -->
       <div class="wrapper">
         <div class="head">
           <div class="left">
@@ -173,25 +176,50 @@ export default {
   data() {
     return {
       title: this.$route.meta.title,
-      flag: false,
-      content: "+关注"
+      isFans: 0,
+      content: "+关注",
+      userinfo:{}
     };
   },
-  computed: {},
-  watch: {},
-  methods: {
-    change() {
-      this.flag = !this.flag;
-      if (this.flag) {
-        this.content = "已关注";
-      } else {
-        this.content = "+关注";
-      }
-    }
+  created(){
+    this.getBasketList()
   },
-  mounted() {
-    // console.log(this.$route)
-  }
+  methods: {
+    follow(){
+      this.$SERVER.updateAttention({
+        userId:this.$route.params.userInfo.userId,
+        fansuserId:this.$store.state.userInfo.userId
+      }).then(res=>{
+        this.isFans = !this.isFans
+      })
+    },
+    
+    getBasketList() {
+      this.userinfo = this.$route.params.userinfo
+      if(this.$route.params.type=="a"){
+      this.$SERVER
+        .getFootBallCanFollowOrderList({
+          id:this.$route.params.id,
+          userId:this.$store.state.userInfo.userId
+        })
+        .then(res => {
+          this.data = res.data;
+        })
+        .catch(err => {});
+      }else{
+              this.$SERVER
+        .getBasketBallCanFollowOrderList({
+          id:this.$route.params.id,
+          userId:this.$store.state.userInfo.userId
+        })
+        .then(res => {
+          this.data = res.data;
+        })
+        .catch(err => {});
+      }
+
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
