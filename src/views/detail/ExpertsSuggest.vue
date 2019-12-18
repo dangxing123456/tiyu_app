@@ -74,11 +74,12 @@
           </van-tab>
         </van-tabs>
       </div> -->
-      <div class="wrapper">
+      <div class="wrapper"  v-for="(item,i) in list" :key="i" v-if="item.canSail==1">
         <div class="head">
           <div class="left">
             <i></i>
-            <span class="zu">足</span>
+            <span class="zu" v-if="$route.params.type=='a'">足</span>
+            <span class="zu" v-else>篮</span>
             <span>单关</span>
           </div>
           <div class="right">
@@ -86,17 +87,17 @@
           </div>
         </div>
         <div class="top">
-          <p>这场必中单, 自购2000元,跟上就是赚,可投重注</p>
+          <p>{{item.describeText}}</p>
         </div>
         <div class="list">
           <div>
             <p class="p1">佣金</p>
-            <p class="p2">近30天发单</p>
+            <p class="p2">10%</p>
           </div>
           <i></i>
           <div>
             <p class="p1">自购金额</p>
-            <p class="p2">近30天连红</p>
+            <p class="p2">{{item.buyWagers*item.times*2}}</p>
           </div>
           <i></i>
           <div>
@@ -106,12 +107,12 @@
           <i></i>
           <div>
             <p class="p1">跟单人气</p>
-            <p class="p2">历史最高连红</p>
+            <p class="p2">{{item.flowCount || 0}}</p>
           </div>
         </div>
         <div class="wrapper-bot">
           <p>
-            <van-icon class-prefix="icon" name="suozi" />截止可见：11-13 21:50
+            <van-icon class-prefix="icon" name="suozi" />截止可见：{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}
           </p>
           <van-button type="danger" size="large">跟一单</van-button>
         </div>
@@ -121,37 +122,38 @@
           <i></i>
           <span>近30日方案</span>
         </div>
-        <div class="info-list">
+        <div class="info-list"  v-for="(item,i) in list" :key="i" v-if="item.canSail==0">
           <div class="top">
             <div class="left">
-              <span class="zu">足</span>
+            <span class="zu" v-if="$route.params.type=='a'">足</span>
+            <span class="zu" v-else>篮</span>
               <span>2串1</span>
               <span>最高SP2.76</span>
             </div>
             <div class="right">
-              <span>11-11 21:50已截止</span>
+              <span>{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}已截止</span>
             </div>
           </div>
           <div class="con">
             <div>
               <p class="p1">自购金额</p>
-              <p class="p2">2.0</p>
+              <p class="p2">{{item.buyWagers*item.times*2}}</p>
             </div>
             <i class="ii"></i>
             <div>
               <p class="p1">跟单总额</p>
-              <p class="p2">0元</p>
+              <p class="p2">{{item.flowTotalMoney}}元</p>
             </div>
             <i class="ii"></i>
             <div>
               <p class="p1">跟单人气</p>
-              <p class="renqi">0</p>
+              <p class="renqi">{{item.flowCount || 0}}</p>
             </div>
             <i class="ii"></i>
             <div>
-              <van-icon class-prefix="icon" name="yizhongjiang" font-size="50px" color="#f24a44" />
+              <van-icon class-prefix="icon" name="yizhongjiang" font-size="50px" color="#f24a44" v-if="item.winmoney" />
               <van-icon
-                v-if="false"
+                v-else
                 class-prefix="icon"
                 name="weizhongjiang"
                 font-size="50px"
@@ -161,16 +163,19 @@
           </div>
         </div>
       </div>
+      <popup />
     </div>
   </div>
 </template>
 
 <script>
 import navBar from "@/components/navbar/navbar.vue";
+import popup from "@/components/popup/popup.vue";
 export default {
   name: "ExpertsSuggest",
   components: {
-    navBar
+    navBar,
+    popup
   },
   props: {},
   data() {
@@ -178,7 +183,8 @@ export default {
       title: this.$route.meta.title,
       isFans: 0,
       content: "+关注",
-      userinfo:{}
+      userinfo:{},
+      list:[]
     };
   },
   created(){
@@ -203,7 +209,7 @@ export default {
           userId:this.$store.state.userInfo.userId
         })
         .then(res => {
-          this.data = res.data;
+          this.list = res.data.list;
         })
         .catch(err => {});
       }else{
@@ -213,7 +219,7 @@ export default {
           userId:this.$store.state.userInfo.userId
         })
         .then(res => {
-          this.data = res.data;
+          this.list = res.data.list;
         })
         .catch(err => {});
       }
