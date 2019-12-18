@@ -8,10 +8,10 @@
     <div class="main">
       <div class="content">
         <div class="left">
-          <img src="../../assets/images/default.png" alt />
+          <img :src="userinfo.icon" alt />
           <div>
             <p class="p1">
-              <span class="sp">最佳大神推荐</span>
+              <span class="sp">{{userinfo.nickname}}</span>
             </p>
             <p class="p2">
               <span>砖粉</span>
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="tab">
+      <!-- <div class="tab">
         <van-tabs>
           <van-tab title="7天">
             <div class="tab-top">
@@ -73,7 +73,7 @@
             </div>
           </van-tab>
         </van-tabs>
-      </div>
+      </div> -->
       <div class="wrapper">
         <div class="head">
           <div class="left">
@@ -172,6 +172,7 @@ export default {
       title: this.$route.meta.title,
       isFans: 0,
       content: "+关注",
+      userinfo:{}
     };
   },
   created(){
@@ -180,7 +181,7 @@ export default {
   methods: {
     follow(){
       this.$SERVER.updateAttention({
-        userId:this.$route.params.id,
+        userId:this.$route.params.userInfo.userId,
         fansuserId:this.$store.state.userInfo.userId
       }).then(res=>{
         this.isFans = !this.isFans
@@ -188,7 +189,19 @@ export default {
     },
     
     getBasketList() {
+      this.userinfo = this.$route.params.userinfo
+      if(this.$route.params.type=="a"){
       this.$SERVER
+        .getFootBallCanFollowOrderList({
+          id:this.$route.params.id,
+          userId:this.$store.state.userInfo.userId
+        })
+        .then(res => {
+          this.data = res.data;
+        })
+        .catch(err => {});
+      }else{
+              this.$SERVER
         .getBasketBallCanFollowOrderList({
           id:this.$route.params.id,
           userId:this.$store.state.userInfo.userId
@@ -197,11 +210,10 @@ export default {
           this.data = res.data;
         })
         .catch(err => {});
+      }
+
     },
   },
-  mounted() {
-    // console.log(this.$route)
-  }
 };
 </script>
 <style lang="less" scoped>

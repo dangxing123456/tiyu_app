@@ -31,7 +31,7 @@
               </van-dropdown-menu>
             </div>
             <div class="content">
-              <div class="con" @click="detailExpert(item.userId)" v-for="(item,index) in list" :key="index" v-if="item.canSail==1">
+              <div class="con" @click="detailExpert(item.id,value2,item.userInfor)" v-for="(item,index) in list" :key="index" v-if="item.canSail==1">
                 <div class="top">
                   <div class="left">
                     <img :src="$store.state.userInfo.avatar || user_img" />
@@ -157,7 +157,6 @@ export default {
       value2: "a",
 
       mon: 20,
-      option1: [{ text: "按实力", value: 0 }, { text: "按人气", value: 1 }],
       option2: [{ text: "竞足", value: "a" }, { text: "竞篮", value: "b" }],
       show: false,
       shiliShow: false,
@@ -253,9 +252,14 @@ export default {
         path: "/profitlist"
       });
     },
-    detailExpert(id) {
+    detailExpert(id,type,userInfor) {
       this.$router.push({
-        path: "/ExpertsSuggest/"+id
+        name: "ExpertsSuggest",
+        params:{
+          id:id,
+          type:type,
+          userinfo:userInfor
+        }
       });
     }
   },
