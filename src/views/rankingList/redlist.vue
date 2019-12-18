@@ -1,10 +1,11 @@
 <template>
-  <div class="container" id="shop">
-    <navBar :goback="true" :title="title"></navBar>
+  <div class="container">
+    <navBar></navBar>
     <div class="main">
-      <commonRanking></commonRanking>
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getList">
+        <commonRanking v-for="(item,i) in list" :key="i" :data="item" :type="1"></commonRanking>
+      </van-list>
     </div>
-  
   </div>
 </template>
 
@@ -12,28 +13,33 @@
 import navBar from "@/components/navbar/navbar.vue";
 import commonRanking from "@/components/commonRankingList/commonRanking.vue";
 export default {
-  name: "redlist",
+  name: "hitlist",
   components: {
     navBar,
     commonRanking
   },
-  props: {},
   data() {
     return {
-      title: this.$route.meta.title,
+      list: [],
+      finished: false,
+      loading: false
     };
   },
-  computed: {},
-  watch: {
-  
+  created() {
+    this.getList();
   },
-  methods: {},
-  mounted() {
-    // console.log(this.$route)
-      //  this.$refs.right.innerHTML="<h3>100%</h3><p>命中率</p>"
+  methods: {
+    getList() {
+      this.$SERVER.joinWinTop().then(res => {
+        this.loading = false;
+        this.list = res.data.list;
+        if (!res.data.hasNextPage) {
+          this.finished = true;
+        }
+      });
+    }
   }
 };
 </script>
 <style lang="less" scoped>
-
 </style>

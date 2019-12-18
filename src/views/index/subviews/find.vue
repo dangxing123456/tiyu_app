@@ -1,5 +1,5 @@
 <template>
-  <div class="container" id="shop">
+  <div class="container">
     <navBar :goback="false" title="发现"></navBar>
     <div class="main">
       <div class="head">
@@ -31,7 +31,7 @@
               </van-dropdown-menu>
             </div>
             <div class="content">
-              <div class="con" @click="detailExpert" v-for="(item,index) in list" :key="index">
+              <div class="con" @click="detailExpert(item.userId)" v-for="(item,index) in list" :key="index" v-if="item.canSail==1">
                 <div class="top">
                   <div class="left">
                     <img :src="$store.state.userInfo.avatar || user_img" />
@@ -110,7 +110,6 @@
         </van-tabs>
       </div>
     </div>
-    <popup ref="pop" v-model="currentValue"></popup>
     <van-popup v-model="shiliShow" round>
       <div class="shili">
         <h3>实力专家指数</h3>
@@ -201,7 +200,6 @@ export default {
         .then(res => {
           this.foogBallList = res.data.list;
           this.list = res.data.list;
-          console.log(this.list);
         })
         .catch(err => {});
     },
@@ -210,7 +208,6 @@ export default {
         .getBasketBallCanFollowOrderList({})
         .then(res => {
           this.basketBallList = res.data.list;
-          console.log(res);
         })
         .catch(err => {});
     },
@@ -221,7 +218,6 @@ export default {
       console.log(value);
       if (value == "b") {
         this.list = this.basketBallList;
-        console.log(this.list);
       }
     },
     showPopup(item) {
@@ -257,9 +253,9 @@ export default {
         path: "/profitlist"
       });
     },
-    detailExpert() {
+    detailExpert(id) {
       this.$router.push({
-        path: "/ExpertsSuggest"
+        path: "/ExpertsSuggest/"+id
       });
     }
   },

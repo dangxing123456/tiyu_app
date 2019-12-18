@@ -384,7 +384,7 @@ const router = new Router({
     },
     //专家战绩
     {
-      path: "/ExpertsSuggest",
+      path: "/ExpertsSuggest/:id",
       name: "ExpertsSuggest",
       component: () => import("@/views/detail/ExpertsSuggest.vue"),
       meta: {

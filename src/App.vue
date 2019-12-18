@@ -6,13 +6,7 @@
         <router-view></router-view>
       </keep-alive>
     </transition>
-    <van-popup
-      v-model="show"
-      position="top"
-      :overlay="false"
-      :lock-scroll="false"
-      :round="true"      
-    >
+    <van-popup v-model="show" position="top" :overlay="false" :lock-scroll="false" :round="true">
       <div class="message" @click.stop="closeMessage">
         <h3>{{message.title}}</h3>
         <p>{{message.content}}</p>
@@ -107,8 +101,8 @@ export default {
           that.$store.state.message = new Date().getTime();
         }
       });
-      
-    this.allEvent();
+
+      this.allEvent();
     }
     this.setVux();
   },
@@ -127,9 +121,9 @@ export default {
         }
       });
     },
-    closeMessage(){
-      this.$router.push('/message')
-      this.show = false
+    closeMessage() {
+      this.$router.push("/message");
+      this.show = false;
     },
     allEvent() {
       var that = this;
@@ -160,25 +154,11 @@ export default {
       );
     },
     setVux() {
-      if (this.$METHOD.getStore("token")) {
-        // this.$store.state.token = this.$METHOD.getStore("token");
-        // this.$SERVER.information().then(res => {
-        //   this.$store.state.userInfo = res.data;
-        //   this.$store.state.isActive = Boolean(res.data.setting);
-        //   this.push.joinGroup(
-        //     {
-        //       groupName: "department"
-        //     },
-        //     function(ret, err) {}
-        //   );
-        //   this.push.bind(
-        //     {
-        //       userName: res.data.user_nickname,
-        //       userId: res.data.use_rid
-        //     },
-        //     function(ret, err) {}
-        //   );
-        // });
+      if (this.$METHOD.getStore("token")) {        
+        this.$store.state.token = this.$METHOD.getStore("token");
+        this.$SERVER.getUserInfoByToken().then(res => {
+          this.$store.state.userInfo = res.data;
+        });
       }
     }
   }

@@ -82,13 +82,8 @@ export default {
         .then(res => {
           that.$toast.success("登录成功");
           that.$METHOD.setStore("token", res.data.token);
+          that.$store.state.userInfo = res.data;
           that.$store.state.token = res.data.token;
-          that.$store.state.userInfo.userid = res.data.userId;
-          that.$store.state.userInfo.nickname = res.data.nickname;
-          that.$store.state.userInfo.mobile = res.data.mobile;
-          that.$store.state.userInfo.sex = res.data.sex;
-          that.$store.state.userInfo.avatar = res.data.icon;
-          console.log(res.data);
           that.loginLoading = false;
           that.$router.go(-1);
         })

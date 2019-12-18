@@ -20,8 +20,9 @@
           </div>
         </div>
         <div class="right" ref="right">
-          <div class="info"  @click="change">
-           {{content}}
+          <div class="info"  @click="follow">
+           <span v-if="isFans==0">+关注</span>
+           <span v-else>已关注</span>
           </div>
         </div>
       </div>
@@ -169,23 +170,34 @@ export default {
   data() {
     return {
       title: this.$route.meta.title,
-      flag: false,
+      isFans: 0,
       content: "+关注",
     };
   },
-  computed: {},
-  watch: {},
+  created(){
+    this.getBasketList()
+  },
   methods: {
-    change() {
-      this.flag = !this.flag;
-      if (this.flag) {
-        this.content = "已关注";
-       
-      } else {
-        this.content = "+关注";
-         
-      }
-    }
+    follow(){
+      this.$SERVER.updateAttention({
+        userId:this.$route.params.id,
+        fansuserId:this.$store.state.userInfo.userId
+      }).then(res=>{
+        this.isFans = !this.isFans
+      })
+    },
+    
+    getBasketList() {
+      this.$SERVER
+        .getBasketBallCanFollowOrderList({
+          id:this.$route.params.id,
+          userId:this.$store.state.userInfo.userId
+        })
+        .then(res => {
+          this.data = res.data;
+        })
+        .catch(err => {});
+    },
   },
   mounted() {
     // console.log(this.$route)

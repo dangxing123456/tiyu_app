@@ -1,9 +1,16 @@
 <template>
-  <div class="container" id="shop">
-    <navBar :goback="true" :title=title>
+  <div class="container">
+    <navBar >
     </navBar>
     <div class="main">
-     <commonRanking></commonRanking>
+      <van-list
+  v-model="loading"
+  :finished="finished"
+  finished-text="没有更多了"
+  @load="getList"
+>
+     <commonRanking v-for="(item,i) in list" :key="i" :data="item" :type="2"></commonRanking>
+      </van-list>
     </div>
   
   </div>
@@ -18,24 +25,28 @@ export default {
     navBar,
     commonRanking
   },
-  props: {
-   
-  },
   data() {
     return {
-      title:this.$route.meta.title
+      list:[],
+      finished: false,
+      loading:false
+
     };
   },
-  computed: {
-    
+  created(){
+    this.getList()
   },
-  watch: {},
   methods: {
-
+    getList(){
+      this.$SERVER.getShootTop().then(res=>{
+        this.loading = false
+        this.list = res.data.list
+        if(!res.data.hasNextPage){
+          this.finished = true
+        }
+      })
+    }
   },
-  mounted(){
-    // console.log(this.$route)
-  }
 };
 </script>
 <style lang="less" scoped>
