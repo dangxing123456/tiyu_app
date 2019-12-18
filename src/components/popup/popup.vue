@@ -14,15 +14,15 @@
         </div>
         <div class="con">
           <div>
-            <p class="money">8.0元</p>
+            <p class="money">{{list.buyWagers*list.times*2}}元</p>
             <p class="text">自购</p>
           </div>
           <div>
-            <p class="money">2元</p>
+            <p class="money">元</p>
             <p class="text">起跟金额</p>
           </div>
           <div>
-            <p class="money">221人</p>
+            <p class="money">{{list.flowCount}}人</p>
             <p class="text">跟单人气</p>
           </div>
         </div>
