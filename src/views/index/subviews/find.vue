@@ -110,6 +110,9 @@
         </van-tabs>
       </div>
     </div>
+    <!-- 组件 -->
+    <popup ref="pop" v-model="currentValue"></popup>
+
     <van-popup v-model="shiliShow" round>
       <div class="shili">
         <h3>实力专家指数</h3>
