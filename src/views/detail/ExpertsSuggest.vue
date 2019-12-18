@@ -114,7 +114,7 @@
           <p>
             <van-icon class-prefix="icon" name="suozi" />截止可见：{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}
           </p>
-          <van-button type="danger" size="large">跟一单</van-button>
+          <van-button type="danger" size="large" @click="showPopup(item)">跟一单</van-button>
         </div>
       </div>
       <div class="info">
@@ -163,7 +163,7 @@
           </div>
         </div>
       </div>
-      <popup />
+      <popup ref="pop" v-model="currentValue"></popup>
     </div>
   </div>
 </template>
@@ -184,7 +184,8 @@ export default {
       isFans: 0,
       content: "+关注",
       userinfo:{},
-      list:[]
+      list:[],
+      currentValue: false
     };
   },
   created(){
@@ -224,6 +225,13 @@ export default {
         .catch(err => {});
       }
 
+    },
+    
+    showPopup(item) {
+      this.show = true;
+      this.currentValue = true;
+      this.$refs.pop.show = true;
+      this.$refs.pop.list = item;
     },
   },
 };
