@@ -6,12 +6,12 @@
           <img src="https://picsum.photos/640/320" />
         </van-swipe-item>
       </van-swipe>
-      <div class="notice">
+      <!-- <div class="notice">
         <van-icon class="yin" class-prefix="icon" name="yinliang" />
         <van-swipe :autoplay="3000" vertical class="notice-list" :show-indicators="false">
           <van-swipe-item v-for="(image, index) in 4" :key="index">123456789</van-swipe-item>
         </van-swipe>
-      </div>
+      </div> -->
       <van-grid :column-num="2" class="menu">
         <van-grid-item @click="detailFoot">
           <img src="../../../assets/images/index1.png" />

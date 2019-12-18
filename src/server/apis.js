@@ -119,6 +119,14 @@ class Api extends Axios {
 
   
   
+  //消费记录
+  async getUserWalletExchangeHIstory(params = {}) {
+    return await this.axios(
+      "POST",
+      "wallet/getUserWalletExchangeHIstory",
+      params
+    );
+  }
 }
 
 export default new Api();

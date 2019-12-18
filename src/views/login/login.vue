@@ -73,7 +73,7 @@ export default {
         this.$toast.fail("请填写密码");
         return;
       }
-      that.loginLoading = true;
+      // that.loginLoading = true;
       that.$SERVER
         .login({
           mobile: that.form.user_account,

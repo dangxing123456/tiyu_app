@@ -67,9 +67,13 @@ export default {
         .then(res => {
           //下单成功
           if (res.code == 200) {
-              this.$toast.success("下单成功");
-              this.$store.state.basketValue = 1;
-            for (var i = 0; i < this.$store.state.basketSelectResult.length; i++) {
+            this.$toast.success("下单成功");
+            this.$store.state.basketValue = 1;
+            for (
+              var i = 0;
+              i < this.$store.state.basketSelectResult.length;
+              i++
+            ) {
               this.$store.state.basketSelectResult[i] = [];
             }
           }
