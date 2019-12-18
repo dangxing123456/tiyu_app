@@ -42,16 +42,63 @@
                     <span v-show="i==2">负</span>
                     <span v-show="i==3">胜</span>
                     <span v-show="i==4">平</span>
-                    <span v-show="i==5">胜</span>
+                    <span v-show="i==5">负</span>
                     <span>{{item}}</span>
                   </li>
                 </ul>
               </div>
               <div class="bot" @click="$router.push('/allplay/'+index)">
                 <p :class="show1(index).length>0  ? 'aa' : '' ">未选择更多玩法</p>
-                <ul>
-                  <li v-for="(item1,i) in show1(index)" :key="i" class="bgColor">
-                    <p></p>
+                <ul v-for="(item1,i) in show1(index)" :key="i">
+                  <li v-if="item1" class="bgColor">
+                    <span v-show="i==6">0球</span>
+                    <span v-show="i==7">1球</span>
+                    <span v-show="i==8">2球</span>
+                    <span v-show="i==9">3球</span>
+                    <span v-show="i==10">4球</span>
+                    <span v-show="i==11">5球</span>
+                    <span v-show="i==12">6球</span>
+                    <span v-show="i==13">7+球</span>
+                    <span v-show="i==14">胜胜</span>
+                    <span v-show="i==15">胜平</span>
+                    <span v-show="i==16">胜负</span>
+                    <span v-show="i==17">平胜</span>
+                    <span v-show="i==18">平平</span>
+                    <span v-show="i==19">平负</span>
+                    <span v-show="i==20">负胜</span>
+                    <span v-show="i==21">负平</span>
+                    <span v-show="i==22">负负</span>
+                    <span v-show="i==23">1:0</span>
+                    <span v-show="i==24">2:0</span>
+                    <span v-show="i==25">2:1</span>
+                    <span v-show="i==26">3:0</span>
+                    <span v-show="i==27">3:1</span>
+                    <span v-show="i==28">3:2</span>
+                    <span v-show="i==29">4:0</span>
+                    <span v-show="i==30">4:1</span>
+                    <span v-show="i==31">4:2</span>
+                    <span v-show="i==32">5:0</span>
+                    <span v-show="i==33">5:1</span>
+                    <span v-show="i==34">5:2</span>
+                    <span v-show="i==35">胜其他</span>
+                    <span v-show="i==36">0:0</span>
+                    <span v-show="i==37">1:1</span>
+                    <span v-show="i==38">2:2</span>
+                    <span v-show="i==39">3:3</span>
+                    <span v-show="i==40">平其他</span>
+                    <span v-show="i==41">0:1</span>
+                    <span v-show="i==42">0:2</span>
+                    <span v-show="i==43">1:2</span>
+                    <span v-show="i==44">0:3</span>
+                    <span v-show="i==45">1:3</span>
+                    <span v-show="i==46">2:3</span>
+                    <span v-show="i==47">0:4</span>
+                    <span v-show="i==48">1:4</span>
+                    <span v-show="i==49">2:4</span>
+                    <span v-show="i==50">0:5</span>
+                    <span v-show="i==51">1:5</span>
+                    <span v-show="i==52">2:5</span>
+                    <span v-show="i==53">负其他</span>
                     {{item1}}
                   </li>
                 </ul>
@@ -201,8 +248,21 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    other(item) {
+      var f = false;
+      for (var i = 0; i < item.length; i++) {
+        if (item[i] != undefined) {
+          f = true;
+        }
+        return f;
+      }
+    },
     confirmOrder() {
-      if (this.$store.state.sumcount >= 2) {
+      if (this.f.length == 0) {
+        this.$toast({
+          message: "请选择串法"
+        });
+      } else if (this.$store.state.sumcount >= 2 && this.f.length > 0) {
         this.$router.push("/confirmOrder");
       } else {
         this.$toast({
@@ -210,7 +270,7 @@ export default {
         });
       }
 
-      if (this.$store.state.sumcount == 1) {
+      if (this.$store.state.sumcount == 1 && this.f.length > 0) {
         var i1 = 0;
         var arr = JSON.parse(JSON.stringify(this.$store.state.selectResult));
         for (var i = 0; i < arr.length; i++) {
@@ -307,9 +367,10 @@ export default {
       var arr = [];
       this.$store.state.selectValue[index].forEach((e, i) => {
         if (i >= 6 && e != "") {
-          arr.push(e);
+          arr[i] = e;
         }
       });
+
       return arr;
     },
     addColor(i, i2) {
@@ -831,17 +892,18 @@ export default {
             background-color: #fff;
             display: inline-block;
             height: 30px;
-            width: 1.4rem;
+            width: 80px;
             border: 0.02rem solid #eeeeee;
             float: left;
             text-align: center;
             line-height: 30px;
             color: #4b4949;
+            font-size: 14px;
           }
         }
         .bot {
           display: inline-block;
-          width: 214px;
+          width: 246px;
 
           border: 1px solid #eeeeee;
           text-align: center;
@@ -849,7 +911,8 @@ export default {
           background-color: #fff;
           ul {
             li {
-              width: 69px;
+              width: 80px;
+               font-size: 14px;
             }
           }
         }

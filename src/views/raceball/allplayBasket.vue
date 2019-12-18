@@ -89,7 +89,7 @@
       </div>
     </div>
     <div class="btn">
-      <van-button type="default" size="large">取消</van-button>
+      <van-button type="default" size="large" @click="$router.go(-1)">取消</van-button>
       <van-button type="danger" size="large" @click="$router.go(-1)">确定</van-button>
     </div>
   </div>

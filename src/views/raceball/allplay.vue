@@ -180,7 +180,7 @@
       </div>
     </div>
     <div class="btn">
-      <van-button type="default" size="large">取消</van-button>
+      <van-button type="default" size="large" @click="cancel">取消</van-button>
       <van-button type="danger" size="large" @click="$router.go(-1)">确定</van-button>
     </div>
   </div>
@@ -204,7 +204,12 @@ export default {
   },
   watch: {},
   methods: {
+    cancel() {
+    
+      this.$router.go(-1);
+    },
     push(i, val) {
+      console.log(this.$store.state.selectResult[this.$route.params.i]);
       if (
         this.$store.state.selectResult[this.$route.params.i][i] == undefined ||
         this.$store.state.selectResult[this.$route.params.i][i] == ""

@@ -73,24 +73,28 @@ export default {
         this.$toast.fail("请填写密码");
         return;
       }
-      that.loginLoading = true;
+      // that.loginLoading = true;
       that.$SERVER
         .login({
           mobile: that.form.user_account,
           password: that.form.user_pwd
         })
         .then(res => {
-          that.$toast.success("登录成功");
-          that.$METHOD.setStore("token", res.data.token);
-          that.$store.state.token = res.data.token;
-          that.$store.state.userInfo.userid = res.data.userId;
-          that.$store.state.userInfo.nickname = res.data.nickname;
-          that.$store.state.userInfo.mobile = res.data.mobile;
-          that.$store.state.userInfo.sex = res.data.sex;
-          that.$store.state.userInfo.avatar = res.data.icon;
-          console.log(res.data);
-          that.loginLoading = false;
-          that.$router.go(-1);
+          if (res.code == 200) {
+            that.$toast.success("登录成功");
+            that.$METHOD.setStore("token", res.data.token);
+            that.$store.state.token = res.data.token;
+            that.$store.state.userInfo.userid = res.data.userId;
+            that.$store.state.userInfo.nickname = res.data.nickname;
+            that.$store.state.userInfo.mobile = res.data.mobile;
+            that.$store.state.userInfo.sex = res.data.sex;
+            that.$store.state.userInfo.avatar = res.data.icon;
+            console.log(res.data);
+            that.loginLoading = false;
+            that.$router.go(-1);
+          } else {
+            that.loginLoading = false;
+          }
         })
         .catch(res => {
           that.loginLoading = false;

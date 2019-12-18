@@ -4,12 +4,12 @@
     <div class="main">
       <div class="head">
         <div @click="detail">
-          <p>
+          <div>
             <van-icon class-prefix="icon" name="jiangbei" color="#f24a44" font-size="40px" />
-          </p>
+          </div>
           <span>连红榜</span>
         </div>
-        <div  @click="detail1">
+        <div @click="detail1">
           <p>
             <van-icon class-prefix="icon" name="bangdan" color="#f24a44" font-size="40px" />
           </p>
@@ -374,6 +374,9 @@ export default {
     border-bottom: 1px solid #eeeeee;
     background-color: white;
     padding: 7px 25px;
+    /deep/ .icon {
+      font-size: 35px;
+    }
     .deo {
       p {
         i {
@@ -436,7 +439,7 @@ export default {
           width: 50px;
           display: inline;
           margin: 0 auto;
-          padding-bottom: 15px;
+         
           border-radius: 50%;
         }
       }
