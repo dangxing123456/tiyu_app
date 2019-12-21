@@ -114,11 +114,20 @@ class Api extends Axios {
   async getUserInfoByToken(params = {}) {
     return await this.axios("POST", "user/getUserInfoByToken", params);
   }
-  
-  
 
-  
-  
+  //足球比分
+  async getFootBallCurrentScore(params = {}) {
+    return await this.axios("POST", "football/getFootBallCurrentScore", params);
+  }
+
+  //篮球比分
+  async getBasketBallCurrentScore(params = {}) {
+    return await this.axios(
+      "POST",
+      "basketball/getBasketBallCurrentScore",
+      params
+    );
+  }
   //消费记录
   async getUserWalletExchangeHIstory(params = {}) {
     return await this.axios(
@@ -126,6 +135,11 @@ class Api extends Axios {
       "wallet/getUserWalletExchangeHIstory",
       params
     );
+  }
+
+  //轮播图
+  async getSlideShowImags(params = {}) {
+    return await this.axios("POST", "query/getSlideShowImags", params);
   }
 }
 

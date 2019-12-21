@@ -30,11 +30,18 @@
                 <van-dropdown-item v-model="value2" :options="option2" @change="changeValue" />
               </van-dropdown-menu>
             </div>
+
             <div class="content">
-              <div class="con" @click="detailExpert(item.id,value2,item.userInfor)" v-for="(item,index) in list" :key="index" v-if="item.canSail==1">
+              <div
+                class="con"
+                @click="detailExpert(item.id,value2,item.userInfor)"
+                v-for="(item,index) in list"
+                :key="index"
+                v-if="item.canSail==1"
+              >
                 <div class="top">
                   <div class="left">
-                    <img :src="$store.state.userInfo.avatar || user_img" />
+                    <img v-if="item.userInfor" :src="item.userInfor.icon || user_img" />
                     <h3>{{item.userInfor.nickname}}</h3>
                   </div>
                   <div class="right">
@@ -48,7 +55,7 @@
                   <div>
                     <p>
                       类型
-                      <van-icon @click.stop="shiliPopup" name="question-o" />
+                      <!-- <van-icon @click.stop="shiliPopup" name="question-o" /> -->
                     </p>
                     <p class="money">{{item.type==1?'竞彩足球':"竞彩篮球"}}</p>
                   </div>
@@ -67,12 +74,12 @@
               </div>
             </div>
           </van-tab>
-          <van-tab title="关注专家">
+          <!-- <van-tab title="关注专家">
             <div class="content">
               <div @click="detailExpert">
                 <div class="top">
                   <div class="left">
-                    <!-- <img src="../../assets/images/default.png" alt /> -->
+                    <img src="../../assets/images/default.png" alt />
                     <h3>追命杀手</h3>
                   </div>
                   <div class="right">
@@ -106,14 +113,14 @@
                 </div>
               </div>
             </div>
-          </van-tab>
+          </van-tab>-->
         </van-tabs>
       </div>
     </div>
     <!-- 组件 -->
     <popup ref="pop" v-model="currentValue"></popup>
 
-    <van-popup v-model="shiliShow" round>
+    <!-- <van-popup v-model="shiliShow" round>
       <div class="shili">
         <h3>实力专家指数</h3>
         <div class="wrap">
@@ -142,7 +149,7 @@
           <span>确认</span>
         </div>
       </div>
-    </van-popup>
+    </van-popup>-->
   </div>
 </template>
 
@@ -198,7 +205,10 @@ export default {
     //获取足球球跟单列表
     getList() {
       this.$SERVER
-        .getFootBallCanFollowOrderList({})
+        .getFootBallCanFollowOrderList({
+          pagenum: 1,
+          pagesize: 1000
+        })
         .then(res => {
           this.foogBallList = res.data.list;
           this.list = res.data.list;
@@ -207,7 +217,10 @@ export default {
     },
     getBasketList() {
       this.$SERVER
-        .getBasketBallCanFollowOrderList({})
+        .getBasketBallCanFollowOrderList({
+          pagenum: 1,
+          pagesize: 1000
+        })
         .then(res => {
           this.basketBallList = res.data.list;
         })
@@ -255,13 +268,13 @@ export default {
         path: "/profitlist"
       });
     },
-    detailExpert(id,type,userInfor) {
+    detailExpert(id, type, userInfor) {
       this.$router.push({
         name: "ExpertsSuggest",
-        params:{
-          id:id,
-          type:type,
-          userinfo:userInfor
+        params: {
+          id: id,
+          type: type,
+          userinfo: userInfor
         }
       });
     }
@@ -440,9 +453,11 @@ export default {
         }
         img {
           width: 50px;
+          height: 50px;
           display: inline;
           margin: 0 auto;
-         
+          object-fit: cover;
+
           border-radius: 50%;
         }
       }
@@ -453,7 +468,7 @@ export default {
         padding-right: 8px;
         p {
           font-size: 14px;
-          height: 80px;
+          height: 70px;
           color: rgb(50, 50, 50);
           width: 290px;
         }

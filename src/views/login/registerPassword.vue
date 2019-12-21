@@ -82,7 +82,7 @@ export default {
       }
 
       this.regLoading = true;
-   
+
       this.$SERVER
         .register({
           mobile: this.$store.state.register.user_account,
@@ -92,10 +92,10 @@ export default {
         })
         .then(res => {
           console.log(res);
-          that.$router.push("/");
+          that.$router.push("/login/" + this.$store.state.userInfo.nickname);
           that.regLoading = false;
           that.$store.state.token = res.data.userinfo.token;
-          that.$toast.success(res.msg);
+          that.$toast.success("注册成功");
         })
         .catch(err => {
           that.regLoading = false;

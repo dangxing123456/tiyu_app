@@ -68,7 +68,7 @@
       <!-- 底部按钮 -->
       <div class="bot-btn">
         <div class="text">
-          <p v-if="$store.state.sumcount==0">至少选择1场比赛</p>
+          <p v-if="$store.state.sumcount==0">至少选择2场比赛</p>
           <p v-if="$store.state.sumcount>=1">已选择{{$store.state.sumcount}}场比赛</p>
           <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
         </div>

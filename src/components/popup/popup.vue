@@ -5,11 +5,11 @@
         <div class="head">
           <div>
             <span class="peo">发单人：{{list.userInfor.nickname}}</span>
-            <span class="com">红单一生一世</span>
+            <!-- <span class="com">红单一生一世</span> -->
           </div>
           <div>
-            <span class="peo">投注方式</span>
-            <span class="com">2串1</span>
+            <!-- <span class="peo">投注方式</span>
+            <span class="com">2串1</span>-->
           </div>
         </div>
         <div class="con">
@@ -18,7 +18,7 @@
             <p class="text">自购</p>
           </div>
           <div>
-            <p class="money">元</p>
+            <p class="money">{{list.buyWagers*2}}元</p>
             <p class="text">起跟金额</p>
           </div>
           <div>
@@ -30,7 +30,7 @@
           <div>
             <p class="mon">
               实付金额
-              <span>{{list.times*bei*list.buyWagers*2}}</span>
+              <span>{{list.buyWagers*list.times*2*bei}}</span>
             </p>
             <p class="yong">
               佣金比例：
@@ -59,7 +59,9 @@ export default {
   props: {
     //是否显示
   },
-  created() {},
+  created() {
+    console.log(this.list);
+  },
   watch: {},
   data() {
     return {
@@ -85,10 +87,9 @@ export default {
     },
     postFootBallFollowOrder() {
       if (this.list.type == 1) {
-        console.log(this.$store.state.userInfo.userid);
         this.$SERVER
           .footBallFollowOrder({
-            userId: this.$store.state.userInfo.userid,
+            userId: this.$store.state.userInfo.userId,
             id: this.list.id,
             times: this.bei * this.list.times
           })
@@ -104,7 +105,7 @@ export default {
       if (this.list.type == 2) {
         this.$SERVER
           .basketBallFollowOrder({
-            userId: this.$store.state.userInfo.userid,
+            userId: this.$store.state.userInfo.userId,
             id: this.list.id,
             times: this.bei * this.list.times
           })
@@ -125,11 +126,9 @@ export default {
 /*遮罩层*/
 .popup {
   .head {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     .peo {
-      font-size: 12px;
+      font-size: 14px;
+      margin-left: 10px;
     }
     .com {
       font-size: 14px;

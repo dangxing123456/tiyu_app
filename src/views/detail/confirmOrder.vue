@@ -57,7 +57,7 @@ export default {
       this.$SERVER
         .footBallBookOrder({
           wagers: this.$store.state.wagers,
-          userId: this.$store.state.userInfo.userid,
+          userId: this.$store.state.userInfo.userId,
           times: this.$store.state.value,
           matchIds: this.$store.state.footId,
           bets: this.$store.state.betArr,
@@ -92,9 +92,9 @@ export default {
       }
     }
 
-    console.log(this.$store.state.betArr);
-    console.log(this.$store.state.footId);
-    console.log(this.$store.state.value);
+    // console.log(this.$store.state.betArr);
+    // console.log(this.$store.state.footId);
+    // console.log(this.$store.state.value);
   }
 };
 </script>

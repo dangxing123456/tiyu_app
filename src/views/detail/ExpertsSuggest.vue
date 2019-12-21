@@ -2,7 +2,7 @@
   <div class="container" id="shop">
     <navBar :goback="true" :title="title">
       <div class="right" slot="right">
-        <van-icon class-prefix="icon" name="share" />
+        <!-- <van-icon class-prefix="icon" name="share" /> -->
       </div>
     </navBar>
     <div class="main">
@@ -20,9 +20,9 @@
           </div>
         </div>
         <div class="right" ref="right">
-          <div class="info"  @click="follow">
-           <span v-if="isFans==0">+关注</span>
-           <span v-else>已关注</span>
+          <div class="info" @click="follow">
+            <span v-if="isFans==0">+关注</span>
+            <span v-else>已关注</span>
           </div>
         </div>
       </div>
@@ -73,8 +73,8 @@
             </div>
           </van-tab>
         </van-tabs>
-      </div> -->
-      <div class="wrapper"  v-for="(item,i) in list" :key="i" v-if="item.canSail==1">
+      </div>-->
+      <div class="wrapper" v-for="(item,i) in list" :key="i" v-if="item.canSail==1">
         <div class="head">
           <div class="left">
             <i></i>
@@ -112,7 +112,8 @@
         </div>
         <div class="wrapper-bot">
           <p>
-            <van-icon class-prefix="icon" name="suozi" />截止可见：{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}
+            <van-icon class-prefix="icon" name="suozi" />
+            截止可见：{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}
           </p>
           <van-button type="danger" size="large" @click="showPopup(item)">跟一单</van-button>
         </div>
@@ -122,11 +123,11 @@
           <i></i>
           <span>近30日方案</span>
         </div>
-        <div class="info-list"  v-for="(item,i) in list" :key="i" v-if="item.canSail==0">
+        <div class="info-list" v-for="(item,i) in list" :key="i" v-if="item.canSail==0">
           <div class="top">
             <div class="left">
-            <span class="zu" v-if="$route.params.type=='a'">足</span>
-            <span class="zu" v-else>篮</span>
+              <span class="zu" v-if="$route.params.type=='a'">足</span>
+              <span class="zu" v-else>篮</span>
               <span>2串1</span>
               <span>最高SP2.76</span>
             </div>
@@ -151,7 +152,13 @@
             </div>
             <i class="ii"></i>
             <div>
-              <van-icon class-prefix="icon" name="yizhongjiang" font-size="50px" color="#f24a44" v-if="item.winmoney" />
+              <van-icon
+                class-prefix="icon"
+                name="yizhongjiang"
+                font-size="50px"
+                color="#f24a44"
+                v-if="item.winmoney"
+              />
               <van-icon
                 v-else
                 class-prefix="icon"
@@ -183,57 +190,60 @@ export default {
       title: this.$route.meta.title,
       isFans: 0,
       content: "+关注",
-      userinfo:{},
-      list:[],
+      userinfo: {},
+      list: [],
       currentValue: false
     };
   },
-  created(){
-    this.getBasketList()
+  created() {
+    this.getBasketList();
   },
   methods: {
-    follow(){
-      this.$SERVER.updateAttention({
-        userId:this.$route.params.userInfo.userId,
-        fansuserId:this.$store.state.userInfo.userId
-      }).then(res=>{
-        this.isFans = !this.isFans
-      })
-    },
-    
-    getBasketList() {
-      this.userinfo = this.$route.params.userinfo
-      if(this.$route.params.type=="a"){
+    follow() {
+      console.log(this.$route);
       this.$SERVER
-        .getFootBallCanFollowOrderList({
-          id:this.$route.params.id,
-          userId:this.$store.state.userInfo.userId
+        .updateAttention({
+          userId: this.$route.params.userinfo.userId,
+          fansuserId: this.$store.state.userInfo.userId
         })
         .then(res => {
-          this.list = res.data.list;
-        })
-        .catch(err => {});
-      }else{
-              this.$SERVER
-        .getBasketBallCanFollowOrderList({
-          id:this.$route.params.id,
-          userId:this.$store.state.userInfo.userId
-        })
-        .then(res => {
-          this.list = res.data.list;
-        })
-        .catch(err => {});
-      }
-
+          this.isFans = !this.isFans;
+        });
     },
-    
+
+    getBasketList() {
+      this.userinfo = this.$route.params.userinfo;
+     
+      if (this.$route.params.type == "a") {
+        this.$SERVER
+          .getFootBallCanFollowOrderList({
+            id: this.$route.params.id,
+            userId: this.$store.state.userInfo.userId
+          })
+          .then(res => {
+            this.list = res.data.list;
+          })
+          .catch(err => {});
+      } else {
+        this.$SERVER
+          .getBasketBallCanFollowOrderList({
+            id: this.$route.params.id,
+            userId: this.$store.state.userInfo.userId
+          })
+          .then(res => {
+            this.list = res.data.list;
+          })
+          .catch(err => {});
+      }
+    },
+
     showPopup(item) {
       this.show = true;
       this.currentValue = true;
       this.$refs.pop.show = true;
       this.$refs.pop.list = item;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -334,6 +344,9 @@ export default {
     font-size: 14px;
     img {
       width: 55px;
+      height: 55px;
+      object-fit: cover;
+      border-radius: 50%;
       margin-right: 15px;
     }
     p {

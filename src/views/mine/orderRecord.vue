@@ -3,7 +3,7 @@
     <navBar />
     <div class="main">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-        <van-tabs class="tab">
+        <van-tabs class="tab" sticky>
           <van-tab title="足球">
             <div class="content" v-for="(item,index) in list" :key="index">
               <div class="left">
@@ -22,8 +22,8 @@
                   size="45px"
                 />
                 <div>
-                  <p>金额: {{item.times*item.buyWagers}}元</p>
-                  <p class="time">{{item.endTime | formatDate}}</p>
+                  <p>金额: {{item.times*item.buyWagers*2}}元</p>
+                  <p class="time">{{item.bookTime | formatDate}}</p>
                 </div>
               </div>
               <div class="right">
@@ -31,8 +31,6 @@
                   <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
                   <p class="type">已消费</p>
                 </div>
-
-                <van-icon name="arrow" size="30px" color="#ccc" />
               </div>
             </div>
           </van-tab>
@@ -54,8 +52,8 @@
                   size="45px"
                 />
                 <div>
-                  <p>金额: {{item.times*item.buyWagers}}元</p>
-                  <p class="time">{{item.endTime | formatDate}}</p>
+                  <p>金额: {{item.times*item.buyWagers*2}}元</p>
+                  <p class="time">{{item.bookTime | formatDate}}</p>
                 </div>
               </div>
               <div class="right">
@@ -63,8 +61,6 @@
                   <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
                   <p class="type">已消费</p>
                 </div>
-
-                <van-icon name="arrow" size="30px" color="#ccc" />
               </div>
             </div>
           </van-tab>
@@ -105,7 +101,7 @@ export default {
     getList() {
       this.$SERVER
         .getUserFootBallOrders({
-          userId: this.$store.state.userInfo.userid,
+          userId: this.$store.state.userInfo.userId,
           pagenum: 1,
           pagesize: 999
         })
@@ -120,7 +116,7 @@ export default {
     getBasketList() {
       this.$SERVER
         .getUserBasketBallOrder({
-          userId: this.$store.state.userInfo.userid,
+          userId: this.$store.state.userInfo.userId,
           pagenum: 1,
           pagesize: 999
         })

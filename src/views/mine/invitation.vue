@@ -2,72 +2,79 @@
   <div class="container">
     <navBar />
     <div class="main">
-      <van-tabs class="tab" @click="onClick">
-        <van-tab title="足球">
-          <div class="content" v-for="(item,index) in list" :key="index">
-            <div class="left">
-              <van-icon
-                v-if="item.type==1"
-                class-prefix="icon"
-                name="football"
-                color="green"
-                size="45px"
-              />
-              <van-icon
-                v-if="item.type==2"
-                class-prefix="icon"
-                name="lanqiu"
-                color="blue"
-                size="45px"
-              />
-              <div>
-                <p>金额: {{item.times*item.buyWagers}}元</p>
-                <p class="time">{{item.endTime | formatDate}}</p>
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <van-tabs class="tab">
+          <van-tab title="足球">
+            <div class="content" v-for="(item,index) in list" :key="index" v-if="item.finishTime">
+              <div class="left">
+                <van-icon
+                  v-if="item.type==1"
+                  class-prefix="icon"
+                  name="football"
+                  color="green"
+                  size="45px"
+                />
+                <van-icon
+                  v-if="item.type==2"
+                  class-prefix="icon"
+                  name="lanqiu"
+                  color="blue"
+                  size="45px"
+                />
+                <div>
+                  <p>金额: {{item.times*item.buyWagers*2}}元</p>
+                  <p class="time">{{item.bookTime | formatDate}}</p>
+                </div>
               </div>
-            </div>
-            <div class="right">
-              <div>
-                <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
-                <p class="type">已消费</p>
-              </div>
+              <div class="right">
+                <div>
+                  <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+                  <p class="type">已消费</p>
+                </div>
 
-              <van-icon name="arrow" size="30px" color="#ccc" />
-            </div>
-          </div>
-        </van-tab>
-        <van-tab title="篮球">
-          <div class="content" v-for="(item,index) in basketlist" :key="index">
-            <div class="left">
-              <van-icon
-                v-if="item.type==1"
-                class-prefix="icon"
-                name="football"
-                color="green"
-                size="45px"
-              />
-              <van-icon
-                v-if="item.type==2"
-                class-prefix="icon"
-                name="lanqiu"
-                color="blue"
-                size="45px"
-              />
-              <div>
-                <p>金额: {{item.times*item.buyWagers}}元</p>
-                <p class="time">{{item.endTime | formatDate}}</p>
+                <van-icon name="arrow" size="30px" color="#ccc" />
               </div>
             </div>
-            <div class="right">
-              <div>
-                <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
-                <p class="type">已消费</p>
+          </van-tab>
+          <van-tab title="篮球">
+            <div
+              class="content"
+              v-for="(item,index) in basketlist"
+              :key="index"
+              v-if="item.finishTime"
+            >
+              <div class="left">
+                <van-icon
+                  v-if="item.type==1"
+                  class-prefix="icon"
+                  name="football"
+                  color="green"
+                  size="45px"
+                />
+                <van-icon
+                  v-if="item.type==2"
+                  class-prefix="icon"
+                  name="lanqiu"
+                  color="blue"
+                  size="45px"
+                />
+                <div>
+                  <p>金额: {{item.times*item.buyWagers*2}}元</p>
+                  <p class="time">{{item.bookTime | formatDate}}</p>
+                </div>
               </div>
+              <div class="right">
+                <div>
+                  <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+                  <p class="type">已消费</p>
+                </div>
 
-              <van-icon name="arrow" size="30px" color="#ccc" />
+                <van-icon name="arrow" size="30px" color="#ccc" />
+              </div>
             </div>
-          </div>
-        </van-tab>
-      </van-tabs>
+          </van-tab>
+        </van-tabs>
+      </van-pull-refresh>
     </div>
   </div>
 </template>
@@ -82,27 +89,41 @@ export default {
   data() {
     return {
       list: [],
-      basketlist: []
+      basketlist: [],
+      isLoading: false, //下拉刷新
+      pageIndex: 1, //页码
+      loading: false,
+      finished: false,
+      pageIndex1: 1
     };
   },
   methods: {
+    onRefresh() {
+      // 下拉调用此函数
+      setTimeout(() => {
+        this.$toast("刷新成功"); //弹出
+        this.getList();
+        this.getBasketList();
+        this.isLoading = false;
+      }, 500);
+    },
     getList() {
       this.$SERVER
         .getUserFootBallOrders({
-          userId: this.$store.state.userInfo.userid,
-          pagenum: 1,
-          pagesize: 999
+          userId: this.$store.state.userInfo.userId,
+          pagenum: this.pageIndex,
+          pagesize: 9999
         })
         .then(res => {
           res.data.list.forEach(e => {
             e.type = 1;
           });
-
-          for (var i = 0; i < res.data.list.length; i++) {
-            if (res.data.list[i].finishTime) {
-              this.list.push(res.data.list[i]);
-            }
-          }
+          this.list = res.data.list;
+          // for (var i = 0; i < res.data.list.length; i++) {
+          //   if (res.data.list[i].finishTime) {
+          //    .push(res.data.list[i]);
+          //   }
+          // }
           // this.list = res.data.list;
           this.list.type = 1;
         });
@@ -111,18 +132,15 @@ export default {
       this.$SERVER
         .getUserBasketBallOrder({
           userId: this.$store.state.userInfo.userid,
-          pagenum: 1,
-          pagesize: 999
+          pagenum: this.pageIndex1,
+          pagesize: 9999
         })
         .then(res => {
           res.data.list.forEach(e => {
             e.type = 2;
           });
-          for (var i = 0; i < res.data.list.length; i++) {
-            if (res.data.list[i].finishTime) {
-              this.basketlist.push(res.data.list[i]);
-            }
-          }
+          this.basketlist = res.data.list;
+
           // this.list.sort(function(a, b) {
           //   return b.bookTime - a.bookTime; //时间反序
           // });

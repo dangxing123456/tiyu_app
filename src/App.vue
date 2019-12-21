@@ -154,10 +154,11 @@ export default {
       );
     },
     setVux() {
-      if (this.$METHOD.getStore("token")) {        
+      if (this.$METHOD.getStore("token")) {
         this.$store.state.token = this.$METHOD.getStore("token");
         this.$SERVER.getUserInfoByToken().then(res => {
           this.$store.state.userInfo = res.data;
+          console.log(res.data);
         });
       }
     }
