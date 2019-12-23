@@ -4,7 +4,7 @@
       <div title="即时" class="instant">
         <p class="title" v-if="type==1">即时赛事{{count}}场</p>
         <p class="title" v-if="type==2">已完成开赛{{count}}场</p>
-        <div class="con" v-for="(item,index) in list" :key="index">
+        <div class="con" v-for="(item,index) in list" :key="index" @click="detail(item)">
           <div class="head">
             <div class="left">
               <span class="nba">{{item.lcn}}</span>
@@ -70,6 +70,24 @@ export default {
     show() {
       this.$router.push({
         path: "/matchFenxi"
+      });
+    },
+    detail(item) {
+      this.$router.push({
+        name: "fenxinBasket",
+        params: {
+          data: {
+            id: item.mId,
+            acn: item.acn,
+            hcn: item.hcn,
+            playStatus: item.playStatus,
+            bdate: item.bdate,
+            btime: item.btime,
+            acore: item.acore,
+            hcore: item.hcore,
+            type: this.type
+          }
+        }
       });
     }
   }

@@ -4,7 +4,7 @@
       <div class="popup">
         <div class="head">
           <div>
-            <span class="peo">发单人：{{list.userInfor.nickname}}</span>
+            <span class="peo" v-if="list.userInfor">发单人：{{list.userInfor.nickname}}</span>
             <!-- <span class="com">红单一生一世</span> -->
           </div>
           <div>

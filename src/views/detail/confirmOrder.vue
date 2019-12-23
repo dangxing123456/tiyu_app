@@ -54,6 +54,9 @@ export default {
   watch: {},
   methods: {
     confirmOrder() {
+      if (this.checked == false) {
+        this.bei = "";
+      }
       this.$SERVER
         .footBallBookOrder({
           wagers: this.$store.state.wagers,

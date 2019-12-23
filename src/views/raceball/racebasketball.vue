@@ -6,7 +6,7 @@
         <span>
           <img src="../../assets/images/shuaxin.png" alt />
         </span>
-      </div> -->
+      </div>-->
       <!-- <van-dropdown-menu class="menu" slot="title">
         <van-dropdown-item v-model="value1" :options="option1" />
       </van-dropdown-menu>-->
@@ -253,11 +253,12 @@ export default {
       })
       .then(res => {
         if (res.code == 200) {
+          var arr = [];
           for (var i = 0; i < res.data.list.length; i++) {
             this.$store.state.basketSelectResult.push([]);
             this.$store.state.basketSelectValue.push([]);
           }
-          res.data.list.forEach(e => {
+          res.data.list.forEach((e, i) => {
             var a;
             var b;
 
@@ -274,7 +275,7 @@ export default {
                   e.basketBallBet.odds_list.mnl.length - 1
                 ].h;
             }
-            this.$store.state.basketResult.push({
+            arr[i] = {
               id: e.id,
               date: e.date,
               num: e.num,
@@ -343,8 +344,9 @@ export default {
                   e.basketBallBet.odds_list.wnm.length - 1
                 ].w6
               ]
-            });
+            };
           });
+          this.$store.state.basketResult = arr;
         }
       });
 

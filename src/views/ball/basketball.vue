@@ -2,7 +2,7 @@
   <div class="container" id="shop">
     <div class="main">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-        <van-tabs>
+        <van-tabs sticky :offset-top="85">
           <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getList">
             <van-tab title="即时" class="instant">
               <commonBasketBall :list="list1" :type="1" :count="count1"></commonBasketBall>

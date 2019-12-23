@@ -6,7 +6,7 @@
         <span>
           <img src="../../assets/images/shuaxin.png" alt />
         </span>
-      </div> -->
+      </div>-->
       <!-- <van-dropdown-menu class="menu" slot="title">
         <van-dropdown-item v-model="value1" :options="option1" />
       </van-dropdown-menu>-->
@@ -158,7 +158,13 @@ export default {
             i1 = i;
           }
         }
-        if (this.$store.state.result[i1].single == 1) {
+        if (
+          this.$store.state.result[i1].single == 1 ||
+          this.$store.state.result[i1].single1 == 1 ||
+          this.$store.state.result[i1].single2 == 1 ||
+          this.$store.state.result[i1].single3 == 1 ||
+          this.$store.state.result[i1].single4 == 1
+        ) {
           this.$router.push("/confirmPlan");
           this.$toast({
             message: "进入单关模式"
@@ -243,8 +249,9 @@ export default {
 
       this.$store.state.sumcount = arr.length;
     },
-    init() {
+    getList() {
       var that = this;
+
       that.$SERVER
         .getFootBall({
           pagenum: 1,
@@ -256,11 +263,13 @@ export default {
               this.$store.state.selectResult.push([]);
               this.$store.state.selectValue.push([]);
             }
-            res.data.list.forEach(e => {
+            var arr = [];
+            res.data.list.forEach((e, i) => {
               var a;
               var b;
               var c;
               var f;
+              var f1, f2, f3, f4;
               if (!e.footBallBet.odds_list.had) {
                 a = "";
                 b = "";
@@ -285,8 +294,27 @@ export default {
               } else {
                 f = e.footBallBet.odds_list.had.single;
               }
-
-              this.$store.state.result.push({
+              if (!e.footBallBet.odds_list.hhad) {
+                f1 = 0;
+              } else {
+                f1 = e.footBallBet.odds_list.hhad.single;
+              }
+              if (!e.footBallBet.odds_list.ttg) {
+                f2 = 0;
+              } else {
+                f2 = e.footBallBet.odds_list.ttg.single;
+              }
+              if (!e.footBallBet.odds_list.hafu) {
+                f3 = 0;
+              } else {
+                f3 = e.footBallBet.odds_list.hafu.single;
+              }
+              if (!e.footBallBet.odds_list.crs) {
+                f4 = 0;
+              } else {
+                f4 = e.footBallBet.odds_list.crs.single;
+              }
+              arr[i] = {
                 id: e.id,
                 date: e.date,
                 num: e.num,
@@ -296,6 +324,10 @@ export default {
                 acnAbbr: e.acnAbbr,
                 goalline: e.footBallBet.odds_list.hhad.goalline,
                 single: f,
+                single1: f1,
+                single2: f2,
+                single3: f3,
+                single4: f4,
                 footBallBet: [
                   a,
                   b,
@@ -454,14 +486,17 @@ export default {
                     e.footBallBet.odds_list.crs.odds.length - 1
                   ].a1
                 ]
-              });
+              };
             });
+            this.$store.state.result = arr;
+            console.log(this.$store.state.result);
           }
         });
     }
   },
   created() {
-    this.init();
+    this.getList();
+
     var arr = JSON.parse(JSON.stringify(this.$store.state.selectResult));
     for (var i = 0; i < arr.length; i++) {
       for (var j = 0; j < arr[i].length; j++) {

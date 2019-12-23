@@ -2,7 +2,7 @@
   <div class="container" id="shop">
     <div class="main">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-        <van-tabs sticky>
+        <van-tabs sticky :offset-top="85">
           <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getlist">
             <van-tab title="即时" class="instant">
               <commonBall :list="list1" :count="count1"></commonBall>
@@ -10,7 +10,13 @@
 
             <van-tab title="完成" class="complete">
               <p class="title">已完成开赛{{count}}场</p>
-              <div class="con" v-for="(item,i) in list" :key="i" v-if="item.scoreStatus=='Played'">
+              <div
+                class="con"
+                v-for="(item,i) in list"
+                :key="i"
+                v-if="item.scoreStatus=='Played'"
+                @click="detail(item)"
+              >
                 <div class="head">
                   <span>{{item.num}} {{item.lcnAbbr}}</span>
                   <span class="time">{{item.time}}</span>
@@ -72,6 +78,25 @@ export default {
   },
   created() {},
   methods: {
+    detail(item) {
+      this.$router.push({
+        name: "matchFenxi",
+        params: {
+         
+          head: {
+            id:item.id,
+            zhu: item.hcn,
+            ke: item.acn,
+            time: item.date + " " + item.time,
+            fsH: item.fsH,
+            fsA: item.fsA,
+            htsH: item.htsH,
+            htsA: item.htsA,
+            scoreStatus: item.scoreStatus
+          }
+        }
+      });
+    },
     onRefresh() {
       setTimeout(() => {
         this.$toast("刷新成功");
@@ -95,7 +120,7 @@ export default {
               this.list1.push(res.data.list[i]);
             }
           }
-       
+
           this.loading = false;
           this.page++;
           // this.list = res.data.list;

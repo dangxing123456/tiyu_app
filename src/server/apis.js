@@ -141,6 +141,22 @@ class Api extends Axios {
   async getSlideShowImags(params = {}) {
     return await this.axios("POST", "query/getSlideShowImags", params);
   }
+  //足球分析
+  async getFootBallHistoryInfor(params = {}) {
+    return await this.axios(
+      "POST",
+      "football/getFootBallHistoryInfor ",
+      params
+    );
+  }
+  //蓝球分析
+  async getBasketballHistoryInfor(params = {}) {
+    return await this.axios(
+      "POST",
+      "basketball/getBasketballHistoryInfor",
+      params
+    );
+  }
 }
 
 export default new Api();

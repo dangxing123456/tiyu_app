@@ -3,7 +3,7 @@
     <div class="main">
       <div title="即时" class="instant">
         <p class="title">即将开赛{{count}}场</p>
-        <div class="con" v-for="(item,index) in list" :key="index">
+        <div class="con" v-for="(item,index) in list" :key="index" @click="detail(item)">
           <div class="head">
             <span>{{item.num}} {{item.lcnAbbr}}</span>
             <span>{{item.date}}</span>
@@ -27,7 +27,10 @@
             <div class="text" v-if="item.scoreStatus=='Fixture'">VS</div>
             <div class="textScore" v-if="item.scoreStatus=='Playing'">
               <p class="score">{{item.fsH}}:{{item.fsA}}</p>
-              <p><span>上半场</span> <span>{{item.htsH}}:{{item.htsA}}</span>  </p>
+              <p>
+                <span>上半场</span>
+                <span>{{item.htsH}}:{{item.htsA}}</span>
+              </p>
             </div>
             <div class="img-right">
               <!-- <img src="https://picsum.photos/640/320" /> -->
@@ -68,6 +71,24 @@ export default {
   },
   created() {},
   methods: {
+    detail(item) {
+      this.$router.push({
+        name: "matchFenxi",
+        params: {
+          head: {
+            id: item.id,
+            zhu: item.hcn,
+            ke: item.acn,
+            time: item.date + " " + item.time,
+            fsH: item.fsH,
+            fsA: item.fsA,
+            htsH: item.htsH,
+            htsA: item.htsA,
+            scoreStatus: item.scoreStatus
+          }
+        }
+      });
+    },
     change() {
       this.flag = !this.flag;
       console.log(this.flag);
@@ -76,11 +97,6 @@ export default {
       } else {
         this.color = "#eee";
       }
-    },
-    show() {
-      this.$router.push({
-        path: "/matchFenxi"
-      });
     }
   }
 };

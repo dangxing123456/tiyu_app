@@ -1,78 +1,79 @@
 <template>
   <div class="container">
     <div class="main">
-      <van-swipe :autoplay="3000" class="banner" >
-        <van-swipe-item v-for="(img, index) in imgList" :key="index">
-          <img :src="img.url" />
-        </van-swipe-item>
-      </van-swipe>
-      <!-- <div class="notice">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <van-swipe :autoplay="3000" class="banner">
+          <van-swipe-item v-for="(img, index) in imgList" :key="index">
+            <img :src="img.url" />
+          </van-swipe-item>
+        </van-swipe>
+        <!-- <div class="notice">
         <van-icon class="yin" class-prefix="icon" name="yinliang" />
         <van-swipe :autoplay="3000" vertical class="notice-list" :show-indicators="false">
           <van-swipe-item v-for="(image, index) in 4" :key="index">123456789</van-swipe-item>
         </van-swipe>
-      </div>-->
-      <van-grid :column-num="2" class="menu">
-        <van-grid-item @click="detailFoot">
-          <img src="../../../assets/images/index1.png" />
-        </van-grid-item>
-        <van-grid-item @click="detailBasket">
-          <img src="../../../assets/images/index2.png" />
-        </van-grid-item>
-      </van-grid>
-      <div class="title">
-        <h3>最新赛事</h3>
-      </div>
-      <div class="hot" v-for="(image, index) in list" :key="index" v-if="image.footBallBet">
-        <div class="top">
-          <div class="img">
-            <h3>{{image.hcn}}</h3>
-          </div>
-          <div class="text">
-            <p>{{image.lcnAbbr}}</p>
-            <p>{{image.date}} {{image.time}}</p>
-          </div>
-          <div class="img">
-            <h3>{{image.acnAbbr}}</h3>
-          </div>
+        </div>-->
+        <van-grid :column-num="2" class="menu">
+          <van-grid-item @click="detailFoot">
+            <img src="../../../assets/images/index1.png" />
+          </van-grid-item>
+          <van-grid-item @click="detailBasket">
+            <img src="../../../assets/images/index2.png" />
+          </van-grid-item>
+        </van-grid>
+        <div class="title">
+          <h3>最新赛事</h3>
         </div>
-        <div class="info">
-          <span>胜 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].h}}</span>
-          <span>平 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].d}}</span>
-          <span>负 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].a}}</span>
-          <!-- <div class="btn">立即下注</div> -->
-        </div>
-      </div>
-
-      <div class="title">
-        <h3>大神推单</h3>
-        <!-- <van-icon name="arrow" @click="$router.push('/documentary')" /> -->
-      </div>
-      <div class="user-list" v-for="(item,index) in person" :key="index">
-        <div class="item">
+        <div class="hot" v-for="(image, index) in list" :key="index" v-if="image.footBallBet">
           <div class="top">
-            <div class="avatar">
-              <img :src="item.icon || user_img" alt />
-              <!-- <img :src="$store.state.userInfo.icon " /> -->
+            <div class="img">
+              <h3>{{image.hcn}}</h3>
             </div>
-            <div class="info">
-              <div class="username">
-                <!-- <p>
+            <div class="text">
+              <p>{{image.lcnAbbr}}</p>
+              <p>{{image.date}} {{image.time}}</p>
+            </div>
+            <div class="img">
+              <h3>{{image.acnAbbr}}</h3>
+            </div>
+          </div>
+          <div class="info">
+            <!-- <span>胜 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].h}}</span>
+            <span>平 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].d}}</span>
+            <span>负 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].a}}</span> -->
+            <!-- <div class="btn">立即下注</div> -->
+          </div>
+        </div>
+
+        <div class="title">
+          <h3>大神推单</h3>
+          <!-- <van-icon name="arrow" @click="$router.push('/documentary')" /> -->
+        </div>
+        <div class="user-list" v-for="(item,index) in person" :key="index">
+          <div class="item">
+            <div class="top">
+              <div class="avatar">
+                <img :src="item.icon || user_img" alt />
+                <!-- <img :src="$store.state.userInfo.icon " /> -->
+              </div>
+              <div class="info">
+                <div class="username">
+                  <!-- <p>
                   最高SP
                   <span>2.04</span>
-                </p>-->
-                <div class="date">截至{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}</div>
+                  </p>-->
+                  <div class="date">截至{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}</div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="bottom">
-            <p>{{item.nickname}}</p>
-            <div class="btn" @click.stop="showPopup(item)">跟一单</div>
+            <div class="bottom">
+              <p>{{item.nickname}}</p>
+              <div class="btn" @click.stop="showPopup(item)">跟一单</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- <div class="title">
+        <!-- <div class="title">
         <h3>精选推荐</h3>
         <van-icon name="arrow" />
       </div>
@@ -115,7 +116,8 @@
             <span>315</span>
           </div>
         </div>
-      </div>-->
+        </div>-->
+      </van-pull-refresh>
     </div>
     <popup ref="pop" v-model="currentValue"></popup>
   </div>
@@ -133,7 +135,8 @@ export default {
       person: [],
       currentValue: false,
       imgList: [],
-      user_img: user_img
+      user_img: user_img,
+      isLoading: false
     };
   },
   components: {
@@ -146,15 +149,29 @@ export default {
   },
   mounted() {},
   methods: {
+    onRefresh() {
+      setTimeout(() => {
+        this.$toast("刷新成功");
+        this.getList();
+        this.getTopPerson();
+        this.getImg();
+        this.isLoading = false;
+      }, 500);
+    },
     getImg() {
       this.$SERVER.getSlideShowImags().then(res => {
         this.imgList = res.data.list;
       });
     },
     getList() {
-      this.$SERVER.getHotMatchs().then(res => {
-        this.list = res.data.list.slice(0, 10);
-      });
+      this.$SERVER
+        .getHotMatchs({
+          pagenum: 1,
+          pagesize: 10
+        })
+        .then(res => {
+          this.list = res.data.list;
+        });
     },
     getTopPerson() {
       this.$SERVER.getTopPerson().then(res => {

@@ -24,56 +24,58 @@
       </div>
       <div class="select">
         <van-tabs title-inactive-color="#333" title-active-color="#f24a44" sticky>
-          <van-tab title="关注专家">
-            <div slot="title">
-              <van-dropdown-menu class="item" active-color="#ee0a24">
-                <van-dropdown-item v-model="value2" :options="option2" @change="changeValue" />
-              </van-dropdown-menu>
-            </div>
+          <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+            <van-tab title="关注专家">
+              <div slot="title">
+                <van-dropdown-menu class="item" active-color="#ee0a24">
+                  <van-dropdown-item v-model="value2" :options="option2" @change="changeValue" />
+                </van-dropdown-menu>
+              </div>
 
-            <div class="content">
-              <div
-                class="con"
-                @click="detailExpert(item.id,value2,item.userInfor)"
-                v-for="(item,index) in list"
-                :key="index"
-                v-if="item.canSail==1"
-              >
-                <div class="top">
-                  <div class="left">
-                    <img v-if="item.userInfor" :src="item.userInfor.icon || user_img" />
-                    <h3>{{item.userInfor.nickname}}</h3>
+              <div class="content">
+                <div
+                  class="con"
+                  @click="detailExpert(item.id,value2,item.userInfor)"
+                  v-for="(item,index) in list"
+                  :key="index"
+                  v-if="item.canSail==1"
+                >
+                  <div class="top">
+                    <div class="left">
+                      <img v-if="item.userInfor" :src="item.userInfor.icon || user_img" />
+                      <h3>{{item.userInfor.nickname}}</h3>
+                    </div>
+                    <div class="right">
+                      <p>{{item.describeText}}</p>
+                      <div>
+                        <span class="time">截止:{{item.endTime | formatDate}}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div class="right">
-                    <p>{{item.describeText}}</p>
+                  <div class="bottom">
                     <div>
-                      <span class="time">截止:{{item.endTime | formatDate}}</span>
+                      <p>
+                        类型
+                        <!-- <van-icon @click.stop="shiliPopup" name="question-o" /> -->
+                      </p>
+                      <p class="money">{{item.type==1?'竞彩足球':"竞彩篮球"}}</p>
+                    </div>
+                    <div>
+                      <p>消费金额</p>
+                      <p class="money">{{item.buyWagers*2*item.times}}元</p>
+                    </div>
+                    <div>
+                      <p>单倍金额</p>
+                      <p class="money">{{item.buyWagers*2}}元</p>
+                    </div>
+                    <div>
+                      <van-button @click.stop="showPopup(item)" type="danger" size="small">跟一单</van-button>
                     </div>
                   </div>
                 </div>
-                <div class="bottom">
-                  <div>
-                    <p>
-                      类型
-                      <!-- <van-icon @click.stop="shiliPopup" name="question-o" /> -->
-                    </p>
-                    <p class="money">{{item.type==1?'竞彩足球':"竞彩篮球"}}</p>
-                  </div>
-                  <div>
-                    <p>消费金额</p>
-                    <p class="money">{{item.buyWagers*2*item.times}}元</p>
-                  </div>
-                  <div>
-                    <p>单倍金额</p>
-                    <p class="money">{{item.buyWagers*2}}元</p>
-                  </div>
-                  <div>
-                    <van-button @click.stop="showPopup(item)" type="danger" size="small">跟一单</van-button>
-                  </div>
-                </div>
               </div>
-            </div>
-          </van-tab>
+            </van-tab>
+          </van-pull-refresh>
           <!-- <van-tab title="关注专家">
             <div class="content">
               <div @click="detailExpert">
@@ -175,7 +177,8 @@ export default {
       basketBallList: [],
       list: [],
       currentValue: false,
-      user_img: user_img
+      user_img: user_img,
+      isLoading: false
     };
   },
   components: {
@@ -202,6 +205,14 @@ export default {
     }
   },
   methods: {
+    onRefresh() {
+      setTimeout(() => {
+        this.$toast("刷新成功");
+        this.isLoading = false;
+        this.getList();
+        this.getBasketList();
+      }, 500);
+    },
     //获取足球球跟单列表
     getList() {
       this.$SERVER
