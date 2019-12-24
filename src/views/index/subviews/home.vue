@@ -1,83 +1,79 @@
 <template>
   <div class="container">
     <div class="main">
-      <van-swipe :autoplay="3000" class="banner">
-        <van-swipe-item v-for="(image, index) in 4" :key="index">
-          <img src="https://picsum.photos/640/320" />
-        </van-swipe-item>
-      </van-swipe>
-      <!-- <div class="notice">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <van-swipe :autoplay="3000" class="banner">
+          <van-swipe-item v-for="(img, index) in imgList" :key="index">
+            <img :src="img.url" />
+          </van-swipe-item>
+        </van-swipe>
+        <!-- <div class="notice">
         <van-icon class="yin" class-prefix="icon" name="yinliang" />
         <van-swipe :autoplay="3000" vertical class="notice-list" :show-indicators="false">
           <van-swipe-item v-for="(image, index) in 4" :key="index">123456789</van-swipe-item>
         </van-swipe>
-      </div> -->
-      <van-grid :column-num="2" class="menu">
-        <van-grid-item @click="detailFoot">
-          <img src="../../../assets/images/index1.png" />
-        </van-grid-item>
-        <van-grid-item @click="detailBasket">
-          <img src="../../../assets/images/index2.png" />
-        </van-grid-item>
-      </van-grid>
-      <div class="title">
-        <h3>最新赛事</h3>
-      </div>
-      <van-swipe class="hot">
-        <van-swipe-item v-for="(image, index) in list" :key="index">
+        </div>-->
+        <van-grid :column-num="2" class="menu">
+          <van-grid-item @click="detailFoot">
+            <img src="../../../assets/images/index1.png" />
+          </van-grid-item>
+          <van-grid-item @click="detailBasket">
+            <img src="../../../assets/images/index2.png" />
+          </van-grid-item>
+        </van-grid>
+        <div class="title">
+          <h3>最新赛事</h3>
+        </div>
+        <div class="hot" v-for="(image, index) in list" :key="index" v-if="image.footBallBet">
           <div class="top">
             <div class="img">
-              <h3>asd</h3>
+              <h3>{{image.hcn}}</h3>
             </div>
             <div class="text">
-              <p>日职</p>
-              <p>2019-01-01 11:11:11</p>
+              <p>{{image.lcnAbbr}}</p>
+              <p>{{image.date}} {{image.time}}</p>
             </div>
             <div class="img">
-              <h3>asd</h3>
+              <h3>{{image.acnAbbr}}</h3>
             </div>
           </div>
           <div class="info">
-            <span>胜 1.70</span>
-            <span>平 1.70</span>
-            <span>负 1.70</span>
-            <div class="btn">立即下注</div>
-          </div>
-        </van-swipe-item>
-      </van-swipe>
-
-      <div class="title">
-        <h3>大神推单</h3>
-        <van-icon name="arrow" @click="$router.push('/documentary')" />
-      </div>
-      <div class="user-list" @click="show">
-        <div class="item">
-          <div class="top">
-            <div class="avatar">
-              <img src="https://picsum.photos/50/50" alt />
-            </div>
-            <div class="info">
-              <div class="username">
-                <h3>阿萨大阿萨大</h3>
-                <p>
-                  最高SP
-                  <span>2.04</span>
-                </p>
-                <div class="date">截至11.11 05：05</div>
-              </div>
-            </div>
-          </div>
-          <div class="bottom">
-            <p>
-              7日命中率
-              <span>100%</span>
-            </p>
-            <div class="btn" @click.stop="showPopup">跟一单</div>
+            <!-- <span>胜 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].h}}</span>
+            <span>平 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].d}}</span>
+            <span>负 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].a}}</span> -->
+            <!-- <div class="btn">立即下注</div> -->
           </div>
         </div>
-      </div>
 
-      <!-- <div class="title">
+        <div class="title">
+          <h3>大神推单</h3>
+          <!-- <van-icon name="arrow" @click="$router.push('/documentary')" /> -->
+        </div>
+        <div class="user-list" v-for="(item,index) in person" :key="index">
+          <div class="item">
+            <div class="top">
+              <div class="avatar">
+                <img :src="item.icon || user_img" alt />
+                <!-- <img :src="$store.state.userInfo.icon " /> -->
+              </div>
+              <div class="info">
+                <div class="username">
+                  <!-- <p>
+                  最高SP
+                  <span>2.04</span>
+                  </p>-->
+                  <div class="date">截至{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="bottom">
+              <p>{{item.nickname}}</p>
+              <div class="btn" @click.stop="showPopup(item)">跟一单</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="title">
         <h3>精选推荐</h3>
         <van-icon name="arrow" />
       </div>
@@ -120,94 +116,82 @@
             <span>315</span>
           </div>
         </div>
-      </div>-->
-      <van-popup position="bottom" v-model="show1">
-        <div class="popup">
-          <div class="head">
-            <div>
-              <span class="peo">发单人：</span>
-              <span class="com">红单一生一世</span>
-            </div>
-            <div>
-              <span class="peo">投注方式</span>
-              <span class="com">2串1</span>
-            </div>
-          </div>
-          <div class="con">
-            <div>
-              <p class="money">8.0元</p>
-              <p class="text">自购</p>
-            </div>
-            <div>
-              <p class="money">2元</p>
-              <p class="text">起跟金额</p>
-            </div>
-            <div>
-              <p class="money">221人</p>
-              <p class="text">跟单人气</p>
-            </div>
-          </div>
-          <div class="wrap">
-            <div>
-              <p class="mon">
-                实付金额
-                <span>20元</span>
-              </p>
-              <p class="yong">
-                佣金比例：
-                <span>10%</span>
-              </p>
-            </div>
-            <div>
-              <div class="num">
-                <p>投</p>
-                <van-stepper value="10" bind:change="onChange" />
-                <p>倍</p>
-                <p />
-              </div>
-            </div>
-          </div>
-          <div class="btn">
-            <van-button type="default" size="large">取消</van-button>
-            <van-button type="danger" size="large">确定</van-button>
-          </div>
-        </div>
-      </van-popup>
+        </div>-->
+      </van-pull-refresh>
     </div>
+    <popup ref="pop" v-model="currentValue"></popup>
   </div>
 </template>
 <script>
-import navBar from "@/components/navbar/navbar.vue";
+import user_img from "../../../assets/images/default.png";
+
+import popup from "../../../components/popup/popup";
 export default {
   name: "home",
   data() {
     return {
       show1: false,
-      list:[],
-      person:[]
+      list: [],
+      person: [],
+      currentValue: false,
+      imgList: [],
+      user_img: user_img,
+      isLoading: false
     };
   },
   components: {
-    navBar
+    popup
   },
   created() {
-   this.getList()
-   this.getTopPerson()
+    this.getList();
+    this.getTopPerson();
+    this.getImg();
   },
   mounted() {},
   methods: {
-    getList(){
-      this.$SERVER.getHotMatchs().then(res=>{
-        this.list =  res.data
-      })
+    onRefresh() {
+      setTimeout(() => {
+        this.$toast("刷新成功");
+        this.getList();
+        this.getTopPerson();
+        this.getImg();
+        this.isLoading = false;
+      }, 500);
     },
-    getTopPerson(){
-      this.$SERVER.getShootTop().then(res=>{
-        this.person = res.data
-      })
+    getImg() {
+      this.$SERVER.getSlideShowImags().then(res => {
+        this.imgList = res.data.list;
+      });
     },
-    showPopup() {
+    getList() {
+      this.$SERVER
+        .getHotMatchs({
+          pagenum: 1,
+          pagesize: 10
+        })
+        .then(res => {
+          this.list = res.data.list;
+        });
+    },
+    getTopPerson() {
+      this.$SERVER.getTopPerson().then(res => {
+        this.person = res.data.list;
+
+        for (var i = 0; i < this.person.length; i++) {
+          this.person[i].type = 1;
+          var userInfor = {
+            nickname: this.person[i].nickname
+          };
+          this.person[i].userInfor = userInfor;
+          this.person[i].id = this.person[i].orderId;
+        }
+      });
+    },
+    showPopup(item) {
       this.show1 = true;
+      this.currentValue = true;
+      this.$refs.pop.show = true;
+      this.$refs.pop.list = item;
     },
     show() {
       this.$router.push({
@@ -236,11 +220,11 @@ export default {
 <style lang="less" scoped>
 .banner {
   width: 100%;
-  height: 230px;
+  height: 150px;
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    // object-fit: cover;
   }
 }
 .notice {
@@ -262,7 +246,7 @@ export default {
 }
 .menu {
   img {
-    width: 100%;
+    width: 80%;
     height: auto;
   }
 }
@@ -286,7 +270,8 @@ export default {
 }
 .hot {
   background: #fff;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
   .top {
     display: flex;
     justify-content: space-around;
@@ -298,17 +283,26 @@ export default {
       width: 70px;
       height: 70px;
       margin: auto;
+      flex-grow: 1;
+      width: 0;
     }
+
     h3 {
-      font-size: 16px;
+      font-size: 14px;
       padding: 5px 0;
     }
     .text {
+      flex-grow: 1;
+      width: 0;
       p {
-        font-size: 13px;
-        color: #999;
+        font-size: 12px;
+        color: #777;
         padding: 5px 0;
       }
+    }
+    .img {
+      flex-grow: 1;
+      width: 0;
     }
   }
   .info {
@@ -316,19 +310,20 @@ export default {
     line-height: 35px;
     text-align: center;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    padding: 0 15px;
+    padding: 0 50px;
     span {
       display: block;
-      width: 60px;
-      border: 1px solid #999;
-      color: #666;
+      width: 80px;
+      border: 1px solid #777;
+      color: #777;
       margin-right: 10px;
-      font-size: 14px;
+      font-size: 12px;
     }
     .btn {
-      font-size: 16px;
-      width: 100px;
+      font-size: 14px;
+      width: 70px;
       color: #fff;
       background: #e73736;
     }
@@ -336,7 +331,8 @@ export default {
 }
 .user-list {
   background: #fff;
-  padding: 15px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #eeeeee;
   .top {
     display: flex;
     .avatar {
@@ -354,7 +350,7 @@ export default {
         display: flex;
         h3 {
           font-size: 16px;
-          color: #666;
+          color: #777;
           margin-right: 10px;
         }
         p {
@@ -366,7 +362,8 @@ export default {
         }
         .date {
           font-size: 14px;
-          color: #999;
+          color: #777;
+          float: right;
         }
       }
     }
@@ -465,13 +462,11 @@ export default {
   align-items: center;
   p {
     font-size: 14px;
-    color: #999;
-    span {
-      color: #e73736;
-    }
+    color: #777;
+    // color: #e73736;
   }
   .btn {
-    width: 90px;
+    width: 70px;
     height: 40px;
     line-height: 40px;
     border-radius: 3px;

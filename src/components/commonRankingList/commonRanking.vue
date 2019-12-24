@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="left">
-      <img :src="icon||'../../assets/images/default.png'" />
+      <img :src=" data.icon ||user_img" />
       <div>
         <p class="p1">
           <span class="sp">{{data.nickname}}</span>
@@ -18,7 +18,7 @@
       <div class="info">
         <p>近期</p>
         <p>连红</p>
-        <p>历史最高</p>
+        <p>历史最高{{data.winCount}}</p>
       </div>
       <div class="num">
         <span>{{data.winCount}}</span>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import user_img from "@/assets/images/default.png";
 export default {
   name: "commonRanking",
   props: {
@@ -52,6 +53,11 @@ export default {
         return 0;
       }
     }
+  },
+  data() {
+    return {
+      user_img: user_img
+    };
   }
 };
 </script>
@@ -70,6 +76,9 @@ export default {
       font-size: 14px;
       img {
         width: 55px;
+        height: 55px;
+        object-fit: cover;
+        border-radius: 50%;
         margin-right: 15px;
       }
       p {

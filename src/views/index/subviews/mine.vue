@@ -10,13 +10,13 @@
             :max-count="1"
             class="avatar"
           >
-            <img :src="$store.state.userInfo.avatar || user_img" />
+            <img :src="$store.state.userInfo.icon || user_img" />
           </van-uploader>
         </div>
         <div class="info">
           <p class="id">
             <span>ID</span>
-            {{this.$store.state.userInfo.userid}}
+            {{this.$store.state.userInfo.userId}}
           </p>
           <p>
             <van-icon name="contact" />
@@ -34,7 +34,7 @@
           <div class="money">
             <van-icon name="card" class="ico" />
             <span>店内账本</span>
-            <h4>￥0.00</h4>
+            <h4>￥{{sumMoney}}</h4>
           </div>
           <div class="btn-group">
             <van-button plain type="danger" size="small" block>清账</van-button>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -69,7 +69,7 @@
             <van-icon :name="item.icon" :color="item.color" slot="icon" size="25px" class="ico" />
           </van-grid-item>
         </van-grid>
-      </van-panel> -->
+      </van-panel>-->
     </div>
   </div>
 </template>
@@ -103,7 +103,7 @@ export default {
           icon: "point-gift",
           color: "#2196F3"
         },
-       
+
         { name: "彩店信息", path: "/kefu", icon: "shop", color: "#E91E63" }
       ],
       menu2: [
@@ -122,16 +122,28 @@ export default {
         },
         { name: "金币", path: "/qrcode", icon: "gold-coin", color: "#2196F3" }
       ],
-      user_img: user_img
+      user_img: user_img,
+      sumMoney: 0
     };
   },
-  created() {},
+  created() {
+    this.$SERVER
+      .getUserWalletExchangeHIstory({
+        userId: this.$store.state.userInfo.userId,
+        pagenum: 1,
+        pagesize: 10
+      })
+      .then(res => {
+        this.sumMoney = res.data.list[0].currentBalance;
+        console.log(res.data.list);
+      });
+  },
   mounted() {},
   methods: {
     uploadAvatar(file) {
       let formData = new FormData();
       formData.append("file", file.file);
-      formData.append("userId", this.$store.state.userInfo.userid);
+      formData.append("userId", this.$store.state.userInfo.userId);
       this.$SERVER
         .uploadUserImage(formData)
         .then(res => {
@@ -159,6 +171,7 @@ export default {
       width: 45px;
       height: 45px;
       border-radius: 50%;
+      object-fit: cover;
     }
   }
   .info {

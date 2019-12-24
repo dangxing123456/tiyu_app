@@ -256,7 +256,7 @@ const router = new Router({
       path: "/matchFenxi",
       name: "matchFenxi",
       component: () => import("@/views/fenxi/matchFenxi.vue"),
-      redirect: { name: "analysis" },
+      // redirect: { name: "analysis" },
       children: [
         {
           //分析
@@ -330,7 +330,7 @@ const router = new Router({
       path: "/fenxinBasket",
       name: "fenxinBasket",
       component: () => import("@/views/fenxi/fenxinBasket.vue"),
-      redirect: { name: "analysisBasket" },
+
       children: [
         {
           //分析

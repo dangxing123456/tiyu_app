@@ -1,29 +1,38 @@
 <template>
   <div class="container" id="shop">
     <div class="main">
-      <div title="即时" class="instant" @click="show">
-        <p class="title">即将开赛18场</p>
-        <div class="con">
+      <div title="即时" class="instant">
+        <p class="title" v-if="type==1">即时赛事{{count}}场</p>
+        <p class="title" v-if="type==2">已完成开赛{{count}}场</p>
+        <div class="con" v-for="(item,index) in list" :key="index" @click="detail(item)">
           <div class="head">
             <div class="left">
-              <span>304</span>
-              <span class="nba">NBA</span>
+              <span class="nba">{{item.lcn}}</span>
             </div>
             <div class="right">
-              <span>11-07</span>
-              <span class="time">08:30</span>
-              <span class="last">第三节 05:23</span>
+              <span>{{item.bdate}}</span>
+              <span class="time">{{item.btime}}</span>
+              <span class="last" v-if="type==1&& item.acore==''&&item.hcore==''">未开赛</span>
+              <span class="last" v-if="type==1&& item.playStatus==1">第一节</span>
+              <span class="last" v-if="type==1&& item.playStatus==2">第二节</span>
+              <span class="last" v-if="type==1&& item.playStatus==3">第三节</span>
+              <span class="last" v-if="type==1&& item.playStatus==4">第四节</span>
             </div>
           </div>
           <div class="top">
             <div class="img">
-              <img src="https://picsum.photos/640/320" />
-              <h3>asd</h3>
+              <!-- <img src="https://picsum.photos/640/320" /> -->
+              <h3>{{item.acn}}</h3>
             </div>
-            <div class="text yanse">90&nbsp;:&nbsp;97</div>
+            <div class="text yanse" v-if="type==2">{{item.acore }}&nbsp;:&nbsp;{{item.hcore}}</div>
+            <div class="text" v-if="type==1&& item.acore==''&&item.hcore=='' ">VS</div>
+            <div
+              class="text yanse"
+              v-if="type==1&& item.acore!=''&&item.hcore!=''"
+            >{{item.acore}}&nbsp;:&nbsp;{{item.hcore}}</div>
             <div class="img-right">
-              <img src="https://picsum.photos/640/320" />
-              <h3>asd</h3>
+              <!-- <img src="https://picsum.photos/640/320" /> -->
+              <h3>{{item.hcn}}</h3>
             </div>
           </div>
         </div>
@@ -36,6 +45,23 @@
 export default {
   name: "score",
   components: {},
+  props: {
+    list: {
+      type: Array
+    },
+    count: {
+      type: Number,
+      default() {
+        return 0;
+      }
+    },
+    type: {
+      type: Number,
+      default() {
+        return 0;
+      }
+    }
+  },
   data() {
     return {};
   },
@@ -45,6 +71,24 @@ export default {
       this.$router.push({
         path: "/matchFenxi"
       });
+    },
+    detail(item) {
+      this.$router.push({
+        name: "fenxinBasket",
+        params: {
+          data: {
+            id: item.mId,
+            acn: item.acn,
+            hcn: item.hcn,
+            playStatus: item.playStatus,
+            bdate: item.bdate,
+            btime: item.btime,
+            acore: item.acore,
+            hcore: item.hcore,
+            type: this.type
+          }
+        }
+      });
     }
   }
 };
@@ -53,26 +97,22 @@ export default {
 .title {
   margin: 6px 0 6px 5px;
   font-size: 13px;
-  color: #999;
+  color: #777;
 }
 .instant {
   .con {
     background-color: #fff;
-    border-bottom: 2px solid rgb(243, 243, 243);
+    border-bottom: 1px solid #eeeeee;
     padding: 5px;
     .head {
       padding: 2px 7px;
       font-size: 12px;
-      color: rgb(160, 160, 160);
+      color: #777;
       .left {
         float: left;
-        width: 70px;
+        width: 110px;
         height: 14px;
-        border-right: 1px solid rgb(160, 160, 160);
-        margin-top: 5px;
-        .nba {
-          margin-left: 10px;
-        }
+        border-right: 1px solid #cccccc;
       }
       .right {
         float: left;
@@ -103,8 +143,8 @@ export default {
       justify-content: space-around;
       align-items: center;
       text-align: center;
-      padding: 12px 15px 0px 15px;
-      width: 90%;
+
+      width: 100%;
       .img-right {
         position: relative;
         width: 100px;
@@ -127,13 +167,13 @@ export default {
       }
 
       h3 {
-        font-size: 16px;
+        font-size: 14px;
         padding: 5px 0;
         margin-top: 10px;
       }
       .text {
         font-size: 20px;
-        color: #999;
+        color: #777;
       }
       .yanse {
         color: red;

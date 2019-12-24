@@ -57,7 +57,7 @@ export default {
       this.$SERVER
         .basketBallBookOrder({
           wagers: this.$store.state.basketWagers,
-          userId: this.$store.state.userInfo.userid,
+          userId: this.$store.state.userInfo.userId,
           times: this.$store.state.basketValue,
           matchIds: this.$store.state.basketFootId,
           bets: this.$store.state.basketBetArr,

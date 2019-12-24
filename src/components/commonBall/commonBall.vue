@@ -1,41 +1,47 @@
 <template>
   <div class="container" id="shop">
     <div class="main">
-      <div title="即时" class="instant" @click="show">
-        <p class="title">即将开赛18场</p>
-        <div class="con">
+      <div title="即时" class="instant">
+        <p class="title">即将开赛{{count}}场</p>
+        <div class="con" v-for="(item,index) in list" :key="index" @click="detail(item)">
           <div class="head">
-            <span>周三001 日职乙</span>
-            <span class="time">18:00</span>
-            <span class="rady">未开始</span>
+            <span>{{item.num}} {{item.lcnAbbr}}</span>
+            <span>{{item.date}}</span>
+            <span class="time">{{item.time}}</span>
+            <span class="rady" v-if="item.scoreStatus=='Fixture'">未开始</span>
+            <span class="rady" v-if="item.scoreStatus=='Playing'">进行中</span>
           </div>
           <div class="top">
             <div class="img">
-              <div class="shoucang">
+              <!-- <div class="shoucang">
                 <van-icon @click.stop="change" :style="{color:color}" name="star" size="28px" />
-              </div>
-              <div class="icon">
+              </div>-->
+              <!-- <div class="icon">
                 <span>4</span>
                 <span class="sen">4</span>
-              </div>
-              <img src="https://picsum.photos/640/320" />
-              <h3>asd</h3>
+              </div>-->
+              <!-- <img src="https://picsum.photos/640/320" /> -->
+              <h3>{{item.hcn}}</h3>
             </div>
-            <div class="text">VS</div>
+
+            <div class="text" v-if="item.scoreStatus=='Fixture'">VS</div>
+            <div class="textScore" v-if="item.scoreStatus=='Playing'">
+              <p class="score">{{item.fsH}}:{{item.fsA}}</p>
+              <p>
+                <span>上半场</span>
+                <span>{{item.htsH}}:{{item.htsA}}</span>
+              </p>
+            </div>
             <div class="img-right">
-              <img src="https://picsum.photos/640/320" />
-              <h3>asd</h3>
-              <div class="icon">
+              <!-- <img src="https://picsum.photos/640/320" /> -->
+              <h3>{{item.acn}}</h3>
+              <!-- <div class="icon">
                 <span>4</span>
                 <span class="sen">4</span>
-              </div>
+              </div>-->
             </div>
           </div>
-          <div class="bottom">
-            <span>
-              <van-icon name="arrow" />41个方案
-            </span>
-          </div>
+          <div class="bottom"></div>
         </div>
       </div>
     </div>
@@ -46,6 +52,17 @@
 export default {
   name: "score",
   components: {},
+  props: {
+    list: {
+      type: Array
+    },
+    count: {
+      type: Number,
+      default() {
+        return 0;
+      }
+    }
+  },
   data() {
     return {
       color: "#eee",
@@ -54,6 +71,24 @@ export default {
   },
   created() {},
   methods: {
+    detail(item) {
+      this.$router.push({
+        name: "matchFenxi",
+        params: {
+          head: {
+            id: item.id,
+            zhu: item.hcn,
+            ke: item.acn,
+            time: item.date + " " + item.time,
+            fsH: item.fsH,
+            fsA: item.fsA,
+            htsH: item.htsH,
+            htsA: item.htsA,
+            scoreStatus: item.scoreStatus
+          }
+        }
+      });
+    },
     change() {
       this.flag = !this.flag;
       console.log(this.flag);
@@ -62,11 +97,6 @@ export default {
       } else {
         this.color = "#eee";
       }
-    },
-    show() {
-      this.$router.push({
-        path: "/matchFenxi"
-      });
     }
   }
 };
@@ -80,9 +110,8 @@ export default {
 .instant {
   .con {
     background-color: #fff;
-    border-bottom: 2px solid rgb(243, 243, 243);
+    border-bottom: 1px solid #eeeeee;
     padding: 5px;
-    height: 140px;
     .head {
       padding: 2px 7px;
       font-size: 12px;
@@ -91,7 +120,7 @@ export default {
         color: rgb(106, 177, 244);
       }
       .time {
-        margin-left: 10px;
+        margin-left: 15px;
         display: inline-block;
         width: 50px;
         height: 20px;
@@ -108,6 +137,17 @@ export default {
       text-align: center;
       padding: 12px 15px 0px 15px;
       width: 90%;
+      .textScore {
+        p {
+          font-size: 12px;
+          color: #777;
+          width: 100px;
+        }
+        .score {
+          font-size: 18px;
+          color: #f24a44;
+        }
+      }
       .img-right {
         position: relative;
         width: 150px;
@@ -167,13 +207,13 @@ export default {
       }
 
       h3 {
-        font-size: 16px;
+        font-size: 14px;
         padding: 5px 0;
         margin-top: 10px;
       }
       .text {
-        width: 50px;
-        font-size: 20px;
+        width: 90px;
+        font-size: 16px;
         color: #999;
       }
     }

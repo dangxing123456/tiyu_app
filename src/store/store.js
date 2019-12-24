@@ -93,7 +93,9 @@ export default new Vuex.Store({
     basketFootId: [],
     basketValue: 1,
     basketSumcount: 0,
-    basketMoney: 0
+    basketMoney: 0,
+
+    sumMoney: 0
   },
   //方法
   mutations: {
