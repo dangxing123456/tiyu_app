@@ -37,15 +37,7 @@
               </van-button>
             </van-field>
           </div>
-          <div class="cell-group">
-            <p class="recommendedPhone">邀请码</p>
-            <van-field
-              v-model="$store.state.register.retail_code"
-              placeholder="选填"
-              class="field choose"
-              :border="false"
-            ></van-field>
-          </div>
+
         </van-cell-group>
         <van-button
           type="primary"
@@ -85,12 +77,14 @@ export default {
     if (this.$METHOD.getStore("token")) {
       this.$router.push("/");
     }
-    if (this.$route.params.val) {
-      this.$store.state.register.retail_code = this.$route.params.val;
-    }
   },
   methods: {
     sendchecknum() {
+      
+      if (!regexUtil.isPhone(this.$store.state.register.user_account)) {
+        this.$toast.fail("请输入正确的手机号码");
+        return;
+      }
       this.$SERVER
         .checkUserInfor({
           mobile: this.$store.state.register.user_account

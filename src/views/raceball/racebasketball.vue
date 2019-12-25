@@ -252,6 +252,7 @@ export default {
         pagesize: 50
       })
       .then(res => {
+        console.log(res.data.list)
         if (res.code == 200) {
           var arr = [];
           for (var i = 0; i < res.data.list.length; i++) {

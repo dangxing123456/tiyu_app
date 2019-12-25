@@ -5,7 +5,7 @@
       <div class="con">
         <div class="top">
           <div class="img">
-            <img src="https://picsum.photos/640/320" />
+            <img :src="content.hIcon" />
             <h4>{{content.zhu}}</h4>
           </div>
           <div>
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="img-right">
-            <img src="https://picsum.photos/640/320" />
+            <img :src="content.aIcon" />
             <h4>{{content.ke}}</h4>
           </div>
         </div>
@@ -59,9 +59,8 @@
         <van-tab title="分析">
           <div id="myChart" :style="{ height: '300px'}"></div>
 
-          <h3>主队近10场比赛记录</h3>
+          <h3>主队近10场比赛记录({{total.win}}胜{{total.draw}}平{{total.lose}}负)</h3>
 
-          <p>{{total.win}}胜{{total.draw}}平{{total.lose}}负</p>
           <table class="tab2">
             <tr class="title">
               <th>赛事</th>
@@ -81,8 +80,7 @@
             </tr>
           </table>
           <div id="myChart1" :style="{ height: '300px'}"></div>
-          <h3>客队近10场比赛记录</h3>
-          <p>{{total1.win}}胜{{total1.draw}}平{{total1.lose}}负</p>
+          <h3>客队近10场比赛记录({{total1.win}}胜{{total1.draw}}平{{total1.lose}}负)</h3>
           <table class="tab2">
             <tr class="title">
               <th>赛事</th>
@@ -102,8 +100,7 @@
             </tr>
           </table>
           <div id="myChart2" :style="{ height: '300px'}"></div>
-          <h3>两队交锋近10场比赛记录</h3>
-          <p>{{total2.win}}胜{{total2.draw}}平{{total2.lose}}负</p>
+          <h3>两队交锋近10场比赛记录({{total2.win}}胜{{total2.draw}}平{{total2.lose}}负)</h3>
           <table class="tab2">
             <tr class="title">
               <th>赛事</th>
@@ -124,7 +121,7 @@
           </table>
         </van-tab>
 
-        <van-tab title="客队">
+        <van-tab title="射手">
           <div class="div">
             <div class="title">
               <h4>{{wrap.h.team_name_abbr}}射手</h4>
@@ -162,7 +159,6 @@
             </div>
           </div>
         </van-tab>
-        <van-tab title="两队交锋">内容 3</van-tab>
       </van-tabs>
 
       <!-- <router-view /> -->
@@ -499,7 +495,7 @@ export default {
       width: 100%;
       height: 35px;
       line-height: 35px;
-      background-color: #87ceff;
+      
       font-size: 14px;
       color: black;
       padding: 0 10px;
@@ -509,7 +505,6 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background-color: #eeeeee;
         font-size: 14px;
         padding: 6px 10px;
       }
@@ -540,11 +535,11 @@ export default {
   background-color: #fff;
   .title {
     color: #777777;
-    background-color: #f8f8f8;
   }
   tr {
     height: 30px;
     line-height: 30px;
+    border-bottom: 1px solid #eee;
   }
 }
 .instant {
@@ -561,7 +556,6 @@ export default {
         display: inline-block;
         width: 50px;
         height: 20px;
-        background-color: rgb(240, 240, 240);
         text-align: center;
         border-radius: 10px;
         line-height: 20px;

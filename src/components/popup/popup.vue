@@ -128,7 +128,8 @@ export default {
   .head {
     .peo {
       font-size: 14px;
-      margin-left: 10px;
+      display: block;
+      text-align: center;
     }
     .com {
       font-size: 14px;

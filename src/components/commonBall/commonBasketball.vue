@@ -2,8 +2,8 @@
   <div class="container" id="shop">
     <div class="main">
       <div title="即时" class="instant">
-        <p class="title" v-if="type==1">即时赛事{{count}}场</p>
-        <p class="title" v-if="type==2">已完成开赛{{count}}场</p>
+        <p class="title" v-if="type==1&&count!=0">即时赛事{{count}}场</p>
+        <p class="title" v-if="type==2&&count!=0">已完成比赛{{count}}场</p>
         <div class="con" v-for="(item,index) in list" :key="index" @click="detail(item)">
           <div class="head">
             <div class="left">
@@ -21,7 +21,7 @@
           </div>
           <div class="top">
             <div class="img">
-              <!-- <img src="https://picsum.photos/640/320" /> -->
+             <img :src="item.aIcon" />
               <h3>{{item.acn}}</h3>
             </div>
             <div class="text yanse" v-if="type==2">{{item.acore }}&nbsp;:&nbsp;{{item.hcore}}</div>
@@ -31,7 +31,7 @@
               v-if="type==1&& item.acore!=''&&item.hcore!=''"
             >{{item.acore}}&nbsp;:&nbsp;{{item.hcore}}</div>
             <div class="img-right">
-              <!-- <img src="https://picsum.photos/640/320" /> -->
+              <img :src="item.hIcon" />
               <h3>{{item.hcn}}</h3>
             </div>
           </div>
@@ -80,6 +80,8 @@ export default {
             id: item.mId,
             acn: item.acn,
             hcn: item.hcn,
+            hIcon:item.hIcon,
+            aIcon:item.aIcon,
             playStatus: item.playStatus,
             bdate: item.bdate,
             btime: item.btime,

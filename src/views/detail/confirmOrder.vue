@@ -27,7 +27,7 @@
         <span>{{$store.state.money*this.$store.state.value}}元</span>
       </div>
       <div>
-        <van-button type="danger" @click="confirmOrder">确认支付</van-button>
+        <van-button type="danger" @click="confirmOrder" :loading="loading">确认支付</van-button>
       </div>
     </div>
   </div>
@@ -47,7 +47,8 @@ export default {
       arrData: [],
       checked: true,
       value: "",
-      bei: "1.7"
+      bei: "1.7",
+      loading:false
     };
   },
   computed: {},
@@ -57,6 +58,7 @@ export default {
       if (this.checked == false) {
         this.bei = "";
       }
+      this.loading = true
       this.$SERVER
         .footBallBookOrder({
           wagers: this.$store.state.wagers,
@@ -70,8 +72,9 @@ export default {
         .then(res => {
           //下单成功
           if (res.code == 200) {
+            this.loading = false
+            this.$router.push('/orderRecord')
             this.$toast.success("下单成功");
-
             this.$store.state.value = 1;
             for (var i = 0; i < this.$store.state.selectResult.length; i++) {
               this.$store.state.selectResult[i] = [];

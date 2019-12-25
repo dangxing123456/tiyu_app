@@ -2,7 +2,7 @@
   <div class="container" id="shop">
     <div class="main">
       <div title="即时" class="instant">
-        <p class="title">即将开赛{{count}}场</p>
+        <p class="title" v-if="count!=0">即将开赛{{count}}场</p>
         <div class="con" v-for="(item,index) in list" :key="index" @click="detail(item)">
           <div class="head">
             <span>{{item.num}} {{item.lcnAbbr}}</span>
@@ -20,7 +20,7 @@
                 <span>4</span>
                 <span class="sen">4</span>
               </div>-->
-              <!-- <img src="https://picsum.photos/640/320" /> -->
+              <img :src="item.hIcon" />
               <h3>{{item.hcn}}</h3>
             </div>
 
@@ -33,7 +33,7 @@
               </p>
             </div>
             <div class="img-right">
-              <!-- <img src="https://picsum.photos/640/320" /> -->
+              <img :src="item.aIcon" />
               <h3>{{item.acn}}</h3>
               <!-- <div class="icon">
                 <span>4</span>
@@ -78,6 +78,8 @@ export default {
           head: {
             id: item.id,
             zhu: item.hcn,
+            hIcon:item.hIcon,
+            aIcon:item.aIcon,
             ke: item.acn,
             time: item.date + " " + item.time,
             fsH: item.fsH,

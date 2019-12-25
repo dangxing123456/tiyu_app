@@ -16,15 +16,15 @@
         <div class="info">
           <p class="id">
             <span>ID</span>
-            {{this.$store.state.userInfo.userId}}
+            {{$store.state.userInfo.userId}}
           </p>
           <p>
             <van-icon name="contact" />
-            {{this.$store.state.userInfo.nickname}}
+            {{$store.state.userInfo.nickname}}
           </p>
           <p>
             <van-icon name="orders-o" />
-            {{this.$store.state.userInfo.mobile}}
+            {{$store.state.userInfo.mobile}}
           </p>
         </div>
         <van-icon name="setting-o" class="setting" @click="$router.push('/setting')" />
@@ -34,7 +34,7 @@
           <div class="money">
             <van-icon name="card" class="ico" />
             <span>店内账本</span>
-            <h4>￥{{sumMoney}}</h4>
+            <h4>￥{{$store.state.userInfo.coin}}</h4>
           </div>
           <div class="btn-group">
             <van-button plain type="danger" size="small" block>清账</van-button>&nbsp;&nbsp;&nbsp;&nbsp;

@@ -24,9 +24,16 @@
         <div class="title">
           <h3>最新赛事</h3>
         </div>
-        <div class="hot" v-for="(image, index) in list" :key="index" v-if="image.footBallBet">
+        <div
+          class="hot"
+          v-for="(image, index) in list"
+          :key="index"
+          v-if="image.footBallBet"
+          @click="go(image)"
+        >
           <div class="top">
             <div class="img">
+              <img :src="image.hIcon" />
               <h3>{{image.hcn}}</h3>
             </div>
             <div class="text">
@@ -34,15 +41,16 @@
               <p>{{image.date}} {{image.time}}</p>
             </div>
             <div class="img">
+              <img :src="image.aIcon" />
               <h3>{{image.acnAbbr}}</h3>
             </div>
           </div>
-          <div class="info">
-            <!-- <span>胜 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].h}}</span>
+          <!-- <div class="info"> -->
+          <!-- <span>胜 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].h}}</span>
             <span>平 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].d}}</span>
-            <span>负 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].a}}</span> -->
-            <!-- <div class="btn">立即下注</div> -->
-          </div>
+          <span>负 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].a}}</span>-->
+          <!-- <div class="btn">立即下注</div> -->
+          <!-- </div> -->
         </div>
 
         <div class="title">
@@ -58,17 +66,14 @@
               </div>
               <div class="info">
                 <div class="username">
-                  <!-- <p>
-                  最高SP
-                  <span>2.04</span>
-                  </p>-->
+                  <p>{{item.nickname}}
+                  </p>
                   <div class="date">截至{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}</div>
+            <div class="bottom">
+              <div class="btn" @click.stop="showPopup(item)">跟一单</div>
+            </div>
                 </div>
               </div>
-            </div>
-            <div class="bottom">
-              <p>{{item.nickname}}</p>
-              <div class="btn" @click.stop="showPopup(item)">跟一单</div>
             </div>
           </div>
         </div>
@@ -212,6 +217,47 @@ export default {
       this.$router.push({
         path: "/racebasketball"
       });
+    },
+    go(item) {
+      if (item.type == 1) {
+        this.$router.push({
+          name: "matchFenxi",
+          params: {
+            head: {
+              id: item.id,
+              zhu: item.hcn,
+              ke: item.acn,
+              hIcon: item.hIcon,
+              aIcon: item.aIcon,
+              time: item.date + " " + item.time,
+              fsH: item.fsH,
+              fsA: item.fsA,
+              htsH: item.htsH,
+              htsA: item.htsA,
+              scoreStatus: item.scoreStatus
+            }
+          }
+        });
+      } else {
+        this.$router.push({
+          name: "fenxinBasket",
+          params: {
+            data: {
+              id: item.mId,
+              acn: item.acn,
+              hcn: item.hcn,
+              hIcon: item.hIcon,
+              aIcon: item.aIcon,
+              playStatus: item.playStatus,
+              bdate: item.bdate,
+              btime: item.btime,
+              acore: item.acore,
+              hcore: item.hcore,
+              type: this.type
+            }
+          }
+        });
+      }
     }
   }
 };
@@ -270,21 +316,20 @@ export default {
 }
 .hot {
   background: #fff;
-  padding-bottom: 10px;
+
   border-bottom: 1px solid #eee;
   .top {
     display: flex;
     justify-content: space-around;
     align-items: center;
     text-align: center;
-    padding: 10px 15px;
+    padding: 5px 15px;
     img {
       display: block;
-      width: 70px;
-      height: 70px;
+      width: 30px;
+      height: 30px;
       margin: auto;
       flex-grow: 1;
-      width: 0;
     }
 
     h3 {
@@ -301,8 +346,7 @@ export default {
       }
     }
     .img {
-      flex-grow: 1;
-      width: 0;
+      width: 100px;
     }
   }
   .info {
@@ -337,9 +381,10 @@ export default {
     display: flex;
     .avatar {
       margin-right: 10px;
+      margin-left: 20px;
       img {
-        width: 50px;
-        height: 50px;
+        width: 30px;
+        height: 30px;
         object-fit: cover;
         border-radius: 50%;
       }
@@ -355,13 +400,15 @@ export default {
         }
         p {
           font-size: 14px;
-          flex-grow: 1;
+          width: 75px;
+          line-height: 30px;
           span {
             color: #e73736;
           }
         }
         .date {
-          font-size: 14px;
+          font-size: 12px;
+          line-height: 30px;
           color: #777;
           float: right;
         }
@@ -460,6 +507,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-left: 10px;
   p {
     font-size: 14px;
     color: #777;
@@ -467,8 +515,8 @@ export default {
   }
   .btn {
     width: 70px;
-    height: 40px;
-    line-height: 40px;
+    height: 30px;
+    line-height: 30px;
     border-radius: 3px;
     color: #fff;
     font-size: 16px;

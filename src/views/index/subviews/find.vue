@@ -41,18 +41,16 @@
                   v-if="item.canSail==1"
                 >
                   <div class="top">
-                    <div class="left">
+                    <div class="right">
+                      <p>{{item.describeText}}</p>
+                    </div>
+                    <span class="time">截止:{{item.endTime | formatDate}}</span>
+                  </div>
+                  <div class="bottom">
+                    <div class="avatar">
                       <img v-if="item.userInfor" :src="item.userInfor.icon || user_img" />
                       <h3>{{item.userInfor.nickname}}</h3>
                     </div>
-                    <div class="right">
-                      <p>{{item.describeText}}</p>
-                      <div>
-                        <span class="time">截止:{{item.endTime | formatDate}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="bottom">
                     <div>
                       <p>
                         类型
@@ -450,27 +448,14 @@ export default {
 
     .top {
       width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       border-bottom: 1px solid #eee;
       padding-top: 10px;
-      .left {
-        width: 35%;
-        text-align: center;
-        h3 {
-          font-size: 16px;
-          font-weight: 500;
-        }
-        img {
-          width: 50px;
-          height: 50px;
-          display: inline;
-          margin: 0 auto;
-          object-fit: cover;
 
-          border-radius: 50%;
-        }
+      .time {
+        font-size: 13px;
+        color: #777;
+        text-align: left;
+        padding: 0 5px;
       }
       .left1 {
         width: 20%;
@@ -478,10 +463,8 @@ export default {
       .right {
         padding-right: 8px;
         p {
-          font-size: 14px;
-          height: 70px;
+          font-size: 13px;
           color: rgb(50, 50, 50);
-          width: 290px;
         }
         div {
           padding-bottom: 10px;
@@ -528,15 +511,27 @@ export default {
             border-radius: 5px;
             padding: 0 2px;
           }
-          .time {
-            float: right;
-            font-size: 14px;
-            color: black;
-          }
         }
       }
     }
     .bottom {
+      .avatar {
+        width: 35%;
+        text-align: center;
+        h3 {
+          font-size: 13px;
+          font-weight: 500;
+        }
+        img {
+          width: 20px;
+          height: 20px;
+          display: inline;
+          margin: 0 auto;
+          object-fit: cover;
+
+          border-radius: 50%;
+        }
+      }
       /deep/ .van-icon-question-o {
         color: #ffd700;
       }

@@ -117,7 +117,7 @@
         </span>
         <span>
           [奖金范围：
-          <span class="color">{{maxBonus*this.$store.state.value}}</span> 元]
+          <span class="color">{{$METHOD.format45(maxBonus*this.$store.state.value,100)}}</span> 元]
         </span>
       </div>
       <div class="con">
@@ -462,6 +462,19 @@ export default {
       this.b = [];
     },
     getMoney() {
+      var num = 0
+      for(var i = 0;i<this.b.length;i++){
+        if(this.b[i]!=undefined&&this.b[i].length>0){
+          num++
+        }
+      }
+      if (num >5) {
+        this.$toast({
+          message: "组合过关最多选择五个"
+        });
+        this.b = []
+        return
+      }
       var resu = [];
       for (var i = 0; i < this.$store.state.result.length; i++) {
         if (this.show(i)) {
@@ -726,7 +739,6 @@ export default {
           var matchArr = chuanType.split("_"); //几串几
           var matheCount = matchArr[0]; //2串1 的2
           var combArr = arrcl(data, matheCount);
-
           for (var i1 = 0, l1 = combArr.length; i1 < l1; i1++) {
             var colComArr = arral(combArr[i1]);
             for (var i2 = 0, l2 = colComArr.length; i2 < l2; i2++) {
@@ -802,6 +814,7 @@ export default {
   justify-content: space-between;
   background-color: #fff;
   font-size: 14px;
+    height: 50px;
   div {
     width: 50%;
     text-align: center;

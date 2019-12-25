@@ -9,7 +9,7 @@
             </van-tab>
 
             <van-tab title="完成" class="complete">
-              <p class="title">已完成开赛{{count}}场</p>
+              <p class="title" v-if="count!=0">已完成比赛{{count}}场</p>
               <div
                 class="con"
                 v-for="(item,i) in list"
@@ -23,12 +23,12 @@
                 </div>
                 <div class="top">
                   <div class="img">
-                    <div class="shoucang"></div>
+                    <!-- <div class="shoucang"></div> -->
                     <!-- <div class="icon">
                   <span>4</span>
                   <span class="sen">4</span>
                     </div>-->
-                    <!-- <img src="https://picsum.photos/640/320" /> -->
+                    <img :src="item.hIcon" />
                     <h3>{{item.hcn}}</h3>
                   </div>
                   <div class="text">
@@ -36,7 +36,7 @@
                     <p>上半场{{item.htsH}}:{{item.htsA}}</p>
                   </div>
                   <div class="img-right">
-                    <!-- <img src="https://picsum.photos/640/320" /> -->
+                    <img :src="item.aIcon" />
                     <h3>{{item.acn}}</h3>
                     <!-- <div class="icon">
                   <span>4</span>
@@ -87,6 +87,8 @@ export default {
             id:item.id,
             zhu: item.hcn,
             ke: item.acn,
+            hIcon:item.hIcon,
+            aIcon:item.aIcon,
             time: item.date + " " + item.time,
             fsH: item.fsH,
             fsA: item.fsA,
