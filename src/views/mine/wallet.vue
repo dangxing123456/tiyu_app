@@ -2,7 +2,7 @@
   <div class="container">
     <navBar />
     <div class="top">
-      <p class="money">￥{{sum}}</p>
+      <p class="money">￥{{$store.state.userInfo.coin}}</p>
     </div>
     <div class="wallet-box">
       <div class="wallet">
@@ -69,7 +69,6 @@ export default {
         })
         .then(res => {
           this.list = [...this.list, ...res.data.list];
-          this.sum = this.list[0].currentBalance;
           this.loading = false;
           this.page++;
           if (!res.data.hasNextPage) {

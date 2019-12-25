@@ -81,7 +81,7 @@
         </span>
         <span>
           [奖金范围：
-          <span class="color">{{maxBonus*this.$store.state.basketValue}}</span> 元]
+          <span class="color">{{$METHOD.format45(maxBonus*this.$store.state.basketValue,100)}}</span> 元]
         </span>
       </div>
       <div class="con">

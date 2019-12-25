@@ -104,6 +104,9 @@ export default {
 #login {
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .close {
     margin-bottom: 75px;
     margin-left: -30px;
@@ -125,7 +128,6 @@ export default {
   .main {
     background: #fff;
     border-radius: 20px;
-    margin: 45px 20px 0 20px;
     width: 73%;
     padding: 0 32px;
   }

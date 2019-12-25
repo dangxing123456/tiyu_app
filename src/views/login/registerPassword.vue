@@ -71,9 +71,8 @@ export default {
   methods: {
     regFn() {
       var that = this;
-      if (regexUtil.isPassword(this.$store.state.register.newpassword)) {
-        console.log(this.$store.state.register.newpassword);
-        this.$toast.fail("请输入6-11位字母数字组合密码");
+      if (!(this.$store.state.register.newpassword.length>=6&&this.$store.state.register.newpassword.length<=11)) {
+        this.$toast.fail("请输入6-11位密码");
         return;
       }
       if (this.$store.state.register.newpassword != this.newpassword) {
@@ -91,10 +90,9 @@ export default {
           sex: 1
         })
         .then(res => {
-          console.log(res);
-          that.$router.push("/login/" + this.$store.state.userInfo.nickname);
+          that.$router.push("/login");
           that.regLoading = false;
-          that.$store.state.token = res.data.userinfo.token;
+          // that.$store.state.token = res.data.userinfo.token;
           that.$toast.success("注册成功");
         })
         .catch(err => {

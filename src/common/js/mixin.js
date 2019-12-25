@@ -393,3 +393,16 @@ export const IdCodeValid = function (code) {
   }
   return row;
 };
+
+
+
+/**
+ * 四舍五入
+ * @param {Number} val 原始数据 v2（100 保留两位小数）
+ */
+export const format45 = (val, v2) => {
+  if (isNaN(val) || val == undefined || val == null) {
+      return null;
+  }
+  return Math.round(val * v2) / v2;
+};

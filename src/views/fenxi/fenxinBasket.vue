@@ -5,7 +5,7 @@
       <div class="con">
         <div class="top">
           <div class="img">
-            <img src="https://picsum.photos/640/320" />
+            <img :src="content.aIcon" />
             <h4>{{content.acn}}</h4>
           </div>
           <div class="text">
@@ -31,7 +31,7 @@
           </div>
 
           <div class="img-right">
-            <img src="https://picsum.photos/640/320" />
+            <img :src="content.hIcon" />
             <h4>{{content.hcn}}</h4>
           </div>
         </div>
@@ -42,8 +42,7 @@
         <div class="wrap">
           <van-tab title="分析">
             <div id="myChart" :style="{ height: '300px'}"></div>
-            <h3>主队近10场比赛记录</h3>
-            <p>{{total.win}}胜{{total.lose}}负</p>
+            <h3>主队近10场比赛记录({{total.win}}胜{{total.lose}}负)</h3>
             <table class="tab2">
               <tr class="title">
                 <th>赛事</th>
@@ -68,8 +67,7 @@
                 <td>{{item.team_rs=='lose'?'负':''}}</td>
               </tr>
             </table>
-            <h3>客队近10场比赛记录</h3>
-            <p>{{total1.win}}胜{{total1.lose}}负</p>
+            <h3>客队近10场比赛记录({{total1.win}}胜{{total1.lose}}负)</h3>
             <div id="myChart1" :style="{ height: '300px'}"></div>
 
             <table class="tab2">
@@ -118,8 +116,6 @@
             </tr>
           </table>-->
         </div>
-        <van-tab title="客队"></van-tab>
-        <van-tab title="两队交锋">内容 3</van-tab>
       </van-tabs>
       <!-- <van-tabs
         v-model="active"
@@ -398,6 +394,7 @@ export default {
   tr {
     height: 30px;
     line-height: 30px;
+    border-bottom: 1px solid #eee;
   }
 }
 .instant {

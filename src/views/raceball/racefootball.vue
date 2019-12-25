@@ -22,13 +22,12 @@
           <div class="left">
             <p class="first">{{item1.num}}</p>
             <p>{{item1.lcnAbbr}}</p>
-            <p>{{item1.time}}截止</p>
+            <p>{{item1.time}}<br>截止 <span @click="go(item1)">析</span></p>
           </div>
           <div class="right">
             <div class="div1">
               <span>{{item1.hcn}}</span>
-              <span>VS</span>
-
+              <span style="color:#777">VS</span>
               <span>{{item1.acnAbbr}}</span>
             </div>
             <div class="tab" v-if="item1.footBallBet">
@@ -37,7 +36,7 @@
                   <span class="p1-first">0</span>
                 </p>
                 <p class="p2">
-                  <span class="p2-first">{{item1.goalline}}</span>
+                  <span :class="item1.goalline=='+1'?'p2-red':'p2-blue'">{{item1.goalline}}</span>
                 </p>
               </div>
               <div class="center" v-if="item1.footBallBet">
@@ -54,7 +53,7 @@
                     <span v-else-if="i==2 || i==5">负</span>
                     <span>{{item}}</span>
 
-                    <span class="dan" v-if="item1.single==1">单</span>
+                    <!-- <span class="dan" v-if="item1.single==1">单</span> -->
                   </li>
                 </ul>
               </div>
@@ -133,6 +132,28 @@ export default {
   },
   mounted() {},
   methods: {
+    go(item){
+      
+      console.log(item)
+      this.$router.push({
+          name: "matchFenxi",
+          params: {
+            head: {
+              id: item.id,
+              zhu: item.hcn,
+              ke: item.acn,
+              hIcon: item.hIcon,
+              aIcon: item.aIcon,
+              time: item.date + " " + item.time,
+              fsH: item.fsH,
+              fsA: item.fsA,
+              htsH: item.htsH,
+              htsA: item.htsA,
+              scoreStatus: item.scoreStatus
+            }
+          }
+        });
+    },
     confirm() {
       if (this.$store.state.sumcount >= 2) {
         this.$router.push("/confirmPlan");
@@ -322,6 +343,9 @@ export default {
                 time: e.time,
                 hcn: e.hcn,
                 acnAbbr: e.acnAbbr,
+                acn: e.acn,
+                hIcon:e.hIcon,
+                aIcon:e.aIcon,
                 goalline: e.footBallBet.odds_list.hhad.goalline,
                 single: f,
                 single1: f1,
@@ -559,6 +583,7 @@ export default {
     color: #4b4949;
     text-align: center;
     margin-top: 10px;
+    font-size: 13px;
   }
   .wrap {
     position: relative;
@@ -577,7 +602,7 @@ export default {
       .div1 {
         display: flex;
         justify-content: space-around;
-        padding-bottom: 15px;
+        padding:0 20px 15px;
 
         color: #4b4949;
         span {
@@ -616,9 +641,14 @@ export default {
               text-align: center;
               line-height: 30px;
             }
-            .p2-first {
+            .p2-red {
               width: 20px;
-              background-color: rgb(100, 160, 240);
+              background-color: #f00;
+              color: white;
+            }
+            .p2-blue {
+              width: 20px;
+              background-color: green;
               color: white;
             }
           }
@@ -636,6 +666,9 @@ export default {
               text-align: center;
               line-height: 30px;
               color: #4b4949;
+              & span:nth-child(2){
+                color: #777;
+              }
 
               .dan {
                 position: absolute;
@@ -654,7 +687,8 @@ export default {
             width: 31px;
             border: 1px solid #eeeeee;
             line-height: 30px;
-            font-size: 14px;
+            font-size: 12px;
+            color:#777;
           }
         }
       }
@@ -662,6 +696,11 @@ export default {
     .left {
       text-align: center;
       font-size: 12px;
+        span{
+          color:#f00;
+          padding: 1px 2px;
+          border: 1px solid #f00;
+        }
       .first {
         padding-bottom: 20px;
 
