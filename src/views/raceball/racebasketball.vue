@@ -69,6 +69,9 @@
       </div>
       <!-- 底部按钮 -->
       <div class="bot-btn">
+        <div>
+          <van-checkbox v-model="checked" checked-color="#07c160">显示固定单关(橙色框内)</van-checkbox>
+        </div>
         <div class="text">
           <p v-if="$store.state.basketSumcount==0">至少选择2场比赛</p>
           <p v-if="$store.state.basketSumcount>=1">已选择{{$store.state.basketSumcount}}场比赛</p>
@@ -173,7 +176,7 @@ export default {
   updated() {},
   methods: {
     bgc(index) {
-      if (this.coun(index) == "更多玩法") {
+      if (this.coun(index) == "更多") {
         return "";
       } else {
         return "bgColor";
@@ -197,7 +200,7 @@ export default {
         }
       }
       if (arr.length == 0) {
-        return "更多玩法";
+        return "更多";
       }
       return "已选" + arr.length + "项";
     },
@@ -506,9 +509,10 @@ export default {
           height: 1.24rem;
           width: 0.62rem;
           border: 0.02rem solid #eeeeee;
-          line-height: 0.6rem;
+          line-height: 1.24rem;
           font-size: 0.24rem;
           color: #777;
+          text-align: center;
         }
       }
     }

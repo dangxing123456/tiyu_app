@@ -1,6 +1,15 @@
 <template>
   <div class="container">
     <div class="main">
+      <van-search
+        v-model="value"
+        placeholder="请输入搜索关键词"
+        show-action
+        shape="round"
+        @search="onSearch"
+      >
+        <div slot="action" @click="onSearch">搜索</div>
+      </van-search>
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-swipe :autoplay="3000" class="banner">
           <van-swipe-item v-for="(img, index) in imgList" :key="index">
@@ -13,17 +22,121 @@
           <van-swipe-item v-for="(image, index) in 4" :key="index">123456789</van-swipe-item>
         </van-swipe>
         </div>-->
-        <van-grid :column-num="2" class="menu">
+        <van-grid :column-num="3" class="menu">
           <van-grid-item @click="detailFoot">
             <img src="../../../assets/images/index1.png" />
+            <p>竞彩足球</p>
           </van-grid-item>
           <van-grid-item @click="detailBasket">
             <img src="../../../assets/images/index2.png" />
+            <p>竞彩蓝球</p>
+          </van-grid-item>
+          <van-grid-item @click="detailBasket">
+            <img src="../../../assets/images/index2.png" />
+            <p>排行榜</p>
           </van-grid-item>
         </van-grid>
         <div class="title">
+          <h3>方案大神</h3>
+        </div>
+        <div class="plan">
+          <van-grid :column-num="4" class="menu">
+            <van-grid-item>
+              <img src="../../../assets/images/index1.png" />
+              <p>竞彩足球</p>
+            </van-grid-item>
+            <van-grid-item>
+              <img src="../../../assets/images/index2.png" />
+              <p>竞彩蓝球</p>
+            </van-grid-item>
+            <van-grid-item>
+              <img src="../../../assets/images/index2.png" />
+              <p>竞彩蓝球</p>
+            </van-grid-item>
+            <van-grid-item>
+              <img src="../../../assets/images/index2.png" />
+              <p>竞彩蓝球</p>
+            </van-grid-item>
+          </van-grid>
+        </div>
+        <div class="title">
+          <h3>连红榜</h3>
+          <span class="right">
+            更多
+            <van-icon name="arrow" />
+          </span>
+        </div>
+        <div class="hong">
+          <van-grid :column-num="4" class="menu">
+            <van-grid-item>
+              <img src="../../../assets/images/index1.png" />
+              <p>竞彩足球</p>
+            </van-grid-item>
+            <van-grid-item>
+              <img src="../../../assets/images/index2.png" />
+              <p>竞彩蓝球</p>
+            </van-grid-item>
+            <van-grid-item>
+              <img src="../../../assets/images/index2.png" />
+              <p>竞彩蓝球</p>
+            </van-grid-item>
+            <van-grid-item>
+              <img src="../../../assets/images/index2.png" />
+              <p>竞彩蓝球</p>
+            </van-grid-item>
+          </van-grid>
+        </div>
+        <div class="title">
+          <h3>今日焦点</h3>
+        </div>
+        <div class="jiao">
+          <van-grid :column-num="2" class="dian">
+            <van-grid-item>
+              <div class="con">
+                <img src="../../../assets/images/index1.png" />
+                <p>竞彩足球</p>
+              </div>
+              <div class="text">
+                <span>奖金</span>
+                <h3>121221元</h3>
+              </div>
+            </van-grid-item>
+            <van-grid-item>
+              <div class="con">
+                <img src="../../../assets/images/index1.png" />
+                <p>竞彩足球</p>
+              </div>
+              <div class="text">
+                <span>奖金</span>
+                <h3>121221元</h3>
+              </div>
+            </van-grid-item>
+            <van-grid-item>
+              <div class="con">
+                <img src="../../../assets/images/index1.png" />
+                <p>竞彩足球</p>
+              </div>
+              <div class="text">
+                <span>奖金</span>
+                <h3>121221元</h3>
+              </div>
+            </van-grid-item>
+            <van-grid-item>
+              <div class="con">
+                <img src="../../../assets/images/index1.png" />
+                <p>竞彩足球</p>
+              </div>
+              <div class="text">
+                <span>奖金</span>
+                <h3>121221元</h3>
+              </div>
+            </van-grid-item>
+          </van-grid>
+        </div>
+        <div class="title">
           <h3>最新赛事</h3>
         </div>
+
         <div
           class="hot"
           v-for="(image, index) in list"
@@ -66,12 +179,11 @@
               </div>
               <div class="info">
                 <div class="username">
-                  <p>{{item.nickname}}
-                  </p>
+                  <p>{{item.nickname}}</p>
                   <div class="date">截至{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}</div>
-            <div class="bottom">
-              <div class="btn" @click.stop="showPopup(item)">跟一单</div>
-            </div>
+                  <div class="bottom">
+                    <div class="btn" @click.stop="showPopup(item)">跟一单</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -141,7 +253,8 @@ export default {
       currentValue: false,
       imgList: [],
       user_img: user_img,
-      isLoading: false
+      isLoading: false,
+      value: ""
     };
   },
   components: {
@@ -154,6 +267,7 @@ export default {
   },
   mounted() {},
   methods: {
+    onSearch() {},
     onRefresh() {
       setTimeout(() => {
         this.$toast("刷新成功");
@@ -290,10 +404,71 @@ export default {
     line-height: 35px;
   }
 }
+
 .menu {
   img {
-    width: 80%;
-    height: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  p {
+    font-size: 14px;
+    margin-top: 8px;
+  }
+}
+.plan {
+  .menu {
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    p {
+      font-size: 14px;
+      margin-top: 8px;
+    }
+  }
+}
+.hong {
+  .menu {
+    img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+    }
+    p {
+      font-size: 14px;
+      margin-top: 8px;
+    }
+  }
+}
+.jiao {
+  .dian {
+    .con {
+      display: flex;
+    }
+    .text {
+      display: flex;
+      align-items: center;
+      span {
+        color: #777;
+        font-size: 14px;
+      }
+      h3 {
+        color: red;
+        margin-left: 10px;
+      }
+    }
+    img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+    }
+    p {
+      font-size: 14px;
+      margin-top: 8px;
+      margin-left: 10px;
+    }
   }
 }
 .title {
@@ -311,7 +486,7 @@ export default {
   }
   span {
     font-size: 12px;
-    color: #ccc;
+    color: #777;
   }
 }
 .hot {

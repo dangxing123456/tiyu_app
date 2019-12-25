@@ -30,6 +30,7 @@
           </div>
           <div class="right">
             <div class="div1">
+              <span class="rang">让球</span>
               <span>{{item1.hcn}}</span>
               <span style="color:#777">VS</span>
               <span>{{item1.acnAbbr}}</span>
@@ -70,14 +71,32 @@
       </div>
       <!-- 底部按钮 -->
       <div class="bot-btn">
-        <div class="text">
+        <div class="check">
+          <van-checkbox v-model="checked" shape="square" checked-color="#FFA500">显示固定单关(橙色框内)</van-checkbox>
+        </div>
+        <!-- <div class="text">
           <p v-if="$store.state.sumcount==0">至少选择2场比赛</p>
           <p v-if="$store.state.sumcount>=1">已选择{{$store.state.sumcount}}场比赛</p>
           <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
-        </div>
+        </div>-->
         <div class="btn">
-          <van-button type="default" size="large">清空</van-button>
-          <van-button type="danger" size="large" @click="confirm">确定</van-button>
+          <div class="delete">
+            <p>
+              <van-icon name="delete" />
+            </p>
+            <p>清空</p>
+          </div>
+          <div>
+            <p v-if="$store.state.sumcount==0">至少选择2场比赛</p>
+            <p v-if="$store.state.sumcount>=1">已选择{{$store.state.sumcount}}场比赛</p>
+          </div>
+          <div>
+            <!-- <van-button type="danger" size="large" @click="confirm">确定</van-button> -->
+            <van-button round type="danger" size="small">确定</van-button>
+          </div>
+
+          <!-- <van-button type="default" size="large">清空</van-button>
+          <van-button type="danger" size="large" @click="confirm">确定</van-button>-->
         </div>
       </div>
       <!-- 下拉菜单 -->
@@ -131,7 +150,8 @@ export default {
   data() {
     return {
       a: "",
-      count: 0
+      count: 0,
+      checked: false
     };
   },
   mounted() {},
@@ -206,7 +226,7 @@ export default {
       return this.$store.state.selectResult[index];
     },
     bgc(index) {
-      if (this.coun(index) == "更多玩法") {
+      if (this.coun(index) == "更多") {
         return "";
       } else {
         return "bgColor";
@@ -230,7 +250,7 @@ export default {
         }
       }
       if (arr.length == 0) {
-        return "更多玩法";
+        return "更多";
       }
       return "已选" + arr.length + "项";
     },
@@ -581,7 +601,7 @@ export default {
 
 .main {
   padding-bottom: 120px;
-
+  background-color: #fff;
   .title {
     color: #4b4949;
     text-align: center;
@@ -604,14 +624,15 @@ export default {
       width: 80%;
       .div1 {
         display: flex;
-        justify-content: space-around;
-        padding: 0 20px 15px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0;
 
+        margin-right: 46px;
         color: #4b4949;
-        span {
-          display: inline-block;
-          width: 33%;
-          text-align: center;
+        .rang {
+          width: 15px;
+          color: #777;
         }
       }
       .tab {
@@ -689,9 +710,10 @@ export default {
             height: 62px;
             width: 31px;
             border: 1px solid #eeeeee;
-            line-height: 30px;
+            line-height: 62px;
             font-size: 12px;
             color: #777;
+            text-align: center;
           }
         }
       }
@@ -789,12 +811,26 @@ export default {
     .btn {
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
   }
   .bot-btn {
     position: fixed;
     bottom: 0;
     width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    .check {
+      width: 100%;
+      background-color: #fff;
+      text-align: center;
+      padding: 8px 25%;
+
+      /deep/ .van-checkbox__label {
+        font-size: 14px;
+        color: orange;
+      }
+    }
     .text {
       width: 100%;
       background-color: rgb(250, 235, 275);
@@ -807,8 +843,19 @@ export default {
       }
     }
     .btn {
-      display: flex;
       width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      color: #4b4949;
+      font-size: 13px;
+      padding-bottom: 8px;
+      .delete {
+        text-align: center;
+        p {
+          color: #777;
+        }
+      }
     }
   }
 

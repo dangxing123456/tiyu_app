@@ -468,13 +468,13 @@ export default {
           num++;
         }
       }
-      if (num > 5) {
-        this.$toast({
-          message: "组合过关最多选择五个"
-        });
-        this.b = [];
-        return;
-      }
+      // if (num > 5) {
+      //   this.$toast({
+      //     message: "组合过关最多选择五个"
+      //   });
+      //   this.b = [];
+      //   return;
+      // }
       var resu = [];
       for (var i = 0; i < this.$store.state.result.length; i++) {
         if (this.show(i)) {
