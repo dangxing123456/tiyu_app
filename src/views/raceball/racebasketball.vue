@@ -18,6 +18,7 @@
           <span>{{item.num}}</span>
           <span v-if="item.showStatus==1">可投注</span>
           <span v-if="item.showStatus==0">不可投注</span>
+          <span class="fen" :style="{color:item.fen>0?'#f00':'green'}">{{item.fen}}</span>
         </div>
         <div class="test">
           <div class="left">
@@ -252,7 +253,7 @@ export default {
         pagesize: 50
       })
       .then(res => {
-        console.log(res.data.list)
+        console.log(res.data.list);
         if (res.code == 200) {
           var arr = [];
           for (var i = 0; i < res.data.list.length; i++) {
@@ -408,6 +409,11 @@ export default {
   color: #4b4949;
   text-align: center;
   margin-top: 10px;
+  font-size: 13px;
+  .fen {
+    float: right;
+    margin-right: 20px;
+  }
 }
 .test {
   padding: 15px 10px;
@@ -463,6 +469,16 @@ export default {
             background-color: rgb(100, 160, 240);
             color: white;
           }
+          .p2-red {
+            width: 20px;
+            background-color: #f00;
+            color: white;
+          }
+          .p2-blue {
+            width: 20px;
+            background-color: green;
+            color: white;
+          }
         }
       }
       .center {
@@ -477,6 +493,9 @@ export default {
             text-align: center;
             line-height: 30px;
             color: #4b4949;
+            & span:nth-child(2) {
+              color: #777;
+            }
           }
         }
       }
@@ -484,11 +503,12 @@ export default {
         color: #4b4949;
         span {
           display: inline-block;
-          height: 62px;
-          width: 31px;
-          border: 1px solid #eeeeee;
-          line-height: 30px;
-          font-size: 14px;
+          height: 1.24rem;
+          width: 0.62rem;
+          border: 0.02rem solid #eeeeee;
+          line-height: 0.6rem;
+          font-size: 0.24rem;
+          color: #777;
         }
       }
     }

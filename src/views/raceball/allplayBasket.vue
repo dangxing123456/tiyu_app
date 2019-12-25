@@ -174,6 +174,7 @@ export default {
     display: inline-block;
   }
   .first {
+    font-size: 12px;
     .left {
       float: left;
       width: 10%;
@@ -208,6 +209,7 @@ export default {
     }
   }
   .second {
+    font-size: 12px;
     .left {
       float: left;
       width: 10%;
@@ -240,6 +242,7 @@ export default {
     }
   }
   .third {
+    font-size: 12px;
     .left {
       float: left;
       width: 10%;
@@ -250,7 +253,7 @@ export default {
         writing-mode: vertical-lr;
         width: 34px;
         /* text-align: center; */
-        margin-left: 3p;
+
         line-height: 34px;
         color: #ffffff;
       }
@@ -272,8 +275,11 @@ export default {
           border: 1px solid #eeeeee;
           float: left;
           text-align: center;
-          font-size: 13px;
+          font-size: 12px;
           color: #4b4949;
+          p {
+            margin-top: 2px;
+          }
         }
       }
     }

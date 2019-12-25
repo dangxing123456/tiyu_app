@@ -4,7 +4,10 @@
       <div class="popup">
         <div class="head">
           <div>
-            <span class="peo" v-if="list.userInfor">发单人：{{list.userInfor.nickname}}</span>
+            <span class="peo" v-if="list.userInfor">
+              发单人：
+              <span class="fa">{{list.userInfor.nickname}}</span>
+            </span>
             <!-- <span class="com">红单一生一世</span> -->
           </div>
           <div>
@@ -29,11 +32,11 @@
         <div class="wrap">
           <div>
             <p class="mon">
-              实付金额
+              实付金额:
               <span>{{list.buyWagers*list.times*2*bei}}</span>
             </p>
             <p class="yong">
-              佣金比例：
+              佣金比例:
               <span>10%</span>
             </p>
           </div>
@@ -130,6 +133,10 @@ export default {
       font-size: 14px;
       display: block;
       text-align: center;
+      padding: 10px;
+      .fa {
+        color: #777;
+      }
     }
     .com {
       font-size: 14px;
@@ -147,6 +154,7 @@ export default {
       padding: 5px 0;
       .money {
         font-size: 14px;
+        color: #777;
       }
       .text {
         font-size: 12px;
@@ -163,6 +171,9 @@ export default {
       font-size: 14px;
       .yong {
         margin-top: 8px;
+        span {
+          color: #777;
+        }
       }
       .mon {
         span {

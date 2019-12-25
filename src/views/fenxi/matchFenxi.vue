@@ -74,7 +74,7 @@
               <td>{{item.l_cn_abbr}}</td>
               <td>{{item.date_cn}}</td>
               <td>{{item.h_cn}}</td>
-              <td>{{item.half}}</td>
+              <td>{{item.res}}</td>
               <td>{{item.a_cn}}</td>
               <td>{{item.half}}</td>
             </tr>
@@ -94,7 +94,7 @@
               <td>{{item.l_cn_abbr}}</td>
               <td>{{item.date_cn}}</td>
               <td>{{item.h_cn}}</td>
-              <td>{{item.half}}</td>
+              <td>{{item.res}}</td>
               <td>{{item.a_cn}}</td>
               <td>{{item.half}}</td>
             </tr>
@@ -114,7 +114,7 @@
               <td>{{item.l_cn_abbr}}</td>
               <td>{{item.date_cn}}</td>
               <td>{{item.h_cn}}</td>
-              <td>{{item.half}}</td>
+              <td>{{item.res}}</td>
               <td>{{item.a_cn}}</td>
               <td>{{item.half}}</td>
             </tr>

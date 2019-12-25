@@ -47,7 +47,7 @@
 
               <div class="bot" @click="$router.push('/allplayBasket/'+index)">
                 <p :class="show1(index).length>0  ? 'aa' : 'bb' ">未选择更多玩法</p>
-                <ul v-for="(item1,i) in show1(index)" :key="i" >
+                <ul v-for="(item1,i) in show1(index)" :key="i">
                   <li v-if="item1" class="bgColor">
                     <span v-if="i==4">大分</span>
                     <span v-if="i==5">小分</span>
@@ -466,7 +466,15 @@ export default {
           }
         }
       }
-
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < arr[i].length; j++) {
+          if (arr[i][j].length == 0) {
+            arr[i].splice(j, 1);
+            j--;
+          }
+        }
+      }
+      console.log(arr);
       var gate = this.f;
       function arrcl(arr, n, z) {
         var r = [];
@@ -928,6 +936,9 @@ export default {
   background-color: #eeeeee;
   .head-bot {
     padding: 10px 5px;
+    h3 {
+      font-size: 16px;
+    }
   }
   .wrapper,
   .bottom {
@@ -952,13 +963,13 @@ export default {
       }
     }
   }
-
   .senf {
     padding: 10px 5px;
     h3 {
       font-size: 16px;
     }
   }
+
   .bottom {
     background-color: #fff;
   }

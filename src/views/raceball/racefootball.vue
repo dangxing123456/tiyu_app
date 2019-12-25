@@ -22,7 +22,11 @@
           <div class="left">
             <p class="first">{{item1.num}}</p>
             <p>{{item1.lcnAbbr}}</p>
-            <p>{{item1.time}}<br>截止 <span @click="go(item1)">析</span></p>
+            <p>
+              {{item1.time}}
+              <br />截止
+              <span @click="go(item1)">析</span>
+            </p>
           </div>
           <div class="right">
             <div class="div1">
@@ -132,27 +136,26 @@ export default {
   },
   mounted() {},
   methods: {
-    go(item){
-      
-      console.log(item)
+    go(item) {
+      console.log(item);
       this.$router.push({
-          name: "matchFenxi",
-          params: {
-            head: {
-              id: item.id,
-              zhu: item.hcn,
-              ke: item.acn,
-              hIcon: item.hIcon,
-              aIcon: item.aIcon,
-              time: item.date + " " + item.time,
-              fsH: item.fsH,
-              fsA: item.fsA,
-              htsH: item.htsH,
-              htsA: item.htsA,
-              scoreStatus: item.scoreStatus
-            }
+        name: "matchFenxi",
+        params: {
+          head: {
+            id: item.id,
+            zhu: item.hcn,
+            ke: item.acn,
+            hIcon: item.hIcon,
+            aIcon: item.aIcon,
+            time: item.date + " " + item.time,
+            fsH: item.fsH,
+            fsA: item.fsA,
+            htsH: item.htsH,
+            htsA: item.htsA,
+            scoreStatus: item.scoreStatus
           }
-        });
+        }
+      });
     },
     confirm() {
       if (this.$store.state.sumcount >= 2) {
@@ -344,8 +347,8 @@ export default {
                 hcn: e.hcn,
                 acnAbbr: e.acnAbbr,
                 acn: e.acn,
-                hIcon:e.hIcon,
-                aIcon:e.aIcon,
+                hIcon: e.hIcon,
+                aIcon: e.aIcon,
                 goalline: e.footBallBet.odds_list.hhad.goalline,
                 single: f,
                 single1: f1,
@@ -602,7 +605,7 @@ export default {
       .div1 {
         display: flex;
         justify-content: space-around;
-        padding:0 20px 15px;
+        padding: 0 20px 15px;
 
         color: #4b4949;
         span {
@@ -666,7 +669,7 @@ export default {
               text-align: center;
               line-height: 30px;
               color: #4b4949;
-              & span:nth-child(2){
+              & span:nth-child(2) {
                 color: #777;
               }
 
@@ -688,7 +691,7 @@ export default {
             border: 1px solid #eeeeee;
             line-height: 30px;
             font-size: 12px;
-            color:#777;
+            color: #777;
           }
         }
       }
@@ -696,11 +699,11 @@ export default {
     .left {
       text-align: center;
       font-size: 12px;
-        span{
-          color:#f00;
-          padding: 1px 2px;
-          border: 1px solid #f00;
-        }
+      span {
+        color: #f00;
+        padding: 1px 2px;
+        border: 1px solid #f00;
+      }
       .first {
         padding-bottom: 20px;
 

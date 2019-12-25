@@ -68,6 +68,7 @@ export default {
           //下单成功
           if (res.code == 200) {
             this.$toast.success("下单成功");
+            this.$router.push("/orderRecord");
             this.$store.state.basketValue = 1;
             for (
               var i = 0;

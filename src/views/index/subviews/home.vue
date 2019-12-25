@@ -333,8 +333,9 @@ export default {
     }
 
     h3 {
-      font-size: 14px;
+      font-size: 13px;
       padding: 5px 0;
+      color: #363636;
     }
     .text {
       flex-grow: 1;
@@ -395,11 +396,11 @@ export default {
         display: flex;
         h3 {
           font-size: 16px;
-          color: #777;
+          color: #363636;
           margin-right: 10px;
         }
         p {
-          font-size: 14px;
+          font-size: 13px;
           width: 75px;
           line-height: 30px;
           span {

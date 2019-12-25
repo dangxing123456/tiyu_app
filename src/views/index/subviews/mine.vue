@@ -123,7 +123,8 @@ export default {
         { name: "金币", path: "/qrcode", icon: "gold-coin", color: "#2196F3" }
       ],
       user_img: user_img,
-      sumMoney: 0
+      sumMoney: 0,
+      img: ""
     };
   },
   created() {
@@ -147,12 +148,17 @@ export default {
       this.$SERVER
         .uploadUserImage(formData)
         .then(res => {
-          this.$store.state.userInfo.avatar = res.url;
-          console.log(res);
+          this.$store.state.userInfo.icon = res.url + "?" + Math.random();
         })
         .catch(err => {
           this.$toast.fail(err.msg);
         });
+    },
+    getuser() {
+      this.$SERVER.getUserInfoByToken().then(res => {
+        console.log(res.data.icon);
+        this.$store.state.userInfo.icon = res.data.icon;
+      });
     }
   }
 };
