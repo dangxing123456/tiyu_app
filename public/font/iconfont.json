@@ -20,6 +20,13 @@
       "unicode_decimal": 59111
     },
     {
+      "icon_id": "1203699",
+      "name": "实名认证",
+      "font_class": "shimingrenzheng",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
       "icon_id": "1249935",
       "name": "箭头-上",
       "font_class": "jiantou-up",

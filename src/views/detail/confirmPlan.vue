@@ -258,7 +258,8 @@ export default {
       i: null,
       d: [],
       c: [],
-      f: []
+      f: [],
+      flag: false
     };
   },
   computed: {},
@@ -274,6 +275,7 @@ export default {
       }
     },
     confirmOrder() {
+      console.log(this.$store.state.selectResult);
       if (this.$store.state.money * this.$store.state.value < 10) {
         this.$toast({
           message: "投注金额不能小于10元"
@@ -317,7 +319,7 @@ export default {
       }
     },
     showMethod() {
-      if (this.$store.state.sumcount <= 1) {
+      if (this.$store.state.sumcount == 1) {
         return this.StringMethod.slice(0, 1);
       } else if (this.$store.state.sumcount <= 2) {
         return this.StringMethod.slice(1, 2);
@@ -353,7 +355,13 @@ export default {
       }
     },
     menu() {
-      this.showmenu = true;
+      if (this.flag) {
+        this.$toast({
+          message: "非单关请选择两场比赛"
+        });
+      } else {
+        this.showmenu = true;
+      }
     },
     change(value) {
       this.$store.state.value = value;
@@ -419,14 +427,14 @@ export default {
         return "bgColor";
       }
     },
-    push(index, i, val) {
+    push(index, ii, val) {
       if (
-        this.$store.state.selectResult[index][i] == undefined ||
-        this.$store.state.selectResult[index][i] == ""
+        this.$store.state.selectResult[index][ii] == undefined ||
+        this.$store.state.selectResult[index][ii] == ""
       ) {
-        this.$set(this.$store.state.selectResult[index], i, val);
+        this.$set(this.$store.state.selectResult[index], ii, val);
       } else {
-        this.$set(this.$store.state.selectResult[index], i, "");
+        this.$set(this.$store.state.selectResult[index], ii, "");
       }
       var arr = JSON.parse(JSON.stringify(this.$store.state.selectResult));
       for (var i = 0; i < arr.length; i++) {
@@ -446,6 +454,89 @@ export default {
       }
 
       this.$store.state.sumcount = arr.length;
+
+      if (this.$store.state.sumcount == 1) {
+        if (this.$store.state.result[index].single == 0 && ii < 3) {
+          for (let i = 0; i < 3; i++) {
+            if (
+              this.$store.state.selectResult[index][ii] != undefined ||
+              this.$store.state.selectResult[index][ii] != ""
+            ) {
+              this.flag = true;
+              break;
+            }
+            var arr2 = JSON.parse(
+              JSON.stringify(this.$store.state.selectResult[index].slice(0, 3))
+            );
+            for (var i = 0; i < arr2.length; i++) {
+              if (arr2[i].length == 0) {
+                arr2.splice(i, 1);
+                i--;
+              }
+            }
+            if (arr2.length == 0) {
+              this.flag = false;
+            }
+          }
+        }
+        if (this.$store.state.result[index].single1 == 0 && ii >= 3 && ii < 6) {
+          for (let i = 0; i < 3; i++) {
+            if (
+              this.$store.state.selectResult[index][ii] != undefined ||
+              this.$store.state.selectResult[index][ii] != ""
+            ) {
+              this.flag = true;
+              break;
+            }
+          }
+          var arr1 = JSON.parse(
+            JSON.stringify(this.$store.state.selectResult[index].slice(3, 6))
+          );
+          for (var i = 0; i < arr1.length; i++) {
+            if (arr1[i].length == 0) {
+              arr1.splice(i, 1);
+              i--;
+            }
+          }
+          if (arr1.length == 0) {
+            this.flag = false;
+          }
+        }
+
+        if (this.flag == false) {
+          if (this.$store.state.result[index].single == 1 && ii < 3) {
+            for (let i = 0; i < 3; i++) {
+              if (
+                this.$store.state.selectResult[index][ii] != undefined ||
+                this.$store.state.selectResult[index][ii] != ""
+              ) {
+                this.$toast({
+                  message: "进入单关模式"
+                });
+                break;
+              }
+            }
+          }
+
+          if (
+            this.$store.state.result[index].single1 == 1 &&
+            ii >= 3 &&
+            ii < 6
+          ) {
+            for (let i = 3; i < 6; i++) {
+              if (
+                this.$store.state.selectResult[index][ii] != undefined ||
+                this.$store.state.selectResult[index][ii] != ""
+              ) {
+                this.$toast({
+                  message: "进入单关模式"
+                });
+                break;
+              }
+            }
+          }
+        }
+      }
       this.getMoney();
       this.confirm();
       this.f = [];
@@ -577,9 +668,9 @@ export default {
           }
         }
       }
-      console.log(arr);
+
       var gate = this.f;
-      console.log(gate);
+
       function arrcl(arr, n, z) {
         var r = [];
         fn([], arr, n);

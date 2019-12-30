@@ -145,9 +145,22 @@ const router = new Router({
         isLogin: false
       }
     },
-     //个人主页
-     {
-      path: "/personHome",
+    //搜索
+    {
+      path: "/search",
+      name: "search",
+      component: () => import("@/views/index/subviews/search.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "搜索",
+        isMember: false,
+        isLogin: false
+      }
+    },
+    //个人主页
+    {
+      path: "/personHome/:i",
       name: "personHome",
       component: () => import("@/views/detail/personHome.vue"),
       meta: {
@@ -158,6 +171,20 @@ const router = new Router({
         isLogin: false
       }
     },
+    //消费单详情
+    {
+      path: "/consumption",
+      name: "consumption",
+      component: () => import("@/views/detail/consumption.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "消费单详情",
+        isMember: false,
+        isLogin: false
+      }
+    },
+
     //连红榜
     {
       path: "/redlist",

@@ -7,24 +7,25 @@
     <div class="main">
       <van-tabs v-model="active" sticky :offset-top="176" type="line">
         <van-tab title="连红榜">
-          <div class="content" v-for='(item,index) in 10' :key='index'>
+          <div class="content" v-for="(item,index) in joinWinTopList" :key="index">
             <div class="first">
-              <span>1</span>
+              <span>{{index}}</span>
             </div>
             <div class="info">
+              <!-- <img :src="item.icon" alt srcset /> -->
               <img src="@/assets/images/paihang.png" alt srcset />
-              <span class="name">篮球操盘手</span>
+              <span class="name">{{item.nickname}}</span>
 
-              <span>5</span>
+              <span>{{item.flowCount}}</span>
             </div>
             <div class="last">
-              <p>7</p>
+              <p>{{item.winCount}}</p>
               <p>连红</p>
             </div>
           </div>
         </van-tab>
         <van-tab title="胜率榜">
-            <div class="content" v-for='(item,index) in 10' :key='index'>
+          <div class="content" v-for="(item,index) in 10" :key="index">
             <div class="first">
               <span>1</span>
             </div>
@@ -41,15 +42,15 @@
           </div>
         </van-tab>
         <van-tab title="大神榜">
-            <div class="content" v-for='(item,index) in 10' :key='index'>
+          <div class="content" v-for="(item,index) in person" :key="index">
             <div class="first">
-              <span>1</span>
+              <span>{{index}}</span>
             </div>
             <div class="info">
-              <img src="@/assets/images/paihang.png" alt srcset />
-              <span class="name">篮球操盘手</span>
+              <img :src="item.icon" alt srcset />
+              <span class="name">{{item.nickname}}</span>
 
-              <span>5</span>
+              <span>{{item.flowCount}}</span>
             </div>
             <div class="last">
               <p>7</p>
@@ -73,11 +74,39 @@ export default {
   data() {
     return {
       list: [],
-      active: 0
+      active: 0,
+      joinWinTopList: [],
+      person: []
     };
   },
-  created() {},
-  methods: {}
+  created() {
+    this.getjoinWinTop();
+    this.getTopPerson();
+  },
+  methods: {
+    getjoinWinTop() {
+      this.$SERVER.joinWinTop().then(res => {
+        this.joinWinTopList = res.data.list;
+        console.log(this.joinWinTopList);
+      });
+    },
+    getTopPerson() {
+      this.$SERVER.getTopPerson().then(res => {
+        this.person = res.data.list;
+
+        for (var i = 0; i < this.person.length; i++) {
+          this.person[i].type = 1;
+          var userInfor = {
+            nickname: this.person[i].nickname
+          };
+          this.person[i].userInfor = userInfor;
+          this.person[i].id = this.person[i].orderId;
+        }
+
+        console.log(this.person);
+      });
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -97,6 +126,7 @@ export default {
     align-items: center;
     justify-content: space-around;
     padding: 10px 5px;
+    position: relative;
     img {
       width: 40px;
       height: 40px;

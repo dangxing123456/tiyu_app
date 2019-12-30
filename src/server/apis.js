@@ -157,6 +157,22 @@ class Api extends Axios {
       params
     );
   }
+  //今日焦点
+  async getFocusOfToday(params = {}) {
+    return await this.axios("POST", "query/getFocusOfToday", params);
+  }
+  //今日焦点详情
+  async getFocusOfDetail(params = {}) {
+    return await this.axios("POST", "query/getFocusOfDetail", params);
+  }
+  //搜索
+  async getSeachUser(params = {}) {
+    return await this.axios("POST", "query/getSeachUser", params);
+  }
+  //根据id获取用户信息
+  async getUserByUserId(params = {}) {
+    return await this.axios("POST", "user/getUserByUserId ", params);
+  }
 }
 
 export default new Api();

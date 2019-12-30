@@ -8,8 +8,9 @@
           show-action
           shape="round"
           @search="onSearch"
+          @click="$router.push('/search')"
         >
-          <div slot="action" @click="onSearch">搜索</div>
+          <div slot="action" @click="onSearch"></div>
         </van-search>
 
         <van-swipe :autoplay="3000" class="banner">
@@ -42,22 +43,15 @@
         </div>
         <div class="plan">
           <van-grid :column-num="4" class="menu">
-            <van-grid-item @click="$router.push('/personHome')">
-              <img src="../../../assets/images/index1.png" />
-              <p>竞彩足球</p>
-              <span>5</span>
-            </van-grid-item>
-            <van-grid-item>
-              <img src="../../../assets/images/index2.png" />
-              <p>竞彩蓝球</p>
-            </van-grid-item>
-            <van-grid-item>
-              <img src="../../../assets/images/index2.png" />
-              <p>竞彩蓝球</p>
-            </van-grid-item>
-            <van-grid-item>
-              <img src="../../../assets/images/index2.png" />
-              <p>竞彩蓝球</p>
+            <van-grid-item
+              v-for="(item,i) in person"
+              :key="i"
+              @click="detailExpert(item.userId)"
+              v-if="i<8"
+            >
+              <img :src="item.icon" />
+              <p>{{item.nickname}}</p>
+              <span>{{item.flowCount}}</span>
             </van-grid-item>
           </van-grid>
         </div>
@@ -70,22 +64,17 @@
         </div>
         <div class="hong">
           <van-grid :column-num="4" class="menu">
-            <van-grid-item>
-              <img src="../../../assets/images/index1.png" />
-              <p>竞彩足球</p>
-              <span>5</span>
-            </van-grid-item>
-            <van-grid-item>
-              <img src="../../../assets/images/index2.png" />
-              <p>竞彩蓝球</p>
-            </van-grid-item>
-            <van-grid-item>
-              <img src="../../../assets/images/index2.png" />
-              <p>竞彩蓝球</p>
-            </van-grid-item>
-            <van-grid-item>
-              <img src="../../../assets/images/index2.png" />
-              <p>竞彩蓝球</p>
+            <van-grid-item
+              v-for="(item,i) in  joinWinTopList "
+              :key="i"
+              @click="detailExpert(item.userId)"
+              v-if="i<4"
+            >
+              <!-- <img :src="item.icon" /> -->
+              <img :src="user_img" alt />
+              <p>{{item.nickname}}</p>
+              <p class="lian">{{item.winCount}}连红</p>
+              <span>{{item.flowCount}}</span>
             </van-grid-item>
           </van-grid>
         </div>
@@ -94,53 +83,130 @@
         </div>
         <div class="jiao">
           <van-grid :column-num="2" class="dian">
-            <van-grid-item>
+            <van-grid-item v-for="(item,i) in focusList" :key="i" @click="detail(item)" v-if="i<4">
               <div class="con">
-                <img src="../../../assets/images/index1.png" />
-                <p>竞彩足球</p>
+                <img :src="item.icon ||user_img" />
+                <p v-if="item.ballType=='zc'">竞彩足球</p>
+                <p v-else>竞彩篮球</p>
               </div>
               <div class="text">
                 <span>奖金</span>
-                <h3>121221元</h3>
-              </div>
-            </van-grid-item>
-            <van-grid-item>
-              <div class="con">
-                <img src="../../../assets/images/index1.png" />
-                <p>竞彩足球</p>
-              </div>
-              <div class="text">
-                <span>奖金</span>
-                <h3>121221元</h3>
-              </div>
-            </van-grid-item>
-            <van-grid-item>
-              <div class="con">
-                <img src="../../../assets/images/index1.png" />
-                <p>竞彩足球</p>
-              </div>
-              <div class="text">
-                <span>奖金</span>
-                <h3>121221元</h3>
-              </div>
-            </van-grid-item>
-            <van-grid-item>
-              <div class="con">
-                <img src="../../../assets/images/index1.png" />
-                <p>竞彩足球</p>
-              </div>
-              <div class="text">
-                <span>奖金</span>
-                <h3>121221元</h3>
+                <h3>{{item.winMoney}}元</h3>
               </div>
             </van-grid-item>
           </van-grid>
         </div>
-        <div class="title">
-          <h3>最新赛事</h3>
-        </div>
+        <van-dropdown-menu>
+          <van-dropdown-item v-model="value1" :options="option1" @change="changeValue" />
+        </van-dropdown-menu>
 
-        <div
+        <van-tabs v-model="active" @click="showP">
+          <van-tab title="消费金额">
+            <div class="wrap" v-for="(item,i) in ballList" :key="i">
+              <div class="head" @click="detailExpert(item.userId)">
+                <img :src="item.userInfor.icon" alt />
+                <!-- <img :src="user_img" alt /> -->
+                <div>
+                  <p>{{item.userInfor.nickname}}</p>
+                  <!-- <p>{{$METHOD.format($route.params.bookTime/1000,'MM-dd hh:mm')}}</p> -->
+                  <p>{{$METHOD.format(item.bookTime/1000,'MM-dd hh:mm')}}</p>
+                </div>
+              </div>
+              <div class="con">
+                <div class="text">{{item.describeText}}</div>
+                <div class="tab">
+                  <span class="bao">保{{item.promiseBet}}</span>
+                  <table border="1">
+                    <tr class="type">
+                      <th>类型</th>
+                      <th>消费金额</th>
+                      <th>单倍金额</th>
+                      <th></th>
+                    </tr>
+                    <tr class="mon">
+                      <td v-if="item.type=='1'">竞彩足球</td>
+                      <td v-if="item.type=='2'">竞彩篮球</td>
+                      <td>{{item.times*item.buyWagers*2}}元</td>
+                      <td>{{item.buyWagers*2}}元</td>
+                      <td>
+                        <van-button type="danger" size="mini" @click="showPopup(item)">跟单</van-button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="time">
+                  <div>
+                    <van-icon
+                      name="fire"
+                      size="12px"
+                      v-for="(item,index) in shouDan(item)"
+                      :key="index"
+                      color="red"
+                    />
+                  </div>
+
+                  <p>截止时间：{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}</p>
+                </div>
+              </div>
+            </div>
+          </van-tab>
+          <van-tab title="跟单数">
+            <div class="wrap" v-for="(item,i) in ballList" :key="i">
+              <div class="head" @click="detailExpert(item.userId)">
+                <img :src="item.userInfor.icon" alt />
+                <div>
+                  <p>{{item.userInfor.nickname}}</p>
+                  <!-- <p>{{$METHOD.format($route.params.bookTime/1000,'MM-dd hh:mm')}}</p> -->
+                  <p>{{$METHOD.format(item.bookTime/1000,'MM-dd hh:mm')}}</p>
+                </div>
+              </div>
+              <div class="con">
+                <div class="text">{{item.describeText}}</div>
+                <div class="tab">
+                  <span class="bao">保{{item.promiseBet}}</span>
+                  <table border="1">
+                    <tr class="type">
+                      <th>类型</th>
+                      <th>消费金额</th>
+                      <th>单倍金额</th>
+                      <th></th>
+                    </tr>
+                    <tr class="mon">
+                      <td v-if="item.type=='1'">竞彩足球</td>
+                      <td v-if="item.type=='2'">竞彩篮球</td>
+                      <td>{{item.times*item.buyWagers*2}}元</td>
+                      <td>{{item.buyWagers*2}}元</td>
+                      <td>
+                        <van-button type="danger" size="mini" @click="showPopup(item)">跟单</van-button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="time">
+                  <div>
+                    <van-icon
+                      name="fire"
+                      size="12px"
+                      v-for="(item,index) in shouDan(item)"
+                      :key="index"
+                      color="red"
+                    />
+                  </div>
+
+                  <p>截止时间：{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}</p>
+                </div>
+              </div>
+            </div>
+          </van-tab>
+        </van-tabs>
+
+        <!-- <div class="title">
+          <h3>最新赛事</h3>
+        </div>-->
+
+        <!-- <div
           class="hot"
           v-for="(image, index) in list"
           :key="index"
@@ -161,24 +227,17 @@
               <h3>{{image.acnAbbr}}</h3>
             </div>
           </div>
-          <!-- <div class="info"> -->
-          <!-- <span>胜 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].h}}</span>
-            <span>平 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].d}}</span>
-          <span>负 {{image.footBallBet.odds_list.had.odds[image.footBallBet.odds_list.had.odds.length-1].a}}</span>-->
-          <!-- <div class="btn">立即下注</div> -->
-          <!-- </div> -->
-        </div>
+         
+        </div>-->
 
-        <div class="title">
-          <h3>大神推单</h3>
-          <!-- <van-icon name="arrow" @click="$router.push('/documentary')" /> -->
+        <!-- <div class="title">
+          <h3>大神推单</h3>     
         </div>
         <div class="user-list" v-for="(item,index) in person" :key="index">
           <div class="item">
             <div class="top">
               <div class="avatar">
-                <img :src="item.icon || user_img" alt />
-                <!-- <img :src="$store.state.userInfo.icon " /> -->
+                <img :src="item.icon || user_img" alt />              
               </div>
               <div class="info">
                 <div class="username">
@@ -191,7 +250,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
 
         <!-- <div class="title">
         <h3>精选推荐</h3>
@@ -257,7 +316,19 @@ export default {
       imgList: [],
       user_img: user_img,
       isLoading: false,
-      value: ""
+      value: "",
+      focusList: [],
+      value1: 0,
+      option1: [
+        { text: "全部", value: 0 },
+        { text: "竞彩足球", value: 1 },
+        { text: "竞彩篮球", value: 2 }
+      ],
+      foogBallList: [],
+      basketBallList: [],
+      ballList: [],
+      active: 0,
+      joinWinTopList: []
     };
   },
   components: {
@@ -267,9 +338,120 @@ export default {
     this.getList();
     this.getTopPerson();
     this.getImg();
+    this.getFocus();
+    this.getListBall();
+    this.getBasketList();
+    this.getjoinWinTop();
   },
   mounted() {},
   methods: {
+    detailExpert(id) {
+      this.$router.push("/personHome/" + id);
+    },
+    getjoinWinTop() {
+      this.$SERVER.joinWinTop().then(res => {
+        this.joinWinTopList = res.data.list;
+        console.log(this.joinWinTopList);
+      });
+    },
+    shouDan(item) {
+      var a = 0;
+      if (item.flowCount >= 1 && item.flowCount <= 5) {
+        a = 1;
+      } else if (item.flowCount > 5 && item.flowCount <= 50) {
+        a = 2;
+      } else if (item.flowCount > 50 && item.flowCount <= 200) {
+        a = 3;
+      } else if (item.flowCount > 200 && item.flowCount <= 500) {
+        a = 4;
+      } else if (item.flowCount > 500) {
+        a = 5;
+      }
+      return a;
+    },
+    compare(property) {
+      return function(a, b) {
+        var value1 = a[property];
+        var value2 = b[property];
+        return value2 - value1;
+      };
+    },
+    compare1(property, property1) {
+      return function(a, b) {
+        var value1 = a[property] * a[property1] * 2;
+        var value2 = b[property] * b[property1] * 2;
+        return value2 - value1;
+      };
+    },
+    showP(name, title) {
+      if (title == "跟单数") {
+        this.ballList.sort(this.compare("flowCount"));
+      } else {
+        this.ballList.sort(this.compare1("times", "buyWagers"));
+      }
+      console.log(this.ballList);
+    },
+    getListBall() {
+      this.$SERVER
+        .getFootBallCanFollowOrderList({
+          pagenum: 1,
+          pagesize: 1000
+        })
+        .then(res => {
+          this.foogBallList = res.data.list;
+          this.ballList = res.data.list;
+        })
+        .catch(err => {});
+    },
+    getBasketList() {
+      this.$SERVER
+        .getBasketBallCanFollowOrderList({
+          pagenum: 1,
+          pagesize: 1000
+        })
+        .then(res => {
+          this.basketBallList = res.data.list;
+          this.ballList = [...this.ballList, ...this.basketBallList];
+          console.log(this.ballList);
+        })
+        .catch(err => {});
+    },
+    changeValue(value) {
+      if (value == "0") {
+        this.ballList = [...this.foogBallList, ...this.basketBallList];
+      }
+      if (value == "1") {
+        this.ballList = this.foogBallList;
+      }
+
+      if (value == "2") {
+        this.ballList = this.basketBallList;
+      }
+      console.log(this.list);
+    },
+    detail(item) {
+      this.$router.push({
+        name: "consumption",
+        params: {
+          ballType: item.ballType,
+          orderId: item.orderId,
+          icon: item.icon,
+          nickname: item.nickname,
+          bookTime: item.bookTime
+        }
+      });
+    },
+    getFocus() {
+      this.$SERVER
+        .getFocusOfToday({
+          pagesize: 10,
+          pagenum: 1
+        })
+        .then(res => {
+          this.focusList = res.data.list;
+        });
+    },
+
     onSearch() {},
     onRefresh() {
       setTimeout(() => {
@@ -307,6 +489,8 @@ export default {
           this.person[i].userInfor = userInfor;
           this.person[i].id = this.person[i].orderId;
         }
+
+        console.log(this.person);
       });
     },
     showPopup(item) {
@@ -381,6 +565,99 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.wrap {
+  margin-bottom: 5px;
+  .head {
+    width: 100%;
+    height: 70px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    div {
+      margin-left: 10px;
+    }
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    p {
+      &:first-child {
+        font-size: 14px;
+        color: #494949;
+      }
+    }
+    p {
+      &:last-child {
+        font-size: 12px;
+        color: #777;
+      }
+    }
+  }
+  .title {
+    color: #777;
+    font-size: 13px;
+    padding: 5px;
+  }
+  .con {
+    background-color: #fff;
+    padding: 5px 10px;
+    .text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 14px;
+      color: #777;
+      padding: 5px 0;
+    }
+    .tab {
+      .bao {
+        position: absolute;
+        /* top: 15px; */
+        right: 10px;
+        /* top: 0px; */
+        margin-top: -5px;
+        display: inline-block;
+        font-size: 12px;
+        width: 34px;
+        height: 15px;
+        text-align: center;
+        line-height: 15px;
+        background-color: #87cefa;
+        color: white;
+        border-radius: 2px;
+      }
+      table {
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        .type {
+          height: 25px;
+          background-color: #f8f8f8;
+          line-height: 25px;
+          color: #777;
+        }
+        .mon {
+          height: 35px;
+          line-height: 35px;
+          border-bottom: 1px solid #eee;
+        }
+      }
+    }
+    .time {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 5px;
+      p {
+        font-size: 12px;
+        color: #777;
+      }
+    }
+  }
+}
 .banner {
   width: 100%;
   height: 150px;
@@ -421,6 +698,7 @@ export default {
     line-height: 14px;
     position: absolute;
     right: 25px;
+    top: 42px;
   }
   img {
     width: 50px;
@@ -443,11 +721,12 @@ export default {
     p {
       font-size: 14px;
       margin-top: 8px;
-      color: #777;
+      color: #494949;
     }
   }
 }
 .hong {
+  background-color: #fff;
   .menu {
     img {
       width: 35px;
@@ -457,7 +736,17 @@ export default {
     p {
       font-size: 14px;
       margin-top: 8px;
-      color: #777;
+      color: #494949;
+    }
+    .lian {
+      color: #f24a44;
+      width: 50px;
+      text-align: center;
+      height: 19px;
+      background-color: #ffc1c1;
+      font-size: 12px;
+      line-height: 19px;
+      border-radius: 10px;
     }
   }
 }

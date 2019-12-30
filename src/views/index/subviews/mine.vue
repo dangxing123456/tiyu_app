@@ -36,6 +36,16 @@
             <span>店内账本</span>
             <h4>￥{{$store.state.userInfo.coin}}</h4>
           </div>
+          <div class="money">
+            <van-icon name="card" class="ico" />
+            <span>我的佣金</span>
+            <h4>￥{{personList.yongjin}}</h4>
+          </div>
+          <div class="money">
+            <van-icon name="card" class="ico" />
+            <span>冻结资金</span>
+            <h4>￥{{personList.orderingMoney}}</h4>
+          </div>
           <div class="btn-group">
             <van-button plain type="danger" size="small" block>清账</van-button>&nbsp;&nbsp;&nbsp;&nbsp;
             <van-button type="danger" size="small" block>储值</van-button>
@@ -56,7 +66,7 @@
           </van-grid-item>
         </van-grid>
       </van-panel>
-      <!-- <van-panel title="我的服务" class="panel">
+      <van-panel title="我的服务" class="panel">
         <van-grid :column-num="3">
           <van-grid-item
             v-for="(item,i) in menu2"
@@ -69,7 +79,7 @@
             <van-icon :name="item.icon" :color="item.color" slot="icon" size="25px" class="ico" />
           </van-grid-item>
         </van-grid>
-      </van-panel>-->
+      </van-panel>
     </div>
   </div>
 </template>
@@ -107,28 +117,35 @@ export default {
         { name: "彩店信息", path: "/kefu", icon: "shop", color: "#E91E63" }
       ],
       menu2: [
-        { name: "订单推荐", path: "/wallet", icon: "star", color: "#4CAF50" },
         {
-          name: "发单收益",
+          name: "实名认证",
+          path: "/wallet",
+          icon: "manager",
+          color: "#4CAF50"
+        },
+        {
+          name: "注销用户",
           path: "/orderRecord",
-          icon: "gold-coin",
+          icon: "map-marked",
           color: "#E91E63"
         },
         {
-          name: "跟单还款",
-          path: "/invitation",
-          icon: "card",
+          name: "经纪人",
+          path: "/friends",
+          icon: "friends",
           color: "#e73736"
         },
         { name: "金币", path: "/qrcode", icon: "gold-coin", color: "#2196F3" }
       ],
       user_img: user_img,
       sumMoney: 0,
-      img: ""
+      img: "",
+      personList: {}
     };
   },
   created() {
-     console.log(this.$METHOD.getStore("token"));
+    console.log(this.$METHOD.getStore("token"));
+    this.getPerson();
     this.$SERVER
       .getUserWalletExchangeHIstory({
         userId: this.$store.state.userInfo.userId,
@@ -142,6 +159,17 @@ export default {
   },
   mounted() {},
   methods: {
+    getPerson() {
+      this.$SERVER
+        .getUserByUserId({
+          userId: this.$store.state.userInfo.userId
+        })
+        .then(res => {
+          this.personList = res.data;
+          console.log(this.personList);
+        })
+        .catch(err => {});
+    },
     uploadAvatar(file) {
       let formData = new FormData();
       formData.append("file", file.file);

@@ -84,6 +84,7 @@ export default new Vuex.Store({
     footId: [],
     sumcount: 0,
     money: 0,
+    flag: false,
     //蓝球
     basketResult: [],
     basketSelectResult: [],
