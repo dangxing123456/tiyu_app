@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <navBar :goback="false" title="发现"></navBar>
+    <navBar :goback="true" title="发现"></navBar>
     <div class="main">
       <div class="head">
         <div @click="detail">
@@ -119,37 +119,6 @@
     </div>
     <!-- 组件 -->
     <popup ref="pop" v-model="currentValue"></popup>
-
-    <!-- <van-popup v-model="shiliShow" round>
-      <div class="shili">
-        <h3>实力专家指数</h3>
-        <div class="wrap">
-          <p>实力指数根据用户多项数据</p>
-          <ul>
-            <li>1.近30日发单4单</li>
-            <li>2.近7日盈利率不低于1%</li>
-            <li>3.近15日连红1单</li>
-            <li>4.近7日命中率不低于40%</li>
-            <li>5.近30日盈利率不低于1%</li>
-          </ul>
-          <p>计算出来的综合数值, 该数字越高,则此发单人整体能力越强,本周状态越好,更容易带领大家红单</p>
-        </div>
-        <div class="bot" @click="btn">
-          <span>确认</span>
-        </div>
-      </div>
-    </van-popup>
-    <van-popup v-model="mingShow" round>
-      <div class="shili">
-        <h3>实力专家指数</h3>
-        <div class="wrap wrap1">
-          <p>命中率统计的是发单人近7日的发单平均命中率</p>
-        </div>
-        <div class="bot" @click="btn1">
-          <span>确认</span>
-        </div>
-      </div>
-    </van-popup>-->
   </div>
 </template>
 

@@ -78,42 +78,7 @@ const router = new Router({
             index: 1
           }
         },
-        {
-          path: "/find",
-          name: "find",
-          component: () => import("@/views/index/subviews/find.vue"),
-          // redirect: { name: "documentary" },
-          // children: [
-          //   {
-          //     // 跟单
-          //     path: "/documentary",
-          //     name: "documentary",
-          //     component: () => import("@/views/found/documentary.vue")
-          //   },
-          //   {
-          //     // 推荐
-          //     path: "/recommended",
-          //     name: "recommended",
-          //     component: () => import("@/views/found/recommended.vue")
-          //   },
-          //   {
-          //     // 合买
-          //     path: "/chipped",
-          //     name: "chipped",
-          //     component: () => import("@/views/found/chipped.vue")
-          //   }
-          // ],
-          meta: {
-            keepAlive: false,
-            isTransition: true,
-            title: "发现",
-            isMember: false,
-            isLogin: false,
-            icon: "3-1",
-            icon_press: "3-2",
-            index: 2
-          }
-        },
+
         {
           path: "/mine",
           name: "mine",
@@ -126,10 +91,72 @@ const router = new Router({
             isLogin: true,
             icon: "4-1",
             icon_press: "4-2",
-            index: 3
+            index: 2
           }
         }
       ]
+    },
+    {
+      path: "/find",
+      name: "find",
+      component: () => import("@/views/index/subviews/find.vue"),
+      // redirect: { name: "documentary" },
+      // children: [
+      //   {
+      //     // 跟单
+      //     path: "/documentary",
+      //     name: "documentary",
+      //     component: () => import("@/views/found/documentary.vue")
+      //   },
+      //   {
+      //     // 推荐
+      //     path: "/recommended",
+      //     name: "recommended",
+      //     component: () => import("@/views/found/recommended.vue")
+      //   },
+      //   {
+      //     // 合买
+      //     path: "/chipped",
+      //     name: "chipped",
+      //     component: () => import("@/views/found/chipped.vue")
+      //   }
+      // ],
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "排行榜",
+        isMember: false,
+        isLogin: false,
+        icon: "3-1",
+        icon_press: "3-2",
+        index: 2
+      }
+    },
+    //排行榜榜
+    {
+      path: "/bang",
+      name: "bang",
+      component: () => import("@/views/rankingList/bang.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "排行榜",
+        isMember: false,
+        isLogin: false
+      }
+    },
+     //个人主页
+     {
+      path: "/personHome",
+      name: "personHome",
+      component: () => import("@/views/detail/personHome.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "个人主页",
+        isMember: false,
+        isLogin: false
+      }
     },
     //连红榜
     {
@@ -141,9 +168,7 @@ const router = new Router({
         isTransition: true,
         title: "连红榜",
         isMember: false,
-        isLogin: false,
-        icon: "4-1",
-        icon_press: "4-2"
+        isLogin: false
       }
     },
     //命中榜
@@ -156,9 +181,7 @@ const router = new Router({
         isTransition: true,
         title: "命中榜",
         isMember: false,
-        isLogin: false,
-        icon: "4-1",
-        icon_press: "4-2"
+        isLogin: false
       }
     },
     //盈利榜

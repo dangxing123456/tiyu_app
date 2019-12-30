@@ -1,6 +1,7 @@
 <template>
   <div class="container" id="shop">
     <navBar :goback="true"></navBar>
+    <p class="tie">*页面显示盘口及赔率仅供参考,请以实际票样为准</p>
     <div class="head">
       <div class="div1" @click="$router.push('/racebasketball')">+添加/编辑赛事</div>
       <div @click="removeAll">清空列表</div>
@@ -15,6 +16,12 @@
           <p></p>
         </div>
         <div class="right">
+          <div class="div1">
+            <span class="rang">{{item.num}}</span>
+            <span>[主]{{item.hcn}}</span>
+            <span style="color:#777">VS</span>
+            <span>[客]{{item.acnAbbr}}</span>
+          </div>
           <div class="tab">
             <div class="left1">
               <p class="p1">
@@ -724,6 +731,12 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.tie {
+  background-color: #b0e2ff;
+  font-size: 12px;
+  padding: 5px;
+  color: #777;
+}
 .bb {
   border: 1px solid #eeeeee;
 }
@@ -769,11 +782,12 @@ export default {
       padding-bottom: 10px;
       font-size: 14px;
       color: #4b4949;
-      width: 88%;
+      width: 100%;
     }
     .tab {
       display: flex;
       width: 5.45rem;
+      margin-left: 15px;
       .left1 {
         float: left;
         color: #4b4949;

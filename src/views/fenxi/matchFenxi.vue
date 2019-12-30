@@ -124,7 +124,7 @@
         <van-tab title="射手">
           <div class="div">
             <div class="title">
-              <h4>{{wrap.h.team_name_abbr}}射手</h4>
+              <h4 v-if="wrap.h.team_name_abbr">{{wrap.h.team_name_abbr}}射手</h4>
             </div>
             <div class="con" v-for="(item,index) in wrap.h.scorer" :key="index">
               <div class="head">
@@ -142,7 +142,7 @@
           </div>
           <div class="div">
             <div class="title">
-              <h4>{{wrap.a.team_name_abbr}}射手</h4>
+              <h4 v-if="wrap.a.team_name_abbr">{{wrap.a.team_name_abbr}}射手</h4>
             </div>
             <div class="con" v-for="(item,index) in wrap.a.scorer" :key="index">
               <div class="head">

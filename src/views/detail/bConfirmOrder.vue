@@ -3,7 +3,7 @@
     <navBar :goback="true" :title="title"></navBar>
     <div class="main">
       <van-cell-group>
-        <van-field placeholder="方案宣言..." v-model="value" />
+        <van-field v-model="value" rows="1" autosize type="textarea" placeholder="方案宣言..." />
       </van-cell-group>
       <div class="content">
         <van-cell-group>

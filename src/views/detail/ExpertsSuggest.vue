@@ -15,7 +15,7 @@
             </p>
             <p class="p2">
               <span>砖粉</span>
-              <span class="span1">658</span>
+              <!-- <span class="span1">658</span> -->
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@
             <i></i>
             <span class="zu" v-if="$route.params.type=='a'">足</span>
             <span class="zu" v-else>篮</span>
-            <span>单关</span>
+            <!-- <span>单关</span> -->
           </div>
           <div class="right">
             <span>最高SP已隐藏</span>
@@ -128,8 +128,8 @@
             <div class="left">
               <span class="zu" v-if="$route.params.type=='a'">足</span>
               <span class="zu" v-else>篮</span>
-              <span>2串1</span>
-              <span>最高SP2.76</span>
+              <!-- <span>2串1</span>
+              <span>最高SP2.76</span> -->
             </div>
             <div class="right">
               <span>{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}已截止</span>

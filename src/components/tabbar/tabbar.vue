@@ -33,7 +33,9 @@ export default {
     };
   },
   created() {
+   
     this.tabList = this.$router.options.routes[0].children;
+     console.log(this.$router.options)
     this.$store.state.tabActiveIndex = this.tabList.findIndex(
       item => item.path === this.$route.path
     );
@@ -42,6 +44,7 @@ export default {
         item => item.path === this.$route.path
       );
     });
+    
     if (window.navigator.userAgent.match(/APICloud/i)) {
       this.bottom = api.safeArea.bottom;
     }

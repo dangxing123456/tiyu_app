@@ -69,76 +69,94 @@
       </div>
       <!-- 底部按钮 -->
       <div class="bot-btn">
-        <div>
-          <van-checkbox v-model="checked" checked-color="#07c160">显示固定单关(橙色框内)</van-checkbox>
+        <div class="check">
+          <van-checkbox v-model="checked" shape="square" checked-color="#FFA500">显示固定单关(橙色框内)</van-checkbox>
         </div>
-        <div class="text">
+        <!-- <div class="text">
           <p v-if="$store.state.basketSumcount==0">至少选择2场比赛</p>
           <p v-if="$store.state.basketSumcount>=1">已选择{{$store.state.basketSumcount}}场比赛</p>
           <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
+        </div>-->
+        <div class="btn">
+          <div class="delete" @click="del">
+            <p>
+              <van-icon name="delete" size="19px" />
+            </p>
+            <p>清空</p>
+          </div>
+          <div>
+            <p v-if="$store.state.basketSumcount==0">至少选择2场比赛</p>
+            <p v-if="$store.state.basketSumcount>=1">已选择{{$store.state.basketSumcount}}场比赛</p>
+          </div>
+          <div>
+            <!-- <van-button type="danger" size="large" @click="confirm">确定</van-button> -->
+            <van-button round type="danger" @click="$router.push('/bConfirmPlan')" size="small">确定</van-button>
+          </div>
+
+          <!-- <van-button type="default" size="large">清空</van-button>
+          <van-button type="danger" size="large">确定</van-button>-->
+        </div>
+        <!-- <van-button type="default" size="large">取消</van-button>
+        <van-button type="danger" size="large" @click="$router.push('/bConfirmPlan')">确定</van-button>-->
+      </div>
+    </div>
+    <!-- 下拉菜单 -->
+    <van-action-sheet v-model="show" :actions="actions">
+      <div class="content">
+        <div class="head">
+          <h3>赛事筛选</h3>
+          <span>清空</span>
+        </div>
+        <div class="wrapper">
+          <ul>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+            <li>西甲(8)</li>
+          </ul>
+        </div>
+        <div class="senf">
+          <h3>赔率筛选</h3>
+        </div>
+        <div class="bottom">
+          <div class="radio">
+            <van-checkbox v-model="checked">赔率小于:</van-checkbox>
+            <input type="text" value="1.5" />
+          </div>
+          <div class="con">
+            <div>
+              <p>赔率筛选范围：</p>
+            </div>
+            <div>
+              <p>足球 胜平负/让球胜平负</p>
+              <p>篮球 胜负/让分胜负</p>
+            </div>
+          </div>
         </div>
         <div class="btn">
           <van-button type="default" size="large">取消</van-button>
-          <van-button type="danger" size="large" @click="$router.push('/bConfirmPlan')">确定</van-button>
+          <van-button type="danger" size="large">确定</van-button>
         </div>
       </div>
-      <!-- 下拉菜单 -->
-      <van-action-sheet v-model="show" :actions="actions">
-        <div class="content">
-          <div class="head">
-            <h3>赛事筛选</h3>
-            <span>清空</span>
-          </div>
-          <div class="wrapper">
-            <ul>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-              <li>西甲(8)</li>
-            </ul>
-          </div>
-          <div class="senf">
-            <h3>赔率筛选</h3>
-          </div>
-          <div class="bottom">
-            <div class="radio">
-              <van-checkbox v-model="checked">赔率小于:</van-checkbox>
-              <input type="text" value="1.5" />
-            </div>
-            <div class="con">
-              <div>
-                <p>赔率筛选范围：</p>
-              </div>
-              <div>
-                <p>足球 胜平负/让球胜平负</p>
-                <p>篮球 胜负/让分胜负</p>
-              </div>
-            </div>
-          </div>
-          <div class="btn">
-            <van-button type="default" size="large">取消</van-button>
-            <van-button type="danger" size="large">确定</van-button>
-          </div>
-        </div>
-      </van-action-sheet>
-    </div>
+    </van-action-sheet>
   </div>
 </template>
 
 <script>
 import navBar from "@/components/navbar/navbar.vue";
 export default {
+  inject: ["reload"],
   name: "racefootball",
   components: {
     navBar
@@ -175,11 +193,24 @@ export default {
   watch: {},
   updated() {},
   methods: {
+    del() {
+      for (var i = 0; i < this.$store.state.basketSelectResult.length; i++) {
+        for (
+          let j = 0;
+          j < this.$store.state.basketSelectResult[i].length;
+          j++
+        ) {
+          this.$store.state.basketSelectResult[i][j] = "";
+        }
+      }
+      this.$store.state.basketSumcount = 0;
+      this.getList();
+    },
     bgc(index) {
       if (this.coun(index) == "更多") {
         return "";
       } else {
-        return "bgColor";
+        return "bgColor1";
       }
     },
     coun(index) {
@@ -246,115 +277,117 @@ export default {
       }
 
       this.$store.state.basketSumcount = arr.length;
+    },
+    getList() {
+      this.$SERVER
+        .getBasketBallMatch({
+          pagenum: 1,
+          pagesize: 50
+        })
+        .then(res => {
+          console.log(res.data.list);
+          if (res.code == 200) {
+            var arr = [];
+            for (var i = 0; i < res.data.list.length; i++) {
+              this.$store.state.basketSelectResult.push([]);
+              this.$store.state.basketSelectValue.push([]);
+            }
+            res.data.list.forEach((e, i) => {
+              var a;
+              var b;
+
+              if (!e.basketBallBet.odds_list.mnl) {
+                a = "";
+                b = "";
+              } else {
+                a =
+                  e.basketBallBet.odds_list.mnl[
+                    e.basketBallBet.odds_list.mnl.length - 1
+                  ].a;
+                b =
+                  e.basketBallBet.odds_list.mnl[
+                    e.basketBallBet.odds_list.mnl.length - 1
+                  ].h;
+              }
+              arr[i] = {
+                id: e.id,
+                date: e.date,
+                num: e.num,
+                lcnAbbr: e.lcnAbbr,
+                time: e.time,
+                hcn: e.hcn,
+                acn: e.acn,
+                fen:
+                  e.basketBallBet.odds_list.hdc[
+                    e.basketBallBet.odds_list.hdc.length - 1
+                  ].fixedodds,
+                sum:
+                  e.basketBallBet.odds_list.hilo[
+                    e.basketBallBet.odds_list.hilo.length - 1
+                  ].fixedodds,
+                // goalline: e.basketBallBet.odds_list.hhad.goalline,
+                basketBallBet: [
+                  a,
+                  b,
+                  e.basketBallBet.odds_list.hdc[
+                    e.basketBallBet.odds_list.hdc.length - 1
+                  ].a,
+                  e.basketBallBet.odds_list.hdc[
+                    e.basketBallBet.odds_list.hdc.length - 1
+                  ].h,
+                  e.basketBallBet.odds_list.hilo[
+                    e.basketBallBet.odds_list.hilo.length - 1
+                  ].h,
+                  e.basketBallBet.odds_list.hilo[
+                    e.basketBallBet.odds_list.hilo.length - 1
+                  ].l,
+                  e.basketBallBet.odds_list.wnm[
+                    e.basketBallBet.odds_list.wnm.length - 1
+                  ].l1,
+                  e.basketBallBet.odds_list.wnm[
+                    e.basketBallBet.odds_list.wnm.length - 1
+                  ].l2,
+                  e.basketBallBet.odds_list.wnm[
+                    e.basketBallBet.odds_list.wnm.length - 1
+                  ].l3,
+                  e.basketBallBet.odds_list.wnm[
+                    e.basketBallBet.odds_list.wnm.length - 1
+                  ].l4,
+                  e.basketBallBet.odds_list.wnm[
+                    e.basketBallBet.odds_list.wnm.length - 1
+                  ].l5,
+                  e.basketBallBet.odds_list.wnm[
+                    e.basketBallBet.odds_list.wnm.length - 1
+                  ].l6,
+                  e.basketBallBet.odds_list.wnm[
+                    e.basketBallBet.odds_list.wnm.length - 1
+                  ].w1,
+                  e.basketBallBet.odds_list.wnm[
+                    e.basketBallBet.odds_list.wnm.length - 1
+                  ].w2,
+                  e.basketBallBet.odds_list.wnm[
+                    e.basketBallBet.odds_list.wnm.length - 1
+                  ].w3,
+                  e.basketBallBet.odds_list.wnm[
+                    e.basketBallBet.odds_list.wnm.length - 1
+                  ].w4,
+                  e.basketBallBet.odds_list.wnm[
+                    e.basketBallBet.odds_list.wnm.length - 1
+                  ].w5,
+                  e.basketBallBet.odds_list.wnm[
+                    e.basketBallBet.odds_list.wnm.length - 1
+                  ].w6
+                ]
+              };
+            });
+            this.$store.state.basketResult = arr;
+          }
+        });
     }
   },
   mounted() {},
   created() {
-    this.$SERVER
-      .getBasketBallMatch({
-        pagenum: 1,
-        pagesize: 50
-      })
-      .then(res => {
-        console.log(res.data.list);
-        if (res.code == 200) {
-          var arr = [];
-          for (var i = 0; i < res.data.list.length; i++) {
-            this.$store.state.basketSelectResult.push([]);
-            this.$store.state.basketSelectValue.push([]);
-          }
-          res.data.list.forEach((e, i) => {
-            var a;
-            var b;
-
-            if (!e.basketBallBet.odds_list.mnl) {
-              a = "";
-              b = "";
-            } else {
-              a =
-                e.basketBallBet.odds_list.mnl[
-                  e.basketBallBet.odds_list.mnl.length - 1
-                ].a;
-              b =
-                e.basketBallBet.odds_list.mnl[
-                  e.basketBallBet.odds_list.mnl.length - 1
-                ].h;
-            }
-            arr[i] = {
-              id: e.id,
-              date: e.date,
-              num: e.num,
-              lcnAbbr: e.lcnAbbr,
-              time: e.time,
-              hcn: e.hcn,
-              acnAbbr: e.acnAbbr,
-              fen:
-                e.basketBallBet.odds_list.hdc[
-                  e.basketBallBet.odds_list.hdc.length - 1
-                ].fixedodds,
-              sum:
-                e.basketBallBet.odds_list.hilo[
-                  e.basketBallBet.odds_list.hilo.length - 1
-                ].fixedodds,
-              // goalline: e.basketBallBet.odds_list.hhad.goalline,
-              basketBallBet: [
-                a,
-                b,
-                e.basketBallBet.odds_list.hdc[
-                  e.basketBallBet.odds_list.hdc.length - 1
-                ].a,
-                e.basketBallBet.odds_list.hdc[
-                  e.basketBallBet.odds_list.hdc.length - 1
-                ].h,
-                e.basketBallBet.odds_list.hilo[
-                  e.basketBallBet.odds_list.hilo.length - 1
-                ].h,
-                e.basketBallBet.odds_list.hilo[
-                  e.basketBallBet.odds_list.hilo.length - 1
-                ].l,
-                e.basketBallBet.odds_list.wnm[
-                  e.basketBallBet.odds_list.wnm.length - 1
-                ].l1,
-                e.basketBallBet.odds_list.wnm[
-                  e.basketBallBet.odds_list.wnm.length - 1
-                ].l2,
-                e.basketBallBet.odds_list.wnm[
-                  e.basketBallBet.odds_list.wnm.length - 1
-                ].l3,
-                e.basketBallBet.odds_list.wnm[
-                  e.basketBallBet.odds_list.wnm.length - 1
-                ].l4,
-                e.basketBallBet.odds_list.wnm[
-                  e.basketBallBet.odds_list.wnm.length - 1
-                ].l5,
-                e.basketBallBet.odds_list.wnm[
-                  e.basketBallBet.odds_list.wnm.length - 1
-                ].l6,
-                e.basketBallBet.odds_list.wnm[
-                  e.basketBallBet.odds_list.wnm.length - 1
-                ].w1,
-                e.basketBallBet.odds_list.wnm[
-                  e.basketBallBet.odds_list.wnm.length - 1
-                ].w2,
-                e.basketBallBet.odds_list.wnm[
-                  e.basketBallBet.odds_list.wnm.length - 1
-                ].w3,
-                e.basketBallBet.odds_list.wnm[
-                  e.basketBallBet.odds_list.wnm.length - 1
-                ].w4,
-                e.basketBallBet.odds_list.wnm[
-                  e.basketBallBet.odds_list.wnm.length - 1
-                ].w5,
-                e.basketBallBet.odds_list.wnm[
-                  e.basketBallBet.odds_list.wnm.length - 1
-                ].w6
-              ]
-            };
-          });
-          this.$store.state.basketResult = arr;
-        }
-      });
-
+    this.getList();
     var arr = JSON.parse(JSON.stringify(this.$store.state.basketSelectResult));
     for (var i = 0; i < arr.length; i++) {
       for (var j = 0; j < arr[i].length; j++) {
@@ -376,6 +409,13 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.bgColor1 {
+  background-color: red;
+  color: white !important;
+  text-align: center !important;
+  height: 1.24rem !important;
+  line-height: 32px !important;
+}
 .main {
   padding-bottom: 120px;
 }
@@ -423,6 +463,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+   border-bottom: 1px solid #eeeeee;
   .right {
     width: 80%;
     font-size: 14px;
@@ -611,20 +652,46 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+  .check {
+    width: 100%;
+    background-color: #fff;
+    text-align: center;
+    padding: 8px 25%;
+
+    /deep/ .van-checkbox__label {
+      font-size: 14px;
+      color: orange;
+    }
+  }
   .text {
     width: 100%;
     background-color: rgb(250, 235, 275);
     text-align: center;
     padding: 5px 0px;
     font-size: 14px;
+    
     .pei {
       color: rgb(158, 150, 145);
       padding-top: 5px;
     }
   }
   .btn {
-    display: flex;
     width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #4b4949;
+    font-size: 13px;
+    padding-bottom: 8px;
+   
+    .delete {
+      text-align: center;
+      p {
+        color: #777;
+      }
+    }
   }
 }
 .bgColor {

@@ -82,13 +82,12 @@ export default {
       this.$router.push({
         name: "matchFenxi",
         params: {
-         
           head: {
-            id:item.id,
+            id: item.id,
             zhu: item.hcn,
             ke: item.acn,
-            hIcon:item.hIcon,
-            aIcon:item.aIcon,
+            hIcon: item.hIcon,
+            aIcon: item.aIcon,
             time: item.date + " " + item.time,
             fsH: item.fsH,
             fsA: item.fsA,
@@ -100,10 +99,29 @@ export default {
       });
     },
     onRefresh() {
+      this.page = 1;
       setTimeout(() => {
         this.$toast("刷新成功");
         this.isLoading = false;
-        this.getlist();
+        this.$SERVER
+          .getFootBallCurrentScore({
+            pagenum: this.page,
+            pagesize: 10
+          })
+          .then(res => {
+            for (var i = 0; i < res.data.list.length; i++) {
+              console.log(res.data.list[i].scoreStatus);
+              if (res.data.list[i].scoreStatus == "Played") {
+                this.list[i] = res.data.list[i];
+              }
+              if (res.data.list[i].scoreStatus == "Fixture") {
+                this.list1[i] = res.data.list[i];
+              }
+            }
+            console.log(this.list);
+            this.isLoading = false;
+            // this.page++;
+          });
       }, 500);
     },
     getlist() {
@@ -116,10 +134,10 @@ export default {
           for (var i = 0; i < res.data.list.length; i++) {
             if (res.data.list[i].scoreStatus == "Played") {
               this.count++;
-              this.list.push(res.data.list[i]);
+              this.list = this.list.concat(res.data.list[i]);
             } else {
               this.count1++;
-              this.list1.push(res.data.list[i]);
+              this.list1 = this.list1.concat(res.data.list[i]);
             }
           }
 

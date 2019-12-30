@@ -1,16 +1,17 @@
 <template>
   <div class="container">
     <div class="main">
-      <van-search
-        v-model="value"
-        placeholder="请输入搜索关键词"
-        show-action
-        shape="round"
-        @search="onSearch"
-      >
-        <div slot="action" @click="onSearch">搜索</div>
-      </van-search>
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <van-search
+          v-model="value"
+          placeholder="请输入搜索关键词"
+          show-action
+          shape="round"
+          @search="onSearch"
+        >
+          <div slot="action" @click="onSearch">搜索</div>
+        </van-search>
+
         <van-swipe :autoplay="3000" class="banner">
           <van-swipe-item v-for="(img, index) in imgList" :key="index">
             <img :src="img.url" />
@@ -24,15 +25,15 @@
         </div>-->
         <van-grid :column-num="3" class="menu">
           <van-grid-item @click="detailFoot">
-            <img src="../../../assets/images/index1.png" />
+            <img src="../../../assets/images/ball.png" />
             <p>竞彩足球</p>
           </van-grid-item>
           <van-grid-item @click="detailBasket">
-            <img src="../../../assets/images/index2.png" />
+            <img src="../../../assets/images/bask.png" />
             <p>竞彩蓝球</p>
           </van-grid-item>
-          <van-grid-item @click="detailBasket">
-            <img src="../../../assets/images/index2.png" />
+          <van-grid-item @click="$router.push('/bang')">
+            <img src="../../../assets/images/bang.png" />
             <p>排行榜</p>
           </van-grid-item>
         </van-grid>
@@ -41,9 +42,10 @@
         </div>
         <div class="plan">
           <van-grid :column-num="4" class="menu">
-            <van-grid-item>
+            <van-grid-item @click="$router.push('/personHome')">
               <img src="../../../assets/images/index1.png" />
               <p>竞彩足球</p>
+              <span>5</span>
             </van-grid-item>
             <van-grid-item>
               <img src="../../../assets/images/index2.png" />
@@ -63,7 +65,7 @@
           <h3>连红榜</h3>
           <span class="right">
             更多
-            <van-icon name="arrow" />
+            <van-icon name="arrow" @click="$router.push('/bang')" />
           </span>
         </div>
         <div class="hong">
@@ -71,6 +73,7 @@
             <van-grid-item>
               <img src="../../../assets/images/index1.png" />
               <p>竞彩足球</p>
+              <span>5</span>
             </van-grid-item>
             <van-grid-item>
               <img src="../../../assets/images/index2.png" />
@@ -406,6 +409,19 @@ export default {
 }
 
 .menu {
+  span {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    color: #fff;
+    background-color: red;
+    font-size: 12px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 14px;
+    position: absolute;
+    right: 25px;
+  }
   img {
     width: 50px;
     height: 50px;
@@ -414,6 +430,7 @@ export default {
   p {
     font-size: 14px;
     margin-top: 8px;
+    color: #777;
   }
 }
 .plan {
@@ -426,6 +443,7 @@ export default {
     p {
       font-size: 14px;
       margin-top: 8px;
+      color: #777;
     }
   }
 }
@@ -439,6 +457,7 @@ export default {
     p {
       font-size: 14px;
       margin-top: 8px;
+      color: #777;
     }
   }
 }
@@ -450,6 +469,7 @@ export default {
     .text {
       display: flex;
       align-items: center;
+      margin-left: 25px;
       span {
         color: #777;
         font-size: 14px;

@@ -4,7 +4,7 @@
       <div title="即时" class="instant">
         <p class="title" v-if="type==1&&count!=0">即时赛事{{count}}场</p>
         <p class="title" v-if="type==2&&count!=0">已完成比赛{{count}}场</p>
-        <div class="con" v-for="(item,index) in list" :key="index" @click="detail(item)">
+        <div class="con" v-for="(item,index) in list" :key="index" @click="detail(item)" >
           <div class="head">
             <div class="left">
               <span class="nba">{{item.lcn}}</span>

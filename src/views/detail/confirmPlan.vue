@@ -1,10 +1,12 @@
 <template>
   <div class="container" id="shop">
     <navBar :goback="true"></navBar>
+    <p class="tie">*页面显示盘口及赔率仅供参考,请以实际票样为准</p>
     <div class="head">
       <div class="div1" @click="$router.push('/racefootball')">+添加/编辑赛事</div>
       <div @click="removeAll">清空列表</div>
     </div>
+
     <div class="main">
       <div class="test" v-for="(item,index) in list" :key="index" v-if="show(index)">
         <div class="left">
@@ -15,6 +17,12 @@
           <p></p>
         </div>
         <div class="right">
+          <div class="div1">
+            <span class="rang">{{item.num}}</span>
+            <span>[主]{{item.hcn}}</span>
+            <span style="color:#777">VS</span>
+            <span>[客]{{item.acnAbbr}}</span>
+          </div>
           <div class="tab">
             <div class="left1">
               <p class="p1">
@@ -109,17 +117,10 @@
       </div>
     </div>
     <div class="bot-btn">
-      <div class="text">
-        <span>{{zhu}}注{{this.$store.state.value}}倍</span>
-        <span>
-          共
-          <span class="color">{{this.$store.state.money*this.$store.state.value}}元</span>
-        </span>
-        <span>
-          [奖金范围：
-          <span class="color">{{$METHOD.format45(maxBonus*this.$store.state.value,100)}}</span> 元]
-        </span>
-      </div>
+      <p class="tishi">
+        *由于店铺繁忙,本店当前最低消费
+        <span>10元</span>。
+      </p>
       <div class="con">
         <div @click="menu()">
           <span v-if="f.length==0">请选择过关方式</span>
@@ -132,8 +133,23 @@
         </div>
       </div>
       <div class="btn">
-        <van-button type="default" size="large">发起合买</van-button>
-        <van-button type="danger" size="large" @click="confirmOrder">下一步</van-button>
+        <div class="text">
+          <p>
+            <span>{{$store.state.sumcount}}场</span>
+            <span>{{zhu}}注{{this.$store.state.value}}倍</span>
+            <span>
+              共
+              <span class="color">{{this.$store.state.money*this.$store.state.value}}元</span>
+            </span>
+          </p>
+
+          <span class="fanwei">
+            [奖金范围：
+            <span class="color">{{$METHOD.format45(maxBonus*this.$store.state.value,100)}}</span> 元]
+          </span>
+        </div>
+        <!-- <van-button type="danger" size="large" @click="confirmOrder">下一步</van-button> -->
+        <van-button round type="info" color="red" size="large" @click="confirmOrder">下一步</van-button>
       </div>
     </div>
     <van-action-sheet v-model="showmenu">
@@ -191,7 +207,7 @@ export default {
       a: "",
       bet: [],
       value: 1,
-      zhu: "",
+      zhu: 0,
       money: "",
       maxBonus: "",
       showmenu: false,
@@ -258,6 +274,12 @@ export default {
       }
     },
     confirmOrder() {
+      if (this.$store.state.money * this.$store.state.value < 10) {
+        this.$toast({
+          message: "投注金额不能小于10元"
+        });
+        return;
+      }
       if (this.f.length == 0) {
         this.$toast({
           message: "请选择串法"
@@ -821,6 +843,12 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.tie {
+  background-color: #b0e2ff;
+  font-size: 12px;
+  padding: 5px;
+  color: #777;
+}
 .aa {
   display: none;
 }
@@ -864,7 +892,7 @@ export default {
       padding-bottom: 10px;
       font-size: 14px;
       color: #4b4949;
-      width: 88%;
+      width: 100%;
     }
     .tab {
       display: flex;
@@ -982,12 +1010,27 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
+  background-color: #fff;
+  .tishi {
+    font-size: 12px;
+    padding: 5px;
+    background-color: #ffdead;
+    padding-left: 20px;
+    color: #777;
+    span {
+      color: #f24a44;
+    }
+  }
   .text {
     width: 100%;
-    background-color: rgb(250, 235, 275);
+
     text-align: center;
     padding: 10px 0px;
     font-size: 12px;
+    margin-left: 60px;
+    .fanwei {
+      color: #777;
+    }
     .pei {
       color: rgb(158, 150, 145);
       padding-top: 5px;
@@ -1007,6 +1050,9 @@ export default {
       height: 45px;
       line-height: 45px;
       margin: 0;
+      span {
+        font-size: 15px;
+      }
       /deep/ .van-icon-arrow-down {
         float: right;
         margin: 15px;
@@ -1027,6 +1073,13 @@ export default {
   .btn {
     display: flex;
     width: 100%;
+    align-items: center;
+    /deep/ .van-button {
+      width: 150px;
+      height: 40px;
+      font-size: 14px;
+      line-height: 40px;
+    }
   }
 }
 .content {

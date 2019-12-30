@@ -3,7 +3,14 @@
     <navBar :goback="true" :title="title"></navBar>
     <div class="main">
       <van-cell-group>
-        <van-field placeholder="方案宣言..." v-model="value" />
+        <van-field
+          v-model="value"
+          rows="1"
+          autosize
+         
+          type="textarea"
+          placeholder="方案宣言..."
+        />
       </van-cell-group>
       <div class="content">
         <van-cell-group>
@@ -48,7 +55,7 @@ export default {
       checked: true,
       value: "",
       bei: "1.7",
-      loading:false
+      loading: false
     };
   },
   computed: {},
@@ -58,7 +65,7 @@ export default {
       if (this.checked == false) {
         this.bei = "";
       }
-      this.loading = true
+      this.loading = true;
       this.$SERVER
         .footBallBookOrder({
           wagers: this.$store.state.wagers,
@@ -72,8 +79,8 @@ export default {
         .then(res => {
           //下单成功
           if (res.code == 200) {
-            this.loading = false
-            this.$router.push('/orderRecord')
+            this.loading = false;
+            this.$router.push("/orderRecord");
             this.$toast.success("下单成功");
             this.$store.state.value = 1;
             for (var i = 0; i < this.$store.state.selectResult.length; i++) {

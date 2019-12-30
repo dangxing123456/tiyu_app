@@ -6,9 +6,7 @@
         <span>VS</span>
         <span>{{list.hcn}}</span>
       </div>
-      <div class="right" slot="right">
-        <span class="fenxi" @click="detail">分析</span>
-      </div>
+    
     </navBar>
     <div class="main">
       <h3>主队让分{{list.fen}}</h3>

@@ -14,6 +14,9 @@
 
     <div class="main">
       <div class="wrap" v-for="(item1,index) in $store.state.result" :key="index">
+        <div class="dan" v-if="item1.single==1">
+          <span>单</span>
+        </div>
         <div class="title">
           <span>{{item1.date}}</span>
           <span>{{item1.num}}</span>
@@ -36,20 +39,13 @@
               <span>{{item1.acnAbbr}}</span>
             </div>
             <div class="tab" v-if="item1.footBallBet">
-              <div class="left1">
-                <p class="p1">
-                  <span class="p1-first">0</span>
-                </p>
-                <p class="p2">
-                  <span :class="item1.goalline=='+1'?'p2-red':'p2-blue'">{{item1.goalline}}</span>
-                </p>
-              </div>
               <div class="center" v-if="item1.footBallBet">
-                <ul>
+                <ul :class="item1.single=='1'?'bor':''">
+                  <span class="p1-first">0</span>
                   <li
                     v-for="(item,i) in item1.footBallBet"
                     :key="i"
-                    v-if="i<6"
+                    v-if="i<3"
                     :class="addColor(index,i)"
                     @click="push(index,i,item)"
                   >
@@ -57,13 +53,33 @@
                     <span v-else-if="i==1 || i==4">平</span>
                     <span v-else-if="i==2 || i==5">负</span>
                     <span>{{item}}</span>
+                  </li>
+                </ul>
+                <ul :class="item1.single1=='1'?'bor':''">
+                  <span :class="item1.goalline=='+1'?'p2-red':'p2-blue'">{{item1.goalline}}</span>
+                  <li
+                    v-for="(item,i) in item1.footBallBet"
+                    :key="i"
+                    v-if="i>=3 && i<6"
+                    :class="addColor(index,i)"
+                    @click="push(index,i,item)"
+                  >
+                    <span v-if="i==0 || i==3">胜</span>
+
+                    <span>{{item}}</span>
 
                     <!-- <span class="dan" v-if="item1.single==1">单</span> -->
                   </li>
                 </ul>
               </div>
-              <div class="right1">
-                <span :class="bgc(index)" @click="$router.push('/allplay/'+index)">{{coun(index)}}</span>
+              <div
+                class="right1"
+                :class="item1.single=='1' ||item1.single1=='1' ||item1.single2=='1' ||item1.single3=='1' ||item1.single4=='1' ?'bor':''"
+              >
+                <span
+                  :class="bgc(item1,index)"
+                  @click="$router.push('/allplay/'+index)"
+                >{{coun(index)}}</span>
               </div>
             </div>
           </div>
@@ -80,9 +96,9 @@
           <p class="pei">[页面赔率仅供参考,请以实体票为准]</p>
         </div>-->
         <div class="btn">
-          <div class="delete">
+          <div class="delete" @click="del">
             <p>
-              <van-icon name="delete" />
+              <van-icon name="delete" size="19px" />
             </p>
             <p>清空</p>
           </div>
@@ -92,11 +108,11 @@
           </div>
           <div>
             <!-- <van-button type="danger" size="large" @click="confirm">确定</van-button> -->
-            <van-button round type="danger" size="small">确定</van-button>
+            <van-button round type="danger" @click="confirm" size="small">确定</van-button>
           </div>
 
           <!-- <van-button type="default" size="large">清空</van-button>
-          <van-button type="danger" size="large" @click="confirm">确定</van-button>-->
+          <van-button type="danger" size="large" >确定</van-button>-->
         </div>
       </div>
       <!-- 下拉菜单 -->
@@ -156,6 +172,15 @@ export default {
   },
   mounted() {},
   methods: {
+    del() {
+      for (var i = 0; i < this.$store.state.selectResult.length; i++) {
+        for (let j = 0; j < this.$store.state.selectResult[i].length; j++) {
+          this.$store.state.selectResult[i][j] = "";
+        }
+      }
+      this.$store.state.sumcount = 0;
+      this.getList();
+    },
     go(item) {
       console.log(item);
       this.$router.push({
@@ -225,11 +250,11 @@ export default {
       });
       return this.$store.state.selectResult[index];
     },
-    bgc(index) {
+    bgc(item, index) {
       if (this.coun(index) == "更多") {
         return "";
       } else {
-        return "bgColor";
+        return "bgColor1";
       }
     },
     coun(index) {
@@ -564,10 +589,20 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.bor {
+  border: 1px solid orange !important;
+}
 .bgColor {
   background-color: red;
   color: white !important;
   text-align: center !important;
+}
+.bgColor1 {
+  background-color: red;
+  color: white !important;
+  text-align: center !important;
+  height: 1.24rem !important;
+  line-height: 32px !important;
 }
 // 修改vant ui内置样式
 .menu {
@@ -605,11 +640,28 @@ export default {
   .title {
     color: #4b4949;
     text-align: center;
-    margin-top: 10px;
+    padding-top: 8px;
     font-size: 13px;
   }
   .wrap {
     position: relative;
+    .dan {
+      font-size: 12px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-top: 25px solid rgb(255, 187, 0);
+      border-right: 25px solid transparent;
+      span {
+        display: inline-block;
+
+        position: absolute;
+        width: 14px;
+        top: -25px;
+      }
+    }
   }
   .test {
     padding: 15px 10px;
@@ -621,7 +673,8 @@ export default {
 
     .right {
       font-size: 14px;
-      width: 80%;
+      width: 77%;
+      margin-right: 10px;
       .div1 {
         display: flex;
         justify-content: space-between;
@@ -636,6 +689,8 @@ export default {
         }
       }
       .tab {
+        display: flex;
+        align-items: center;
         .left1 {
           float: left;
           color: #4b4949;
@@ -679,8 +734,46 @@ export default {
         }
         .center {
           font-size: 12px;
+          width: 238px;
 
           ul {
+            width: 100%;
+            height: 32px;
+            border: 1px solid #ffffff;
+            border-bottom: none;
+            &:last-child {
+              border-top: none;
+            }
+            .p1-first {
+              background-color: rgb(204, 204, 204);
+              color: white;
+              display: inline-block;
+              width: 22px;
+              height: 32px;
+              float: left;
+              text-align: center;
+              line-height: 32px;
+            }
+            .p2-red {
+              background-color: #f00;
+              color: white;
+              display: inline-block;
+              width: 22px;
+              height: 32px;
+              float: left;
+              text-align: center;
+              line-height: 32px;
+            }
+            .p2-blue {
+              background-color: green;
+              color: white;
+              display: inline-block;
+              width: 22px;
+              height: 32px;
+              float: left;
+              text-align: center;
+              line-height: 32px;
+            }
             li {
               display: inline-block;
               height: 30px;
@@ -693,13 +786,6 @@ export default {
               & span:nth-child(2) {
                 color: #777;
               }
-
-              .dan {
-                position: absolute;
-                top: -18px;
-                left: 0;
-                color: rgb(255, 187, 0);
-              }
             }
           }
         }
@@ -709,7 +795,7 @@ export default {
             display: inline-block;
             height: 62px;
             width: 31px;
-            border: 1px solid #eeeeee;
+
             line-height: 62px;
             font-size: 12px;
             color: #777;

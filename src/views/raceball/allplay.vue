@@ -6,9 +6,6 @@
         <span>VS</span>
         <span>{{list.acnAbbr}}</span>
       </div>
-      <div class="right" slot="right">
-        <span class="fenxi">分析</span>
-      </div>
     </navBar>
     <div class="main">
       <h3>胜平负/让球</h3>
@@ -19,11 +16,25 @@
         </div>
 
         <div class="right">
-          <ul>
+          <ul :class="list.single=='1'?'bor':''">
             <li
               v-for="(item,i) in list.footBallBet"
               :key="i"
-              v-if="i<6"
+              v-if="i<3"
+              :class="addColor(i)"
+              @click="push(i,item)"
+            >
+              <span v-if="i==0 || i==3">胜</span>
+              <span v-else-if="i==1 || i==3">平</span>
+              <span v-else-if="i==2 || i==3">负</span>
+              <span>{{item}}</span>
+            </li>
+          </ul>
+          <ul :class="list.single1=='1'?'bor':''">
+            <li
+              v-for="(item,i) in list.footBallBet"
+              :key="i"
+              v-if="i>=3 && i<6"
               :class="addColor(i)"
               @click="push(i,item)"
             >
@@ -36,7 +47,7 @@
         </div>
       </div>
       <h3>总进球</h3>
-      <div class="second">
+      <div class="second" :class="list.single2=='1'?'bor':''">
         <div class="left">
           <p class="p1">总进球</p>
         </div>
@@ -63,7 +74,7 @@
         </div>
       </div>
       <h3>半全场</h3>
-      <div class="third">
+      <div class="third" :class="list.single3=='1'?'bor':''">
         <div class="left">
           <p class="p1">半全场</p>
         </div>
@@ -91,7 +102,7 @@
         </div>
       </div>
       <h3>比分</h3>
-      <div class="fourth">
+      <div class="fourth" :class="list.single4=='1'?'bor':''">
         <div class="sheng">
           <div class="left">
             <p class="p1">胜</p>
@@ -205,7 +216,6 @@ export default {
   watch: {},
   methods: {
     cancel() {
-    
       this.$router.go(-1);
     },
     push(i, val) {
@@ -236,6 +246,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.bor {
+  border: 1px solid orange;
+}
 .fenxi {
   color: #ffffff;
   font-size: 14px;
@@ -252,6 +265,9 @@ export default {
   }
   .first {
     font-size: 12px;
+    width: 100%;
+    height: 75px;
+
     .left {
       float: left;
       width: 10%;
@@ -269,13 +285,17 @@ export default {
       }
     }
     .right {
-      width: 90%;
+      width: 89%;
       float: left;
+      border: 1px solid #fff;
       ul {
+        // width: 100%;
+
+        height: 37px;
         li {
           display: inline-block;
           height: 35px;
-          width: 32%;
+          width: 32.6%;
           border: 1px solid #eeeeee;
           float: left;
           text-align: center;
@@ -287,6 +307,9 @@ export default {
   }
   .second {
     font-size: 12px;
+    width: 100%;
+    height: 74px;
+
     .left {
       float: left;
       width: 10%;
@@ -310,7 +333,7 @@ export default {
         li {
           display: inline-block;
           height: 35px;
-          width: 24%;
+          width: 24.3%;
           border: 1px solid #eeeeee;
           float: left;
           text-align: center;
@@ -326,6 +349,9 @@ export default {
   }
   .third {
     font-size: 12px;
+    width: 100%;
+    height: 111px;
+
     .left {
       float: left;
       width: 10%;
@@ -349,7 +375,7 @@ export default {
         li {
           display: inline-block;
           height: 35px;
-          width: 32%;
+          width: 32.6%;
           border: 1px solid #eeeeee;
           float: left;
           text-align: center;
@@ -365,6 +391,9 @@ export default {
   }
   .fourth {
     font-size: 12px;
+    width: 100%;
+    height: 259px;
+
     .sheng,
     .fu {
       .left {
@@ -391,7 +420,7 @@ export default {
           li {
             display: inline-block;
             height: 35px;
-            width: 19%;
+            width: 19.3%;
             border: 1px solid #eeeeee;
             float: left;
             text-align: center;

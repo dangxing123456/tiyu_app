@@ -21,7 +21,9 @@
     </div>
 
     <div class="main">
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getList">
+      
+<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <div class="content" v-for="(item,index) in list" :key="index">
           <div class="wrap">
             <div class="time">
@@ -39,6 +41,7 @@
           </div>
         </div>
       </van-list>
+      </van-pull-refresh>
     </div>
   </div>
 </template>
@@ -54,12 +57,36 @@ export default {
     return {
       finished: false,
       loading: false,
+      isLoading:false,
       list: [],
       page: 1,
       sum: 0
     };
   },
   methods: {
+    onRefresh(){
+ this.page = 1
+        this.finished = false
+        this.getList()
+    },
+    onLoad(){
+         this.page++;
+        let that = this;
+        this.$SERVER
+        .getUserWalletExchangeHIstory({
+          userId: that.$store.state.userInfo.userId,
+          pagenum: that.page,
+          pagesize: 10
+        })
+        .then(res => {
+          that.list = [...that.list, ...res.data.list];
+          that.loading = false;
+         
+          if (!res.data.hasNextPage) {
+            that.finished = true;
+          }
+        });
+    },
     getList() {
       this.$SERVER
         .getUserWalletExchangeHIstory({
@@ -68,10 +95,10 @@ export default {
           pagesize: 10
         })
         .then(res => {
-          this.list = [...this.list, ...res.data.list];
-          this.loading = false;
-          this.page++;
-          if (!res.data.hasNextPage) {
+          this.list =res.data.list;
+        this.isLoading = false;
+         
+          if (res.data.hasNextPage==false) {
             this.finished = true;
           }
         });
@@ -92,7 +119,9 @@ export default {
       });
     }
   },
-  created() {}
+  created() {
+    this.getList();
+  }
 };
 </script>
 

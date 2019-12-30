@@ -128,6 +128,7 @@ export default {
     };
   },
   created() {
+     console.log(this.$METHOD.getStore("token"));
     this.$SERVER
       .getUserWalletExchangeHIstory({
         userId: this.$store.state.userInfo.userId,
