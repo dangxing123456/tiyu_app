@@ -5,7 +5,7 @@
       <div class="head">
         <img :src="$route.params.icon" alt />
         <div>
-          <p>{{$route.params.icon.nickname}}</p>
+          <p>{{$route.params.nickname}}</p>
           <p>{{$METHOD.format($route.params.bookTime/1000,'MM-dd hh:mm')}}</p>
         </div>
       </div>
@@ -131,15 +131,30 @@
               <th>用户名</th>
               <th width="50%">跟单金额</th>
             </tr>
-            <tr class="mon" v-for="(item,i) in 5" :key="i">
+            <tr
+              class="mon"
+              v-for="(item,i) in flowerList"
+              :key="i"
+              v-if="$route.params.ballType=='zc'"
+            >
               <td>
-                <span>1</span>
-                <!-- <span> -->
-                <img src="@/assets/images/bang.png" alt />
-                <!-- </span> -->
+                <span>{{i+1}}</span>
+              
+                <img :src="item.icon" alt />
+               
               </td>
-              <td>$100</td>
-              <td>$100</td>
+              <td>{{item.nickname}}</td>
+              <td>{{item.totalMoney}}</td>
+            </tr>
+            <tr class="mon" v-for="(item,i) in lFlowerList" :key="i" v-else>
+              <td>
+                <span>{{index+1}}</span>
+               
+                <img :src="item.icon" alt />
+              
+              </td>
+              <td>{{item.nickname}}</td>
+              <td>{{item.totalMoney}}</td>
             </tr>
           </table>
         </div>
@@ -172,7 +187,9 @@ export default {
       zcOrder: {},
       lorderDesc: {},
       lcontent: [],
-      lcOrder: {}
+      lcOrder: {},
+      flowerList: [],
+      lFlowerList: []
     };
   },
   created() {
@@ -187,7 +204,9 @@ export default {
         })
         .then(res => {
           console.log(res.data);
+
           if (this.$route.params.ballType == "zc") {
+            this.flowerList = res.data.zcFlowers;
             this.zcOrder = res.data.zcOrder;
             this.zorderDesc = JSON.parse(res.data.zcOrder.orderDesc);
             this.zorderDesc.matchs.forEach(e => {
@@ -199,6 +218,7 @@ export default {
             });
           }
           if (this.$route.params.ballType == "lc") {
+            this.lFlowerList = res.data.lcFlowers;
             this.lcOrder = res.data.lcOrder;
             this.lorderDesc = JSON.parse(res.data.lcOrder.orderDesc);
 

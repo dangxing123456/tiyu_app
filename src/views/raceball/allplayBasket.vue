@@ -6,7 +6,6 @@
         <span>VS</span>
         <span>{{list.hcn}}</span>
       </div>
-    
     </navBar>
     <div class="main">
       <h3>主队让分{{list.fen}}</h3>
@@ -54,7 +53,7 @@
         </div>
       </div>
       <h3>胜分差</h3>
-      <div class="third">
+      <div class="third" :class="list.single=='1'?'bor':''">
         <div class="left">
           <p class="p1">客胜</p>
           <p class="p2">主胜</p>
@@ -88,7 +87,7 @@
     </div>
     <div class="btn">
       <van-button type="default" size="large" @click="$router.go(-1)">取消</van-button>
-      <van-button type="danger" size="large" @click="$router.go(-1)">确定</van-button>
+      <van-button type="danger" size="large" @click="confirm">确定</van-button>
     </div>
   </div>
 </template>
@@ -104,44 +103,106 @@ export default {
   data() {
     return {
       list: this.$store.state.basketResult[this.$route.params.i],
-      a: ""
+      a: "",
+      flag: false
     };
   },
   computed: {},
   watch: {},
   methods: {
+    confirm() {
+      this.$store.state.bFlag = this.flag;
+      console.log(this.$store.state.bFlag);
+      this.$router.go(-1);
+    },
     detail() {
       this.$router.push({
         path: "/fenxinBasket"
       });
     },
-    push(i, val) {
+    push(ii, val) {
       if (
-        this.$store.state.basketSelectResult[this.$route.params.i][i] ==
+        this.$store.state.basketSelectResult[this.$route.params.i][ii] ==
           undefined ||
-        this.$store.state.basketSelectResult[this.$route.params.i][i] == ""
+        this.$store.state.basketSelectResult[this.$route.params.i][ii] == ""
       ) {
         this.$set(
           this.$store.state.basketSelectResult[this.$route.params.i],
-          i,
+          ii,
           val
         );
         this.$set(
           this.$store.state.basketSelectValue[this.$route.params.i],
-          i,
+          ii,
           val
         );
       } else {
         this.$set(
           this.$store.state.basketSelectResult[this.$route.params.i],
-          i,
+          ii,
           ""
         );
         this.$set(
           this.$store.state.basketSelectValue[this.$route.params.i],
-          i,
+          ii,
           ""
         );
+      }
+      var arr = JSON.parse(
+        JSON.stringify(this.$store.state.basketSelectResult)
+      );
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < arr[i].length; j++) {
+          if (arr[i][j] == "" || arr[i][j] == undefined) {
+            arr[i].splice(j, 1);
+            j--;
+          }
+        }
+      }
+
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].length == 0) {
+          arr.splice(i, 1);
+          i--;
+        }
+      }
+      this.$store.state.basketSumcount = arr.length;
+
+      if (this.$store.state.basketSumcount == 1) {
+        if (
+          this.$store.state.basketResult[this.$route.params.i].single == 1 &&
+          ii >= 6 &&
+          ii < 18
+        ) {
+          for (let i = 6; i < 18; i++) {
+
+            if (
+              this.$store.state.basketSelectResult[this.$route.params.i][ii] !=
+                undefined ||
+              this.$store.state.basketSelectResult[this.$route.params.i][ii] !=
+                ""
+            ) {
+              this.flag = true;
+              break;
+            }
+            var arrs = JSON.parse(
+              JSON.stringify(
+                this.$store.state.basketSelectResult[
+                  this.$route.params.i
+                ].slice(6, 18)
+              )
+            );
+            for (var i = 0; i < arrs.length; i++) {
+              if (arrs[i].length == 0) {
+                arrs.splice(i, 1);
+                i--;
+              }
+            }
+            if (arrs.length == 0) {
+              this.flag = false;
+            }
+          }
+        }
       }
     },
     addColor(i) {
@@ -160,6 +221,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.bor {
+  border: 1px solid orange !important;
+}
 .fenxi {
   color: #ffffff;
   font-size: 14px;
@@ -241,6 +305,7 @@ export default {
   }
   .third {
     font-size: 12px;
+    height: 155px;
     .left {
       float: left;
       width: 10%;
@@ -269,7 +334,7 @@ export default {
         li {
           display: inline-block;
           height: 36px;
-          width: 32%;
+          width: 32.5%;
           border: 1px solid #eeeeee;
           float: left;
           text-align: center;

@@ -18,9 +18,9 @@
         <div class="right">
           <div class="div1">
             <span class="rang">{{item.num}}</span>
-            <span>[主]{{item.hcn}}</span>
+            <span>{{item.acn}}(客)</span>
             <span style="color:#777">VS</span>
-            <span>[客]{{item.acnAbbr}}</span>
+            <span>{{item.hcn}}(主)</span>
           </div>
           <div class="tab">
             <div class="left1">
@@ -167,6 +167,7 @@ export default {
       maxBonus: "",
       showmenu: false,
       StringMethod: [
+        "1串1",
         "2串1",
         "3串1",
         "4串1",
@@ -212,7 +213,8 @@ export default {
       i: null,
       d: [],
       c: [],
-      f: []
+      f: [],
+      flag: false
     };
   },
   computed: {},
@@ -228,41 +230,50 @@ export default {
       }
     },
     showMethod() {
-      if (this.$store.state.basketSumcount <= 2) {
+      if (this.$store.state.basketSumcount == 1) {
         return this.StringMethod.slice(0, 1);
-      } else if (this.$store.state.basketSumcount <= 3) {
+      } else if (this.$store.state.basketSumcount <= 2) {
         return this.StringMethod.slice(0, 2);
-      } else if (this.$store.state.basketSumcount <= 4) {
+      } else if (this.$store.state.basketSumcount <= 3) {
         return this.StringMethod.slice(0, 3);
-      } else if (this.$store.state.basketSumcount <= 5) {
+      } else if (this.$store.state.basketSumcount <= 4) {
         return this.StringMethod.slice(0, 4);
-      } else if (this.$store.state.basketSumcount <= 6) {
+      } else if (this.$store.state.basketSumcount <= 5) {
         return this.StringMethod.slice(0, 5);
-      } else if (this.$store.state.basketSumcount <= 7) {
+      } else if (this.$store.state.basketSumcount <= 6) {
         return this.StringMethod.slice(0, 6);
-      } else if (this.$store.state.basketSumcount <= 9999) {
+      } else if (this.$store.state.basketSumcount <= 7) {
         return this.StringMethod.slice(0, 7);
+      } else if (this.$store.state.basketSumcount <= 9999) {
+        return this.StringMethod.slice(0, 8);
       }
     },
     showMethod1() {
       if (this.$store.state.basketSumcount <= 2) {
         return this.StringMethod.slice(0, 0);
       } else if (this.$store.state.basketSumcount <= 3) {
-        return this.StringMethod.slice(7, 9);
+        return this.StringMethod.slice(8, 10);
       } else if (this.$store.state.basketSumcount <= 4) {
-        return this.StringMethod.slice(7, 13);
+        return this.StringMethod.slice(8, 14);
       } else if (this.$store.state.basketSumcount <= 5) {
-        return this.StringMethod.slice(7, 19);
+        return this.StringMethod.slice(8, 20);
       } else if (this.$store.state.basketSumcount <= 6) {
-        return this.StringMethod.slice(7, 28);
+        return this.StringMethod.slice(8, 29);
       } else if (this.$store.state.basketSumcount <= 7) {
-        return this.StringMethod.slice(7, 33);
+        return this.StringMethod.slice(8, 34);
       } else if (this.$store.state.basketSumcount <= 9999) {
-        return this.StringMethod.slice(7, 39);
+        return this.StringMethod.slice(8, 40);
       }
     },
     menu() {
-      this.showmenu = true;
+      console.log(this.$store.state.bFlag)
+      if (!this.$store.state.bFlag) {
+        this.$toast({
+          message: "非单关请选择两场比赛"
+        });
+      } else {
+        this.showmenu = true;
+      }
     },
     change(value) {
       this.$store.state.basketValue = value;

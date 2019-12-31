@@ -211,8 +211,12 @@ export default {
           message: "非单关至少选择两场比赛"
         });
       }
+      if (this.$store.state.sumcount == 1) {
+        // console.log(index);
+    
 
-      // if (this.$store.state.sumcount == 1) {
+        for (let i = 0; i < this.$store.state.selectResult.length; i++) {}
+      }
 
       //   if (
       //     this.$store.state.result[this.$route.params.i].single == 0 &&

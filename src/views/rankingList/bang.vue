@@ -9,7 +9,7 @@
         <van-tab title="连红榜">
           <div class="content" v-for="(item,index) in joinWinTopList" :key="index">
             <div class="first">
-              <span>{{index}}</span>
+              <span>{{index+1}}</span>
             </div>
             <div class="info">
               <!-- <img :src="item.icon" alt srcset /> -->
@@ -24,27 +24,10 @@
             </div>
           </div>
         </van-tab>
-        <van-tab title="胜率榜">
-          <div class="content" v-for="(item,index) in 10" :key="index">
+        <van-tab title="命中榜">
+          <div class="content" v-for="(item,index) in shopTop" :key="index">
             <div class="first">
-              <span>1</span>
-            </div>
-            <div class="info">
-              <img src="@/assets/images/paihang.png" alt srcset />
-              <span class="name">篮球操盘手</span>
-
-              <span>5</span>
-            </div>
-            <div class="last">
-              <p>7</p>
-              <p>连红</p>
-            </div>
-          </div>
-        </van-tab>
-        <van-tab title="大神榜">
-          <div class="content" v-for="(item,index) in person" :key="index">
-            <div class="first">
-              <span>{{index}}</span>
+              <span>{{index+1}}</span>
             </div>
             <div class="info">
               <img :src="item.icon" alt srcset />
@@ -53,8 +36,25 @@
               <span>{{item.flowCount}}</span>
             </div>
             <div class="last">
-              <p>7</p>
-              <p>连红</p>
+              <p>{{item.winRate*100}}%</p>
+              <p>命中率</p>
+            </div>
+          </div>
+        </van-tab>
+        <van-tab title="大神榜">
+          <div class="content" v-for="(item,index) in person" :key="index">
+            <div class="first">
+              <span>{{index+1}}</span>
+            </div>
+            <div class="info">
+              <img :src="item.icon" alt srcset />
+              <span class="name">{{item.nickname}}</span>
+
+              <span>{{item.flowCount}}</span>
+            </div>
+            <div class="last">
+              <p>{{item.hotCount}}</p>
+              <p>带红人数</p>
             </div>
           </div>
         </van-tab>
@@ -76,14 +76,21 @@ export default {
       list: [],
       active: 0,
       joinWinTopList: [],
-      person: []
+      person: [],
+      shopTop: []
     };
   },
   created() {
     this.getjoinWinTop();
     this.getTopPerson();
+    this.getSheng();
   },
   methods: {
+    getSheng() {
+      this.$SERVER.getShootTop().then(res => {
+        this.shopTop = res.data.list;
+      });
+    },
     getjoinWinTop() {
       this.$SERVER.joinWinTop().then(res => {
         this.joinWinTopList = res.data.list;

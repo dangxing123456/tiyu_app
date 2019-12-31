@@ -197,9 +197,10 @@ export default {
         width: 150px;
         img {
           display: block;
-          width: 50px;
-          height: 50px;
+          width: 40px;
+          height: 40px;
           margin: auto;
+          margin-top: 5px;
 
           h3 {
             font-size: 14px;
@@ -232,9 +233,10 @@ export default {
         }
         img {
           display: block;
-          width: 50px;
-          height: 50px;
+          width: 40px;
+          height: 40px;
           margin: auto;
+          margin-top: 5px;
         }
         .icon {
           width: 35px;

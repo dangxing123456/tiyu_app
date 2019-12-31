@@ -12,25 +12,23 @@
       </van-dropdown-menu>-->
     </navBar>
     <div class="main">
-      <div class="wrap" v-for="(item,index) in $store.state.basketResult" :key="index">
+      <div class="wrap" v-for="(item1,index) in $store.state.basketResult" :key="index">
         <div class="title">
-          <span>{{item.date}}</span>
-          <span>{{item.num}}</span>
-          <span v-if="item.showStatus==1">可投注</span>
-          <span v-if="item.showStatus==0">不可投注</span>
-          <span class="fen" :style="{color:item.fen>0?'#f00':'green'}">{{item.fen}}</span>
+          <span>{{item1.date}}</span>
+          <span>{{item1.num}}</span>
+          <span class="fen" :style="{color:item1.fen>0?'#f00':'green'}">{{item1.fen}}</span>
         </div>
         <div class="test">
           <div class="left">
-            <p class="first">{{item.num}}</p>
-            <p>{{item.lcnAbbr}}</p>
-            <p>{{item.time}}截止</p>
+            <p class="first">{{item1.num}}</p>
+            <p>{{item1.lcnAbbr}}</p>
+            <p>{{item1.time}}截止</p>
           </div>
           <div class="right">
             <div class="div1">
-              <span>{{item.acnAbbr}}(客)</span>
+              <span>{{item1.acn}}(客)</span>
               <span>VS</span>
-              <span>{{item.hcn}}(主)</span>
+              <span>{{item1.hcn}}(主)</span>
             </div>
             <div class="tab">
               <div class="left1">
@@ -44,7 +42,7 @@
               <div class="center">
                 <ul>
                   <li
-                    v-for="(item,i) in item.basketBallBet"
+                    v-for="(item,i) in item1.basketBallBet"
                     :key="i"
                     v-if="i<4"
                     :class="addColor(index,i)"
@@ -57,7 +55,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="right1">
+              <div class="right1" :class="item1.single==1?'bor':''">
                 <span
                   :class="bgc(index)"
                   @click="$router.push('/allplayBasket/'+index)"
@@ -90,7 +88,7 @@
           </div>
           <div>
             <!-- <van-button type="danger" size="large" @click="confirm">确定</van-button> -->
-            <van-button round type="danger" @click="$router.push('/bConfirmPlan')" size="small">确定</van-button>
+            <van-button round type="danger" @click="confirm" size="small">确定</van-button>
           </div>
 
           <!-- <van-button type="default" size="large">清空</van-button>
@@ -193,6 +191,24 @@ export default {
   watch: {},
   updated() {},
   methods: {
+    confirm() {
+      if (this.$store.state.basketSumcount >= 2) {
+        this.$router.push("/bConfirmPlan");
+      } else {
+        this.$toast({
+          message: "非单关至少选择两场比赛"
+        });
+      }
+
+      if (this.$store.state.basketSumcount == 1) {
+        if (this.$store.state.bFlag) {
+          this.$router.push("/bConfirmPlan");
+          this.$toast({
+            message: "进入单关模式"
+          });
+        }
+      }
+    },
     del() {
       for (var i = 0; i < this.$store.state.basketSelectResult.length; i++) {
         for (
@@ -295,7 +311,7 @@ export default {
             res.data.list.forEach((e, i) => {
               var a;
               var b;
-
+              var f;
               if (!e.basketBallBet.odds_list.mnl) {
                 a = "";
                 b = "";
@@ -309,14 +325,20 @@ export default {
                     e.basketBallBet.odds_list.mnl.length - 1
                   ].h;
               }
+
+              f =
+                e.basketBallBet.odds_list.wnm[
+                  e.basketBallBet.odds_list.wnm.length - 1
+                ].single;
+
               arr[i] = {
                 id: e.id,
                 date: e.date,
                 num: e.num,
                 lcnAbbr: e.lcnAbbr,
                 time: e.time,
-                hcn: e.hcn,
-                acn: e.acn,
+                hcn: e.hcnAbbr,
+                acn: e.acnAbbr,
                 fen:
                   e.basketBallBet.odds_list.hdc[
                     e.basketBallBet.odds_list.hdc.length - 1
@@ -326,6 +348,7 @@ export default {
                     e.basketBallBet.odds_list.hilo.length - 1
                   ].fixedodds,
                 // goalline: e.basketBallBet.odds_list.hhad.goalline,
+                single: f,
                 basketBallBet: [
                   a,
                   b,
@@ -381,6 +404,7 @@ export default {
               };
             });
             this.$store.state.basketResult = arr;
+            console.log(this.$store.state.basketResult);
           }
         });
     }
@@ -409,6 +433,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.bor {
+  border: 1px solid orange !important;
+}
 .bgColor1 {
   background-color: red;
   color: white !important;
@@ -463,7 +490,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-   border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
   .right {
     width: 80%;
     font-size: 14px;
@@ -479,6 +506,7 @@ export default {
       }
     }
     .tab {
+      display: flex;
       .left1 {
         float: left;
         color: #4b4949;
@@ -527,6 +555,7 @@ export default {
       }
       .center {
         font-size: 12px;
+        width: 215px;
         ul {
           li {
             display: inline-block;
@@ -671,7 +700,7 @@ export default {
     text-align: center;
     padding: 5px 0px;
     font-size: 14px;
-    
+
     .pei {
       color: rgb(158, 150, 145);
       padding-top: 5px;
@@ -685,7 +714,7 @@ export default {
     color: #4b4949;
     font-size: 13px;
     padding-bottom: 8px;
-   
+
     .delete {
       text-align: center;
       p {

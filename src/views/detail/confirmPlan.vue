@@ -364,7 +364,13 @@ export default {
       }
     },
     change(value) {
-      this.$store.state.value = value;
+      if (this.value > 100000) {
+        this.$toast({
+          message: "最高输入100000倍"
+        });
+      } else {
+        this.$store.state.value = value;
+      }
     },
     show(index) {
       var r = false;
@@ -386,6 +392,11 @@ export default {
       this.$router.go(-1);
     },
     removeFootball(index) {
+      
+      for (let i = 0; i < this.$store.state.selectResult[index].length; i++) {
+        
+      }
+
       this.$store.state.selectResult[index] = [];
       this.getMoney();
       this.confirm();
@@ -501,40 +512,8 @@ export default {
           if (arr1.length == 0) {
             this.flag = false;
           }
-        }
 
-        if (this.flag == false) {
-          if (this.$store.state.result[index].single == 1 && ii < 3) {
-            for (let i = 0; i < 3; i++) {
-              if (
-                this.$store.state.selectResult[index][ii] != undefined ||
-                this.$store.state.selectResult[index][ii] != ""
-              ) {
-                this.$toast({
-                  message: "进入单关模式"
-                });
-                break;
-              }
-            }
-          }
-
-          if (
-            this.$store.state.result[index].single1 == 1 &&
-            ii >= 3 &&
-            ii < 6
-          ) {
-            for (let i = 3; i < 6; i++) {
-              if (
-                this.$store.state.selectResult[index][ii] != undefined ||
-                this.$store.state.selectResult[index][ii] != ""
-              ) {
-                this.$toast({
-                  message: "进入单关模式"
-                });
-                break;
-              }
-            }
-          }
+          this.$store.state.flag = this.flag;
         }
       }
       this.getMoney();

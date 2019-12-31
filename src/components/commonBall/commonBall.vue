@@ -78,8 +78,8 @@ export default {
           head: {
             id: item.id,
             zhu: item.hcn,
-            hIcon:item.hIcon,
-            aIcon:item.aIcon,
+            hIcon: item.hIcon,
+            aIcon: item.aIcon,
             ke: item.acn,
             time: item.date + " " + item.time,
             fsH: item.fsH,
@@ -155,9 +155,10 @@ export default {
         width: 150px;
         img {
           display: block;
-          width: 50px;
-          height: 50px;
+          width: 40px;
+          height: 40px;
           margin: auto;
+          margin-top: 5px;
         }
         .icon {
           width: 35px;
@@ -186,9 +187,10 @@ export default {
         }
         img {
           display: block;
-          width: 50px;
-          height: 50px;
+          width: 40px;
+          height: 40px;
           margin: auto;
+          margin-top: 5px;
         }
         .icon {
           width: 35px;
@@ -212,6 +214,7 @@ export default {
         font-size: 14px;
         padding: 5px 0;
         margin-top: 10px;
+        color: #7d7e80;
       }
       .text {
         width: 90px;

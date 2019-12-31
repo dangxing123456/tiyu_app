@@ -83,11 +83,10 @@
         </div>
         <div class="jiao">
           <van-grid :column-num="2" class="dian">
-            <van-grid-item v-for="(item,i) in focusList" :key="i" @click="detail(item)" v-if="i<4">
+            <van-grid-item v-for="(item,i) in focusList" :key="i" @click="detail(item)">
               <div class="con">
-                <img :src="item.icon ||user_img" />
-                <p v-if="item.ballType=='zc'">竞彩足球</p>
-                <p v-else>竞彩篮球</p>
+                <img :src="user_img" />
+                <p>{{item.nickname}}</p>
               </div>
               <div class="text">
                 <span>奖金</span>
@@ -112,7 +111,7 @@
                   <p>{{$METHOD.format(item.bookTime/1000,'MM-dd hh:mm')}}</p>
                 </div>
               </div>
-              <div class="con">
+              <div class="con" @click="detail(item)">
                 <div class="text">{{item.describeText}}</div>
                 <div class="tab">
                   <span class="bao">保{{item.promiseBet}}</span>
@@ -161,7 +160,7 @@
                   <p>{{$METHOD.format(item.bookTime/1000,'MM-dd hh:mm')}}</p>
                 </div>
               </div>
-              <div class="con">
+              <div class="con" @click="detail(item)">
                 <div class="text">{{item.describeText}}</div>
                 <div class="tab">
                   <span class="bao">保{{item.promiseBet}}</span>
@@ -351,7 +350,6 @@ export default {
     getjoinWinTop() {
       this.$SERVER.joinWinTop().then(res => {
         this.joinWinTopList = res.data.list;
-        console.log(this.joinWinTopList);
       });
     },
     shouDan(item) {
@@ -389,7 +387,6 @@ export default {
       } else {
         this.ballList.sort(this.compare1("times", "buyWagers"));
       }
-      console.log(this.ballList);
     },
     getListBall() {
       this.$SERVER
@@ -412,7 +409,6 @@ export default {
         .then(res => {
           this.basketBallList = res.data.list;
           this.ballList = [...this.ballList, ...this.basketBallList];
-          console.log(this.ballList);
         })
         .catch(err => {});
     },
@@ -427,16 +423,20 @@ export default {
       if (value == "2") {
         this.ballList = this.basketBallList;
       }
-      console.log(this.list);
     },
     detail(item) {
+      if (item.type == 1) {
+        item.type = "zc";
+      } else {
+        item.type = "lc";
+      }
       this.$router.push({
         name: "consumption",
         params: {
-          ballType: item.ballType,
-          orderId: item.orderId,
-          icon: item.icon,
-          nickname: item.nickname,
+          ballType: item.ballType || item.type,
+          orderId: item.orderId || item.id,
+          icon: item.icon || item.userInfor.icon,
+          nickname: item.nickname || item.userInfor.nickname,
           bookTime: item.bookTime
         }
       });
@@ -489,8 +489,6 @@ export default {
           this.person[i].userInfor = userInfor;
           this.person[i].id = this.person[i].orderId;
         }
-
-        console.log(this.person);
       });
     },
     showPopup(item) {
@@ -754,11 +752,13 @@ export default {
   .dian {
     .con {
       display: flex;
+      width: 124px;
+      align-items: center;
     }
     .text {
       display: flex;
       align-items: center;
-      margin-left: 25px;
+      width: 120px;
       span {
         color: #777;
         font-size: 14px;
@@ -775,8 +775,8 @@ export default {
     }
     p {
       font-size: 14px;
-      margin-top: 8px;
-      margin-left: 10px;
+
+      margin-left: 4px;
     }
   }
 }

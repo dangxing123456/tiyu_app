@@ -5,7 +5,7 @@
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-tabs class="tab">
           <van-tab title="足球">
-            <div class="content" v-for="(item,index) in list" :key="index" v-if="item.finishTime">
+            <div class="content" v-for="(item,index) in list" :key="index" v-if="item.winMoney">
               <div class="left">
                 <van-icon
                   v-if="item.type==1"
@@ -28,7 +28,7 @@
               </div>
               <div class="right">
                 <div>
-                  <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+                  <p v-if="item.winMoney" class="money">中奖:{{item.winMoney}}元</p>
                   <p class="type">已消费</p>
                 </div>
 
@@ -41,7 +41,7 @@
               class="content"
               v-for="(item,index) in basketlist"
               :key="index"
-              v-if="item.finishTime"
+              v-if="item.winMoney"
             >
               <div class="left">
                 <van-icon
@@ -65,7 +65,7 @@
               </div>
               <div class="right">
                 <div>
-                  <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+                  <p v-if="item.winMoney" class="money">中奖:{{item.winMoney}}元</p>
                   <p class="type">已消费</p>
                 </div>
 
@@ -205,6 +205,7 @@ export default {
   border-bottom: 1px solid #cccccc;
   p {
     padding: 4px 0;
+    font-size: 14px;
   }
   .left {
     display: flex;

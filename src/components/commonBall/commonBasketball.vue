@@ -4,7 +4,7 @@
       <div title="即时" class="instant">
         <p class="title" v-if="type==1&&count!=0">即时赛事{{count}}场</p>
         <p class="title" v-if="type==2&&count!=0">已完成比赛{{count}}场</p>
-        <div class="con" v-for="(item,index) in list" :key="index" @click="detail(item)" >
+        <div class="con" v-for="(item,index) in list" :key="index" @click="detail(item)">
           <div class="head">
             <div class="left">
               <span class="nba">{{item.lcn}}</span>
@@ -21,7 +21,7 @@
           </div>
           <div class="top">
             <div class="img">
-             <img :src="item.aIcon" />
+              <img :src="item.aIcon" />
               <h3>{{item.acn}}</h3>
             </div>
             <div class="text yanse" v-if="type==2">{{item.acore }}&nbsp;:&nbsp;{{item.hcore}}</div>
@@ -80,8 +80,8 @@ export default {
             id: item.mId,
             acn: item.acn,
             hcn: item.hcn,
-            hIcon:item.hIcon,
-            aIcon:item.aIcon,
+            hIcon: item.hIcon,
+            aIcon: item.aIcon,
             playStatus: item.playStatus,
             bdate: item.bdate,
             btime: item.btime,
@@ -152,9 +152,10 @@ export default {
         width: 100px;
         img {
           display: block;
-          width: 50px;
-          height: 50px;
+          width: 40px;
+          height: 40px;
           margin: auto;
+          margin-top: 5px;
         }
       }
       .img {
@@ -162,9 +163,10 @@ export default {
         width: 100px;
         img {
           display: block;
-          width: 50px;
-          height: 50px;
+          width: 40px;
+          height: 40px;
           margin: auto;
+          margin-top: 5px;
         }
       }
 
@@ -172,6 +174,7 @@ export default {
         font-size: 14px;
         padding: 5px 0;
         margin-top: 10px;
+        color: #7d7e80;
       }
       .text {
         font-size: 20px;

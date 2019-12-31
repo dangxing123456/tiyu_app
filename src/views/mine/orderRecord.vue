@@ -28,7 +28,7 @@
               </div>
               <div class="right">
                 <div>
-                  <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+                  <p v-if="item.winMoney" class="money">中奖:{{item.winMoney}}元</p>
                   <p class="type">已消费</p>
                 </div>
               </div>
@@ -58,7 +58,7 @@
               </div>
               <div class="right">
                 <div>
-                  <p v-if="item.finishTime" class="money">中奖:{{item.winMoney}}元</p>
+                  <p v-if="item.winMoney" class="money">中奖:{{item.winMoney}}元</p>
                   <p class="type">已消费</p>
                 </div>
               </div>
@@ -189,6 +189,7 @@ export default {
   border-bottom: 1px solid #cccccc;
   p {
     padding: 4px 0;
+    font-size: 14px;
   }
   .left {
     display: flex;

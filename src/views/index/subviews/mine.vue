@@ -27,7 +27,7 @@
             {{$store.state.userInfo.mobile}}
           </p>
         </div>
-        <van-icon name="setting-o" class="setting" @click="$router.push('/setting')" />
+        <!-- <van-icon name="setting-o" class="setting" @click="$router.push('/setting')" /> -->
       </div>
       <div class="wallet-box">
         <div class="wallet">
@@ -123,19 +123,20 @@ export default {
           icon: "manager",
           color: "#4CAF50"
         },
-        {
-          name: "注销用户",
-          path: "/orderRecord",
-          icon: "map-marked",
-          color: "#E91E63"
-        },
+
         {
           name: "经纪人",
           path: "/friends",
           icon: "friends",
           color: "#e73736"
         },
-        { name: "金币", path: "/qrcode", icon: "gold-coin", color: "#2196F3" }
+        {
+          name: "注销用户",
+          path: "/orderRecord",
+          icon: "map-marked",
+          color: "#E91E63"
+        },
+        { name: "退出登录", path: "/setting", icon: "setting-o", color: "#2196F3" }
       ],
       user_img: user_img,
       sumMoney: 0,
@@ -241,6 +242,9 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      h4 {
+        color: #f24a44;
+      }
       .ico {
         color: #e73736;
         margin-right: 10px;
