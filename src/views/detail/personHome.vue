@@ -47,7 +47,7 @@
                     <td>{{item.times*item.buyWagers*2}}元</td>
                     <td>{{item.buyWagers*2}}元</td>
                     <td>
-                      <van-button type="danger" size="mini">跟单</van-button>
+                      <van-button type="danger" size="mini" @click="showPopup(item)">跟单</van-button>
                     </td>
                   </tr>
                 </table>
@@ -89,7 +89,7 @@
                     <td>{{item.times*item.buyWagers*2}}元</td>
                     <td>{{item.buyWagers*2}}元</td>
                     <td>
-                      <van-button type="danger" size="mini">跟单</van-button>
+                      <van-button type="danger" size="mini" @click="showPopup(item)">跟单</van-button>
                     </td>
                   </tr>
                 </table>
@@ -113,19 +113,23 @@
         </van-tab>
       </van-tabs>
     </div>
+    <popup ref="pop" v-model="currentValue"></popup>
   </div>
 </template>
 
 <script>
 import navBar from "@/components/navbar/navbar.vue";
-
+import popup from "@/components/popup/popup";
 export default {
   name: "personHome",
   components: {
-    navBar
+    navBar,
+    popup
   },
   data() {
     return {
+      show1: false,
+       currentValue: false,
       list: [],
       list1: [],
       finished: false,
@@ -140,10 +144,16 @@ export default {
     this.getPerson();
   },
   methods: {
+    showPopup(item) {
+      this.show1 = true;
+      this.currentValue = true;
+      this.$refs.pop.show = true;
+      this.$refs.pop.list = item;
+    },
     getPerson() {
       this.$SERVER
         .getUserByUserId({
-          userId: 201912201845049
+          userId: this.$route.params.i
         })
         .then(res => {
           this.personList = res.data;
@@ -169,8 +179,7 @@ export default {
     getList() {
       this.$SERVER
         .getBasketBallCanFollowOrderList({
-          id: this.$route.params.i,
-          userId: this.$store.state.userInfo.userId
+          userId: this.$route.params.i
         })
         .then(res => {
           this.list1 = res.data.list;
@@ -182,8 +191,7 @@ export default {
 
       this.$SERVER
         .getFootBallCanFollowOrderList({
-          id: this.$route.params.i,
-          userId: this.$store.state.userInfo.userId
+          userId: this.$route.params.i
         })
         .then(res => {
           this.list = res.data.list;
@@ -196,11 +204,11 @@ export default {
 <style lang="less" scoped>
 .head {
   width: 100%;
-  height: 100px;
+
   background-color: #f24a44;
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 10px 20px;
   img {
     width: 50px;
     height: 50px;

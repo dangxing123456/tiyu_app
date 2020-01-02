@@ -12,11 +12,11 @@
               <span>{{index+1}}</span>
             </div>
             <div class="info">
-              <!-- <img :src="item.icon" alt srcset /> -->
-              <img src="@/assets/images/paihang.png" alt srcset />
+              <img :src="item.icon" alt srcset />
+              <!-- <img src="@/assets/images/paihang.png" alt srcset /> -->
               <span class="name">{{item.nickname}}</span>
 
-              <span>{{item.flowCount}}</span>
+              <span v-if="item.flowCount>0">{{item.flowCount}}</span>
             </div>
             <div class="last">
               <p>{{item.winCount}}</p>
@@ -33,7 +33,7 @@
               <img :src="item.icon" alt srcset />
               <span class="name">{{item.nickname}}</span>
 
-              <span>{{item.flowCount}}</span>
+              <span v-if="item.flowCount>0">{{item.flowCount}}</span>
             </div>
             <div class="last">
               <p>{{item.winRate*100}}%</p>
@@ -50,7 +50,7 @@
               <img :src="item.icon" alt srcset />
               <span class="name">{{item.nickname}}</span>
 
-              <span>{{item.flowCount}}</span>
+              <span class="count" v-if="item.flowCount>0">{{item.flowCount}}</span>
             </div>
             <div class="last">
               <p>{{item.hotCount}}</p>
@@ -155,25 +155,28 @@ export default {
         margin-left: 10px;
         color: #494949;
       }
-      span {
-        &:last-child {
-          display: inline-block;
-          width: 14px;
-          height: 14px;
-          color: #fff;
-          background-color: red;
-          font-size: 12px;
-          border-radius: 50%;
-          text-align: center;
-          line-height: 14px;
-          position: absolute;
-          right: 264px;
-          bottom: 11px;
-        }
+      .count {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        color: #fff;
+        background-color: red;
+        font-size: 12px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 14px;
+        position: absolute;
+        right: 275px;
+        bottom: 11px;
       }
+      // span {
+      //   &:last-child {
+      //   }
+      // }
     }
     .last {
       text-align: center;
+      width: 50px;
       p {
         &:first-child {
           color: red;

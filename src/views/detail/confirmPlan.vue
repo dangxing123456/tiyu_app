@@ -355,6 +355,143 @@ export default {
       }
     },
     menu() {
+      if (this.$store.state.sumcount == 1) {
+        var num = 0;
+        var arr = this.$store.state.selectResult;
+
+        for (let i = 0; i < arr.length; i++) {
+          for (let j = 0; j < arr[i].length; j++) {
+            if (arr[i][j] != undefined && arr[i][j] != "") {
+              num = i;
+            }
+          }
+        }
+
+        var arrs = arr[num].slice(0, 3);
+        for (var i = 0; i < arrs.length; i++) {
+          if (!arrs[i]) {
+            arrs.splice(i, 1);
+            i--;
+          }
+        }
+        console.log(arrs);
+
+        var arr1 = arr[num].slice(3, 6);
+
+        for (var i = 0; i < arr1.length; i++) {
+          if (!arr1[i]) {
+            arr1.splice(i, 1);
+            i--;
+          }
+        }
+        var arr2 = arr[num].slice(6, 14);
+
+        for (var i = 0; i < arr2.length; i++) {
+          if (!arr2[i]) {
+            arr2.splice(i, 1);
+            i--;
+          }
+        }
+        var arr3 = arr[num].slice(14, 23);
+
+        for (var i = 0; i < arr3.length; i++) {
+          if (!arr3[i]) {
+            arr3.splice(i, 1);
+            i--;
+          }
+        }
+        var arr4 = arr[num].slice(23, 54);
+
+        for (var i = 0; i < arr4.length; i++) {
+          if (!arr4[i]) {
+            arr4.splice(i, 1);
+            i--;
+          }
+        }
+        console.log(this.$store.state.result[num]);
+        if (this.$store.state.result[num].single == 0 && arrs.length > 0) {
+          for (let j = 0; j < 3; j++) {
+            if (arr[num][j] != undefined && arr[num][j] != "") {
+              this.flag = true;
+              console.log(this.flag);
+              break;
+            }
+          }
+        }
+        if (!this.flag) {
+          if (arrs.length > 0 && this.$store.state.result[num].single == 1) {
+            this.flag = false;
+          }
+        }
+
+        if (this.$store.state.result[num].single1 == 0 && arr1.length > 0) {
+          for (let j = 3; j < 6; j++) {
+            if (arr[num][j] != undefined && arr[num][j] != "") {
+              this.flag = true;
+              console.log(this.flag);
+              break;
+            }
+          }
+        }
+        if (!this.flag) {
+          if (arr1.length > 0 && this.$store.state.result[num].single1 == 1) {
+            this.flag = false;
+            console.log(this.flag);
+          }
+        }
+
+        if (this.$store.state.result[num].single2 == 0 && arr2.length > 0) {
+          for (let j = 6; j < 14; j++) {
+            if (arr[num][j] != undefined && arr[num][j] != "") {
+              this.flag = true;
+              break;
+            }
+          }
+        }
+        if (!this.flag) {
+          if (arr2.length > 0 && this.$store.state.result[num].single2 == 1) {
+            this.flag = false;
+            console.log(this.flag);
+          }
+        }
+
+        if (this.$store.state.result[num].single3 == 0 && arr3.length > 0) {
+          for (let j = 14; j < 23; j++) {
+            if (arr[num][j] != undefined && arr[num][j] != "") {
+              this.flag = true;
+              console.log(this.flag);
+
+              break;
+            }
+          }
+        }
+        if (!this.flag) {
+          if (arr3.length > 0 && this.$store.state.result[num].single3 == 1) {
+            this.flag = false;
+            console.log(this.flag);
+          }
+        }
+
+        if (this.$store.state.result[num].single4 == 0 && arr4.length > 0) {
+          for (let j = 23; j < 54; j++) {
+            if (arr[num][j] != undefined && arr[num][j] != "") {
+              this.flag = true;
+              console.log(this.flag);
+
+              break;
+            }
+          }
+        }
+        if (!this.flag) {
+          if (arr4.length > 0 && this.$store.state.result[num].single4 == 1) {
+            this.flag = false;
+            console.log(this.flag);
+          }
+        }
+
+        console.log(this.flag);
+      }
+
       if (this.flag) {
         this.$toast({
           message: "非单关请选择两场比赛"
@@ -392,16 +529,11 @@ export default {
       this.$router.go(-1);
     },
     removeFootball(index) {
-      
-      for (let i = 0; i < this.$store.state.selectResult[index].length; i++) {
-        
-      }
-
       this.$store.state.selectResult[index] = [];
+
       this.getMoney();
       this.confirm();
       this.$store.state.sumcount--;
-
       this.f = [];
     },
     show1(index) {
@@ -539,16 +671,19 @@ export default {
     },
     confirm() {
       this.f = [...this.b, ...this.c];
+
       for (var i = 0; i < this.f.length; i++) {
         if (!this.f[i]) {
           this.f.splice(i, 1);
           i--;
         }
       }
+      this.$store.state.gate = this.f;
       for (var i = 0; i < this.f.length; i++) {
         // this.f[i].substring(1, 2) = "_";
         this.f[i] = this.f[i].replace(/串/, "_");
       }
+
       this.showmenu = false;
       this.getMoney();
       this.b = [];
@@ -842,9 +977,9 @@ export default {
 
       function parse(data, source) {
         //取几串几 ，二维数组的行(如[1,2,3]2串1，组合为[[1,2],[1,3],[2,3]])
-        if (data.length == 0 || source.length == 0) {
-          return;
-        }
+        // if (data.length == 0 || source.length == 0) {
+        //   return;
+        // }
         var bisai = [];
         var wagers = 0;
         var result = {};

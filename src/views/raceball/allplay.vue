@@ -210,16 +210,13 @@ export default {
   data() {
     return {
       list: this.$store.state.result[this.$route.params.i],
-      a: "",
-      flag: false
+      a: ""
     };
   },
   watch: {},
   methods: {
     confirm() {
-      this.$router.go(-1);
-      this.$store.state.flag = this.flag;
-      console.log(this.flag);
+      this.$router.push("/racefootball");
     },
     cancel() {
       this.$router.go(-1);
@@ -257,159 +254,6 @@ export default {
       }
 
       this.$store.state.sumcount = arr.length;
-
-      if (this.$store.state.sumcount == 1) {
-        if (
-          this.$store.state.result[this.$route.params.i].single == 0 &&
-          ii < 3
-        ) {
-          for (let i = 0; i < 3; i++) {
-            if (
-              this.$store.state.selectResult[this.$route.params.i][ii] !=
-                undefined ||
-              this.$store.state.selectResult[this.$route.params.i][ii] != ""
-            ) {
-              this.flag = true;
-              break;
-            }
-            var arrs = JSON.parse(
-              JSON.stringify(
-                this.$store.state.selectResult[this.$route.params.i].slice(0, 3)
-              )
-            );
-            for (var i = 0; i < arrs.length; i++) {
-              if (arrs[i].length == 0) {
-                arrs.splice(i, 1);
-                i--;
-              }
-            }
-            if (arrs.length == 0) {
-              this.flag = false;
-            }
-          }
-        }
-        if (
-          this.$store.state.result[this.$route.params.i].single1 == 0 &&
-          ii >= 3 &&
-          ii < 6
-        ) {
-          for (let i = 3; i < 6; i++) {
-            if (
-              this.$store.state.selectResult[this.$route.params.i][ii] !=
-                undefined ||
-              this.$store.state.selectResult[this.$route.params.i][ii] != ""
-            ) {
-              this.flag = true;
-              break;
-            }
-          }
-          var arr1 = JSON.parse(
-            JSON.stringify(
-              this.$store.state.selectResult[this.$route.params.i].slice(3, 6)
-            )
-          );
-          for (var i = 0; i < arr1.length; i++) {
-            if (arr1[i].length == 0) {
-              arr1.splice(i, 1);
-              i--;
-            }
-          }
-          if (arr1.length == 0) {
-            this.flag = false;
-          }
-        }
-        if (
-          this.$store.state.result[this.$route.params.i].single2 == 0 &&
-          ii >= 6 &&
-          ii < 14
-        ) {
-          for (let i = 6; i < 14; i++) {
-            if (
-              this.$store.state.selectResult[this.$route.params.i][ii] !=
-                undefined ||
-              this.$store.state.selectResult[this.$route.params.i][ii] != ""
-            ) {
-              this.flag = true;
-              break;
-            }
-          }
-          // eslint-disable-next-line no-redeclare
-          var arr2 = JSON.parse(
-            JSON.stringify(
-              this.$store.state.selectResult[this.$route.params.i].slice(6, 14)
-            )
-          );
-          for (var i = 0; i < arr2.length; i++) {
-            if (arr2[i].length == 0) {
-              arr2.splice(i, 1);
-              i--;
-            }
-          }
-          if (arr2.length == 0) {
-            this.flag = false;
-          }
-        }
-        if (
-          this.$store.state.result[this.$route.params.i].single3 == 0 &&
-          ii >= 14 &&
-          ii < 23
-        ) {
-          for (let i = 14; i < 23; i++) {
-            if (
-              this.$store.state.selectResult[this.$route.params.i][ii] !=
-                undefined ||
-              this.$store.state.selectResult[this.$route.params.i][ii] != ""
-            ) {
-              this.flag = true;
-              break;
-            }
-          }
-          var arr3 = JSON.parse(
-            JSON.stringify(
-              this.$store.state.selectResult[this.$route.params.i].slice(14, 23)
-            )
-          );
-          for (var i = 0; i < arr3.length; i++) {
-            if (arr3[i].length == 0) {
-              arr3.splice(i, 1);
-              i--;
-            }
-          }
-          if (arr3.length == 0) {
-            this.flag = false;
-          }
-        }
-        if (
-          this.$store.state.result[this.$route.params.i].single4 == 0 &&
-          ii >= 23 &&
-          ii < 54
-        ) {
-          for (let i = 23; i < 54; i++) {
-            if (
-              this.$store.state.selectResult[this.$route.params.i][ii] !=
-                undefined ||
-              this.$store.state.selectResult[this.$route.params.i][ii] != ""
-            ) {
-              this.flag = true;
-              break;
-            }
-          }
-          var arr4 = JSON.parse(
-            JSON.stringify(
-              this.$store.state.selectResult[this.$route.params.i].slice(23, 54)
-            )
-          );
-          for (var i = 0; i < arr4.length; i++) {
-            if (arr4[i].length == 0) {
-              arr4.splice(i, 1);
-              i--;
-            }
-          }
-          if (arr4.length == 0) {
-            this.flag = false;
-          }
-        }
-      }
     },
     addColor(i) {
       if (

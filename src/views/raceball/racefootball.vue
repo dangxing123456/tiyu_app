@@ -40,7 +40,7 @@
             </div>
             <div class="tab" v-if="item1.footBallBet">
               <div class="center" v-if="item1.footBallBet">
-                <ul :class="item1.single=='1'?'bor':''">
+                <ul :class="item1.single=='1'&& bool==true?'bor':''">
                   <span class="p1-first">0</span>
                   <li
                     v-for="(item,i) in item1.footBallBet"
@@ -89,7 +89,12 @@
       <!-- 底部按钮 -->
       <div class="bot-btn">
         <div class="check">
-          <van-checkbox v-model="checked" shape="square" checked-color="#FFA500">显示固定单关(橙色框内)</van-checkbox>
+          <van-checkbox
+            v-model="checked"
+            shape="square"
+            checked-color="#FFA500"
+            @change="chek"
+          >显示固定单关(橙色框内)</van-checkbox>
         </div>
         <!-- <div class="text">
           <p v-if="$store.state.sumcount==0">至少选择2场比赛</p>
@@ -169,11 +174,20 @@ export default {
       a: "",
       count: 0,
       checked: false,
-      flag: false
+      flag: false,
+      bool: true
     };
   },
   mounted() {},
   methods: {
+    chek() {
+      console.log(this.checked);
+      if (this.checked == true) {
+        this.bool = false;
+      } else {
+        this.bool = true;
+      }
+    },
     del() {
       for (var i = 0; i < this.$store.state.selectResult.length; i++) {
         for (let j = 0; j < this.$store.state.selectResult[i].length; j++) {
@@ -212,163 +226,158 @@ export default {
         });
       }
       if (this.$store.state.sumcount == 1) {
-        // console.log(index);
-    
+        var num = 0;
+        var arr = this.$store.state.selectResult;
 
-        for (let i = 0; i < this.$store.state.selectResult.length; i++) {}
+        for (let i = 0; i < arr.length; i++) {
+          for (let j = 0; j < arr[i].length; j++) {
+            if (arr[i][j] != undefined && arr[i][j] != "") {
+              num = i;
+            }
+          }
+        }
+
+        var arrs = arr[num].slice(0, 3);
+        for (var i = 0; i < arrs.length; i++) {
+          if (!arrs[i]) {
+            arrs.splice(i, 1);
+            i--;
+          }
+        }
+        console.log(arrs);
+
+        var arr1 = arr[num].slice(3, 6);
+
+        for (var i = 0; i < arr1.length; i++) {
+          if (!arr1[i]) {
+            arr1.splice(i, 1);
+            i--;
+          }
+        }
+        var arr2 = arr[num].slice(6, 14);
+
+        for (var i = 0; i < arr2.length; i++) {
+          if (!arr2[i]) {
+            arr2.splice(i, 1);
+            i--;
+          }
+        }
+        var arr3 = arr[num].slice(14, 23);
+
+        for (var i = 0; i < arr3.length; i++) {
+          if (!arr3[i]) {
+            arr3.splice(i, 1);
+            i--;
+          }
+        }
+        var arr4 = arr[num].slice(23, 54);
+
+        for (var i = 0; i < arr4.length; i++) {
+          if (!arr4[i]) {
+            arr4.splice(i, 1);
+            i--;
+          }
+        }
+        console.log(this.$store.state.result[num]);
+        if (this.$store.state.result[num].single == 0 && arrs.length > 0) {
+          for (let j = 0; j < 3; j++) {
+            if (arr[num][j] != undefined && arr[num][j] != "") {
+              this.flag = true;
+              console.log(this.flag);
+              break;
+            }
+          }
+        }
+        if (!this.flag) {
+          if (arrs.length > 0 && this.$store.state.result[num].single == 1) {
+            this.flag = false;
+          }
+        }
+
+        if (this.$store.state.result[num].single1 == 0 && arr1.length > 0) {
+          for (let j = 3; j < 6; j++) {
+            if (arr[num][j] != undefined && arr[num][j] != "") {
+              this.flag = true;
+              console.log(this.flag);
+              break;
+            }
+          }
+        }
+        if (!this.flag) {
+          if (arr1.length > 0 && this.$store.state.result[num].single1 == 1) {
+            this.flag = false;
+            console.log(this.flag);
+          }
+        }
+
+        if (this.$store.state.result[num].single2 == 0 && arr2.length > 0) {
+          for (let j = 6; j < 14; j++) {
+            if (arr[num][j] != undefined && arr[num][j] != "") {
+              this.flag = true;
+              break;
+            }
+          }
+        }
+        if (!this.flag) {
+          if (arr2.length > 0 && this.$store.state.result[num].single2 == 1) {
+            this.flag = false;
+            console.log(this.flag);
+          }
+        }
+
+        if (this.$store.state.result[num].single3 == 0 && arr3.length > 0) {
+          for (let j = 14; j < 23; j++) {
+            if (arr[num][j] != undefined && arr[num][j] != "") {
+              this.flag = true;
+              console.log(this.flag);
+
+              break;
+            }
+          }
+        }
+        if (!this.flag) {
+          if (arr3.length > 0 && this.$store.state.result[num].single3 == 1) {
+            this.flag = false;
+            console.log(this.flag);
+          }
+        }
+
+        if (this.$store.state.result[num].single4 == 0 && arr4.length > 0) {
+          for (let j = 23; j < 54; j++) {
+            if (arr[num][j] != undefined && arr[num][j] != "") {
+              this.flag = true;
+              console.log(this.flag);
+
+              break;
+            }
+          }
+        }
+        if (!this.flag) {
+          if (arr4.length > 0 && this.$store.state.result[num].single4 == 1) {
+            this.flag = false;
+            console.log(this.flag);
+          }
+        }
+
+        // if (this.$store.state.result[num].single == 1 && arrs.length > 0) {
+        //   this.flag = false;
+        // }
+        // if (this.$store.state.result[num].single1 == 1 && arr1.length > 0) {
+        //   this.flag = false;
+        // }
+        // if (this.$store.state.result[num].single2 == 1 && arr2.length > 0) {
+        //   this.flag = false;
+        // }
+        // if (this.$store.state.result[num].single3 == 1 && arr3.length > 0) {
+        //   this.flag = false;
+        // }
+        // if (this.$store.state.result[num].single4 == 1 && arr4.length > 0) {
+        //   this.flag = false;
+        // }
       }
 
-      //   if (
-      //     this.$store.state.result[this.$route.params.i].single == 0 &&
-      //     ii < 3
-      //   ) {
-      //     for (let i = 0; i < 3; i++) {
-      //       if (
-      //         this.$store.state.selectResult[this.$route.params.i][ii] !=
-      //           undefined ||
-      //         this.$store.state.selectResult[this.$route.params.i][ii] != ""
-      //       ) {
-      //         this.flag = true;
-      //         break;
-      //       }
-      //       var arr = JSON.parse(
-      //         JSON.stringify(
-      //           this.$store.state.selectResult[this.$route.params.i].slice(0, 3)
-      //         )
-      //       );
-      //       for (var i = 0; i < arr2.length; i++) {
-      //         if (arr[i].length == 0) {
-      //           arr.splice(i, 1);
-      //           i--;
-      //         }
-      //       }
-      //       if (arr.length == 0) {
-      //         this.flag = false;
-      //       }
-      //     }
-      //   }
-      //   if (
-      //     this.$store.state.result[this.$route.params.i].single1 == 0 &&
-      //     ii >= 3 &&
-      //     ii < 6
-      //   ) {
-      //     for (let i = 3; i < 6; i++) {
-      //       if (
-      //         this.$store.state.selectResult[this.$route.params.i][ii] !=
-      //           undefined ||
-      //         this.$store.state.selectResult[this.$route.params.i][ii] != ""
-      //       ) {
-      //         this.flag = true;
-      //         break;
-      //       }
-      //     }
-      //     var arr1 = JSON.parse(
-      //       JSON.stringify(
-      //         this.$store.state.selectResult[this.$route.params.i].slice(3, 6)
-      //       )
-      //     );
-      //     for (var i = 0; i < arr1.length; i++) {
-      //       if (arr1[i].length == 0) {
-      //         arr1.splice(i, 1);
-      //         i--;
-      //       }
-      //     }
-      //     if (arr1.length == 0) {
-      //       this.flag = false;
-      //     }
-      //   }
-      //   if (
-      //     this.$store.state.result[this.$route.params.i].single2 == 0 &&
-      //     ii >= 6 &&
-      //     ii < 14
-      //   ) {
-      //     for (let i = 6; i < 14; i++) {
-      //       if (
-      //         this.$store.state.selectResult[this.$route.params.i][ii] !=
-      //           undefined ||
-      //         this.$store.state.selectResult[this.$route.params.i][ii] != ""
-      //       ) {
-      //         this.flag = true;
-      //         break;
-      //       }
-      //     }
-      //     // eslint-disable-next-line no-redeclare
-      //     var arr2 = JSON.parse(
-      //       JSON.stringify(
-      //         this.$store.state.selectResult[this.$route.params.i].slice(6, 14)
-      //       )
-      //     );
-      //     for (var i = 0; i < arr2.length; i++) {
-      //       if (arr2[i].length == 0) {
-      //         arr2.splice(i, 1);
-      //         i--;
-      //       }
-      //     }
-      //     if (arr2.length == 0) {
-      //       this.flag = false;
-      //     }
-      //   }
-      //   if (
-      //     this.$store.state.result[this.$route.params.i].single3 == 0 &&
-      //     ii >= 14 &&
-      //     ii < 23
-      //   ) {
-      //     for (let i = 14; i < 23; i++) {
-      //       if (
-      //         this.$store.state.selectResult[this.$route.params.i][ii] !=
-      //           undefined ||
-      //         this.$store.state.selectResult[this.$route.params.i][ii] != ""
-      //       ) {
-      //         this.flag = true;
-      //         break;
-      //       }
-      //     }
-      //     var arr3 = JSON.parse(
-      //       JSON.stringify(
-      //         this.$store.state.selectResult[this.$route.params.i].slice(14, 23)
-      //       )
-      //     );
-      //     for (var i = 0; i < arr3.length; i++) {
-      //       if (arr3[i].length == 0) {
-      //         arr3.splice(i, 1);
-      //         i--;
-      //       }
-      //     }
-      //     if (arr3.length == 0) {
-      //       this.flag = false;
-      //     }
-      //   }
-      //   if (
-      //     this.$store.state.result[this.$route.params.i].single4 == 0 &&
-      //     ii >= 23 &&
-      //     ii < 54
-      //   ) {
-      //     for (let i = 23; i < 54; i++) {
-      //       if (
-      //         this.$store.state.selectResult[this.$route.params.i][ii] !=
-      //           undefined ||
-      //         this.$store.state.selectResult[this.$route.params.i][ii] != ""
-      //       ) {
-      //         this.flag = true;
-      //         break;
-      //       }
-      //     }
-      //     var arr4 = JSON.parse(
-      //       JSON.stringify(
-      //         this.$store.state.selectResult[this.$route.params.i].slice(23, 54)
-      //       )
-      //     );
-      //     for (var i = 0; i < arr4.length; i++) {
-      //       if (arr4[i].length == 0) {
-      //         arr4.splice(i, 1);
-      //         i--;
-      //       }
-      //     }
-      //     if (arr4.length == 0) {
-      //       this.flag = false;
-      //     }
-      //   }
-      // }
+      this.$store.state.flag = this.flag;
+      console.log(this.$store.state.flag);
       if (this.$store.state.sumcount == 1) {
         if (!this.$store.state.flag) {
           this.$router.push("/confirmPlan");
@@ -377,6 +386,7 @@ export default {
           });
         }
       }
+      this.flag = false;
     },
     show(index) {
       var r = false;
@@ -455,82 +465,82 @@ export default {
 
       this.$store.state.sumcount = arr.length;
 
-      if (this.$store.state.sumcount == 1) {
-        if (this.$store.state.result[index].single == 0 && ii < 3) {
-          for (let i = 0; i < 3; i++) {
-            if (
-              this.$store.state.selectResult[index][ii] != undefined ||
-              this.$store.state.selectResult[index][ii] != ""
-            ) {
-              this.$store.state.flag = true;
-              break;
-            }
-            var arr2 = JSON.parse(
-              JSON.stringify(this.$store.state.selectResult[index].slice(0, 3))
-            );
-            for (var i = 0; i < arr2.length; i++) {
-              if (arr2[i].length == 0) {
-                arr2.splice(i, 1);
-                i--;
-              }
-            }
-            if (arr2.length == 0) {
-              this.$store.state.flag = false;
-            }
-          }
-        }
-        if (this.$store.state.result[index].single1 == 0 && ii >= 3 && ii < 6) {
-          for (let i = 0; i < 3; i++) {
-            if (
-              this.$store.state.selectResult[index][ii] != undefined ||
-              this.$store.state.selectResult[index][ii] != ""
-            ) {
-              this.$store.state.flag = true;
-              break;
-            }
-          }
-          var arr1 = JSON.parse(
-            JSON.stringify(this.$store.state.selectResult[index].slice(3, 6))
-          );
-          for (var i = 0; i < arr1.length; i++) {
-            if (arr1[i].length == 0) {
-              arr1.splice(i, 1);
-              i--;
-            }
-          }
-          if (arr1.length == 0) {
-            this.$store.state.flag = false;
-          }
-        }
+      // if (this.$store.state.sumcount == 1) {
+      //   if (this.$store.state.result[index].single == 0 && ii < 3) {
+      //     for (let i = 0; i < 3; i++) {
+      //       if (
+      //         this.$store.state.selectResult[index][ii] != undefined ||
+      //         this.$store.state.selectResult[index][ii] != ""
+      //       ) {
+      //         this.$store.state.flag = true;
+      //         break;
+      //       }
+      //       var arr2 = JSON.parse(
+      //         JSON.stringify(this.$store.state.selectResult[index].slice(0, 3))
+      //       );
+      //       for (var i = 0; i < arr2.length; i++) {
+      //         if (arr2[i].length == 0) {
+      //           arr2.splice(i, 1);
+      //           i--;
+      //         }
+      //       }
+      //       if (arr2.length == 0) {
+      //         this.$store.state.flag = false;
+      //       }
+      //     }
+      //   }
+      //   if (this.$store.state.result[index].single1 == 0 && ii >= 3 && ii < 6) {
+      //     for (let i = 0; i < 3; i++) {
+      //       if (
+      //         this.$store.state.selectResult[index][ii] != undefined ||
+      //         this.$store.state.selectResult[index][ii] != ""
+      //       ) {
+      //         this.$store.state.flag = true;
+      //         break;
+      //       }
+      //     }
+      //     var arr1 = JSON.parse(
+      //       JSON.stringify(this.$store.state.selectResult[index].slice(3, 6))
+      //     );
+      //     for (var i = 0; i < arr1.length; i++) {
+      //       if (arr1[i].length == 0) {
+      //         arr1.splice(i, 1);
+      //         i--;
+      //       }
+      //     }
+      //     if (arr1.length == 0) {
+      //       this.$store.state.flag = false;
+      //     }
+      //   }
 
-        if (this.$store.state.flag == false) {
-          if (this.$store.state.result[index].single == 1 && ii < 3) {
-            for (let i = 0; i < 3; i++) {
-              if (
-                this.$store.state.selectResult[index][ii] != undefined ||
-                this.$store.state.selectResult[index][ii] != ""
-              ) {
-                break;
-              }
-            }
-          }
+      //   if (this.$store.state.flag == false) {
+      //     if (this.$store.state.result[index].single == 1 && ii < 3) {
+      //       for (let i = 0; i < 3; i++) {
+      //         if (
+      //           this.$store.state.selectResult[index][ii] != undefined ||
+      //           this.$store.state.selectResult[index][ii] != ""
+      //         ) {
+      //           break;
+      //         }
+      //       }
+      //     }
 
-          if (
-            this.$store.state.result[index].single1 == 1 &&
-            ii >= 3 &&
-            ii < 6
-          ) {
-            for (let i = 3; i < 6; i++) {
-              if (
-                this.$store.state.selectResult[index][ii] != undefined ||
-                this.$store.state.selectResult[index][ii] != ""
-              ) {
-                break;
-              }
-            }
-          }
-        }
-      }
+      //     if (
+      //       this.$store.state.result[index].single1 == 1 &&
+      //       ii >= 3 &&
+      //       ii < 6
+      //     ) {
+      //       for (let i = 3; i < 6; i++) {
+      //         if (
+      //           this.$store.state.selectResult[index][ii] != undefined ||
+      //           this.$store.state.selectResult[index][ii] != ""
+      //         ) {
+      //           break;
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
     },
     getList() {
       var that = this;

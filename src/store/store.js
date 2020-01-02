@@ -85,6 +85,7 @@ export default new Vuex.Store({
     sumcount: 0,
     money: 0,
     flag: false,
+    gate: [],
     //蓝球
     basketResult: [],
     basketSelectResult: [],

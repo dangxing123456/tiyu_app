@@ -34,7 +34,7 @@
           <div class="money">
             <van-icon name="card" class="ico" />
             <span>店内账本</span>
-            <h4>￥{{$store.state.userInfo.coin}}</h4>
+            <h4>￥{{$store.state.userInfo.balance}}</h4>
           </div>
           <div class="money">
             <van-icon name="card" class="ico" />
@@ -136,7 +136,12 @@ export default {
           icon: "map-marked",
           color: "#E91E63"
         },
-        { name: "退出登录", path: "/setting", icon: "setting-o", color: "#2196F3" }
+        {
+          name: "退出登录",
+          path: "/setting",
+          icon: "setting-o",
+          color: "#2196F3"
+        }
       ],
       user_img: user_img,
       sumMoney: 0,
@@ -145,18 +150,7 @@ export default {
     };
   },
   created() {
-    console.log(this.$METHOD.getStore("token"));
     this.getPerson();
-    this.$SERVER
-      .getUserWalletExchangeHIstory({
-        userId: this.$store.state.userInfo.userId,
-        pagenum: 1,
-        pagesize: 10
-      })
-      .then(res => {
-        this.sumMoney = res.data.list[0].currentBalance;
-        console.log(res.data.list);
-      });
   },
   mounted() {},
   methods: {

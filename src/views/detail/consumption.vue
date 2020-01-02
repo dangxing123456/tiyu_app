@@ -57,7 +57,12 @@
             <span v-if="$route.params.ballType=='zc'">保{{zorderDesc.promiseBet}}</span>
             <span v-else>保{{lorderDesc.promiseBet}}</span>
           </div>
-          <div class="right">2串一</div>
+          <div class="right" v-if="$route.params.ballType=='zc'">
+            <span v-for="(item,i) in gate" :key="i">{{item}}</span>
+          </div>
+          <div class="right" v-if="$route.params.ballType=='lc'">
+            <span v-for="(item,i) in lgate" :key="i">{{item}}</span>
+          </div>
         </div>
         <div class="tab" v-if="$route.params.ballType=='zc'">
           <table border="1">
@@ -85,6 +90,7 @@
               <td class="mey">负</td>
             </tr>
           </table>
+          <div class="info" v-if="dataTime<time">比赛开赛后公开</div>
 
           <p class="prompt">*页面显示盘口及赔率,奖金计算请以实体票样为准</p>
         </div>
@@ -139,9 +145,8 @@
             >
               <td>
                 <span>{{i+1}}</span>
-              
+
                 <img :src="item.icon" alt />
-               
               </td>
               <td>{{item.nickname}}</td>
               <td>{{item.totalMoney}}</td>
@@ -149,9 +154,8 @@
             <tr class="mon" v-for="(item,i) in lFlowerList" :key="i" v-else>
               <td>
                 <span>{{index+1}}</span>
-               
+
                 <img :src="item.icon" alt />
-              
               </td>
               <td>{{item.nickname}}</td>
               <td>{{item.totalMoney}}</td>
@@ -161,21 +165,23 @@
       </div>
     </div>
 
-    <div class="bot">
+    <div class="bot" v-if="dataTime>time">
       <p>截止时间: 2019-12-26 21:40:40</p>
-      <van-button type="danger" size="large">我要跟单</van-button>
+      <van-button type="danger" size="large" >我要跟单</van-button>
     </div>
+    <popup ref="pop" v-model="currentValue"></popup>
   </div>
 </template>
 
 <script>
 import navBar from "@/components/navbar/navbar.vue";
-
+// import popup from "@components/popup/popup";
 export default {
   name: "consumption",
   props: {},
   components: {
-    navBar
+    navBar,
+    // popup
   },
   data() {
     return {
@@ -189,13 +195,25 @@ export default {
       lcontent: [],
       lcOrder: {},
       flowerList: [],
-      lFlowerList: []
+      lFlowerList: [],
+      gate: [],
+      lgate: [],
+      time: "",
+      dataTime: new Date().getTime(),
+      show1: false,
+      currentValue: false
     };
   },
   created() {
     this.getList();
   },
   methods: {
+    showPopup(item) {
+      this.show1 = true;
+      this.currentValue = true;
+      this.$refs.pop.show = true;
+      this.$refs.pop.list = item;
+    },
     getList() {
       this.$SERVER
         .getFocusOfDetail({
@@ -208,28 +226,36 @@ export default {
           if (this.$route.params.ballType == "zc") {
             this.flowerList = res.data.zcFlowers;
             this.zcOrder = res.data.zcOrder;
-            this.zorderDesc = JSON.parse(res.data.zcOrder.orderDesc);
-            this.zorderDesc.matchs.forEach(e => {
-              this.zcontent.push({
-                aCnAbbr: e.aCnAbbr,
-                hCnAbbr: e.hCnAbbr,
-                num: e.num
+            this.time = this.zcOrder.endTime;
+            if (this.dataTime > this.time) {
+              this.zorderDesc = JSON.parse(res.data.zcOrder.orderDesc);
+
+              console.log(this.time);
+
+              this.gate = this.zorderDesc.gates;
+              this.zorderDesc.matchs.forEach(e => {
+                this.zcontent.push({
+                  aCnAbbr: e.aCnAbbr,
+                  hCnAbbr: e.hCnAbbr,
+                  num: e.num
+                });
               });
-            });
+            }
           }
           if (this.$route.params.ballType == "lc") {
             this.lFlowerList = res.data.lcFlowers;
             this.lcOrder = res.data.lcOrder;
-            this.lorderDesc = JSON.parse(res.data.lcOrder.orderDesc);
-
-            this.lorderDesc.matchs.forEach(e => {
-              this.lcontent.push({
-                aCnAbbr: e.aCnAbbr,
-                hCnAbbr: e.hCnAbbr,
-                num: e.num
+            if (res.data.lcOrder.length > 0) {
+              this.lorderDesc = JSON.parse(res.data.lcOrder.orderDesc);
+              this.lgate = this.lorderDesc.gates;
+              this.lorderDesc.matchs.forEach(e => {
+                this.lcontent.push({
+                  aCnAbbr: e.aCnAbbr,
+                  hCnAbbr: e.hCnAbbr,
+                  num: e.num
+                });
               });
-            });
-            console.log(this.lcontent);
+            }
           }
         });
     }
@@ -265,6 +291,13 @@ export default {
       color: #777;
     }
   }
+}
+.info {
+  text-align: center;
+  font-size: 13px;
+  background-color: #ffefd5;
+  color: #ffb90f;
+  padding: 10px;
 }
 .wrap {
   .title {

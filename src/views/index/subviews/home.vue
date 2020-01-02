@@ -51,7 +51,7 @@
             >
               <img :src="item.icon" />
               <p>{{item.nickname}}</p>
-              <span>{{item.flowCount}}</span>
+              <span v-if="item.flowCount>0">{{item.flowCount}}</span>
             </van-grid-item>
           </van-grid>
         </div>
@@ -70,11 +70,11 @@
               @click="detailExpert(item.userId)"
               v-if="i<4"
             >
-              <!-- <img :src="item.icon" /> -->
-              <img :src="user_img" alt />
+              <img :src="item.icon" />
+              <!-- <img :src="user_img" alt /> -->
               <p>{{item.nickname}}</p>
               <p class="lian">{{item.winCount}}连红</p>
-              <span>{{item.flowCount}}</span>
+              <span v-if="item.flowCount>0">{{item.flowCount}}</span>
             </van-grid-item>
           </van-grid>
         </div>
@@ -85,7 +85,7 @@
           <van-grid :column-num="2" class="dian">
             <van-grid-item v-for="(item,i) in focusList" :key="i" @click="detail(item)">
               <div class="con">
-                <img :src="user_img" />
+              <img :src="item.icon" />
                 <p>{{item.nickname}}</p>
               </div>
               <div class="text">
@@ -128,7 +128,7 @@
                       <td>{{item.times*item.buyWagers*2}}元</td>
                       <td>{{item.buyWagers*2}}元</td>
                       <td>
-                        <van-button type="danger" size="mini" @click="showPopup(item)">跟单</van-button>
+                        <van-button type="danger" size="mini" @click.stop="showPopup(item)">跟单</van-button>
                       </td>
                     </tr>
                   </table>
@@ -177,7 +177,7 @@
                       <td>{{item.times*item.buyWagers*2}}元</td>
                       <td>{{item.buyWagers*2}}元</td>
                       <td>
-                        <van-button type="danger" size="mini" @click="showPopup(item)">跟单</van-button>
+                        <van-button type="danger" size="mini" @click.stop="showPopup(item)">跟单</van-button>
                       </td>
                     </tr>
                   </table>
@@ -459,6 +459,8 @@ export default {
         this.getList();
         this.getTopPerson();
         this.getImg();
+        this.getBasketList();
+        this.getListBall();
         this.isLoading = false;
       }, 500);
     },
@@ -704,7 +706,7 @@ export default {
     border-radius: 50%;
   }
   p {
-    font-size: 14px;
+    font-size: 13px;
     margin-top: 8px;
     color: #777;
   }
@@ -717,9 +719,9 @@ export default {
       border-radius: 50%;
     }
     p {
-      font-size: 14px;
+      font-size: 13px;
       margin-top: 8px;
-      color: #494949;
+      color: #777;
     }
   }
 }
@@ -732,9 +734,9 @@ export default {
       border-radius: 50%;
     }
     p {
-      font-size: 14px;
+      font-size: 13px;
       margin-top: 8px;
-      color: #494949;
+      color: #777;
     }
     .lian {
       color: #f24a44;
@@ -761,7 +763,7 @@ export default {
       width: 120px;
       span {
         color: #777;
-        font-size: 14px;
+        font-size: 13px;
       }
       h3 {
         color: red;
@@ -788,10 +790,10 @@ export default {
   margin-top: 10px;
   background: #fff;
   h3 {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     padding-left: 8px;
-    border-left: 5px solid #f24a44;
+    border-left: 4px solid #f24a44;
   }
   span {
     font-size: 12px;
