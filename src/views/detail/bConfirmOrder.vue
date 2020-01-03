@@ -62,7 +62,8 @@ export default {
           matchIds: this.$store.state.basketFootId,
           bets: this.$store.state.basketBetArr,
           describeText: this.value,
-          promiseBet: this.bei
+          promiseBet: this.bei,
+          gates: this.$store.state.basketGate
         })
         .then(res => {
           //下单成功

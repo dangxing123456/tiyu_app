@@ -86,6 +86,8 @@ export default new Vuex.Store({
     money: 0,
     flag: false,
     gate: [],
+    bool: true,
+    arr: [],
     //蓝球
     basketResult: [],
     basketSelectResult: [],
@@ -96,9 +98,10 @@ export default new Vuex.Store({
     basketValue: 1,
     basketSumcount: 0,
     basketMoney: 0,
-
+    basketGate: [],
     sumMoney: 0,
-    bFlag: false
+    bFlag: false,
+    boolBask: true
   },
   //方法
   mutations: {

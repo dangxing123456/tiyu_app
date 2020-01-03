@@ -34,7 +34,7 @@
           <div class="money">
             <van-icon name="card" class="ico" />
             <span>店内账本</span>
-            <h4>￥{{$store.state.userInfo.balance}}</h4>
+            <h4>￥{{personList.balance}}</h4>
           </div>
           <div class="money">
             <van-icon name="card" class="ico" />

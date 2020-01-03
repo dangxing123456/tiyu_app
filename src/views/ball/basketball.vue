@@ -41,13 +41,12 @@ export default {
   },
   created() {
     // this.getList();
-
-    window.setInterval(() => {
-      var that = this;
-      setTimeout(function() {
-        that.getList();
-      }, 0);
-    }, 30000);
+    // window.setInterval(() => {
+    //   var that = this;
+    //   setTimeout(function() {
+    //     that.getList();
+    //   }, 0);
+    // }, 30000);
   },
   methods: {
     onRefresh() {

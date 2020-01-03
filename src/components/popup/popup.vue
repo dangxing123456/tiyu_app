@@ -6,7 +6,7 @@
           <div>
             <span class="peo" v-if="list.userInfor">
               发单人：
-              <span class="fa">{{list.userInfor.nickname}}</span>
+              <span class="fa">{{list.userInfor.nickname || list.nickname}}</span>
             </span>
             <!-- <span class="com">红单一生一世</span> -->
           </div>
@@ -62,9 +62,7 @@ export default {
   props: {
     //是否显示
   },
-  created() {
-    console.log(this.list);
-  },
+  created() {},
   watch: {},
   data() {
     return {
@@ -82,9 +80,7 @@ export default {
     Onshow() {
       this.show = true;
     },
-    onChange(value) {
-      //   console.log(value);
-    },
+    onChange(value) {},
     quxiao() {
       this.show = false;
     },

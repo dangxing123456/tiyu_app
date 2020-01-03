@@ -85,7 +85,7 @@
           <van-grid :column-num="2" class="dian">
             <van-grid-item v-for="(item,i) in focusList" :key="i" @click="detail(item)">
               <div class="con">
-              <img :src="item.icon" />
+                <img :src="item.icon" />
                 <p>{{item.nickname}}</p>
               </div>
               <div class="text">
@@ -95,111 +95,113 @@
             </van-grid-item>
           </van-grid>
         </div>
-        <van-dropdown-menu>
-          <van-dropdown-item v-model="value1" :options="option1" @change="changeValue" />
-        </van-dropdown-menu>
-
-        <van-tabs v-model="active" @click="showP">
-          <van-tab title="消费金额">
-            <div class="wrap" v-for="(item,i) in ballList" :key="i">
-              <div class="head" @click="detailExpert(item.userId)">
-                <img :src="item.userInfor.icon" alt />
-                <!-- <img :src="user_img" alt /> -->
-                <div>
-                  <p>{{item.userInfor.nickname}}</p>
-                  <!-- <p>{{$METHOD.format($route.params.bookTime/1000,'MM-dd hh:mm')}}</p> -->
-                  <p>{{$METHOD.format(item.bookTime/1000,'MM-dd hh:mm')}}</p>
-                </div>
-              </div>
-              <div class="con" @click="detail(item)">
-                <div class="text">{{item.describeText}}</div>
-                <div class="tab">
-                  <span class="bao">保{{item.promiseBet}}</span>
-                  <table border="1">
-                    <tr class="type">
-                      <th>类型</th>
-                      <th>消费金额</th>
-                      <th>单倍金额</th>
-                      <th></th>
-                    </tr>
-                    <tr class="mon">
-                      <td v-if="item.type=='1'">竞彩足球</td>
-                      <td v-if="item.type=='2'">竞彩篮球</td>
-                      <td>{{item.times*item.buyWagers*2}}元</td>
-                      <td>{{item.buyWagers*2}}元</td>
-                      <td>
-                        <van-button type="danger" size="mini" @click.stop="showPopup(item)">跟单</van-button>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-
-                <div class="time">
+        <div class="won">
+          <van-tabs v-model="active" @click="showP">
+            <van-tab title="消费金额">
+              
+              <div class="wrap" v-for="(item,i) in ballList" :key="i">
+                <div class="head" @click="detailExpert(item.userId)">
+                  <img :src="item.userInfor.icon" alt />
+                  <!-- <img :src="user_img" alt /> -->
                   <div>
-                    <van-icon
-                      name="fire"
-                      size="12px"
-                      v-for="(item,index) in shouDan(item)"
-                      :key="index"
-                      color="red"
-                    />
+                    <p>{{item.userInfor.nickname}}</p>
+                    <!-- <p>{{$METHOD.format($route.params.bookTime/1000,'MM-dd hh:mm')}}</p> -->
+                    <p>{{$METHOD.format(item.bookTime/1000,'MM-dd hh:mm')}}</p>
+                  </div>
+                </div>
+                <div class="con" @click="detail(item)">
+                  <div class="text">{{item.describeText}}</div>
+                  <div class="tab">
+                    <span class="bao">保{{item.promiseBet}}</span>
+                    <table border="1">
+                      <tr class="type">
+                        <th>类型</th>
+                        <th>消费金额</th>
+                        <th>单倍金额</th>
+                        <th></th>
+                      </tr>
+                      <tr class="mon">
+                        <td v-if="item.type=='1'">竞彩足球</td>
+                        <td v-if="item.type=='2'">竞彩篮球</td>
+                        <td>{{item.times*item.buyWagers*2}}元</td>
+                        <td>{{item.buyWagers*2}}元</td>
+                        <td>
+                          <van-button type="danger" size="mini" @click.stop="showPopup(item)">跟单</van-button>
+                        </td>
+                      </tr>
+                    </table>
                   </div>
 
-                  <p>截止时间：{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}</p>
-                </div>
-              </div>
-            </div>
-          </van-tab>
-          <van-tab title="跟单数">
-            <div class="wrap" v-for="(item,i) in ballList" :key="i">
-              <div class="head" @click="detailExpert(item.userId)">
-                <img :src="item.userInfor.icon" alt />
-                <div>
-                  <p>{{item.userInfor.nickname}}</p>
-                  <!-- <p>{{$METHOD.format($route.params.bookTime/1000,'MM-dd hh:mm')}}</p> -->
-                  <p>{{$METHOD.format(item.bookTime/1000,'MM-dd hh:mm')}}</p>
-                </div>
-              </div>
-              <div class="con" @click="detail(item)">
-                <div class="text">{{item.describeText}}</div>
-                <div class="tab">
-                  <span class="bao">保{{item.promiseBet}}</span>
-                  <table border="1">
-                    <tr class="type">
-                      <th>类型</th>
-                      <th>消费金额</th>
-                      <th>单倍金额</th>
-                      <th></th>
-                    </tr>
-                    <tr class="mon">
-                      <td v-if="item.type=='1'">竞彩足球</td>
-                      <td v-if="item.type=='2'">竞彩篮球</td>
-                      <td>{{item.times*item.buyWagers*2}}元</td>
-                      <td>{{item.buyWagers*2}}元</td>
-                      <td>
-                        <van-button type="danger" size="mini" @click.stop="showPopup(item)">跟单</van-button>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                  <div class="time">
+                    <div>
+                      <van-icon
+                        name="fire"
+                        size="12px"
+                        v-for="(item,index) in shouDan(item)"
+                        :key="index"
+                        color="red"
+                      />
+                    </div>
 
-                <div class="time">
+                    <p>截止时间：{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}</p>
+                  </div>
+                </div>
+              </div>
+            </van-tab>
+            <van-tab title="跟单数">
+              <div class="wrap" v-for="(item,i) in ballList" :key="i">
+                <div class="head" @click="detailExpert(item.userId)">
+                  <img :src="item.userInfor.icon" alt />
                   <div>
-                    <van-icon
-                      name="fire"
-                      size="12px"
-                      v-for="(item,index) in shouDan(item)"
-                      :key="index"
-                      color="red"
-                    />
+                    <p>{{item.userInfor.nickname}}</p>
+                    <!-- <p>{{$METHOD.format($route.params.bookTime/1000,'MM-dd hh:mm')}}</p> -->
+                    <p>{{$METHOD.format(item.bookTime/1000,'MM-dd hh:mm')}}</p>
+                  </div>
+                </div>
+                <div class="con" @click="detail(item)">
+                  <div class="text">{{item.describeText}}</div>
+                  <div class="tab">
+                    <span class="bao">保{{item.promiseBet}}</span>
+                    <table border="1">
+                      <tr class="type">
+                        <th>类型</th>
+                        <th>消费金额</th>
+                        <th>单倍金额</th>
+                        <th></th>
+                      </tr>
+                      <tr class="mon">
+                        <td v-if="item.type=='1'">竞彩足球</td>
+                        <td v-if="item.type=='2'">竞彩篮球</td>
+                        <td>{{item.times*item.buyWagers*2}}元</td>
+                        <td>{{item.buyWagers*2}}元</td>
+                        <td>
+                          <van-button type="danger" size="mini" @click.stop="showPopup(item)">跟单</van-button>
+                        </td>
+                      </tr>
+                    </table>
                   </div>
 
-                  <p>截止时间：{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}</p>
+                  <div class="time">
+                    <div>
+                      <van-icon
+                        name="fire"
+                        size="12px"
+                        v-for="(item,index) in shouDan(item)"
+                        :key="index"
+                        color="red"
+                      />
+                    </div>
+
+                    <p>截止时间：{{$METHOD.format(item.endTime/1000,'MM-dd hh:mm')}}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </van-tab>
-        </van-tabs>
+            </van-tab>
+          </van-tabs>
+          <van-dropdown-menu>
+            <van-dropdown-item v-model="value1" :options="option1" @change="changeValue" />
+          </van-dropdown-menu>
+        </div>
 
         <!-- <div class="title">
           <h3>最新赛事</h3>
@@ -780,6 +782,16 @@ export default {
 
       margin-left: 4px;
     }
+  }
+}
+.won {
+  display: flex;
+  align-items: center;
+  /deep/ .van-dropdown-menu {
+    width: 30%;
+  }
+  /deep/ .van-tabs {
+    width: 70%;
   }
 }
 .title {

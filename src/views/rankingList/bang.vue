@@ -5,60 +5,98 @@
       <img src="@/assets/images/paihang.png" alt srcset />
     </div>
     <div class="main">
-      <van-tabs v-model="active" sticky :offset-top="176" type="line">
-        <van-tab title="连红榜">
-          <div class="content" v-for="(item,index) in joinWinTopList" :key="index">
-            <div class="first">
-              <span>{{index+1}}</span>
-            </div>
-            <div class="info">
-              <img :src="item.icon" alt srcset />
-              <!-- <img src="@/assets/images/paihang.png" alt srcset /> -->
-              <span class="name">{{item.nickname}}</span>
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <van-tabs v-model="active" sticky :offset-top="176" type="line">
+          <van-tab title="连红榜">
+            <van-list
+              v-model="loading"
+              :finished="finished"
+              finished-text="没有更多了"
+              @load="getjoinWinTop"
+            >
+              <div
+                class="content"
+                v-for="(item,index) in joinWinTopList"
+                :key="index"
+                @click="detailExpert(item.userId)"
+              >
+                <div class="first">
+                  <span>{{index+1}}</span>
+                </div>
+                <div class="info">
+                  <img :src="item.icon" alt srcset />
+                  <!-- <img src="@/assets/images/paihang.png" alt srcset /> -->
+                  <span class="name">{{item.nickname}}</span>
 
-              <span v-if="item.flowCount>0">{{item.flowCount}}</span>
-            </div>
-            <div class="last">
-              <p>{{item.winCount}}</p>
-              <p>连红</p>
-            </div>
-          </div>
-        </van-tab>
-        <van-tab title="命中榜">
-          <div class="content" v-for="(item,index) in shopTop" :key="index">
-            <div class="first">
-              <span>{{index+1}}</span>
-            </div>
-            <div class="info">
-              <img :src="item.icon" alt srcset />
-              <span class="name">{{item.nickname}}</span>
+                  <span v-if="item.flowCount>0">{{item.flowCount}}</span>
+                </div>
+                <div class="last">
+                  <p>{{item.winCount}}</p>
+                  <p>连红</p>
+                </div>
+              </div>
+            </van-list>
+          </van-tab>
+          <van-tab title="命中榜">
+            <van-list
+              v-model="loading1"
+              :finished="finished1"
+              finished-text="没有更多了"
+              @load="getSheng"
+            >
+              <div
+                class="content"
+                v-for="(item,index) in shopTop"
+                :key="index"
+                @click="detailExpert(item.userId)"
+              >
+                <div class="first">
+                  <span>{{index+1}}</span>
+                </div>
+                <div class="info">
+                  <img :src="item.icon" alt srcset />
+                  <span class="name">{{item.nickname}}</span>
 
-              <span v-if="item.flowCount>0">{{item.flowCount}}</span>
-            </div>
-            <div class="last">
-              <p>{{item.winRate*100}}%</p>
-              <p>命中率</p>
-            </div>
-          </div>
-        </van-tab>
-        <van-tab title="大神榜">
-          <div class="content" v-for="(item,index) in person" :key="index">
-            <div class="first">
-              <span>{{index+1}}</span>
-            </div>
-            <div class="info">
-              <img :src="item.icon" alt srcset />
-              <span class="name">{{item.nickname}}</span>
+                  <span v-if="item.flowCount>0">{{item.flowCount}}</span>
+                </div>
+                <div class="last">
+                  <p>{{item.winRate*100}}%</p>
+                  <p>命中率</p>
+                </div>
+              </div>
+            </van-list>
+          </van-tab>
+          <van-tab title="大神榜">
+            <van-list
+              v-model="loading2"
+              :finished="finished2"
+              finished-text="没有更多了"
+              @load="getTopPerson"
+            >
+              <div
+                class="content"
+                v-for="(item,index) in person"
+                :key="index"
+                @click="detailExpert(item.userId)"
+              >
+                <div class="first">
+                  <span>{{index+1}}</span>
+                </div>
+                <div class="info">
+                  <img :src="item.icon" alt srcset />
+                  <span class="name">{{item.nickname}}</span>
 
-              <span class="count" v-if="item.flowCount>0">{{item.flowCount}}</span>
-            </div>
-            <div class="last">
-              <p>{{item.hotCount}}</p>
-              <p>带红人数</p>
-            </div>
-          </div>
-        </van-tab>
-      </van-tabs>
+                  <span class="count" v-if="item.flowCount>0">{{item.flowCount}}</span>
+                </div>
+                <div class="last">
+                  <p>{{item.hotCount}}</p>
+                  <p>带红人数</p>
+                </div>
+              </div>
+            </van-list>
+          </van-tab>
+        </van-tabs>
+      </van-pull-refresh>
     </div>
   </div>
 </template>
@@ -77,41 +115,69 @@ export default {
       active: 0,
       joinWinTopList: [],
       person: [],
-      shopTop: []
+      shopTop: [],
+      loading: false,
+      finished: false,
+      page: 1,
+      loading1: false,
+      finished1: false,
+      page1: 1,
+      loading2: false,
+      finished2: false,
+      page2: 1,
+      isLoading: false
     };
   },
-  created() {
-    this.getjoinWinTop();
-    this.getTopPerson();
-    this.getSheng();
-  },
+  created() {},
   methods: {
+    detailExpert(id) {
+      this.$router.push("/personHome/" + id);
+    },
     getSheng() {
-      this.$SERVER.getShootTop().then(res => {
-        this.shopTop = res.data.list;
-      });
+      this.$SERVER
+        .getShootTop({
+          pagenum: this.page1,
+          pagesize: 10
+        })
+        .then(res => {
+          this.shopTop = [...this.shopTop, ...res.data.list];
+          this.loading1 = false;
+          this.page1++;
+          if (!res.data.hasNextPage) {
+            this.finished1 = true;
+          }
+        });
     },
     getjoinWinTop() {
-      this.$SERVER.joinWinTop().then(res => {
-        this.joinWinTopList = res.data.list;
-        console.log(this.joinWinTopList);
-      });
+      this.$SERVER
+        .joinWinTop({
+          pagenum: this.page,
+          pagesize: 10
+        })
+        .then(res => {
+          this.joinWinTopList = [...this.joinWinTopList, ...res.data.list];
+          this.loading = false;
+          this.page++;
+          if (!res.data.hasNextPage) {
+            this.finished = true;
+          }
+        });
     },
     getTopPerson() {
-      this.$SERVER.getTopPerson().then(res => {
-        this.person = res.data.list;
+      this.$SERVER
+        .getTopPerson({
+          pagenum: this.page2,
+          pagesize: 10
+        })
+        .then(res => {
+          this.person = [...this.person, ...res.data.list];
 
-        for (var i = 0; i < this.person.length; i++) {
-          this.person[i].type = 1;
-          var userInfor = {
-            nickname: this.person[i].nickname
-          };
-          this.person[i].userInfor = userInfor;
-          this.person[i].id = this.person[i].orderId;
-        }
-
-        console.log(this.person);
-      });
+          this.loading2 = false;
+          this.page2++;
+          if (!res.data.hasNextPage) {
+            this.finished2 = true;
+          }
+        });
     }
   }
 };

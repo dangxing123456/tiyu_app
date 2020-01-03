@@ -40,7 +40,7 @@
             </div>
             <div class="tab" v-if="item1.footBallBet">
               <div class="center" v-if="item1.footBallBet">
-                <ul :class="item1.single=='1'&& bool==true?'bor':''">
+                <ul :class="item1.single=='1'&& $store.state.bool==true?'bor':''">
                   <span class="p1-first">0</span>
                   <li
                     v-for="(item,i) in item1.footBallBet"
@@ -55,7 +55,7 @@
                     <span>{{item}}</span>
                   </li>
                 </ul>
-                <ul :class="item1.single1=='1'?'bor':''">
+                <ul :class="item1.single1=='1'&& $store.state.bool==true?'bor':''">
                   <span :class="item1.goalline=='+1'?'p2-red':'p2-blue'">{{item1.goalline}}</span>
                   <li
                     v-for="(item,i) in item1.footBallBet"
@@ -68,14 +68,12 @@
                     <span v-else-if="i==1 || i==4">平</span>
                     <span v-else-if="i==2 || i==5">负</span>
                     <span>{{item}}</span>
-
-                    <!-- <span class="dan" v-if="item1.single==1">单</span> -->
                   </li>
                 </ul>
               </div>
               <div
                 class="right1"
-                :class="item1.single=='1' ||item1.single1=='1' ||item1.single2=='1' ||item1.single3=='1' ||item1.single4=='1' ?'bor':''"
+                :class="(item1.single=='1' ||item1.single1=='1' ||item1.single2=='1' ||item1.single3=='1' ||item1.single4=='1') && $store.state.bool==true?'bor':''"
               >
                 <span
                   :class="bgc(item1,index)"
@@ -173,19 +171,17 @@ export default {
     return {
       a: "",
       count: 0,
-      checked: false,
-      flag: false,
-      bool: true
+      checked: true,
+      flag: false
     };
   },
   mounted() {},
   methods: {
     chek() {
-      console.log(this.checked);
       if (this.checked == true) {
-        this.bool = false;
+        this.$store.state.bool = true;
       } else {
-        this.bool = true;
+        this.$store.state.bool = false;
       }
     },
     del() {
@@ -244,7 +240,6 @@ export default {
             i--;
           }
         }
-        console.log(arrs);
 
         var arr1 = arr[num].slice(3, 6);
 
@@ -278,12 +273,12 @@ export default {
             i--;
           }
         }
-        console.log(this.$store.state.result[num]);
+
         if (this.$store.state.result[num].single == 0 && arrs.length > 0) {
           for (let j = 0; j < 3; j++) {
             if (arr[num][j] != undefined && arr[num][j] != "") {
               this.flag = true;
-              console.log(this.flag);
+
               break;
             }
           }
@@ -298,7 +293,7 @@ export default {
           for (let j = 3; j < 6; j++) {
             if (arr[num][j] != undefined && arr[num][j] != "") {
               this.flag = true;
-              console.log(this.flag);
+
               break;
             }
           }
@@ -306,7 +301,6 @@ export default {
         if (!this.flag) {
           if (arr1.length > 0 && this.$store.state.result[num].single1 == 1) {
             this.flag = false;
-            console.log(this.flag);
           }
         }
 
@@ -321,7 +315,6 @@ export default {
         if (!this.flag) {
           if (arr2.length > 0 && this.$store.state.result[num].single2 == 1) {
             this.flag = false;
-            console.log(this.flag);
           }
         }
 
@@ -329,7 +322,6 @@ export default {
           for (let j = 14; j < 23; j++) {
             if (arr[num][j] != undefined && arr[num][j] != "") {
               this.flag = true;
-              console.log(this.flag);
 
               break;
             }
@@ -338,7 +330,6 @@ export default {
         if (!this.flag) {
           if (arr3.length > 0 && this.$store.state.result[num].single3 == 1) {
             this.flag = false;
-            console.log(this.flag);
           }
         }
 
@@ -346,7 +337,6 @@ export default {
           for (let j = 23; j < 54; j++) {
             if (arr[num][j] != undefined && arr[num][j] != "") {
               this.flag = true;
-              console.log(this.flag);
 
               break;
             }
@@ -355,7 +345,6 @@ export default {
         if (!this.flag) {
           if (arr4.length > 0 && this.$store.state.result[num].single4 == 1) {
             this.flag = false;
-            console.log(this.flag);
           }
         }
 
@@ -377,7 +366,7 @@ export default {
       }
 
       this.$store.state.flag = this.flag;
-      console.log(this.$store.state.flag);
+
       if (this.$store.state.sumcount == 1) {
         if (!this.$store.state.flag) {
           this.$router.push("/confirmPlan");
@@ -1023,6 +1012,7 @@ export default {
             font-size: 12px;
             color: #777;
             text-align: center;
+            border: 1px solid #eee;
           }
         }
       }

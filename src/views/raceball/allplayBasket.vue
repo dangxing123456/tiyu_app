@@ -53,7 +53,7 @@
         </div>
       </div>
       <h3>胜分差</h3>
-      <div class="third" :class="list.single=='1'?'bor':''">
+      <div class="third" :class="list.single=='1'&&$store.state.boolBask==true?'bor':''">
         <div class="left">
           <p class="p1">客胜</p>
           <p class="p2">主胜</p>

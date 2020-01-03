@@ -16,7 +16,7 @@
         </div>
 
         <div class="right">
-          <ul :class="list.single=='1'?'bor':''">
+          <ul :class="list.single=='1'&& $store.state.bool==true?'bor':''">
             <li
               v-for="(item,i) in list.footBallBet"
               :key="i"
@@ -30,7 +30,7 @@
               <span>{{item}}</span>
             </li>
           </ul>
-          <ul :class="list.single1=='1'?'bor':''">
+          <ul :class="list.single1=='1'&& $store.state.bool==true?'bor':''">
             <li
               v-for="(item,i) in list.footBallBet"
               :key="i"
@@ -47,7 +47,7 @@
         </div>
       </div>
       <h3>总进球</h3>
-      <div class="second" :class="list.single2=='1'?'bor':''">
+      <div class="second" :class="list.single2=='1'&& $store.state.bool==true?'bor':''">
         <div class="left">
           <p class="p1">总进球</p>
         </div>
@@ -74,7 +74,7 @@
         </div>
       </div>
       <h3>半全场</h3>
-      <div class="third" :class="list.single3=='1'?'bor':''">
+      <div class="third" :class="list.single3=='1'&& $store.state.bool==true?'bor':''">
         <div class="left">
           <p class="p1">半全场</p>
         </div>
@@ -102,7 +102,7 @@
         </div>
       </div>
       <h3>比分</h3>
-      <div class="fourth" :class="list.single4=='1'?'bor':''">
+      <div class="fourth" :class="list.single4=='1'&& $store.state.bool==true?'bor':''">
         <div class="sheng">
           <div class="left">
             <p class="p1">胜</p>

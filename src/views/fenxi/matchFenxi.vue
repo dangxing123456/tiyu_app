@@ -124,9 +124,9 @@
         <van-tab title="射手">
           <div class="div">
             <div class="title">
-              <h4 v-if="wrap.h.team_name_abbr">{{wrap.h.team_name_abbr}}射手</h4>
+              <h4 v-if="wrap.team_name_abbr">{{wrap.team_name_abbr}}射手</h4>
             </div>
-            <div class="con" v-for="(item,index) in wrap.h.scorer" :key="index">
+            <div class="con" v-for="(item,index) in wrap.scorer" :key="index">
               <div class="head">
                 <p>
                   <span>{{index}}</span>
@@ -142,9 +142,9 @@
           </div>
           <div class="div">
             <div class="title">
-              <h4 v-if="wrap.a.team_name_abbr">{{wrap.a.team_name_abbr}}射手</h4>
+              <h4 v-if="wrap1.team_name_abbr">{{wrap1.team_name_abbr}}射手</h4>
             </div>
-            <div class="con" v-for="(item,index) in wrap.a.scorer" :key="index">
+            <div class="con" v-for="(item,index) in wrap1.scorer" :key="index">
               <div class="head">
                 <p>
                   <span>{{index}}</span>
@@ -185,7 +185,8 @@ export default {
       total: {},
       total1: {},
       total2: {},
-      wrap: {}
+      wrap: {},
+      wrap1: {}
     };
   },
   computed: {},
@@ -451,7 +452,8 @@ export default {
           this.total = res.data.ahistoryInfor.result.total;
           this.total1 = res.data.hhistoryInfor.result.total;
           this.total2 = res.data.twoTeamMatchInfo.result.total;
-          this.wrap = res.data.ftShooterInfor.result;
+          this.wrap = res.data.ftShooterInfor.result.h;
+          this.wrap1 = res.data.ftShooterInfor.result.a;
           console.log(this.wrap);
           this.$nextTick(function() {
             this.drawBing();
@@ -495,7 +497,7 @@ export default {
       width: 100%;
       height: 35px;
       line-height: 35px;
-      
+
       font-size: 14px;
       color: black;
       padding: 0 10px;

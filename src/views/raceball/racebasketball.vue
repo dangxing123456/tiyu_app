@@ -55,7 +55,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="right1" :class="item1.single==1?'bor':''">
+              <div class="right1" :class="item1.single==1&&$store.state.boolBask==true?'bor':''">
                 <span
                   :class="bgc(index)"
                   @click="$router.push('/allplayBasket/'+index)"
@@ -68,7 +68,12 @@
       <!-- 底部按钮 -->
       <div class="bot-btn">
         <div class="check">
-          <van-checkbox v-model="checked" shape="square" checked-color="#FFA500">显示固定单关(橙色框内)</van-checkbox>
+          <van-checkbox
+            v-model="checked"
+            shape="square"
+            checked-color="#FFA500"
+            @change="chek"
+          >显示固定单关(橙色框内)</van-checkbox>
         </div>
         <!-- <div class="text">
           <p v-if="$store.state.basketSumcount==0">至少选择2场比赛</p>
@@ -184,13 +189,21 @@ export default {
       ],
       basketList: [],
       a: [],
-      count: 0
+      count: 0,
+      flag: false
     };
   },
   computed: {},
   watch: {},
   updated() {},
   methods: {
+    chek() {
+      if (this.checked == true) {
+        this.$store.state.boolBask = true;
+      } else {
+        this.$store.state.boolBask = false;
+      }
+    },
     confirm() {
       if (this.$store.state.basketSumcount >= 2) {
         this.$router.push("/bConfirmPlan");
@@ -199,14 +212,68 @@ export default {
           message: "非单关至少选择两场比赛"
         });
       }
-
       if (this.$store.state.basketSumcount == 1) {
-        if (this.$store.state.bFlag) {
+        var num = 0;
+        var arr = this.$store.state.basketSelectResult;
+        for (let i = 0; i < arr.length; i++) {
+          for (let j = 0; j < arr[i].length; j++) {
+            if (arr[i][j] != undefined && arr[i][j] != "") {
+              num = i;
+            }
+          }
+        }
+
+        var arrs = arr[num].slice(6, 18);
+        for (var i = 0; i < arrs.length; i++) {
+          if (!arrs[i]) {
+            arrs.splice(i, 1);
+            i--;
+          }
+        }
+        var arr1 = arr[num].slice(0, 6);
+        for (var i = 0; i < arr1.length; i++) {
+          if (!arr1[i]) {
+            arr1.splice(i, 1);
+            i--;
+          }
+        }
+        for (let j = 0; j < 6; j++) {
+          if (arr[num][j] != undefined && arr[num][j] != "") {
+            this.flag = true;
+
+            break;
+          }
+        }
+        if (
+          this.$store.state.basketResult[num].single == 0 &&
+          arrs.length > 0
+        ) {
+          for (let j = 6; j < 18; j++) {
+            if (arr[num][j] != undefined && arr[num][j] != "") {
+              this.flag = true;
+
+              break;
+            }
+          }
+        }
+        if (!this.flag) {
+          if (
+            arrs.length > 0 &&
+            this.$store.state.basketResult[num].single == 1
+          ) {
+            this.flag = false;
+          }
+        }
+
+        this.$store.state.bFlag = this.flag;
+
+        if (!this.$store.state.bFlag) {
           this.$router.push("/bConfirmPlan");
           this.$toast({
             message: "进入单关模式"
           });
         }
+        this.flag = false;
       }
     },
     del() {
@@ -301,7 +368,6 @@ export default {
           pagesize: 50
         })
         .then(res => {
-          console.log(res.data.list);
           if (res.code == 200) {
             var arr = [];
             for (var i = 0; i < res.data.list.length; i++) {
@@ -404,7 +470,6 @@ export default {
               };
             });
             this.$store.state.basketResult = arr;
-            console.log(this.$store.state.basketResult);
           }
         });
     }

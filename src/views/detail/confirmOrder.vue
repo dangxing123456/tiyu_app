@@ -86,6 +86,8 @@ export default {
     }
   },
   created() {
+    console.log(this.$store.state.arr.join(","));
+
     for (var i = 0; i < this.$store.state.betArr.length; i++) {
       if (!this.$store.state.betArr[i]) {
         this.$store.state.betArr.splice(i, 1);
@@ -98,10 +100,6 @@ export default {
         i--;
       }
     }
-
-    // console.log(this.$store.state.betArr);
-    // console.log(this.$store.state.footId);
-    // console.log(this.$store.state.value);
   }
 };
 </script>

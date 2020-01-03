@@ -166,8 +166,11 @@
     </div>
 
     <div class="bot" v-if="dataTime>time">
-      <p>截止时间: 2019-12-26 21:40:40</p>
-      <van-button type="danger" size="large" >我要跟单</van-button>
+      <p
+        v-if="$route.params.ballType=='zc'"
+      >截止时间：{{$METHOD.format(zcOrder.endTime/1000,'MM-dd hh:mm')}}</p>
+      <p v-else>截止时间：{{$METHOD.format(lcOrder.endTime/1000,'MM-dd hh:mm')}}</p>
+      <van-button type="danger" size="large" @click="showPopup">我要跟单</van-button>
     </div>
     <popup ref="pop" v-model="currentValue"></popup>
   </div>
@@ -175,13 +178,13 @@
 
 <script>
 import navBar from "@/components/navbar/navbar.vue";
-// import popup from "@components/popup/popup";
+import popup from "@/components/popup/popup.vue";
 export default {
   name: "consumption",
   props: {},
   components: {
     navBar,
-    // popup
+    popup
   },
   data() {
     return {
@@ -208,7 +211,31 @@ export default {
     this.getList();
   },
   methods: {
-    showPopup(item) {
+    showPopup() {
+      var item = {};
+      var userInfor = {
+        nickname: this.$route.params.nickname
+      };
+      if (this.$route.params.ballType == "zc") {
+        item = {
+          type: 1,
+          userInfor: userInfor,
+          id: this.$route.params.orderId,
+          buyWagers: this.zcOrder.buyWagers,
+          times: this.zcOrder.times,
+          flowCount: this.zcOrder.flowCount
+        };
+      } else {
+        item = {
+          type: 2,
+          userInfor: userInfor,
+          id: this.$route.params.orderId,
+          buyWagers: this.lcOrder.buyWagers,
+          times: this.lcOrder.times,
+          flowCount: this.lcOrder.flowCount
+        };
+      }
+
       this.show1 = true;
       this.currentValue = true;
       this.$refs.pop.show = true;
@@ -221,16 +248,12 @@ export default {
           ballType: this.$route.params.ballType
         })
         .then(res => {
-          console.log(res.data);
-
           if (this.$route.params.ballType == "zc") {
             this.flowerList = res.data.zcFlowers;
             this.zcOrder = res.data.zcOrder;
             this.time = this.zcOrder.endTime;
             if (this.dataTime > this.time) {
               this.zorderDesc = JSON.parse(res.data.zcOrder.orderDesc);
-
-              console.log(this.time);
 
               this.gate = this.zorderDesc.gates;
               this.zorderDesc.matchs.forEach(e => {

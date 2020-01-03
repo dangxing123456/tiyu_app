@@ -738,7 +738,8 @@ export default {
         }
         arr.push([a, b, c, d, e]);
       }
-
+      this.$store.state.arr = arr;
+      console.log(arr);
       //   var arr = JSON.parse(JSON.stringify(this.$store.state.selectResult));
       //   for (var i = 0; i < arr.length; i++) {
       //     for (var j = 0; j < arr[i].length; j++) {
@@ -961,20 +962,6 @@ export default {
         }
       }
       var source = this.$store.state.betArr;
-      // var arr = [
-      //   [["0_1"]], //二维数组中的每一项数组，中的所有项排序为 1-54，共54项
-      //   [["1_1"]],
-      //   [["2_1"]],
-      //   [["3_1"]],
-      //   [["4_1"]],
-      //   [["5_1"]],
-      //   [["6_1"]],
-      //   [["7_1"]],
-      //   [["8_1"]],
-      //   [["9_1"]]
-      // ];
-      console.log(arr);
-
       function parse(data, source) {
         //取几串几 ，二维数组的行(如[1,2,3]2串1，组合为[[1,2],[1,3],[2,3]])
         // if (data.length == 0 || source.length == 0) {
