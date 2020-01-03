@@ -29,8 +29,8 @@
                 <span>{{$METHOD.format(item.time/1000,'MM-dd hh:mm')}}</span>
               </div>
               <div class="text">
-                <p class="mon">{{item.coin}}</p>
-
+                <p class="mon" v-if="item.coin<0">{{item.coin}}</p>
+                <p class="mon1" v-else>+{{item.coin}}</p>
                 <p v-if="item.currentBalance">账户余额:{{item.currentBalance}}</p>
                 <p class="type">余额支付,订单[{{item.forId}}],支付{{item.coin}}元</p>
               </div>
@@ -178,6 +178,9 @@ export default {
       width: 54%;
       .mon {
         color: #f24a44;
+      }
+      .mon1 {
+        color: #00cd66;
       }
     }
     .bot {

@@ -113,7 +113,7 @@ export default {
     confirm() {
       this.$store.state.bFlag = this.flag;
       console.log(this.$store.state.bFlag);
-      this.$router.go(-1);
+      this.$router.push('/racebasketball');
     },
     detail() {
       this.$router.push({

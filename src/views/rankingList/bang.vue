@@ -5,7 +5,7 @@
       <img src="@/assets/images/paihang.png" alt srcset />
     </div>
     <div class="main">
-      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
         <van-tabs v-model="active" sticky :offset-top="176" type="line">
           <van-tab title="连红榜">
             <van-list
@@ -96,7 +96,7 @@
             </van-list>
           </van-tab>
         </van-tabs>
-      </van-pull-refresh>
+      <!-- </van-pull-refresh> -->
     </div>
   </div>
 </template>

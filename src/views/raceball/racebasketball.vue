@@ -159,7 +159,6 @@
 <script>
 import navBar from "@/components/navbar/navbar.vue";
 export default {
-  inject: ["reload"],
   name: "racefootball",
   components: {
     navBar
