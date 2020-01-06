@@ -32,7 +32,8 @@
                 <p class="mon" v-if="item.coin<0">{{item.coin}}</p>
                 <p class="mon1" v-else>+{{item.coin}}</p>
                 <p v-if="item.currentBalance">账户余额:{{item.currentBalance}}</p>
-                <p class="type">余额支付,订单[{{item.forId}}],支付{{item.coin}}元</p>
+                <p class="type" v-if="item.coin<0">余额支付,订单[{{item.forId}}],支付{{item.coin}}元</p>
+                <p class="type" v-else>余额支付,订单[{{item.forId}}],收入{{item.coin}}元</p>
               </div>
               <div class="bot">
                 <span>类型:{{item.remark}}</span>

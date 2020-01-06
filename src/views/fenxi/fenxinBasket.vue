@@ -331,7 +331,9 @@ export default {
     // },
     getList() {
       this.$SERVER
-        .getBasketballHistoryInfor({ matchId: this.$route.params.data.id })
+        .getBasketballHistoryInfor({
+          mid: parseInt(this.$route.params.data.id)
+        })
         .then(res => {
           this.matchTeam = res.data.matchTeam.result.data;
           this.hmatchInfor = res.data.hmatchInfor.result.data;
